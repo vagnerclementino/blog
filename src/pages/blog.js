@@ -13,6 +13,7 @@ class Blog extends React.Component {
     const siteTitle = data.site.siteMetadata.title
     const posts = data.allMdx.edges
     const localSearchBlog = data.localSearchBlog
+    const homepageURL = process.env.HOMEPAGE_URL || 'https://clementino.me'
 
     return (
       <Layout location={this.props.location} title={siteTitle}>
@@ -24,7 +25,7 @@ class Blog extends React.Component {
           navigate={navigate}
           location={location}
         />
-        <Link to="/">
+        <Link to={homepageURL}>
           <Button marginTop="85px">Go Home</Button>
         </Link>
       </Layout>
