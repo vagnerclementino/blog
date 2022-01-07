@@ -25,9 +25,9 @@ class Blog extends React.Component {
           navigate={navigate}
           location={location}
         />
-        <Link to={homepageURL}>
+        <a href={homepageURL} target="_top">
           <Button marginTop="85px">Go Home</Button>
-        </Link>
+        </a>
       </Layout>
     )
   }
