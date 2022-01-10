@@ -6,37 +6,56 @@ description: "Uma introdução ao formato MDX!"
 
 import Button from "src/components/button"
 
-This is a post showing MDX in action. This starter now comes with MDX
-out-of-the-box!
+É bem possível que você já teve contato com o formato _Markdown_ (`*.md`). Seja
+quando abriu um _Pull Request_, durante um [chat do
+Facebook](https://www.facebook.com/help/147348452522644) ou escrever um
+[comentário no Reddit](https://www.reddit.com/wiki/markdown).
 
-```jsx
-// you can write JSX in your Markdown!
-<button>test</button>
-```
+A
+[filosofia](https://www.ultraedit.com/company/blog/community/what-is-markdown-why-use-it.html)
+por trás do Markdown é a simplicidade: textos devem ser legíveis sem a
+necessidade de marcações (tags) que acabam por confundir o leitor (exemplo HTML).
+Posto de outra forma, um arquivo markdown deve maximizar a separação entre
+formato e conteúdo. Não obstante, deve haver maneiras de adicionar modificadores
+de texto como listas, negrito, itálico e etc.
 
-<button>test</button>
+A simplicidade do markdown vem desde a sua
+[especificação](https://daringfireball.net/projects/markdown/) em que poucas
+páginas descrevem as sintaxe da linguagem. E talvez esteja aí umas das principais
+limitações de se documentar em markdown. Quando a documentação exige componentes
+mais complexos, como por exemplo um *colapse*, a versão original do markdown não
+tem suporte. Por essa razão,  existem alguns "sabores" de markdown que propõe
+alguns elementos sintáticos que aumentam as possibilidades de documentar em
+determinados contextos. Um exemplo é *superset* do markdown utilizado pelo
+[Github](https://github.github.com/gfm/). Um outro "sabor" que vem ganhando
+popularidade é o [MDX!](https://mdxjs.com/docs/what-is-mdx/).
 
-## Custom components
+## MDX
 
-You can also import custom React components locally. Make sure
-[gatsby-plugin-root-import](https://www.gatsbyjs.org/plugins/gatsby-plugin-root-import/)
-as relative paths will not work.
+Em resumo o formato MDX permite que você inclua componentes `JSX` dentro de um
+arquivo markdown.  MDX funciona com o Gatsby por meio de um plugin
+[gatsby-plugin-mdx](https://www.gatsbyjs.org/packages/gatsby-plugin-mdx/). Você
+pode saber mais sobre o uso do `JSX` nos documentos do Gatsby: [Getting Started
+with MDX](https://www.gatsbyjs.org/docs/mdx/getting-started/).
+
+## Componentes Customizados
+
+Suponha que você tenha escrito um componente `Button` no seu projeto que esteja
+localizado em `src/components/button`. Você pode importar no seu arquivo
+`*.mdx` os seus componentes customizado escritos em React.
 
 ```jsx
 // Import custom component
 import Button from "src/components/button"
+
+<Button color='yellow' marginBottom='25px'>Test</Button>
 ```
 
-```jsx
-<Button>Test</Button>
-```
+Com base no código anterior um botão será renderizado na sua página conforme o
+exemplo a seguir:
 
-<Button>Test</Button>
+<Button color='yellow' marginBottom='25px'>Test</Button>
 
-## MDX
-
-MDX lets you write JSX embedded inside markdown, perfect for technical blogs.
-MDX works with Gatsby through
-[gatsby-plugin-mdx](https://www.gatsbyjs.org/packages/gatsby-plugin-mdx/). You
-can learn more about it in the Gatsby docs: [Getting Started with
-MDX](https://www.gatsbyjs.org/docs/mdx/getting-started/).
+Para que seja possível importar seus componentes é necessário utilizar o plugin 
+[gatsby-plugin-root-import](https://www.gatsbyjs.org/plugins/gatsby-plugin-root-import/)
+de modo a disponibilizar o caminho relativo do componente.
