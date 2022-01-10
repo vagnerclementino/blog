@@ -100,6 +100,13 @@ module.exports = {
           {
             resolve: `gatsby-remark-smartypants`,
           },
+          {
+            resolve: `gatsby-remark-external-links`,
+            options: {
+              target: "_blank",
+              rel: "noreferrer noopener"
+            }
+          },
         ],
         plugins: [`gatsby-remark-images`],
       },
