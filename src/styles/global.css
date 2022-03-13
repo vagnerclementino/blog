@@ -48,12 +48,12 @@ pre {
 }
 
 h1 {
-	font-size: 2em;
+	font-size: 2em !important;
 }
 
 @media (min-width: 48rem) {
 	h1 {
-		font-size: 4em;
+		font-size: 4em !important;
 	}
 
 }
