@@ -23,11 +23,13 @@ ul {
 	margin-left: 1.25em;
 	padding-left: 1.25em;
 }
+
 blockquote::before {
-  content: open-quote;
+	content: open-quote;
 }
+
 blockquote::after {
-  content: close-quote;
+	content: close-quote;
 }
 
 blockquote {
@@ -43,4 +45,15 @@ pre {
 	font-family: monospace;
 	white-space: pre;
 	margin: 1em 0px;
+}
+
+h1 {
+	font-size: 2em;
+}
+
+@media (min-width: 48rem) {
+	h1 {
+		font-size: 4em;
+	}
+
 }
