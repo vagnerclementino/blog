@@ -1,0 +1,59 @@
+p {
+	text-align: justify;
+	font-size: 16px;
+	line-height: 1.7;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	hyphens: auto;
+
+	@media screen and (min-width: 600px) {
+		font-size: 18px;
+		line-height: 30px;
+	}
+}
+
+img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+}
+
+ul {
+	margin-left: 1.25em;
+	padding-left: 1.25em;
+}
+
+blockquote::before {
+	content: open-quote;
+}
+
+blockquote::after {
+	content: close-quote;
+}
+
+blockquote {
+	margin: 1.0em;
+	background: #eee;
+	padding: 1.0em;
+	border-radius: 1em;
+}
+
+pre {
+	white-space: pre-wrap;
+	display: block;
+	font-family: monospace;
+	white-space: pre;
+	margin: 1em 0px;
+}
+
+h1 {
+	font-size: 2em;
+}
+
+@media (min-width: 48rem) {
+	h1 {
+		font-size: 4em;
+	}
+
+}
