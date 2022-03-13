@@ -23,3 +23,24 @@ ul {
 	margin-left: 1.25em;
 	padding-left: 1.25em;
 }
+blockquote::before {
+  content: open-quote;
+}
+blockquote::after {
+  content: close-quote;
+}
+
+blockquote {
+	margin: 1.0em;
+	background: #eee;
+	padding: 1.0em;
+	border-radius: 1em;
+}
+
+pre {
+	white-space: pre-wrap;
+	display: block;
+	font-family: monospace;
+	white-space: pre;
+	margin: 1em 0px;
+}
