@@ -218,25 +218,26 @@ exibida a seguir:'
 package me.clementino.solution.acompanhamentos;
 
 import me.clementino.v1.acai.Acai;
+import me.clementino.v1.acai.Tamanho;
 
-public class LeiteEmPo extends PadraoDeProjeto {
+public abstract class PadraoDeProjeto extends Acai {
 
-    private final double preco;
+    protected Acai acai;
 
-    public LeiteEmPo(Acai acai) {
-        this.acai = acai;
-        preco = 1.99;
+    public Tamanho getTamanho() {
+        return acai.getTamanho();
     }
 
     @Override
-    public String getDescricao() {
-        return this.acai.getDescricao() + " com leite em pó";
+    public String toString() {
+        return this.getDescricao() +
+            " do tamanho " +
+            this.getTamanho().getDescricao() +
+            " custa R$" + String.format("%.2f", this.getPreco());
     }
 
-    @Override
-    public double getPreco() {
-        return acai.getPreco() + preco;
-    }
+    public abstract String getDescricao();
+    public abstract double getPreco();
 }
 ```
 
