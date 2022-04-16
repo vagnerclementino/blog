@@ -1,0 +1,110 @@
+---
+title: "Princípios de Projeto"
+date: "2022-04-18"
+description: "A diferença entre o sucesso ou o novo legado."
+---
+
+## O novo legado
+
+## A arte ou ciência de abstrair
+
+De maneira geral, podemos pensar que a disciplina de Engenharia de Software
+consiste na implementação de um sistema que atenda aos requisitos funcionais e
+não funcionais definidos por um cliente. Posto de outra forma, estamos propondo
+uma solução de software para um determinado problema de negócio. Nesse ponto,
+abrimos aspas para *John Ousterhout*:
+
+> O desafio mais fundamental da computação é a decomposição de problemas, ou
+seja, como pegar um problema complexo e dividi-lo em pedaços que podem ser
+resolvidos de forma independente.
+
+A arte ou a ciência de definir a solução para um problema em projetos de
+software pode parecer à primeira vista uma atividade simples. Na prática,
+devemos lidar com a complexidade que caracteriza os sistemas modernos de
+software. Na Computação, historicamente, lidamos com a complexidade por meio de
+abstrações que são uma representação simplificada de uma entidade. Apesar de
+simplificada, a representação permite que possamos interagir e tirar proveito da
+entidade abstraída, sem que tenhamos que dominar todos os detalhes envolvidos na
+sua implementação. Funções, classes, interfaces, pacotes, bibliotecas, etc. são
+os instrumentos clássicos oferecidos por linguagens de programação para criação
+de abstrações (VALENTE, 2020).
+
+## Dividir para simplificar
+
+Como um dos objetivos do projeto de um software é decompor o problema que o
+sistema pretende resolver em partes menores, tal decomposição pode ser guiada
+por meio de Princípios de Projeto. Princípios de Projeto representam diretrizes
+que visam garantir que um software tenha determinadas propriedades de qualidade.
+Alguns dessas propriedades estão listadas a seguir:
+
+- **Integridade Conceitual**: propriedade de projeto proposta por Frederick
+ Brooks em 1975 no seu livro o Mítico Homem-Mês (BROOKS, 1975). A ideia é que um
+ sistema não pode ser um amontoado de funcionalidades, sem coerência e coesão
+ entre elas. Segundo Brooks, a falta de integridade pode ser minimizada por uma
+ autoridade central (um comitê, um arquiteto de software e etc.) responsável por
+ incluir as funcionalidades.
+
+- **Ocultamento de informação**: esse conceito foi discutido inicialmente em 1972
+ por David Parnas (PARNAS, 1972). O autor argumenta que o uso dessa propriedade
+ traz consigo vantagens como o desenvolvimento em paralelo, a flexibilidade de
+ mudança e a facilidade de entendimento. Em resumo, para se atingir tais
+ benefícios os módulos elas devem esconder decisões de projeto que são
+ eventualmente estejam sujeitas a mudanças.
+
+- **Coesão**: essa propriedade visa garantir que um módulo, seja uma classe ou
+função, implemente uma única funcionalidade ou serviço. A partir dessa premissa,
+conseguimos facilitar o desenvolvimento, o entendimento e a manutenção de uma
+classe.
+
+- **Acoplamento**: pode ser visto como a “força” de conexão entre dois módulos
+em um sistema. Na prática é difícil projetar um sistema com zero acoplamento.
+Nesse sentido, por exemplo, existe um acoplamento (ruim) de uma classe A para
+uma classe B quando mudanças em B necessariamente impactam em alterações na
+classe A. Em resumo, acoplamentos podem ocorrer, mas deveriam ser mediados por
+alguma interface bem definida.
+
+## Por um código com mais solidez
+
+As propriedades descritas anteriormente podem ser simples em sua definição,
+contudo, muitas vezes não é fácil garanti-las no código. Por esse motivo, alguns
+autores vêm propondo alguns princípios que servem como um guia para o
+desenvolvimento de softwares mais fáceis de entender, manter e evoluir.
+
+Um dos mais famosos ficou conhecido como Princípios SOLID que foi introduzido
+por Robert C. Martin (MARTIN, 2000). O SOLID é o acrônimo de um conjunto de
+práticas que, quando implementadas em conjunto, tornam o código adaptável à
+mudança. Cada letra significa os seguintes princípios:
+
+- **Single Responsibility Principle (Responsabilidade Única)**: estabelece que
+uma classe deveria fazer apenas uma coisa e, portanto, deve ter apenas uma
+única razão para mudar.
+
+- **Open Closed/Principle (Aberto/Fechado)**: exige que as classes sejam abertas
+para extensão e fechadas para modificações.
+
+- **Liskov Substitution Principle (Substituição de Liskov)**: estabelece que as
+subclasses devem ser substituíveis por suas classes de base. Isto significa
+que, dado que a classe B é uma subclasse da classe A, devemos ser capazes de
+passar um objeto da classe B para qualquer método que espere um objeto da
+classe A.
+
+- **Interface Segregation Principle (Segregação de Interfaces)**: o princípio
+afirma que criar um número maior de interfaces específicas seria melhor que
+definir uma única interface de uso geral. Os clientes não devem ser forçados a
+implementar uma função da qual não precisam.
+
+- **Dependency Inversion Principle (Inversão de Dependências)**: afirma que
+nossas classes devem depender de interfaces ou classes abstratas, em vez de
+classes e funções concretas.
+
+Nessa seção discutimos como os princípios de projeto permitem o desenho de uma
+solução mais flexível. Manter estes princípios em mente ao projetar e escrever
+um sistema permite um código seja mais limpo, extensível e testável. Uma maneira
+de conseguir de forma “automática” tais princípios é por meio da adoção de
+Padrões de Projeto. É importante salientar que alguns desses princípios ou mesmo
+propriedades que descrevemos anteriormente fazem mais sentido para sistema que
+utilizem linguagens orientadas a objeto (Java, C#, Ruby e etc.). Caso o projeto
+utilize uma linguagem de programação baseada em outro paradigma (ex. funcional),
+o uso de alguns princípios ou padrões acabam não fazendo muito sentido.
+
+<!-- TODO: Add references-->
