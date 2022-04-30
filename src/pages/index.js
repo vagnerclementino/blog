@@ -13,7 +13,7 @@ class IndexPage extends React.Component {
       <Layout location={this.props.location} title={siteTitle}>
         <SEO
           title="Home"
-          keywords={[`blog`, `gatsby`, `javascript`, `react`]}
+          keywords={[`blog`, `clementino.me`, `solid`, `design patterns`]}
         />
         <img style={{ margin: 0 }} src="./GatsbyScene.svg" alt="Gatsby Scene" />
         <h1>
