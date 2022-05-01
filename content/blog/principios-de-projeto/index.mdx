@@ -6,30 +6,33 @@ description: "A diferença entre o sucesso ou o novo legado."
 
 ## Construindo o novo legado
 
-Uma reflexão que faço sempre é sobre que, independente das práticas e processos
-que aplico como pessoa desenvolvedora, inevitavelmente estou _construindo o
-futuro projeto legado_. Seja por questões de evolução tecnológica ou por não
-adotarmos as melhores práticas, o software que construímos ou mantemos hoje, em
-algum momento vai receber a etiqueta de "legado". É importante frisar que legado
-não é sinônimo de software de baixa qualidade. Segundo a Wikipedia, o adjetivo
+Uma reflexão recorrente no meu dia-a-dia como pessoa desenvolvedora é como as
+práticas e processos que aplico contribuem para construir o _futuro novo
+legado_. Seja por questões de evolução tecnológica ou pelo fato de não adotarmos
+as melhores práticas, o software que produzimos ou mantemos hoje, em algum
+momento vai receber a etiqueta de **legado**. É importante frisar que legado não
+é sinônimo de software de baixa qualidade. Segundo a Wikipedia, o adjetivo
 [legado](https://pt.wikipedia.org/wiki/Sistema_legado) descreve um sistema
 antigo que permanece em operação em uma organização. Existem alguns artigos que
 tentam sistematizar o que caracteriza um software legado[^Chervenski,2020].
 
-Os motivos pelo qual um software antigo continua em operação fogem do escopo
-desse texto. O ponto que gostaria de discutir é que os problemas decorrentes do
-uso de um sistema legado podem ser potencializado caso o software tenha baixa
-manutenabilidade e legibilidade. Nos softwares com tais características, uma
-alteração pode ser com comparado à tentar encontrar ou incluir um novo objeto em
+As motivações que um software antigo continua em operação fogem do escopo desse
+texto. O ponto que gostaria de discutir, é que os problemas decorrentes do uso
+de um sistema legado podem ser potencializados caso o software possui
+características como  baixa manutenabilidade e legibilidade. Posto de outra
+forma: **qualidade é mais relevante que a idade do software**.
+
+Uma analogia que podemos fazer é que manter ou evoluir um software com baixa
+qualidade pode ser comparado com tentar encontrar a tampa de um Tupperware™ em
 um armário de cozinha bagunçado.
 
 ![Um armário de cozinha bagunçado](./messy.jpg)
 
-A evolução tecnológica talvez seja a variável na qual não temos o controle nesta
-equação de envelhecimento de um produto de software. Por outro lado, existe
-diferentes arcabouços na Engenharia de Software que podem ajudar no aumento da
-vida "útil" de um sistema de software. Tais diretrizes são conhecidas como
-**Princípios de Projetos**.  Antes de entendermos quais são esses princípios,
+As mudanças tecnológicas talvez seja a variável da qual não temos o controle
+nesta equação de envelhecimento de um produto de software. Por outro lado,
+existe diferentes arcabouços na Engenharia de Software que podem nos ajudar no
+aumento da vida "útil" de um software. Tais diretrizes são conhecidas como
+**Princípios de Projetos**. Antes de entendermos quais são esses princípios,
 vamos entender um conceito que está na base do processo de resolver problemas
 com computadores: a _abstração_.
 
@@ -37,10 +40,9 @@ com computadores: a _abstração_.
 
 De maneira geral, podemos pensar que a disciplina de Engenharia de Software
 consiste na implementação de um sistema capaz de ser executado em um computador
-e que atenda aos requisitos funcionais e não funcionais definidos
-pré-estabelecidos. Em muitos casos, as pessoas envolvidas no processo de
-construção de um software, estão propondo uma solução para um determinado
-problema de negócio.
+e que atenda aos requisitos funcionais e não funcionais pré-estabelecidos. Na
+maioria das vezes, um software é uma solução para um determinado problema de
+negócio.
 
 Nesse ponto, abrimos aspas para _John Ousterhout_:
 
@@ -48,14 +50,14 @@ Nesse ponto, abrimos aspas para _John Ousterhout_:
 seja, como pegar um problema complexo e dividi-lo em pedaços que podem ser
 resolvidos de forma independente.
 
-A arte ou a ciência de definir a solução para um problema em projetos de
-software pode parecer à primeira vista uma atividade simples. Na prática,
-devemos lidar com a complexidade que caracteriza os sistemas modernos de
-software. Na Computação, historicamente, lidamos com a complexidade por meio de
-abstrações que são uma representação _simplificada_ de uma determinada
-realidade. Apesar de simplificada, a representação permite que possamos
-interagir e tirar proveito da entidade abstraída, sem que tenhamos que dominar
-todos os detalhes envolvidos na sua implementação.
+O processo de definir uma solução para um problema em projetos de software pode
+parecer à primeira vista uma atividade simples. Na prática, devemos lidar com a
+complexidade que caracteriza os sistemas modernos de software. Na Computação,
+historicamente, lidamos com a complexidade por meio de abstrações que são uma
+representação _simplificada_ de uma determinada realidade. Apesar de
+simplificada, a representação permite que possamos interagir e tirar proveito da
+entidade abstraída, sem que tenhamos que dominar todos os detalhes envolvidos na
+sua implementação.
 
 Funções, classes, interfaces, pacotes, bibliotecas, etc. são os instrumentos
 clássicos oferecidos por linguagens de programação para criação de
@@ -64,8 +66,8 @@ abstrações[^Valente,2020].
 ## Dividir para simplificar
 
 Conforme discutimos anteriormente, o desenvolvimento de software é um eterno,
-dividir para conquistar, ou melhor, dividir para simplificar( e entender). Nesse
-ponto, o projeto de um consiste em decompor o problema que o sistema pretende
+dividir para conquistar, ou melhor, dividir para simplificar. Nesse ponto, o
+projeto de um software consiste em decompor o problema que o sistema pretende
 resolver em partes menores. Esse processo pode ser guiado pelas diretrizes ao
 que denominados _Princípios de Projeto_.
 
@@ -73,26 +75,26 @@ Os Princípios de Projeto representam um conjunto de recomendações que visam
 mitigar a construção de um software de baixa qualidade. Apenas é possível
 inferir que um software possui baixa qualidade por meio de métricas. Do
 contrário, estaremos sempre avaliando no plano do subjetivo. Nesse sentido,
-foram propostas determinar propriedades de um sistema de software que nos
-permite mensurar a sua qualidade.
+foram propostas determinadas propriedades de um software que nos permite
+mensurar a sua qualidade.
 
 ### Integridade conceitual
 
-A Integridade Conceitual de um software foi proposta por Frederick Brooks em
-1975 no seu livro o Mítico Homem-Mês[^Brooks,1975]. A ideia é que um sistema não
-pode ser um amontoado de funcionalidades, sem coerência e coesão entre elas.
-Segundo Brooks, a falta de integridade pode ser minimizada por uma autoridade
-central (um comitê, um arquiteto de software, project manager e etc.)
-responsável por gerenciar quais tipos de funcionalidade o sistema deveria prover.
+A Integridade Conceitual de um software foi proposta por Frederick Brooks no seu
+livro o Mítico Homem-Mês[^Brooks,1975]. A ideia é que um sistema não pode ser um
+amontoado de funcionalidades, sem coerência e coesão entre elas. Segundo Brooks,
+a falta de integridade pode ser minimizada por uma autoridade central (um
+comitê, um arquiteto de software, um project manager e etc.) responsável por
+gerenciar quais tipos de funcionalidade o sistema deveria prover.
 
 ### Ocultamento de informação
 
-Esse conceito foi discutido inicialmente em 1972 por David Parnas[^Parnas,1972].
-O autor argumenta que o uso dessa propriedade traz consigo vantagens como o
+Esse conceito foi discutido em 1972 por David Parnas[^Parnas,1972]. O autor
+argumenta que o uso dessa propriedade traz consigo vantagens como o
 desenvolvimento em paralelo, a flexibilidade de mudança e a facilidade de
 entendimento. Em resumo, para se atingir tais benefícios os módulos (classes,
-funções, pacotes e etc.) devem esconder decisões de projeto que são
-eventualmente estejam sujeitas a mudanças.
+funções, pacotes e etc.) devem esconder decisões de projeto que eventualmente
+estejam sujeitas a mudanças.
 
 ### Coesão
 
@@ -103,24 +105,24 @@ o desenvolvimento, o entendimento e a manutenção de uma classe.
 ### Acoplamento
 
 Pode ser visto como a “força” de conexão entre dois módulos em um sistema. Na
-prática é difícil projetar um sistema com zero acoplamento.  Nesse sentido, por
+prática é difícil projetar um sistema com zero acoplamento. Nesse sentido, por
 exemplo, existe um acoplamento _ruim_ de uma classe A para uma classe B quando
 _mudanças em B necessariamente impactam em alterações na classe A_. Em resumo,
 acoplamentos podem ocorrer, mas deveriam ser mediados por alguma interface bem
 definida.
 
-## Os princípios para qualidade no software
+## Os princípios para qualidade em software
 
 As propriedades de software descritas anteriormente podem ser simples em sua
 definição, entretanto, muitas vezes não é fácil garanti-las no código. Por esse
-motivo, alguns autores vêm propondo diferentes Princípios de Projeto que servem
-como um guia para o desenvolvimento de softwares mais fáceis de entender, manter
-e evoluir.
+motivo, alguns autores vêm propondo diferentes _Princípios de Projeto_ que
+servem como um guia para o desenvolvimento de softwares mais fáceis de entender,
+manter e evoluir.
 
-Um dos mais famosos ficou conhecido como Princípios SOLID que foi introduzido
-por Robert C. Martin[^Martin,2000]. O SOLID é o acrônimo de um conjunto de
+Um dos mais famosos ficou conhecido como _Princípios SOLID_ que foi introduzido
+por Robert C. Martin[^Martin,2000]. O _SOLID_ é o acrônimo de um conjunto de
 práticas que, quando implementadas em conjunto, tornam o código adaptável à
-mudança. SOLID declara o seguintes princípios:
+mudança. O SOLID declara o seguintes princípios:
 
 - **Single Responsibility Principle (Responsabilidade Única)**: estabelece que
 uma classe deveria fazer apenas uma coisa e, portanto, deve ter apenas uma única
@@ -143,7 +145,9 @@ implementar uma função da qual não precisam.
 nossas classes devem depender de interfaces ou classes abstratas, em vez de
 classes e funções concretas.
 
-## Na história de hoje
+## Conclusão
+
+![Imagem do desenho he-man dizendo: Na história de hoje](./he-man.jpg)
 
 Esse artigo discutiu brevemente como os princípios de projeto permitem o desenho
 e a construção de um software mais flexível. A ideia é que sejamos críticos e
@@ -151,15 +155,13 @@ avaliarmos se estamos aplicando tais princípios ao projetar e escrever um
 sistema, dessa forma, produzindo um código seja mais limpo, extensível e
 testável.
 
-![Imagem do desenho he-man dizendo: Na história de hoje](./he-man.jpg)
-
-Alguns autores argumentam que uma maneira de conseguir de forma “automática” a
-aplicação dos Princípios de Projeto é através [Padrões de
+Alguns autores argumentam que uma maneira “automática” de obter uma software de
+qualidade é por meio do uso dos [Padrões de
 Projeto](https://clementino-notes.netlify.app/blog/design-patterns-101/), tendo
-em vista que são soluções previamente testadas em diferentes tipos de software.
+em vista que são soluções previamente testadas em diferentes contextos.
 
-Para finalizar é importante salientar que alguns desses princípios ou mesmo propriedades que
-descrevemos anteriormente fazem mais sentido para sistema que utilizem
+Para finalizar é importante salientar que alguns desses princípios ou mesmo
+propriedades que descrevemos nesse texto foram pensadas em um contexto de
 linguagens orientadas a objeto (Java, C#, Ruby e etc.). Caso o projeto utilize
 uma linguagem de programação baseada em outro paradigma (ex. funcional), o uso
 de determinados princípios ou padrões acaba não fazendo muito sentido.
