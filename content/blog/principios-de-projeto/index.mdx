@@ -1,0 +1,184 @@
+---
+title: "Princípios de Projeto"
+date: "2022-04-18"
+description: "A diferença entre o sucesso ou o novo legado."
+---
+
+## Construindo o novo legado
+
+Uma reflexão recorrente no meu dia-a-dia como pessoa desenvolvedora é como as
+práticas e processos que aplico contribuem para construir o _futuro novo
+legado_. Seja por questões de evolução tecnológica ou pelo fato de não adotarmos
+as melhores práticas, o software que produzimos ou mantemos hoje, em algum
+momento vai receber a etiqueta de **legado**. É importante frisar que legado não
+é sinônimo de software de baixa qualidade. Segundo a Wikipedia, o adjetivo
+[legado](https://pt.wikipedia.org/wiki/Sistema_legado) descreve um sistema
+antigo que permanece em operação em uma organização. Existem alguns artigos que
+tentam sistematizar o que caracteriza um software legado[^Chervenski,2020].
+
+As motivações que um software antigo continua em operação fogem do escopo desse
+texto. O ponto que gostaria de discutir, é que os problemas decorrentes do uso
+de um sistema legado podem ser potencializados caso o software possui
+características como  baixa manutenabilidade e legibilidade. Posto de outra
+forma: **qualidade é mais relevante que a idade do software**.
+
+Uma analogia que podemos fazer é que manter ou evoluir um software com baixa
+qualidade pode ser comparado com tentar encontrar a tampa de um Tupperware™ em
+um armário de cozinha bagunçado.
+
+![Um armário de cozinha bagunçado](./messy.jpg)
+
+As mudanças tecnológicas talvez seja a variável da qual não temos o controle
+nesta equação de envelhecimento de um produto de software. Por outro lado,
+existe diferentes arcabouços na Engenharia de Software que podem nos ajudar no
+aumento da vida "útil" de um software. Tais diretrizes são conhecidas como
+**Princípios de Projetos**. Antes de entendermos quais são esses princípios,
+vamos entender um conceito que está na base do processo de resolver problemas
+com computadores: a _abstração_.
+
+## A arte ou ciência de criar abstrações
+
+De maneira geral, podemos pensar que a disciplina de Engenharia de Software
+consiste na implementação de um sistema capaz de ser executado em um computador
+e que atenda aos requisitos funcionais e não funcionais pré-estabelecidos. Na
+maioria das vezes, um software é uma solução para um determinado problema de
+negócio.
+
+Nesse ponto, abrimos aspas para _John Ousterhout_:
+
+> O desafio mais fundamental da computação é a decomposição de problemas, ou
+seja, como pegar um problema complexo e dividi-lo em pedaços que podem ser
+resolvidos de forma independente.
+
+O processo de definir uma solução para um problema em projetos de software pode
+parecer à primeira vista uma atividade simples. Na prática, devemos lidar com a
+complexidade que caracteriza os sistemas modernos de software. Na Computação,
+historicamente, lidamos com a complexidade por meio de abstrações que são uma
+representação _simplificada_ de uma determinada realidade. Apesar de
+simplificada, a representação permite que possamos interagir e tirar proveito da
+entidade abstraída, sem que tenhamos que dominar todos os detalhes envolvidos na
+sua implementação.
+
+Funções, classes, interfaces, pacotes, bibliotecas, etc. são os instrumentos
+clássicos oferecidos por linguagens de programação para criação de
+abstrações[^Valente,2020].
+
+## Dividir para simplificar
+
+Conforme discutimos anteriormente, o desenvolvimento de software é um eterno,
+dividir para conquistar, ou melhor, dividir para simplificar. Nesse ponto, o
+projeto de um software consiste em decompor o problema que o sistema pretende
+resolver em partes menores. Esse processo pode ser guiado pelas diretrizes ao
+que denominados _Princípios de Projeto_.
+
+Os Princípios de Projeto representam um conjunto de recomendações que visam
+mitigar a construção de um software de baixa qualidade. Apenas é possível
+inferir que um software possui baixa qualidade por meio de métricas. Do
+contrário, estaremos sempre avaliando no plano do subjetivo. Nesse sentido,
+foram propostas determinadas propriedades de um software que nos permite
+mensurar a sua qualidade.
+
+### Integridade conceitual
+
+A Integridade Conceitual de um software foi proposta por Frederick Brooks no seu
+livro o Mítico Homem-Mês[^Brooks,1975]. A ideia é que um sistema não pode ser um
+amontoado de funcionalidades, sem coerência e coesão entre elas. Segundo Brooks,
+a falta de integridade pode ser minimizada por uma autoridade central (um
+comitê, um arquiteto de software, um project manager e etc.) responsável por
+gerenciar quais tipos de funcionalidade o sistema deveria prover.
+
+### Ocultamento de informação
+
+Esse conceito foi discutido em 1972 por David Parnas[^Parnas,1972]. O autor
+argumenta que o uso dessa propriedade traz consigo vantagens como o
+desenvolvimento em paralelo, a flexibilidade de mudança e a facilidade de
+entendimento. Em resumo, para se atingir tais benefícios os módulos (classes,
+funções, pacotes e etc.) devem esconder decisões de projeto que eventualmente
+estejam sujeitas a mudanças.
+
+### Coesão
+
+Essa propriedade propõe que um módulo, seja uma classe ou função, implemente uma
+única funcionalidade ou serviço. A partir dessa premissa, conseguimos facilitar
+o desenvolvimento, o entendimento e a manutenção de uma classe.
+
+### Acoplamento
+
+Pode ser visto como a “força” de conexão entre dois módulos em um sistema. Na
+prática é difícil projetar um sistema com zero acoplamento. Nesse sentido, por
+exemplo, existe um acoplamento _ruim_ de uma classe A para uma classe B quando
+_mudanças em B necessariamente impactam em alterações na classe A_. Em resumo,
+acoplamentos podem ocorrer, mas deveriam ser mediados por alguma interface bem
+definida.
+
+## Os princípios para qualidade em software
+
+As propriedades de software descritas anteriormente podem ser simples em sua
+definição, entretanto, muitas vezes não é fácil garanti-las no código. Por esse
+motivo, alguns autores vêm propondo diferentes _Princípios de Projeto_ que
+servem como um guia para o desenvolvimento de softwares mais fáceis de entender,
+manter e evoluir.
+
+Um dos mais famosos ficou conhecido como _Princípios SOLID_ que foi introduzido
+por Robert C. Martin[^Martin,2000]. O _SOLID_ é o acrônimo de um conjunto de
+práticas que, quando implementadas em conjunto, tornam o código adaptável à
+mudança. O SOLID declara o seguintes princípios:
+
+- **Single Responsibility Principle (Responsabilidade Única)**: estabelece que
+uma classe deveria fazer apenas uma coisa e, portanto, deve ter apenas uma única
+razão para mudar.
+
+- **Open Closed/Principle (Aberto/Fechado)**: exige que as classes sejam abertas
+para extensão e fechadas para modificações.
+
+- **Liskov Substitution Principle (Substituição de Liskov)**: estabelece que as
+subclasses devem ser substituíveis por suas classes de base. Isto significa que,
+dado que a classe B é uma subclasse da classe A, devemos ser capazes de passar
+um objeto da classe B para qualquer método que espere um objeto da classe A.
+
+- **Interface Segregation Principle (Segregação de Interfaces)**: o princípio
+afirma que criar um número maior de interfaces específicas seria melhor que
+definir uma única interface de uso geral. Os clientes não devem ser forçados a
+implementar uma função da qual não precisam.
+
+- **Dependency Inversion Principle (Inversão de Dependências)**: afirma que
+nossas classes devem depender de interfaces ou classes abstratas, em vez de
+classes e funções concretas.
+
+## Conclusão
+
+![Imagem do desenho he-man dizendo: Na história de hoje](./he-man.jpg)
+
+Esse artigo discutiu brevemente como os princípios de projeto permitem o desenho
+e a construção de um software mais flexível. A ideia é que sejamos críticos e
+avaliarmos se estamos aplicando tais princípios ao projetar e escrever um
+sistema, dessa forma, produzindo um código seja mais limpo, extensível e
+testável.
+
+Alguns autores argumentam que uma maneira “automática” de obter uma software de
+qualidade é por meio do uso dos [Padrões de
+Projeto](https://clementino-notes.netlify.app/blog/design-patterns-101/), tendo
+em vista que são soluções previamente testadas em diferentes contextos.
+
+Para finalizar é importante salientar que alguns desses princípios ou mesmo
+propriedades que descrevemos nesse texto foram pensadas em um contexto de
+linguagens orientadas a objeto (Java, C#, Ruby e etc.). Caso o projeto utilize
+uma linguagem de programação baseada em outro paradigma (ex. funcional), o uso
+de determinados princípios ou padrões acaba não fazendo muito sentido.
+
+[^Chervenski,2020]:
+    Chervenski, Alex Severo, and Andréa Sabedra Bordin. "Understanding Legacy
+    Systems in the Light of Grounded Theory." Proceedings of the 34th Brazilian
+    Symposium on Software Engineering. 2020.
+[^Valente,2020]:
+    Marco Túlio Valente. Engenharia de Software Moderna: Princípios e Práticas
+    para Desenvolvimento de Software com Produtividade, 2020.
+[^Brooks,1975]:
+    Brooks, Frederick P. The mythical man-month. Addison-Wesley Longman
+    Publishing Co., Inc. 1975.
+[^Parnas,1972]:
+    Parnas, David L. "On the criteria to be used in decomposing systems into
+    modules." Pioneers and Their Contributions to Software Engineering.
+    Springer, Berlin, Heidelberg. 1972.
+[^Martin,2000]:
+    Martin, R. C. Design principles and design patterns. Object Mentor. 2000.
