@@ -6,7 +6,7 @@ import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { rhythm, scale } from "../utils/typography"
-import { Disqus, CommentCount } from 'gatsby-plugin-disqus'
+import { Disqus } from 'gatsby-plugin-disqus'
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -27,8 +27,6 @@ class BlogPostTemplate extends React.Component {
           description={post.frontmatter.description || post.excerpt}
         />
         <h1>{post.frontmatter.title}</h1>
-
-        <CommentCount config={disqusConfig} placeholder={'...'} />
         <p
           style={{
             ...scale(-1 / 5),
