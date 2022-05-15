@@ -132,7 +132,7 @@ module.exports = {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         // edit below
-        trackingId: `ADD YOUR TRACKING ID HERE`,
+        trackingId: `UA-183067713-1`,
       },
     },
     {
@@ -166,6 +166,7 @@ module.exports = {
         // You can add multiple tracking ids and a pageview event will be fired for all of them.
         trackingIds: [
           "G-T1BV8DMEMW",
+          "UA-183067713-1"
         ],
         // This object is used for configuration specific to this plugin
         pluginConfig: {
