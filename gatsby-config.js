@@ -167,6 +167,17 @@ module.exports = {
         trackingIds: [
           "G-T1BV8DMEMW",
         ],
+        // This object is used for configuration specific to this plugin
+        pluginConfig: {
+          // Puts tracking script in the head instead of the body
+          head: true,
+          // Setting this parameter is also optional
+          respectDNT: true,
+          // Avoids sending pageview hits from custom paths
+          exclude: ["deploy-preview-**"],
+          // Defaults to https://www.googletagmanager.com
+          origin: "https://clementino-notes.netlify.app",
+        },
       },
     },
   ],
