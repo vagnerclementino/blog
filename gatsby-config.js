@@ -128,13 +128,13 @@ module.exports = {
         ],
       },
     },
-    {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        // edit below
-        trackingId: `UA-183067713-1`,
-      },
-    },
+    // {
+    //   resolve: `gatsby-plugin-google-analytics`,
+    //   options: {
+    //     // edit below
+    //     trackingId: `UA-183067713-1`,
+    //   },
+    // },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -161,24 +161,14 @@ module.exports = {
       }
     }, 
     {
-      resolve: `gatsby-plugin-google-gtag`,
+      resolve: `gatsby-plugin-gtag`,
       options: {
-        // You can add multiple tracking ids and a pageview event will be fired for all of them.
-        trackingIds: [
-          "G-T1BV8DMEMW",
-          "UA-183067713-1"
-        ],
-        // This object is used for configuration specific to this plugin
-        pluginConfig: {
-          // Puts tracking script in the head instead of the body
-          head: true,
-          // Setting this parameter is also optional
-          respectDNT: true,
-          // Avoids sending pageview hits from custom paths
-          exclude: ["deploy-preview-**"],
-          // Defaults to https://www.googletagmanager.com
-          origin: "https://clementino-notes.netlify.app",
-        },
+        // your google analytics tracking id
+        trackingId: process.env.TRACKING_ID,
+        // Puts tracking script in the head instead of the body
+        head: true,
+        // enable ip anonymization
+        anonymize: true,
       },
     },
   ],
