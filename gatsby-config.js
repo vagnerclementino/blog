@@ -128,13 +128,13 @@ module.exports = {
         ],
       },
     },
-    // {
-    //   resolve: `gatsby-plugin-google-analytics`,
-    //   options: {
-    //     // edit below
-    //     trackingId: `UA-183067713-1`,
-    //   },
-    // },
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        // edit below
+        trackingId: `UA-183067713-1`,
+      },
+    },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -160,16 +160,5 @@ module.exports = {
           shortname: `clementino`
       }
     }, 
-    {
-      resolve: `gatsby-plugin-gtag`,
-      options: {
-        // your google analytics tracking id
-        trackingId: process.env.TRACKING_ID,
-        // Puts tracking script in the head instead of the body
-        head: true,
-        // enable ip anonymization
-        anonymize: true,
-      },
-    },
   ],
 }
