@@ -133,6 +133,7 @@ module.exports = {
       options: {
         // edit below
         trackingId: `UA-183067713-1`,
+        cookieFlags: 'SameSite=None; Secure'
       },
     },
     {
