@@ -46,12 +46,17 @@ export const pageQuery = graphql`
       index
       store
     }
-    allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
+    allMdx(
+      sort: { fields: [frontmatter___date], order: DESC }
+      filter: { fields: { released: { eq: true } } }
+      ) {
       edges {
         node {
           excerpt
           fields {
             slug
+            released
+            releasedNotForced
           }
           frontmatter {
             date(formatString: "MMMM DD, YYYY")

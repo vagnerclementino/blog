@@ -1,0 +1,58 @@
+---
+title: "Estilos Arquiteturais"
+date: "2022-07-07"
+description: "Por um software com estilo"
+released: false
+---
+
+Nessa seção voltamos com a discussão sobre estilos e padrões arquiteturais. Conforme discutido anteriormente, não existe na literatura de arquitetura de software um consenso quanto ao uso dos termos estilo e padrão arquitetural. Alguns autores (VALENTE, 2020) e (RICHARDS e FORD, 2020) utilizam os termos de forma intercambiáveis. Outros, como (TAYLOR et al, 2009) fazem questão de diferencia-los.  Nesse texto, por questões didáticas, optamos por trata-los de maneira distinta, ou seja, padrões focam em soluções para problemas específicos de arquitetura; enquanto estilos propõem como os módulos de um sistema devem ser organizados. A seguir apresentamos as definições de estilo e padrão arquitetural que nos guiará durante esse módulo.
+
+Um padrão arquitetural é uma coleção nomeada de decisões arquiteturais que são
+aplicáveis para um problema de desenho recorrente, no qual deve ser
+parametrizado para responder diferentes contextos de desenvolvimento de software
+no qual o problema aparece (TAYLOR et. al., 2009). Com base nessa definição,
+podemos notar que o foco de um padrão arquitetural está na solução de um
+problema específico, algo que não necessariamente existe ao se propor um estilo
+arquitetural.  
+
+Por sua vez, estilos de arquitetura descrevem uma relação nomeada de componentes
+cobrindo uma variedade de características de arquitetura (RICHARDS e FORD,
+2020). Importante notar que o nome de estilo de arquitetura, semelhante ao que
+vimos anteriormente ao discutirmos os Padrões de Projeto, cria um vocabulário
+único que atua como abreviação e facilita a comunicação entre arquitetos,
+desenvolvedores, pessoas de infraestrutura e etc. Nos próximos capítulos iremos
+focar nos estilos arquiteturais, contudo, antes, precisamos entender como eles
+podem ser classificados.  
+
+## Classificação dos Estilos Arquiteturais
+
+Os estilos de arquitetura podem ser classificados em dois tipos principais:
+monolítico em que é possível identificar um único deployment (unidade de
+implantação) de todo o código fonte; e distribuído onde o processo de deployment
+resulta em dois ou mais “executáveis” que estão conectados por meio de
+protocolos de acesso remoto, seja uma requisição HTTP ou mesmo uma chamada
+remota de métodos (RPC).
+
+Embora nenhum esquema de classificação seja perfeito, todas as arquiteturas
+distribuídas compartilham um conjunto comum de desafios e problemas não
+encontrados nos estilos de arquitetura monolítica, tornando este esquema de
+classificação uma boa separação entre os vários estilos de arquitetura. A Tabela
+2  apresenta exemplos concretos de cada um dos tipos de estilos arquiteturais
+que iremos discutir nesse módulo.
+
+|     **Monolítico**    |         **Distribuído**         |
+|:---------------------:|:-------------------------------:|
+| Arquitetura em Camada | Arquitetura Orientada à Eventos |
+|        Pipeline       | Arquitetura Orientada à Serviço |
+|      Microkernel      |          Microsserviços         |
+
+Ao analisar um estilo arquitetural devemos descrever sua topologia, suas
+características básicas e as vantagens e desvantagens do seu uso. Nos próximos
+capítulos vamos aprofundar um pouco mais nesses estilos sob esse ponto de vista.
+Os estilos arquiteturais apresentados foram baseados no livro de (RICHARDS e
+FORD, 2020), sugerimos que utilizem essa referência para uma discussão mais
+aprofundada.
+
+[^Valente,2020]:
+    Marco Túlio Valente. Engenharia de Software Moderna: Princípios e Práticas
+    para Desenvolvimento de Software com Produtividade, 2020.
