@@ -165,7 +165,7 @@ module.exports = {
       resolve: 'gatsby-plugin-released',
       options: {
         fieldName: 'released',
-        timezone: 'UTC',
+        timezone: 'America/Sao_Paulo',
         force: process.env.NODE_ENV === 'development'
       }
     }
