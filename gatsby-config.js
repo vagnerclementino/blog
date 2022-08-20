@@ -1,3 +1,5 @@
+const homepageURL = process.env.HOMEPAGE_URL || 'https://clementino.me'
+
 module.exports = {
   siteMetadata: {
     // edit below
@@ -188,11 +190,12 @@ module.exports = {
           {
             serialize: ({ query: { site, allMdx } }) => {
               return allMdx.nodes.map(node => {
+                console.log(`node: ${JSON.stringify(node)}`)
                 return Object.assign({}, node.frontmatter, {
                   description: node.excerpt,
                   date: node.frontmatter.date,
-                  url: `${site.siteMetadata.siteUrl}${node.fields.slug}`,
-                  guid: `${site.siteMetadata.siteUrl}${node.fields.slug}`,
+                  url: `${site.siteMetadata.siteUrl}/blog${node.fields.slug}`,
+                  guid: `${site.siteMetadata.siteUrl}/blog${node.fields.slug}`,
                 })
               })
             },
