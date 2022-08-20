@@ -14,6 +14,7 @@
     "gatsby": "^2.24.47",
     "gatsby-image": "^2.0.39",
     "gatsby-plugin-disqus": "^1.2.4",
+    "gatsby-plugin-feed": "^4.21.0",
     "gatsby-plugin-feed-mdx": "1.0.0",
     "gatsby-plugin-google-analytics": "^4.15.0",
     "gatsby-plugin-local-search": "^1.1.1",
