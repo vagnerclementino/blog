@@ -1,3 +1,5 @@
+const homepageURL = process.env.HOMEPAGE_URL || 'https://clementino.me'
+
 module.exports = {
   siteMetadata: {
     // edit below
@@ -187,15 +189,16 @@ module.exports = {
         feeds: [
           {
             serialize: ({ query: { site, allMdx } }) => {
-              return allMdx.nodes.map(node => {
-                return Object.assign({}, node.frontmatter, {
-                  description: node.excerpt,
-                  date: node.frontmatter.date,
-                  url: site.siteMetadata.siteUrl + node.fields.slug,
-                  guid: site.siteMetadata.siteUrl + node.fields.slug,
-                  custom_elements: [{ "content:encoded": node.html }],
+              return allMdx.nodes
+                .filter(node => true === node.frontmatter.released || true)
+                .map(node => {
+                  return Object.assign({}, node.frontmatter, {
+                    description: node.frontmatter.description,
+                    date: node.frontmatter.date,
+                    url: `${site.siteMetadata.siteUrl}/blog${node.fields.slug}`,
+                    guid: `${site.siteMetadata.siteUrl}/blog${node.fields.slug}`,
+                  })
                 })
-              })
             },
             query: `
               {
@@ -204,13 +207,14 @@ module.exports = {
                 ) {
                   nodes {
                     excerpt
-                    html
                     fields { 
                       slug 
                     }
                     frontmatter {
                       title
                       date
+                      description
+                      released
                     }
                   }
                 }
