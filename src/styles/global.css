@@ -4,6 +4,7 @@ p {
 	line-height: 1.7;
 	word-wrap: break-word;
 	overflow-wrap: break-word;
+	-webkit-hyphens: auto;
 	hyphens: auto;
 
 	@media screen and (min-width: 600px) {
@@ -50,7 +51,9 @@ pre {
 h1 {
 	font-size: 2em !important;
 }
-
+h3 {
+	font-size: 1.8em !important;
+}
 @media (min-width: 48rem) {
 	h1 {
 		font-size: 4em !important;
