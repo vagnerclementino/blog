@@ -10,8 +10,8 @@ const SearchBar = styled.div`
   display: flex;
   border: 1px solid #dfe1e5;
   border-radius: 10px;
-  margin: 0 auto ${rhythm(1)};
-  width: 100%;
+  margin: 0 0 ${rhythm(1)};
+  width: 80%;
   height: 3rem;
   background: #fdfdfd;
 
