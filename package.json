@@ -67,6 +67,7 @@
     "url": "git+https://github.com/gatsbyjs/gatsby-starter-blog.git"
   },
   "scripts": {
+    "prebuild": "npm rebuild",
     "build": "gatsby build",
     "develop": "GATSBY_GTAG_DEBUG=true gatsby develop",
     "format": "prettier --write src/**/*.{js,jsx}",
