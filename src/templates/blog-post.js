@@ -7,6 +7,7 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { rhythm, scale } from "../utils/typography"
 import { Disqus } from 'gatsby-plugin-disqus'
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -19,12 +20,15 @@ class BlogPostTemplate extends React.Component {
       title: post.frontmatter.title
     }
 
+    let featuredImg = getImage(post.frontmatter.featuredImage?.childImageSharp?.gatsbyImageData)
+
     return (
       <Layout location={this.props.location}>
         <SEO
           title={post.frontmatter.title}
           description={post.frontmatter.description || post.excerpt}
         />
+        <GatsbyImage image={featuredImg} />
         <h1>{post.frontmatter.title}</h1>
         <p
           style={{
@@ -94,6 +98,11 @@ export const pageQuery = graphql`
         title
         date(formatString: "MMMM DD, YYYY")
         description
+        featuredImage {
+          childImageSharp {
+            gatsbyImageData(layout: FULL_WIDTH)
+          }
+        }
       }
     }
   }
