@@ -6,7 +6,7 @@ module.exports = {
     title: `Clementino's Notes`,
     author: `Vagner Clementino`,
     description: `A personal blog with styled components, dark mode, and Netlify CMS.`,
-    siteUrl: `https://clementino-notes.netlify.app/`,
+    siteUrl: `https://notes.clementino.me`,
     social: {
       twitter: `vclementino`,
     },
