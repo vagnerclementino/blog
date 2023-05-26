@@ -27,7 +27,8 @@ function SEO({ description, lang, meta, keywords, title, featureImg }) {
   )
 
   const metaDescription = description || site.siteMetadata.description
-  console.log(JSON.stringify(site.siteMetadata))
+  const imagePath = `${site.siteMetadata.siteUrl}${featureImg}`
+  const author = site.siteMetadata.author || ""
 
   return (
     <Helmet
@@ -71,7 +72,15 @@ function SEO({ description, lang, meta, keywords, title, featureImg }) {
         },
         {
           property: `og:image`,
-          content: `${site.siteMetadata.siteUrl}${featureImg}`,
+          content: imagePath,
+        },
+        {
+          property: `og:author`,
+          content: author,
+        },
+        {
+          name: `twitter:image`,
+          content: imagePath,
         },
       ]
         .concat(
