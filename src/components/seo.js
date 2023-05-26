@@ -19,6 +19,7 @@ function SEO({ description, lang, meta, keywords, title, featureImg }) {
             title
             description
             author
+            siteUrl
           }
         }
       }
@@ -26,6 +27,7 @@ function SEO({ description, lang, meta, keywords, title, featureImg }) {
   )
 
   const metaDescription = description || site.siteMetadata.description
+  console.log(JSON.stringify(site.siteMetadata))
 
   return (
     <Helmet
@@ -69,10 +71,7 @@ function SEO({ description, lang, meta, keywords, title, featureImg }) {
         },
         {
           property: `og:image`,
-          // You should ideally replace the hardcoded URL below with a value you set
-          // in your gatsby-config.js file.  And import all shared site metadata into
-          // this component with the useStaticQuery hook.
-          content: featureImg,
+          content: `${site.siteMetadata.siteUrl}${featureImg}`,
         },
       ]
         .concat(
