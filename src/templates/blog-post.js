@@ -27,6 +27,7 @@ class BlogPostTemplate extends React.Component {
         <SEO
           title={post.frontmatter.title}
           description={post.frontmatter.description || post.excerpt}
+          featureImg={featuredImg}
         />
         <GatsbyImage image={featuredImg} />
         <h1>{post.frontmatter.title}</h1>
@@ -73,8 +74,7 @@ class BlogPostTemplate extends React.Component {
           </li>
         </ul>
 
-        <Disqus config={disqusConfig}/>
-
+        <Disqus config={disqusConfig} />
       </Layout>
     )
   }
