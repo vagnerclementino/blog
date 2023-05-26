@@ -6,8 +6,16 @@ import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { rhythm, scale } from "../utils/typography"
-import { Disqus } from 'gatsby-plugin-disqus'
+import { Disqus } from "gatsby-plugin-disqus"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
+
+const getFeatureImgPath = featuredImg => {
+  if (featuredImg && featuredImg.images && featuredImg.images.fallback) {
+    return featuredImg.images.fallback.src || ""
+  } else {
+    return ""
+  }
+}
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -17,16 +25,18 @@ class BlogPostTemplate extends React.Component {
     const disqusConfig = {
       url: this.props.location.href,
       identifier: post.id,
-      title: post.frontmatter.title
+      title: post.frontmatter.title,
     }
 
     let featuredImg = getImage(post.frontmatter.featuredImage?.childImageSharp?.gatsbyImageData)
 
+    console.log(`featureImg is ${JSON.stringify(featuredImg)}`)
     return (
       <Layout location={this.props.location}>
         <SEO
           title={post.frontmatter.title}
           description={post.frontmatter.description || post.excerpt}
+          featureImg={getFeatureImgPath(featuredImg)}
         />
         <GatsbyImage image={featuredImg} />
         <h1>{post.frontmatter.title}</h1>
@@ -73,8 +83,7 @@ class BlogPostTemplate extends React.Component {
           </li>
         </ul>
 
-        <Disqus config={disqusConfig}/>
-
+        <Disqus config={disqusConfig} />
       </Layout>
     )
   }
