@@ -12,7 +12,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          node-version: lts/gallium
+          node-version: lts/hydrogen
           cache: 'npm'
       - run: npm ci
       - run: npm test
