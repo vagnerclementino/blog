@@ -1,5 +1,5 @@
 {
-  "name": "clementino-notes",
+  "name": "notes.clementino.me",
   "private": true,
   "description": "A personal blog, based on the default blog starter",
   "version": "3.0.0",
@@ -56,13 +56,16 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",
   "keywords": [
-    "gatsby"
+    "gatsby",
+    "blog",
+    "clementino",
+    "notes"
   ],
   "license": "MIT",
   "main": "n/a",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gatsbyjs/gatsby-starter-blog.git"
+    "url": "git@github.com:vagnerclementino/blog.git"
   },
   "scripts": {
     "build": "gatsby build",
