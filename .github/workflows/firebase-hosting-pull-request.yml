@@ -14,7 +14,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           node-version: lts/hydrogen
           cache: 'npm'
-      - run: npm ci
+      - run: npm ci --legacy-peer-deps
       - run: npm test
       - run: npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
