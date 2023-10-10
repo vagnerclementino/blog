@@ -12,7 +12,6 @@ module.exports = {
     },
   },
   plugins: [
-    `gatsby-plugin-netlify-cms`,
     `gatsby-plugin-styled-components`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
@@ -106,8 +105,8 @@ module.exports = {
             resolve: `gatsby-remark-external-links`,
             options: {
               target: "_blank",
-              rel: "noreferrer noopener"
-            }
+              rel: "noreferrer noopener",
+            },
           },
           {
             resolve: `gatsby-remark-footnotes`,
@@ -120,14 +119,11 @@ module.exports = {
               //use "front" for Wikipedia style ^ links
               footnoteBackRefInnerTextStartPosition: "front",
               useFootnoteMarkerText: true, // Defaults to false
-              useCustomDivider: "<hr/><strong>References:</strong>" // Defaults to <hr/>
-            }
+              useCustomDivider: "<hr/><strong>References:</strong>", // Defaults to <hr/>
+            },
           },
         ],
-        plugins: [
-          `gatsby-remark-images`,
-          `gatsby-remark-footnotes`,
-        ],
+        plugins: [`gatsby-remark-images`, `gatsby-remark-footnotes`],
       },
     },
     {
@@ -135,7 +131,7 @@ module.exports = {
       options: {
         // edit below
         trackingId: `UA-183067713-1`,
-        cookieFlags: 'SameSite=None; Secure'
+        cookieFlags: "SameSite=None; Secure",
       },
     },
     {
@@ -160,16 +156,16 @@ module.exports = {
     {
       resolve: `gatsby-plugin-disqus`,
       options: {
-          shortname: `clementino`
-      }
-    }, 
+        shortname: `clementino`,
+      },
+    },
     {
-      resolve: 'gatsby-plugin-released',
+      resolve: "gatsby-plugin-released",
       options: {
-        fieldName: 'released',
-        timezone: 'America/Sao_Paulo',
-        force: process.env.NODE_ENV === 'development'
-      }
+        fieldName: "released",
+        timezone: "America/Sao_Paulo",
+        force: process.env.NODE_ENV === "development",
+      },
     },
     {
       resolve: `gatsby-plugin-feed`,
@@ -234,6 +230,6 @@ module.exports = {
       options: {
         path: `${__dirname}/content/blog`,
       },
-    }
+    },
   ],
 }
