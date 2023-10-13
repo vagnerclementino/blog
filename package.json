@@ -1,17 +1,17 @@
 {
-  "name": "gatsby-personal-starter-blog",
+  "name": "clementino-notes",
   "private": true,
-  "description": "A personal blog starter for a blog powered by Netlify CMS, based on the default blog starter",
-  "version": "2.0.0",
-  "author": "Thomas Wang <thomas@wang.sh>",
+  "description": "A personal blog, based on the default blog starter",
+  "version": "3.0.0",
+  "author": "Vagner Clementino <vagner@clementino.me>",
   "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
+    "url": "https://github.com/vagnerclementino/blog/issues"
   },
   "dependencies": {
     "@mdx-js/mdx": "^1.5.1",
     "@mdx-js/react": "^1.5.1",
     "babel-plugin-styled-components": "^1.10.0",
-    "gatsby": "^2.24.47",
+    "gatsby": "^3.15.0",
     "gatsby-image": "^2.0.39",
     "gatsby-plugin-disqus": "^1.2.4",
     "gatsby-plugin-feed": "^4.21.0",
@@ -21,7 +21,6 @@
     "gatsby-plugin-local-search": "^1.1.1",
     "gatsby-plugin-manifest": "^2.0.29",
     "gatsby-plugin-mdx": "^1.2.14",
-    "gatsby-plugin-netlify-cms": "^4.3.7",
     "gatsby-plugin-offline": "^3.2.23",
     "gatsby-plugin-react-helmet": "^3.0.12",
     "gatsby-plugin-released": "^0.3.0",
@@ -37,7 +36,6 @@
     "gatsby-remark-vscode": "^2.1.2",
     "gatsby-source-filesystem": "^2.11.1",
     "gatsby-transformer-sharp": "^2.12.1",
-    "netlify-cms-app": "^2.9.1",
     "query-string": "^6.13.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -58,13 +56,16 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",
   "keywords": [
-    "gatsby"
+    "gatsby",
+    "blog",
+    "clementino",
+    "notes"
   ],
   "license": "MIT",
   "main": "n/a",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gatsbyjs/gatsby-starter-blog.git"
+    "url": "git@github.com:vagnerclementino/blog.git"
   },
   "scripts": {
     "build": "gatsby build",
