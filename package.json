@@ -68,8 +68,9 @@
     "url": "git@github.com:vagnerclementino/blog.git"
   },
   "scripts": {
+    "prebuild": "npm run clean",
     "build": "gatsby build",
-    "develop": "GATSBY_GTAG_DEBUG=true gatsby develop",
+    "develop": "gatsby develop",
     "format": "prettier --write src/**/*.{js,jsx}",
     "start": "npm run develop",
     "serve": "gatsby serve",
