@@ -13,8 +13,22 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-styled-components`,
-    `gatsby-transformer-sharp`,
+    `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`,
+    // {
+    //   resolve: `gatsby-plugin-manifest`,
+    //   options: {
+    //     name: `Clementino's Notes`,
+    //     short_name: `clementino-notes`,
+    //     start_url: `/blog`,
+    //     background_color: `#ffffff`,
+    //     theme_color: `#663399`,
+    //     display: `minimal-ui`,
+    //     // edit below
+    //     icon: `content/assets/clementine-icon.png`,
+    //   },
+    // },
     `gatsby-plugin-offline`,
     `gatsby-plugin-react-helmet`,
     {
@@ -134,19 +148,7 @@ module.exports = {
         cookieFlags: "SameSite=None; Secure",
       },
     },
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `Gatsby Starter Blog`,
-        short_name: `GatsbyJS`,
-        start_url: `/`,
-        background_color: `#ffffff`,
-        theme_color: `#663399`,
-        display: `minimal-ui`,
-        // edit below
-        icon: `content/assets/clementine-icon.png`,
-      },
-    },
+
     {
       resolve: `gatsby-plugin-typography`,
       options: {
@@ -222,7 +224,6 @@ module.exports = {
         ],
       },
     },
-    `gatsby-plugin-image`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
