@@ -68,6 +68,7 @@
   },
   "scripts": {
     "build": "gatsby build",
+    "build:verbose": "gatsby build --verbose --log-pages",
     "develop": "GATSBY_GTAG_DEBUG=true gatsby develop",
     "format": "prettier --write src/**/*.{js,jsx}",
     "start": "npm run develop",
