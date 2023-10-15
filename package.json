@@ -14,7 +14,7 @@
     "gatsby": "^4.5.5",
     "gatsby-cli": "^4.25.0",
     "gatsby-plugin-disqus": "^1.2.6",
-    "gatsby-plugin-image": "^1.15.0",
+    "gatsby-plugin-image": "^2.25.0",
     "gatsby-plugin-local-search": "^1.1.1",
     "gatsby-plugin-mdx": "^2.15.0",
     "gatsby-plugin-offline": "^4.15.0",
