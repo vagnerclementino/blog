@@ -11,6 +11,9 @@ module.exports = {
       twitter: `vclementino`,
     },
   },
+  flags: {
+    DEV_SSR: true,
+  },
   plugins: [
     `gatsby-plugin-styled-components`,
     `gatsby-transformer-sharp`,
@@ -34,7 +37,7 @@ module.exports = {
                 id
                 fields { slug }
                 excerpt
-                rawBody
+                body
                 frontmatter {
                   title
                   description
@@ -45,13 +48,13 @@ module.exports = {
           }
         `,
         ref: "id",
-        index: ["title", "rawBody"],
+        index: ["title", "body"],
         store: ["id", "slug", "date", "title", "excerpt", "description"],
         normalizer: ({ data }) =>
           data.allMdx.nodes.map(node => ({
             id: node.id,
             slug: node.fields.slug,
-            rawBody: node.rawBody,
+            body: node.body,
             excerpt: node.excerpt,
             title: node.frontmatter.title,
             description: node.frontmatter.description,
@@ -59,7 +62,6 @@ module.exports = {
           })),
       },
     },
-    `gatsby-plugin-feed-mdx`,
     `gatsby-plugin-root-import`,
     {
       resolve: `gatsby-source-filesystem`,
@@ -93,9 +95,6 @@ module.exports = {
             },
           },
           {
-            resolve: `gatsby-remark-vscode`,
-          },
-          {
             resolve: `gatsby-remark-copy-linked-files`,
           },
           {
@@ -122,8 +121,13 @@ module.exports = {
               useCustomDivider: "<hr/><strong>References:</strong>", // Defaults to <hr/>
             },
           },
+          {
+            resolve: `gatsby-remark-images`,
+          },
+          {
+            resolve: `gatsby-remark-footnotes`,
+          },
         ],
-        plugins: [`gatsby-remark-images`, `gatsby-remark-footnotes`],
       },
     },
     {
