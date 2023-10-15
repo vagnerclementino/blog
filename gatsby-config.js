@@ -11,6 +11,9 @@ module.exports = {
       twitter: `vclementino`,
     },
   },
+  flags: {
+    DEV_SSR: true
+  },
   plugins: [
     {
       resolve: `gatsby-plugin-styled-components`,
