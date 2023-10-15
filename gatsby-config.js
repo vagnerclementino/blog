@@ -59,7 +59,6 @@ module.exports = {
           })),
       },
     },
-    `gatsby-plugin-feed-mdx`,
     `gatsby-plugin-root-import`,
     {
       resolve: `gatsby-source-filesystem`,
@@ -127,14 +126,6 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        // edit below
-        trackingId: `UA-183067713-1`,
-        cookieFlags: "SameSite=None; Secure",
-      },
-    },
-    {
       resolve: `gatsby-plugin-typography`,
       options: {
         pathToConfigModule: `src/utils/typography`,
@@ -152,61 +143,6 @@ module.exports = {
         fieldName: "released",
         timezone: "America/Sao_Paulo",
         force: process.env.NODE_ENV === "development",
-      },
-    },
-    {
-      resolve: `gatsby-plugin-feed`,
-      options: {
-        query: `
-          {
-            site {
-              siteMetadata {
-                title
-                description
-                siteUrl
-                site_url: siteUrl
-              }
-            }
-          }
-        `,
-        feeds: [
-          {
-            serialize: ({ query: { site, allMdx } }) => {
-              return allMdx.nodes
-                .filter(node => true === node.frontmatter.released || true)
-                .map(node => {
-                  return Object.assign({}, node.frontmatter, {
-                    description: node.frontmatter.description,
-                    date: node.frontmatter.date,
-                    url: `${site.siteMetadata.siteUrl}/blog${node.fields.slug}`,
-                    guid: `${site.siteMetadata.siteUrl}/blog${node.fields.slug}`,
-                  })
-                })
-            },
-            query: `
-              {
-                allMdx(
-                  sort: { order: DESC, fields: [frontmatter___date] },
-                ) {
-                  nodes {
-                    excerpt
-                    fields { 
-                      slug 
-                    }
-                    frontmatter {
-                      title
-                      date
-                      description
-                      released
-                    }
-                  }
-                }
-              }
-            `,
-            output: "/rss.xml",
-            title: "Clementino Notes' RSS Feed",
-          },
-        ],
       },
     },
     `gatsby-plugin-sharp`,
