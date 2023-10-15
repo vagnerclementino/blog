@@ -12,7 +12,8 @@ module.exports = {
     },
   },
   flags: {
-    DEV_SSR: true
+    DEV_SSR: true,
+    FAST_DEV: true,
   },
   plugins: [
     {
@@ -111,9 +112,6 @@ module.exports = {
             options: {
               wrapperStyle: `margin-bottom: 1.0725rem`,
             },
-          },
-          {
-            resolve: `gatsby-remark-vscode`,
           },
           {
             resolve: `gatsby-remark-copy-linked-files`,

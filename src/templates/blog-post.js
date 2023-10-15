@@ -28,9 +28,10 @@ class BlogPostTemplate extends React.Component {
       title: post.frontmatter.title,
     }
 
-    let featuredImg = getImage(post.frontmatter.featuredImage?.childImageSharp?.gatsbyImageData)
+    let featuredImg = getImage(
+      post.frontmatter.featuredImage?.childImageSharp?.gatsbyImageData
+    )
 
-    console.log(`featureImg is ${JSON.stringify(featuredImg)}`)
     return (
       <Layout location={this.props.location}>
         <SEO
@@ -38,7 +39,11 @@ class BlogPostTemplate extends React.Component {
           description={post.frontmatter.description || post.excerpt}
           featureImg={getFeatureImgPath(featuredImg)}
         />
-        <GatsbyImage image={featuredImg} />
+        <GatsbyImage
+          image={featuredImg}
+          GatsbyImage
+          alt={post.frontmatter.description || post.excerpt}
+        />
         <h1>{post.frontmatter.title}</h1>
         <p
           style={{
