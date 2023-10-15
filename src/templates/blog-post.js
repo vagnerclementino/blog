@@ -30,6 +30,7 @@ class BlogPostTemplate extends React.Component {
 
     let featuredImg = getImage(post.frontmatter.featuredImage?.childImageSharp?.gatsbyImageData)
 
+    console.log(`featureImg is ${JSON.stringify(featuredImg)}`)
     return (
       <Layout location={this.props.location}>
         <SEO
