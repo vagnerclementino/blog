@@ -5,16 +5,34 @@ module.exports = {
     // edit below
     title: `Clementino's Notes`,
     author: `Vagner Clementino`,
-    description: `A personal blog with styled components, dark mode, and Netlify CMS.`,
+    description: `A personal blog with styled components and dark mode`,
     siteUrl: `https://notes.clementino.me`,
     social: {
       twitter: `vclementino`,
     },
   },
   plugins: [
-    `gatsby-plugin-styled-components`,
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-plugin-styled-components`,
+      options: {
+        // Add any options here
+      },
+    },
+    {
+      resolve: `gatsby-plugin-sharp`,
+      options: {
+        // Defaults used for gatsbyImageData and StaticImage
+        defaults: {},
+        // Set to none to allow builds to continue on image errors
+        failOn: `warning`,
+        // deprecated options and their defaults:
+        base64Width: 20,
+        forceBase64Format: `png`, // valid formats: png,jpg,webp
+        useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
+        stripMetadata: true,
+        defaultQuality: 50,
+      },
+    },
     `gatsby-plugin-offline`,
     `gatsby-plugin-react-helmet`,
     {
@@ -145,9 +163,8 @@ module.exports = {
         force: process.env.NODE_ENV === "development",
       },
     },
-    `gatsby-plugin-sharp`,
-    `gatsby-transformer-sharp`,
     `gatsby-plugin-image`,
+    `gatsby-transformer-sharp`, // Needed for dynamic images
     {
       resolve: `gatsby-source-filesystem`,
       options: {
