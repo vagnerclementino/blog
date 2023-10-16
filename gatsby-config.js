@@ -5,16 +5,38 @@ module.exports = {
     // edit below
     title: `Clementino's Notes`,
     author: `Vagner Clementino`,
-    description: `A personal blog with styled components, dark mode, and Netlify CMS.`,
+    description: `A personal blog with styled components and dark mode`,
     siteUrl: `https://notes.clementino.me`,
     social: {
       twitter: `vclementino`,
     },
   },
+  flags: {
+    DEV_SSR: true,
+    FAST_DEV: true,
+  },
   plugins: [
-    `gatsby-plugin-styled-components`,
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-plugin-styled-components`,
+      options: {
+        // Add any options here
+      },
+    },
+    {
+      resolve: `gatsby-plugin-sharp`,
+      options: {
+        // Defaults used for gatsbyImageData and StaticImage
+        defaults: {},
+        // Set to none to allow builds to continue on image errors
+        failOn: `warning`,
+        // deprecated options and their defaults:
+        base64Width: 20,
+        forceBase64Format: `png`, // valid formats: png,jpg,webp
+        useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
+        stripMetadata: true,
+        defaultQuality: 50,
+      },
+    },
     `gatsby-plugin-offline`,
     `gatsby-plugin-react-helmet`,
     {
@@ -59,7 +81,6 @@ module.exports = {
           })),
       },
     },
-    `gatsby-plugin-feed-mdx`,
     `gatsby-plugin-root-import`,
     {
       resolve: `gatsby-source-filesystem`,
@@ -127,27 +148,6 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        // edit below
-        trackingId: `UA-183067713-1`,
-        cookieFlags: "SameSite=None; Secure",
-      },
-    },
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `Gatsby Starter Blog`,
-        short_name: `GatsbyJS`,
-        start_url: `/`,
-        background_color: `#ffffff`,
-        theme_color: `#663399`,
-        display: `minimal-ui`,
-        // edit below
-        icon: `content/assets/clementine-icon.png`,
-      },
-    },
-    {
       resolve: `gatsby-plugin-typography`,
       options: {
         pathToConfigModule: `src/utils/typography`,
@@ -167,64 +167,8 @@ module.exports = {
         force: process.env.NODE_ENV === "development",
       },
     },
-    {
-      resolve: `gatsby-plugin-feed`,
-      options: {
-        query: `
-          {
-            site {
-              siteMetadata {
-                title
-                description
-                siteUrl
-                site_url: siteUrl
-              }
-            }
-          }
-        `,
-        feeds: [
-          {
-            serialize: ({ query: { site, allMdx } }) => {
-              return allMdx.nodes
-                .filter(node => true === node.frontmatter.released || true)
-                .map(node => {
-                  return Object.assign({}, node.frontmatter, {
-                    description: node.frontmatter.description,
-                    date: node.frontmatter.date,
-                    url: `${site.siteMetadata.siteUrl}/blog${node.fields.slug}`,
-                    guid: `${site.siteMetadata.siteUrl}/blog${node.fields.slug}`,
-                  })
-                })
-            },
-            query: `
-              {
-                allMdx(
-                  sort: { order: DESC, fields: [frontmatter___date] },
-                ) {
-                  nodes {
-                    excerpt
-                    fields { 
-                      slug 
-                    }
-                    frontmatter {
-                      title
-                      date
-                      description
-                      released
-                    }
-                  }
-                }
-              }
-            `,
-            output: "/rss.xml",
-            title: "Clementino Notes' RSS Feed",
-          },
-        ],
-      },
-    },
-    `gatsby-plugin-sharp`,
-    `gatsby-transformer-sharp`,
     `gatsby-plugin-image`,
+    `gatsby-transformer-sharp`, // Needed for dynamic images
     {
       resolve: `gatsby-source-filesystem`,
       options: {
