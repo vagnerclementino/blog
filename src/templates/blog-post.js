@@ -38,7 +38,10 @@ class BlogPostTemplate extends React.Component {
           description={post.frontmatter.description || post.excerpt}
           featureImg={getFeatureImgPath(featuredImg)}
         />
-        <GatsbyImage image={featuredImg} />
+        <GatsbyImage
+          image={featuredImg}
+          alt={post.frontmatter.description || post.excerpt}
+        />
         <h1>{post.frontmatter.title}</h1>
         <p
           style={{
