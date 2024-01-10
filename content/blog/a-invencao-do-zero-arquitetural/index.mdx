@@ -2,7 +2,7 @@
 title: "A invenção do zero (arquitetural)"
 date: "2023-12-21"
 description: "'Big Ball of mud' e os problemas da ausência de um estilo arquitetural"
-featuredImage: frankenstein.webp
+featuredImage: feature-zero-2.png
 ---
 
 ## Os homens que calculavam
@@ -22,11 +22,9 @@ e cultura. Muitas palavras árabes foram gradualmente incorporadas ao português
 especialmente no vocabulário relacionado ao campo da agricultura, comércio,
 ciência e tecnologia. Um livro muito interessante que conta a relação da
 cultura árabe com a Matemática é _O Homem que Calculava_[^1] de Malba Tahan,
-pseudônimo do escritor brasileiro Júlio César de Melo e Sousa. 
-
+pseudônimo do escritor brasileiro _Júlio César de Melo e Sousa_.
 
 ![Capa do Livro O Homem que Calculava de Malba Tahan](./capa-o-homem-que-calculava.webp)
-
 
 Dessa forma, palavras como "algoritmo", "álgebra" e "algarismo" mantiveram o
 prefixo "_al_" para preservar a sua identidade. E justamente uma das maiores
@@ -37,30 +35,112 @@ especial que teve um papel especial, aquele ao qual damos o nome de _zero_.
 
 ## A invenção do zero
 
-
 #### Na Matemática
+
+A invenção do número zero representa um marco fundamental na história da
+matemática e um dos avanços mais significativos da humanidade. Embora seja
+difícil identificar o exato momento em que o zero foi inventado, sabemos que
+essa ideia revolucionária começou a ser desenvolvida por civilizações antigas,
+como os maias, babilônios e hindus.
+
+Apesar de não existir um consenso sobre a origem do conceito de zero, alguns
+historiados definem que foi na Índia, por volta do século V d.C., que o conceito
+de zero começou a ser formalizado e utilizado com mais frequência. Os
+matemáticos indianos perceberam que ao adicionar um símbolo para representar uma
+quantidade vazia ou a ausência de algo, era possível transformar completamente a
+forma como os números eram manipulados. 
+
+A importância do zero na matemática foi notada pelos árabes, que depois de sua
+expansão pelo Oriente, trouxeram esse conceito para o Ocidente. Foi na cultura
+árabe que o termo _al-zéro_ surgiu, que posteriormente se transformou na
+palavra “zero” que usamos hoje.
+
+A incorporação do número zero na matemática permitiu um grande avanço nas
+operações numéricas. Antes da sua invenção, lidar com quantidades nulas ou a
+realização de cálculos complexos era extremamente difícil. Com a introdução do
+zero, os matemáticos puderam desenvolver sistemas de numeração mais eficientes
+e precisos, como o sistema de numeração posicional usado atualmente.
 
 
 #### Nas Linguagens de Programação
 
+A invenção do número zero, como conceito matemático, e o conceito de `null` ou
+nulo em linguagens de programação têm uma relação interessante. Assim como o
+número zero foi introduzido na matemática para representar uma quantidade vazia
+ou a ausência de algo, o conceito de "null", em linguagens de programação, serve
+para representar uma referência vazia ou a ausência de um valor válido. Tanto o
+zero quanto o "null" desempenham a função de indicar a ausência de algo, mas em
+contextos diferentes.
+
+Diferentemente do zero, a possibilidade de referenciar um endereço inválido,
+custou muito caro. O cientista da computação Tony Hoare, em sua palestra _"Null
+References: The Billion Dollar Mistake"_[^2], ressalta que as referências nulas
+em linguagens de programação podem levar a erros e comportamentos indesejados,
+que custou bilhões de dólares em depuração de código e manutenção de sistemas.
+
+O ponto principal da palestra é que o uso de referências nulas torna o código
+mais propenso a erros, pois muitas vezes os desenvolvedores esquecem de
+verificar se uma referência é nula antes de usá-la, o que pode levar a falhas no
+programa. A exceção `NullPointerException` manda lembranças.
+
+Se por um lado a invenção do zero trouxe vantagens significativas para a
+matemática, o conceito de referências nulas em linguagens de programação tem
+sido alvo de críticas por seus possíveis efeitos negativos e potenciais erros
+causados pela sua utilização inadequada.
 
 #### Na arquitetura de software
 
+Nesse momento do texto, gostaria que você fizesse uma reflexão: para todo
+software existe uma arquitetura associada?! Para responder essa pergunta,
+primeiro precisamos definir o que seria a arquitetura de um software.
 
-## O anti-padrão:  Big Ball of Mud
+Na matemática, o número zero desempenha um papel fundamental na organização e
+estruturação dos sistemas numéricos. Da mesma forma, a arquitetura de software
+visa estabelecer regras e estruturas para organizar o código de forma clara,
+facilitando sua compreensão, manutenção e evolução.
 
+## O anti-padrão: Big Ball of Mud
+
+O conceito de _"Big Ball of Mud"_ se refere a um tipo de arquitetura de software
+em que essas regras e estruturas não estão presentes ou são negligenciadas. Esse
+termo foi cunhado por Brian Foote e Joseph Yoder em seu artigo[^3], descrevendo
+um sistema em que é difícil identificar qualquer tipo de estilo arquitetural
+claro.
+
+Podemos fazer uma relação entre o "Big Ball of Mud" e a ausência do número
+zero, em termos de organização e estruturação. Assim como a ausência do zero na
+matemática dificultaria a compreensão e execução de operações, a falta de uma
+arquitetura clara e bem definida em um sistema de software pode levar a
+problemas semelhantes.
+
+Um sistema "Big Ball of Mud" geralmente resulta em código desorganizado, com
+dependências entrelaçadas, falta de modularidade e reutilização de código. Isso
+impacta diretamente na manutenção, escalabilidade e evolução do sistema. O
+código torna-se difícil de ler e entender, dificultando a detecção de
+problemas, a implementação de novas funcionalidades e a correção de erros.
 
 ## Como evitar o anti-padrão
 
+Assim como o número zero se tornou essencial para a matemática, a adoção de uma
+arquitetura de software eficiente é fundamental para um sistema robusto e
+sustentável. A criação de padrões de projeto, separação de responsabilidades e
+outras práticas arquiteturais ajudam a evitar o "Big Ball of Mud" e garantem um
+código mais organizado, reutilizável e de fácil manutenção.
+
+Portanto, a relação entre a invenção do zero na matemática e o conceito de "Big
+Ball of Mud" na arquitetura de software é a importância de estabelecer
+estruturas e regras para tornar sistemas complexos mais compreensíveis e
+manejáveis. Enquanto o zero facilita operações matemáticas, a adoção de uma
+arquitetura clara facilita a desenvolvimento de software de qualidade.
 
 [^1]:
     O Homem que Calculava.
     https://pt.wikipedia.org/wiki/O_Homem_que_Calculava
 
 [^2]:
-    Livro ilustrado por IA é retirado da lista do Prêmio Jabuti.
-    https://agenciabrasil.ebc.com.br/geral/noticia/2023-11/livro-ilustrado-por-ia-e-retirado-da-lista-do-premio-jabuti
+    Null References: The Billion Dollar Mistake.
+    https://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mistake-Tony-Hoare/
 
 [^3]:
-    'The Gospel': how Israel uses AI to select bombing targets in Gaza.
-    https://www.theguardian.com/world/2023/dec/01/the-gospel-how-israel-uses-ai-to-select-bombing-targets
+    Big Ball of Mud.
+    https://wiki.c2.com/?BigBallOfMud
