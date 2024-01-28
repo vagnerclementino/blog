@@ -1,8 +1,8 @@
 ---
 title: "A invenção do zero (arquitetural)"
-date: "2023-12-21"
+date: "2024-01-30"
 description: "'Big Ball of mud' e os problemas da ausência de um estilo arquitetural"
-featuredImage: feature-zero-2.png
+featuredImage: feature.jpg
 ---
 
 ## Os homens que calculavam
@@ -24,7 +24,8 @@ ciência e tecnologia. Um livro muito interessante que conta a relação da
 cultura árabe com a Matemática é _O Homem que Calculava_[^1] de Malba Tahan,
 pseudônimo do escritor brasileiro _Júlio César de Melo e Sousa_.
 
-![Capa do Livro O Homem que Calculava de Malba Tahan](./capa-o-homem-que-calculava.webp)
+![Capa do Livro O Homem que Calculava de Malba
+Tahan](./capa-o-homem-que-calculava.webp)
 
 Dessa forma, palavras como "algoritmo", "álgebra" e "algarismo" mantiveram o
 prefixo "_al_" para preservar a sua identidade. E justamente uma das maiores
@@ -67,9 +68,9 @@ e precisos, como o sistema de numeração posicional usado atualmente.
 A invenção do número zero, como conceito matemático, e o conceito de `null` ou
 nulo em linguagens de programação têm uma relação interessante. Assim como o
 número zero foi introduzido na matemática para representar uma quantidade vazia
-ou a ausência de algo, o conceito de "null", em linguagens de programação,
+ou a ausência de algo, o conceito de `null`, em linguagens de programação,
 serve para representar uma referência vazia ou a ausência de um valor válido.
-Tanto o zero quanto o "null" desempenham a função de indicar a ausência de
+Tanto o zero quanto o `null` desempenham a função de indicar a ausência de
 algo, mas em contextos diferentes.
 
 Diferentemente do zero, a possibilidade de referenciar um endereço inválido,
@@ -97,20 +98,20 @@ considerando sistemas com uma quantidade de funcionalidade suficiente para que
 decida definir alguma arquitetura. Para responder essa pergunta, primeiro
 precisamos definir o que seria a arquitetura de um software.
 
-A análise da arquitetura de um software é por natureza multi-dimensional e deve
-considerar fatores como estrutura, características arquiteturais, principios de
+A análise da arquitetura de um software é por natureza multidimensional e deve
+considerar fatores como estrutura, características arquiteturais, princípios de
 desenho e decisões arquiteturais[^4]. A dimensão "_estrutura_" refere-se ao
 tipo de [estilo
 arquitetural](https://notes.clementino.me/blog/estilos-arquiteturais/)
 implementado, ou seja, como os módulos (funções, classes, pacotes e etc.) de um
 sistema devem estar organizados. Em suma, para fins da discussão proposta nesse
-artigo, podeos considerar a _arquitetura de um software como o conjunto de
-regras que governa a orgamização dos seus módulos.
+artigo, podemos considerar a _arquitetura de um software como o conjunto de
+regras que governa a organização dos seus módulos.
 
-Agora que estaos alinhados com a definição de arquitetura de software, podemos
+Agora que estamos alinhados com a definição de arquitetura de software, podemos
 retornar com a reflexão feita no inicio dessa seção sobre se todo sistema de
-uma uma arquitetura, ou refraseando após defirmos o conceito de arquiteura de
-software, se para todo sistema é possível determinar um conjunto finito de
+uma uma arquitetura, ou refraseando, após definirmos o conceito de arquitetura
+de software, se para todo sistema é possível determinar um conjunto finito de
 regras logicamente interconectadas que determinam a sua organização?! No limite
 a resposta é não! 
 
@@ -127,12 +128,12 @@ foi cunhado por Brian Foote e Joseph Yoder em seu artigo[^3], descrevendo um
 sistema em que é difícil identificar qualquer tipo de estilo arquitetural
 claro. 
 
->"(...) Big Ball of Mud  é uma selva de código espaguete, estruturada de forma
+>(...) Big Ball of Mud  é uma selva de código espaguete, estruturada de forma
 >aleatória, (...), desleixada, (...). Esses sistemas mostram sinais
 >inconfundíveis de crescimento desordenado (...) . As informações são
 >compartilhadas de forma promíscua entre elementos (...) do sistema, muitas
 >vezes a ponto de quase todas as informações importantes se tornarem globais ou
->duplicadas."
+>duplicadas.
 
 Um sistema com as características de "Big Ball of Mud" geralmente resulta em
 código desorganizado, com dependências entrelaçadas, falta de modularidade e
@@ -144,17 +145,87 @@ e a correção de erros.
 
 ## Como evitar o anti-padrão
 
+No artigo que dar origem ao termo "_Big Ball of Mud_", os autores, ao avaliaram
+os motivos da ocorrência do anti-padrão, relatam que _"(..) A estrutura geral
+do sistema pode nunca ter sido bem definida. Se tiver sido, pode ter se
+desgastado de forma irreconhecível"_. A partir do que os autores afirma, o
+anti-padrão acontece para os projetos em que arquitetura nunca foi uma
+preocupação, ou se foi, as regras não foram respeitadas ocorrendo o fenômeno
+conhecido como _erosão arquitetural_.
+
+A fim de mitigar os efeitos da erosão de um arquitetural, o primeiro passo é a
+mudança de mentalidade de todos envolvidos no desenvolvimento do software. Essa
+mudança de comportamento pode partir da premissa que _"apenas funcionar não
+deveria ser o suficiente"_. Na prática, cada alteração no sistema deveria se
+realizada de forma estratégica e não de uma maneira tática[^5].
+
+Na abordagem tática, seu foco principal é fazer com que algo funcione, como um
+novo recurso ou uma correção de bug. Por outro lado, ao atuar na evolução do
+sistema de forma estratégica, você não deve pensar em "código funcional" como
+seu objetivo principal, embora, é claro, seu código deva funcionar. O objetivo
+deve ser produzir um ótimo design, que também funcione[^5]. Porém, apenas a
+mudança de comportamento pode não ser suficiente.
+
+Em alguns cenários talvez seja mais efetivo automatizar a detecção de anomalias
+arquiteturais. Para projetos que utilizam Java e outras linguagens
+correlacionadas existe a biblioteca chamada
+[ArchUnit](https://www.archunit.org/). Ao utilizá-la como um teste no projeto
+de software, é possível garantir que a arquitetura definida seja continuamente
+seguida, mesmo que as pessoas envolvidas no projeto não façam mais parte dele.
+Dessa forma, a biblioteca auxilia na manutenção do estilo arquitetural,
+promovendo a consistência e coerência ao longo do tempo. Além disso, a
+_ArchUnit_ possibilita a detecção automática de violações arquiteturais,
+permitindo uma rápida identificação e correção de problemas antes que eles se
+tornem críticos. Isso resulta em um código mais limpo, modular e de fácil
+manutenção. A seguir temos o exemplo de um teste que valida que as classes de
+serviço só tenham dependência com outras classes de serviço ou aquelas de
+camada de acesso à dados.
+
+
+```java
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
+
+import com.tngtech.archunit.core.domain.JavaClasses;
+import com.tngtech.archunit.core.domain.JavaClass;
+import com.tngtech.archunit.core.importer.ClassFileImporter;
+import com.tngtech.archunit.lang.ArchRule;
+import org.junit.Test;
+
+public class ArchUnitTest {
+
+    private final JavaClasses classes = new ClassFileImporter()
+            .importPackages("com.example.project");
+
+    @Test
+    public void ensureDependencyRules() {
+        // Verifica regras de dependências entre classes
+        ArchRule rule = classes()
+                .should()
+                .dependOnClassesThat()
+                .resideInAnyPackage("..service..", "..repository..")
+                .because("Services devem depender apenas de outras classes de serviço ou repositórios");
+
+        rule.check(classes);
+    }
+
+}
+```
+
+## Conclusão 
+
 Assim como o número zero se tornou essencial para a matemática, a adoção de uma
 arquitetura de software eficiente é fundamental para um sistema robusto e
-sustentável. A criação de padrões de projeto, separação de responsabilidades e
-outras práticas arquiteturais ajudam a evitar o "Big Ball of Mud" e garantem um
-código mais organizado, reutilizável e de fácil manutenção.
+sustentável. O uso de padrões de projeto, separação de responsabilidades e
+outras práticas arquiteturais ajudam a evitar o "_Big Ball of Mud_" e garantem
+um código mais organizado, reutilizável e de fácil manutenção.
 
-Portanto, a relação entre a invenção do zero na matemática e o conceito de "Big
-Ball of Mud" na arquitetura de software é a importância de estabelecer
-estruturas e regras para tornar sistemas complexos mais compreensíveis e
-manejáveis. Enquanto o zero facilita operações matemáticas, a adoção de uma
-arquitetura clara facilita a desenvolvimento de software de qualidade.
+Um anti-padrão como o "_Big Ball of Mud_" existe justamente para nos mostrar a
+importância de estabelecer estruturas e regras para tornar sistemas complexos
+mais compreensíveis e manejáveis. Enquanto o zero facilita operações
+matemáticas, a adoção de uma arquitetura clara facilita a desenvolvimento de
+software de qualidade. Ter uma abordagem estratégica durante a evolução do
+projeto e automatizar a identificação de anomalias podem evitar a erosão da
+arquitetura do seu projeto.
 
 [^1]:
     O Homem que Calculava.
@@ -171,4 +242,8 @@ arquitetura clara facilita a desenvolvimento de software de qualidade.
 [^4]:
     Richards, Mark, and Neal Ford. Fundamentals of Software Architecture: An
     Engineering Approach. O'Reilly Media, 2020.
+
+[^5]:
+    Ousterhout, J. K. (n.d.). A Philosophy of Software Design. United
+    States: Yaknyam Press.
 
