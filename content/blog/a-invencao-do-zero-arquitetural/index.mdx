@@ -67,10 +67,10 @@ e precisos, como o sistema de numeração posicional usado atualmente.
 A invenção do número zero, como conceito matemático, e o conceito de `null` ou
 nulo em linguagens de programação têm uma relação interessante. Assim como o
 número zero foi introduzido na matemática para representar uma quantidade vazia
-ou a ausência de algo, o conceito de "null", em linguagens de programação, serve
-para representar uma referência vazia ou a ausência de um valor válido. Tanto o
-zero quanto o "null" desempenham a função de indicar a ausência de algo, mas em
-contextos diferentes.
+ou a ausência de algo, o conceito de "null", em linguagens de programação,
+serve para representar uma referência vazia ou a ausência de um valor válido.
+Tanto o zero quanto o "null" desempenham a função de indicar a ausência de
+algo, mas em contextos diferentes.
 
 Diferentemente do zero, a possibilidade de referenciar um endereço inválido,
 custou muito caro. O cientista da computação Tony Hoare, em sua palestra _"Null
@@ -80,8 +80,8 @@ que custou bilhões de dólares em depuração de código e manutenção de sist
 
 O ponto principal da palestra é que o uso de referências nulas torna o código
 mais propenso a erros, pois muitas vezes os desenvolvedores esquecem de
-verificar se uma referência é nula antes de usá-la, o que pode levar a falhas no
-programa. A exceção `NullPointerException` manda lembranças.
+verificar se uma referência é nula antes de usá-la, o que pode levar a falhas
+no programa. A exceção `NullPointerException` manda lembranças.
 
 Se por um lado a invenção do zero trouxe vantagens significativas para a
 matemática, o conceito de referências nulas em linguagens de programação tem
@@ -90,34 +90,57 @@ causados pela sua utilização inadequada.
 
 #### Na arquitetura de software
 
-Nesse momento do texto, gostaria que você fizesse uma reflexão: para todo
-software existe uma arquitetura associada?! Para responder essa pergunta,
-primeiro precisamos definir o que seria a arquitetura de um software.
+Antes de aprofundarmos a discussão do quer seria o zero ou ausência
+arquitetural, gostaria que você refletisse sob a seguinte questão: todo
+sistema/software possui uma arquitetura associada?! Naturalmente estamos
+considerando sistemas com uma quantidade de funcionalidade suficiente para que
+decida definir alguma arquitetura. Para responder essa pergunta, primeiro
+precisamos definir o que seria a arquitetura de um software.
 
-Na matemática, o número zero desempenha um papel fundamental na organização e
-estruturação dos sistemas numéricos. Da mesma forma, a arquitetura de software
-visa estabelecer regras e estruturas para organizar o código de forma clara,
-facilitando sua compreensão, manutenção e evolução.
+A análise da arquitetura de um software é por natureza multi-dimensional e deve
+considerar fatores como estrutura, características arquiteturais, principios de
+desenho e decisões arquiteturais[^4]. A dimensão "_estrutura_" refere-se ao
+tipo de [estilo
+arquitetural](https://notes.clementino.me/blog/estilos-arquiteturais/)
+implementado, ou seja, como os módulos (funções, classes, pacotes e etc.) de um
+sistema devem estar organizados. Em suma, para fins da discussão proposta nesse
+artigo, podeos considerar a _arquitetura de um software como o conjunto de
+regras que governa a orgamização dos seus módulos.
+
+Agora que estaos alinhados com a definição de arquitetura de software, podemos
+retornar com a reflexão feita no inicio dessa seção sobre se todo sistema de
+uma uma arquitetura, ou refraseando após defirmos o conceito de arquiteura de
+software, se para todo sistema é possível determinar um conjunto finito de
+regras logicamente interconectadas que determinam a sua organização?! No limite
+a resposta é não! 
+
+Assim como na matemática a ausência do zero na matemática dificultaria a
+compreensão e execução de operações, a falta de  uma arquitetura clara e bem
+definida em um sistema de software pode levar a diferentes problemas. Tanto que
+esse tipo de cenário recebeu um nome "_Big Ball of Mud_".
 
 ## O anti-padrão: Big Ball of Mud
 
-O conceito de _"Big Ball of Mud"_ se refere a um tipo de arquitetura de software
-em que essas regras e estruturas não estão presentes ou são negligenciadas. Esse
-termo foi cunhado por Brian Foote e Joseph Yoder em seu artigo[^3], descrevendo
-um sistema em que é difícil identificar qualquer tipo de estilo arquitetural
-claro.
+O conceito de _"Big Ball of Mud"_ se refere a um estilo arquitetural em que
+essas regras e estruturas não estão presentes ou são negligenciadas. Esse termo
+foi cunhado por Brian Foote e Joseph Yoder em seu artigo[^3], descrevendo um
+sistema em que é difícil identificar qualquer tipo de estilo arquitetural
+claro. 
 
-Podemos fazer uma relação entre o "Big Ball of Mud" e a ausência do número
-zero, em termos de organização e estruturação. Assim como a ausência do zero na
-matemática dificultaria a compreensão e execução de operações, a falta de uma
-arquitetura clara e bem definida em um sistema de software pode levar a
-problemas semelhantes.
+>"(...) Big Ball of Mud  é uma selva de código espaguete, estruturada de forma
+>aleatória, (...), desleixada, (...). Esses sistemas mostram sinais
+>inconfundíveis de crescimento desordenado (...) . As informações são
+>compartilhadas de forma promíscua entre elementos (...) do sistema, muitas
+>vezes a ponto de quase todas as informações importantes se tornarem globais ou
+>duplicadas."
 
-Um sistema "Big Ball of Mud" geralmente resulta em código desorganizado, com
-dependências entrelaçadas, falta de modularidade e reutilização de código. Isso
-impacta diretamente na manutenção, escalabilidade e evolução do sistema. O
-código torna-se difícil de ler e entender, dificultando a detecção de
-problemas, a implementação de novas funcionalidades e a correção de erros.
+Um sistema com as características de "Big Ball of Mud" geralmente resulta em
+código desorganizado, com dependências entrelaçadas, falta de modularidade e
+reutilização de código. Isso impacta diretamente na manutenção, escalabilidade
+e evolução do sistema. O código torna-se difícil de ler e entender,
+dificultando a detecção de problemas, a implementação de novas funcionalidades
+e a correção de erros.
+
 
 ## Como evitar o anti-padrão
 
@@ -144,3 +167,8 @@ arquitetura clara facilita a desenvolvimento de software de qualidade.
 [^3]:
     Big Ball of Mud.
     https://wiki.c2.com/?BigBallOfMud
+
+[^4]:
+    Richards, Mark, and Neal Ford. Fundamentals of Software Architecture: An
+    Engineering Approach. O'Reilly Media, 2020.
+
