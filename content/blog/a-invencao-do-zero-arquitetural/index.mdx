@@ -1,0 +1,249 @@
+---
+title: "A Invenção do Zero (Arquitetural)"
+date: "2024-01-30"
+description: "'Big Ball of Mud' e os problemas da ausência de um estilo arquitetural"
+featuredImage: feature.jpg
+---
+
+## Os Homens que Calculavam
+
+A contribuição dos árabes para a Matemática foi de grande importância e
+influência ao longo da história. Durante a Idade Média, enquanto a Europa
+estava em um período de estagnação em relação ao desenvolvimento matemático, os
+árabes tiveram um papel fundamental na preservação, tradução e expansão do
+conhecimento matemático greco-romano, além de introduzir novos conceitos e
+técnicas matemáticas.
+
+Para entendermos a abrangência dessa contribuição basta entendermos a
+etimologia de palavras que utilizamos cotidianamente. A palavra "_al_" no
+idioma árabe é um artigo definido, equivalente ao "o" ou "a" no português.
+Quando os árabes dominaram partes da Península Ibérica, eles trouxeram consigo
+sua língua e cultura. Muitas palavras árabes foram gradualmente incorporadas ao
+português, especialmente no vocabulário relacionado aos campos da agricultura,
+comércio, ciência e tecnologia. Dessa forma, palavras como "_algoritmo_",
+"_álgebra_" e "_algarismo_" mantiveram o prefixo "al" para preservar sua
+identidade. Um livro muito interessante que conta a relação da cultura árabe
+com a Matemática é _O Homem que Calculava_[^1] de Malba Tahan, pseudônimo do
+escritor brasileiro _Júlio César de Melo e Sousa_.
+
+![Capa do Livro O Homem que Calculava de Malba Tahan](./capa-o-homem-que-calculava.webp)
+
+Uma das maiores contribuições árabes no campo da matemática foi a introdução
+dos algarismos no sistema decimal. Esses algarismos hoje são amplamente usados
+em todo o mundo e formam a base do nosso atual sistema numérico. Dentre os
+algarismos propostos pelos árabes, um em especial teve um papel fundamental,
+aquele ao qual damos o nome de "zero".
+
+## A Invenção do Zero
+
+#### Na Matemática
+
+A invenção do zero representa um marco fundamental na história da matemática e
+um dos avanços mais significativos da humanidade. Embora seja difícil
+identificar o exato momento em que o zero foi inventado, sabemos que essa ideia
+revolucionária começou a ser desenvolvida por civilizações antigas, como os
+maias, babilônios e hindus.
+
+Apesar de não existir um consenso sobre a origem do conceito de zero, alguns
+historiadores definem que foi na Índia, por volta do século V d.C., que o
+conceito começou a ser formalizado e utilizado com mais frequência. Os
+matemáticos indianos perceberam que ao adicionar um símbolo para representar
+uma quantidade vazia ou a ausência de algo, era possível transformar
+completamente a forma como os números eram manipulados. 
+
+Não obstante a sua origem no subcontinente indiano, a importância do zero na
+matemática foi difundida pelos árabes, que depois de sua expansão pelo Oriente,
+trouxeram esse conceito para o Ocidente. Foi na cultura árabe que o termo
+_al-zéro_ surgiu, que posteriormente se transformou na palavra “_zero_” que
+usamos hoje.
+
+A incorporação do número zero na matemática permitiu um grande avanço nas
+operações numéricas. Antes da sua invenção, lidar com quantidades nulas ou a
+realização de cálculos complexos era extremamente difícil. Com a introdução do
+zero, os matemáticos puderam desenvolver sistemas de numeração mais eficientes
+e precisos, como o sistema posicional usado atualmente.
+
+
+#### Nas Linguagens de Programação
+
+A invenção do número zero, como conceito matemático, e o conceito de `null` ou
+nulo em linguagens de programação têm uma relação interessante. Assim como o
+número zero foi introduzido na matemática para representar uma quantidade vazia
+ou a ausência de algo, o conceito de `nulo`, em linguagens de programação,
+serve para representar uma referência vazia ou a ausência de um valor. Tanto o
+zero quanto o `null` desempenham a função de indicar a ausência de algo, mas em
+contextos diferentes.
+
+Diferentemente do zero, a possibilidade de referenciar um endereço inválido
+custou muito caro (literalmente). O cientista da computação Tony Hoare, em sua
+palestra [Null References: The Billion Dollar
+Mistake](https://youtu.be/ybrQvs4x0Ps)[^2], ressalta que as referências nulas
+em linguagens de programação podem levar a erros e comportamentos indesejados,
+algo que vêm nos custando bilhões de dólares em depuração de código e
+manutenção de sistemas.
+
+O ponto principal da palestra é que o uso de referências nulas torna o código
+mais propenso a erros, pois muitas vezes os desenvolvedores esquecem de
+verificar se uma referência é nula antes de usá-la, o que pode levar a falhas
+no programa. O `NullPointerException` nos manda lembranças.
+
+Se por um lado a invenção do zero trouxe vantagens significativas para a
+matemática, o conceito de referências nulas em linguagens de programação tem
+sido alvo de críticas por seus possíveis efeitos negativos e potenciais erros
+causados pela sua utilização inadequada.
+
+#### Na Arquitetura de Software
+
+Antes de aprofundarmos a discussão sobre o que seria um zero ou ausência
+arquitetural, gostaria que você refletisse sobre a seguinte questão: *todo
+sistema/software possui uma arquitetura associada*? Naturalmente, estamos
+considerando sistemas com uma quantidade de funcionalidades suficiente para que
+se decida definir alguma arquitetura. Só é possível responder a essa pergunta, a
+partir do entendimento do que seria a arquitetura de um software.
+
+A análise da arquitetura de um software é, por natureza, multidimensional. Nesse
+sentido, devemos considerar fatores como _estrutura, características
+arquiteturais, princípios de design e decisões arquiteturais_[^4]. A dimensão
+"_estrutura_" refere-se ao tipo de estilo arquitetural implementado, ou seja, como
+os módulos (funções, classes, pacotes, etc.) de um sistema devem estar
+organizados. Em resumo, para fins da discussão proposta neste artigo, podemos
+considerar a arquitetura de um software como o conjunto de regras que governa a
+organização de seus módulos.
+
+Agora que estamos alinhados com a definição de arquitetura de software, podemos
+retornar à reflexão feita no início desta seção: será que todo sistema possui
+uma arquitetura, ou, em outras palavras, após definirmos o conceito de
+arquitetura de software, é possível determinar um conjunto finito de regras
+logicamente interconectadas que determinam sua organização? Em última
+instância, a resposta é não!
+
+Na matemática, a ausência do zero dificulta a compreensão e execução de
+operações. Da mesma forma, a falta de uma arquitetura clara e bem definida em
+um sistema de software pode levar a diferentes problemas. Tanto que esse tipo
+de cenário recebeu o nome de "_Big Ball of Mud_".
+
+## O Anti-Padrão: Big Ball of Mud
+
+O conceito de _"Big Ball of Mud"_ se refere a um estilo arquitetural em que
+regras e estruturas não estão presentes ou são negligenciadas. Esse termo foi
+cunhado por Brian Foote e Joseph Yoder em seu artigo[^3], descrevendo um
+sistema em que é difícil identificar qualquer tipo de estilo arquitetônico
+claro.
+
+>(...) Big Ball of Mud  é uma selva de código espaguete, estruturado de forma
+>aleatória, (...), desleixada, (...). Esses sistemas mostram sinais
+>inconfundíveis de crescimento desordenado (...) . As informações são
+>compartilhadas de forma promíscua entre os elementos (...) do sistema, muitas
+>vezes a ponto de quase todas as informações importantes se tornarem globais ou
+>duplicadas.
+
+Um sistema com as características de "_Big Ball of Mud_" geralmente resulta em
+código desorganizado, com dependências entrelaçadas, falta de modularidade e
+ausência de reutilização de código. Isso impacta diretamente na manutenção,
+escalabilidade e evolução do sistema. O código torna-se difícil de ler e
+entender, dificultando a detecção de problemas, a implementação de novas
+funcionalidades e a correção de erros.
+
+## Mitigando a Erosão Arquitetural
+
+No artigo que deu origem ao termo "_Big Ball of Mud_", os autores, ao avaliarem
+os motivos da ocorrência do anti-padrão, relatam que _"(..) A estrutura geral
+do sistema pode nunca ter sido bem definida. Se tiver sido, pode ter se
+desgastado de forma irreconhecível"_. A partir do que os autores afirmam, o
+anti-padrão acontece em projetos nos quais a arquitetura nunca foi uma
+preocupação, ou se foi, as regras não foram respeitadas, ocorrendo o fenômeno
+conhecido como _erosão arquitetural_.
+
+Com o intuito de mitigar os efeitos da erosão de um arquitetural, o primeiro
+passo consiste na mudança de mentalidade de todos envolvidos no desenvolvimento
+do software. Essa mudança de comportamento pode partir da premissa que _"apenas
+funcionar não deveria ser o suficiente"_. Na prática, cada alteração no sistema
+deveria se realizada de forma estratégica e não de uma maneira tática[^5].
+
+Na abordagem tática, o foco está em fazer com que algo funcione, como um novo
+recurso ou uma correção de bug. Por outro lado, ao atuar na evolução do sistema
+de forma estratégica, você não deve pensar apenas no "código funcional" como
+seu objetivo principal, embora, é claro, seu código deva funcionar. O objetivo
+deve ser produzir um ótimo design, que também funcione[^5]. Porém, em
+determinados contextos, apenas a mudança de comportamento pode não ser
+suficiente.
+
+Em alguns projetos, é mais efetivo automatizar a detecção de anomalias
+arquiteturais. No caso de bases de código escritas em Java, ou outras linguagens
+correlatas, existe uma biblioteca chamada [ArchUnit](https://www.archunit.org/).
+Ao utilizá-la, por meio de um teste no projeto, é possível mitigar desvios na
+arquitetura. Nesse sentido, esse tipo de biblioteca auxilia na manutenção do
+estilo arquitetural, promovendo a consistência e coerência ao longo do tempo.
+
+Além disso, adotar o _ArchUnit_ nos projetos possibilita a detecção automática
+de violações arquiteturais, permitindo uma rápida identificação e correção de
+problemas antes que eles se tornem críticos. Isso resulta em um código mais
+limpo, modular e de fácil manutenção. A seguir, temos um exemplo de um teste
+que valida que as classes de serviço só tenham dependência com outras classes
+de serviço ou com aquelas da camada de acesso aos dados (_repository_).
+
+```java
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
+
+import com.tngtech.archunit.core.domain.JavaClasses;
+import com.tngtech.archunit.core.domain.JavaClass;
+import com.tngtech.archunit.core.importer.ClassFileImporter;
+import com.tngtech.archunit.lang.ArchRule;
+import org.junit.Test;
+
+public class ArchUnitTest {
+
+    private final JavaClasses classes = new ClassFileImporter()
+            .importPackages("com.example.project");
+
+    @Test
+    public void ensureDependencyRules() {
+        // Verifica regras de dependências entre classes
+        ArchRule rule = classes()
+                .should()
+                .dependOnClassesThat()
+                .resideInAnyPackage("..service..", "..repository..")
+                .because("Services devem depender apenas de outras classes de serviço ou repositórios");
+
+        rule.check(classes);
+    }
+
+}
+```
+
+## Conclusão 
+
+Assim como o número zero se tornou essencial para a matemática, a adoção de uma
+arquitetura de software eficiente é fundamental para um sistema robusto e
+sustentável. O uso de padrões de projeto, separação de responsabilidades e
+outras práticas arquiteturais ajudam a evitar o "_Big Ball of Mud_" e garantem
+um código mais organizado, reutilizável e de fácil manutenção.
+
+Um anti-padrão como o "_Big Ball of Mud_" existe justamente para nos mostrar a
+importância de estabelecer estruturas e regras para tornar sistemas complexos
+mais compreensíveis e manejáveis. Assim como o zero facilita operações
+matemáticas, a adoção de uma arquitetura clara facilita o desenvolvimento de
+software de qualidade. Ter uma abordagem estratégica durante a evolução do
+projeto e automatizar a identificação de anomalias pode evitar a erosão da
+arquitetura do seu projeto.
+
+[^1]:
+    O Homem que Calculava.
+    https://pt.wikipedia.org/wiki/O_Homem_que_Calculava
+
+[^2]:
+    Null References: The Billion Dollar Mistake.
+    https://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mistake-Tony-Hoare/
+
+[^3]:
+    Big Ball of Mud.
+    https://wiki.c2.com/?BigBallOfMud
+
+[^4]:
+    Richards, Mark, and Neal Ford. Fundamentals of Software Architecture: An
+    Engineering Approach. O'Reilly Media, 2020.
+
+[^5]:
+    Ousterhout, J. K. (n.d.). A Philosophy of Software Design. United
+    States: Yaknyam Press.
+
