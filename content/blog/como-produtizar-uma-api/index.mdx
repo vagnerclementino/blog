@@ -11,9 +11,11 @@ As APIs (Application Programming Interfaces) desempenham um papel crucial no
 desenvolvimento de software moderno. Elas permitem a comunicação entre
 diferentes sistemas, possibilitando a integração e a interoperabilidade. No
 entanto, para que uma API tenha sucesso, ela deve ser tratada como um produto.
-Este artigo explora como desenhar uma API como produto, utilizando o ciclo de
-vida proposto em nossa recente apresentação na conferência de desenvolvimento
-de software.
+Este artigo explora como projetar uma API como produto, partindo da premissa de
+que uma API deve ser pensada para resolver um determinado problema, assim como
+qualquer produto. Portanto, a disponibilização de uma API deve seguir um ciclo
+de vida. Apresentamos algumas bibliotecas, frameworks e ferramentas que podem
+ajudá-lo durante esse processo.
 
 ## Os acrônimos e suas limitações
 
@@ -262,11 +264,52 @@ seu negócio.
 
 ## Agradecimentos
 
-
+Este artigo foi escrito em conjunto com [Gabriella
+Mara](https://linktr.ee/gmarap). Agradecemos muito pela parceria de sempre.
+Também gostaríamos de agradecer a [Marcelo
+Lima](https://www.linkedin.com/in/mgdlima/), um dos principais promotores da
+ideia de um portal de APIs públicas na Hotmart, que nos ajudou com o
+desenvolvimento de software. Por fim, gostariamos de agrader ao [Danilo
+Amaral](https://www.linkedin.com/in/it0dan/) cuja apresentação sobre o ciclod
+de vida de APIs  foi utilizada como base para o ciclo descrito neste artigo.
 ---
 
 ## Referências de Ferramentas
 
+Nessa seção listamos algumas ferramentas que podem te ajudar no processo de
+desenho, implementaçã e publicação de APIs. Elas foram organizadas conforme as
+etapas do Ciclo de Vida de uma API descritas nesse artigo. Essa lista não se
+esgota em si mesma. Por favor, utilize os comentários para sugerir outras
+ferramentas que você conhece ou utlizada. 
+## Design
+
+| Nome da ferramenta | Nome da etapa do ciclo de vida | URL da ferramenta |
+| --- | --- | --- |
+| Swagger | Design de APIs | https://swagger.io/ |
+| RAML | Design de APIs | https://raml.org/ |
+| API Blueprint | Design de APIs | https://apiblueprint.org/ |
+| Postman | Teste e documentação de APIs | https://www.postman.com/ |
+| Insomnia | Teste e documentação de APIs | https://insomnia.rest/ |
+| Stoplight | Design, documentação e testes de APIs | https://stoplight.io/ |
+| Lucybot | Teste e documentação de APIs | https://lucybot.com/ |
+| Apiary | Design, documentação e testes de APIs | https://apiary.io/ |
+| Mulesoft Anypoint Platform | Design, documentação e testes de APIs |
+https://www.mulesoft.com/platform/api |
+| Apicurio | Design, documentação e testes de APIs | https://www.apicur.io/ |
+| Node.js | Implementação de APIs | https://nodejs.org/ |
+| Express | Implementação de APIs | https://expressjs.com/ |
+| Spring Boot | Implementação de APIs | https://spring.io/projects/spring-boot
+|
+| Django | Implementação de APIs | https://www.djangoproject.com/ |
+| Ruby on Rails | Implementação de APIs | https://rubyonrails.org/ |
+| ASP.NET Core | Implementação de APIs |
+https://dotnet.microsoft.com/apps/aspnet |
+| LoopBack | Implementação de APIs | https://loopback.io/ |
+| Restify | Implementação de APIs | http://restify.com/ |
+| Hapi | Implementação de APIs | https://hapi.dev/ |
+| Koa | Implementação de APIs | https://koajs.com/ |
+| NestJS | Implementação de APIs | https://nestjs.com/ |
+| LoopBack 4 | Implementação de APIs | https://loopback.io/ |
 
 | Nome | Etapa do Ciclo de Vida | Link |
 |------|------------------------|------|
@@ -276,6 +319,7 @@ seu negócio.
 | Prism | Design | https://stoplight.io/open-source/prism/ |
 | ReDoc | Design | https://github.com/Redocly/redoc |
 | Postman | Desenvolvimento | https://www.postman.com/ |
+| Newman | Testes | https://learning.postman.com/docs/collections/using-newman-cli/command-line-integration-with-newman/ |
 | Insomnia | Desenvolvimento | https://insomnia.rest/ |
 | OpenAPI Generator | Desenvolvimento | https://openapi-generator.tech/ |
 | Ngrok | Desenvolvimento | https://ngrok.com/ |
@@ -287,14 +331,39 @@ seu negócio.
 | Apigee | Publicação | https://cloud.google.com/apigee |
 | AWS API Gateway | Publicação | https://aws.amazon.com/api-gateway/ |
 | Kong API Gateway | Publicação | https://konghq.com/kong/ |
+| Azure API Management | Publicação | https://azure.microsoft.com/en-us/products/api-management/|
 | SwaggerHub | Publicação | https://swagger.io/tools/swaggerhub/ |
 | Spotify Developer Portal | Publicação | https://developer.spotify.com/ |
 | Hotmart Developer Portal | Publicação | https://developers.hotmart.com/ |
+| Apiary | Publicação | https://apiary.io/|
 | API.Guru | Publicação | https://api.guru/ |
 | Prometheus | Monitoramento | https://prometheus.io/ |
 | Grafana | Monitoramento | https://grafana.com/ |
 | Stainless | Monitoramento | https://stainlessapi.com/ |
 | Uptime Robot | Monitoramento | https://uptimerobot.com/ |
+| API Blueprint | Desing | https://apiblueprint.org |
+| Runscope            | Monitoramento                  | https://www.runscope.com/ |
+| Pingdom             | Monitoramento                  | https://www.pingdom.com/ |
+| New Relic           | Monitoramento                  | https://newrelic.com/|
+| RAML | Design de APIs | https://raml.org/ |
+| API Blueprint | Design de APIs | https://apiblueprint.org/ |
+| Stoplight | Design, documentação e testes de APIs | https://stoplight.io/ |
+| Lucybot | Teste e documentação de APIs | https://lucybot.com/ |
+| Mulesoft Anypoint Platform | Design, documentação e testes de APIs |
+https://www.mulesoft.com/platform/api |
+| Apicurio | Design, documentação e testes de APIs | https://www.apicur.io/ |
+| Node.js | Implementação de APIs | https://nodejs.org/ |
+| Express | Implementação de APIs | https://expressjs.com/ |
+| Spring Boot | Implementação de APIs | https://spring.io/projects/spring-boot|
+| Django | Implementação de APIs | https://www.djangoproject.com/ |
+| Ruby on Rails | Implementação de APIs | https://rubyonrails.org/ |
+| ASP.NET Core | Implementação de APIs | https://dotnet.microsoft.com/apps/aspnet |
+| LoopBack | Implementação de APIs | https://loopback.io/ |
+| Restify | Implementação de APIs | http://restify.com/ |
+| Hapi | Implementação de APIs | https://hapi.dev/ |
+| Koa | Implementação de APIs | https://koajs.com/ |
+| NestJS | Implementação de APIs | https://nestjs.com/ |
+| LoopBack 4 | Implementação de APIs | https://loopback.io/ |
 
 [^1]:
     API.
