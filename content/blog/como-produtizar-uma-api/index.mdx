@@ -1,52 +1,48 @@
 ---
 title: "Como produtizar uma API"
 date: "2024-06-01"
-description: "Um guia prático sobre desenhar uma API como um produto"
+description: "Um guia prático sobre como projetar uma API como um produto"
 featuredImage: feature.jpg
 ---
 
 ## Introdução
 
-As APIs (Application Programming Interfaces) desempenham um papel crucial no
+As APIs (_Application Programming Interfaces_) desempenham um papel crucial no
 desenvolvimento de software moderno. Elas permitem a comunicação entre
 diferentes sistemas, possibilitando a integração e a interoperabilidade. No
-entanto, para que uma API tenha sucesso, ela deve ser tratada como um produto.
-Este artigo explora como projetar uma API como produto, partindo da premissa de
-que uma API deve ser pensada para resolver um determinado problema, assim como
-qualquer produto. Portanto, a disponibilização de uma API deve seguir um ciclo
-de vida. Apresentamos algumas bibliotecas, frameworks e ferramentas que podem
-ajudá-lo durante esse processo.
+entanto, para que uma API tenha sucesso, ela deve ser pensada, desenhada e
+desenvolvida como um produto. Este artigo explora como projetar uma API como
+produto, partindo da premissa de que uma API deve ser pensada para resolver um
+determinado problema, assim como qualquer produto. Nessa linha, por analogia, a
+disponibilização de uma API deve seguir um ciclo de vida, da mesma forma que
+fazemos para um produto, seja ele físico ou digital. 
+
+Para te ajudar nessa jornada de uma API como produto, serão apresentadas
+algumas bibliotecas, frameworks e ferramentas que podem auxiliá-lo durante esse
+processo.
 
 ## Os acrônimos e suas limitações
 
 Não é novidade que trabalhar com o desenvolvimento de software é conviver com
-uma constante "sopa de letrinhas". Quando se fala de desenho, implementação e
-manutenção de APIs, termos como _REST_, _SOAP_, _HTTP_, _JSON_, _XML_, entre
-outros, são comuns e fazem parte do dia a dia de quem trabalha com tecnologia.
+uma constante _"sopa de letrinhas"_. Quando falamos da disciplina de desenho,
+implementação e manutenção de APIs, termos como _REST_, _SOAP_, _HTTP_, _JSON_,
+_XML_, entre outros, fazem parte do vocabulário básico de quem trabalha com
+essa tecnologia.
 
 ![Um prato de sopa em que os macarrões formam a palavra API](./api.png)
 
-Por um lado, o uso de acrônimos facilita a comunicação, mas por outro lado, seu
-excesso pode nos afastar da definição do conceito. Em uma definição "formal",
-uma API "é uma maneira para dois ou mais programas de computador ou
-Componentes se comunicarem entre si."[^1]. Contudo, em uma definição mais
-ampla, uma API seria um código capaz de resolver um determinado problema,
-entregue por meio de uma abstração simplificada e utilizável de forma
-programável.
+Se por um lado o uso de acrônimos facilita a comunicação, por outro, seu
+excesso pode nos afastar da concreta definição de um determinal conceito.
+Podemos definir uma API "é uma maneira para dois ou mais programas de
+computador ou Componentes se comunicarem entre si."[^1]. Contudo, em uma
+definição mais ampla, uma API seria um código capaz de resolver um determinado
+problema (_application_), entregue por meio de uma abstração simplificada e
+utilizável (_interface_) de forma programável (_programming_).
 
 ![Imagem representando uma construção grega em que as palavras "Application
 Programming Interface" estão escritas em três colunas para dar uma ideia de que
 cada palavra do termo "API" deve ser considerada de forma equivalente no
 entendimento dessa tecnologia](./api-columns.png)
-
-Uma API (Application Programming Interface) é um conjunto de definições e
-protocolos que permite a comunicação entre diferentes sistemas de software. As
-APIs permitem que os desenvolvedores acessem as funcionalidades de um serviço
-ou aplicação sem precisar entender sua implementação interna. 
-
-![Imagem de um iceberg em que no topo temos a sigla API, para dar a ideia de
-que uma API, por definição, deveria ser exposto sempre o mínimo
-possível](./iceberg.png)
 
 As APIs são a tecnologia mais poderosa disponível atualmente, sendo mais
 relevantes do que ferramentas derivadas da Inteligência Artificial (IA). Não dá
@@ -56,6 +52,10 @@ artigo foram geradas usando uma ferramenta de IA, porém através de uma API.
 Nesse sentido, entendemos que uma API é uma tecnologia complementar e
 fundamental para o uso e adoção das soluções de inteligência artificial.
 
+![Imagem de um iceberg em que no topo temos a sigla API, para dar a ideia de
+que uma API, por definição, deveria ser exposto sempre o mínimo
+possível](./iceberg.png)
+
 As APIs são poderosas, e isso é um fato. Elas são fundamentais na tecnologia
 moderna por vários motivos:
 
@@ -64,15 +64,17 @@ moderna por vários motivos:
  - **Reutilização**: Desenvolvedores podem reutilizar funcionalidades
    existentes sem precisar reescrever código.
  - **Escalabilidade**: Facilitam a expansão de serviços e a adição de novas
-    funcionalidades de forma modular.
+   funcionalidades de forma modular.
  - **Inovação**: Abrem portas para novas integrações e serviços que podem ser
    construídos sobre as APIs existentes.
 
-Seja na comunicação do sistema operacional com a tela do seu celular, seja nas
-assinaturas dos métodos de uma biblioteca ou ainda em uma API REST que gere uma
-imagem, todas são aplicações do conceito de API. De forma geral, podemos ter
-dois tipos de API: **locais e remotas**. Podem ser consideradas como APIs
-locais:
+A partir da extrapolação do conceito de API podemos afirmar que elas estão em
+todos lugares. Seja na comunicação do sistema operacional com a tela do seu
+celular, seja nas assinaturas dos métodos de uma biblioteca ou ainda em uma API
+REST que gere uma imagem, todas são aplicações do conceito de API. De forma
+geral, temos dois tipos de API: **locais e remotas**.
+
+Podem ser consideradas como APIs locais:
 
  - **POSIX (Portable Operating System Interface)**: Um padrão para manter
    compatibilidade entre sistemas operacionais UNIX. Fornece uma API que
@@ -94,18 +96,19 @@ Por outro lado, são exemplos de APIs Remotas:
    serialização.
 
 Os exemplos descritos anteriormente demonstram a versatilidade e a ubiquidade
-das APIs na tecnologia atual. Contudo, para esta apresentação, podemos
-considerar API como sinônimo de APIs remotas. Segundo um relatório da empresa
-responsável pela ferramenta _Postman_, cerca de 86% dos desenvolvedores utilizam
-APIs REST[^2].
+das APIs no ecossistema atual de desenvolvimento de software. Contudo, para
+esta apresentação, podemos considerar API como sinônimo de APIs remotas.
+Segundo um relatório da empresa responsável pela ferramenta _Postman_, cerca de
+86% dos desenvolvedores utilizam APIs REST[^2].
 
 ![Imagem das principais APIs Remotas ou Web APIs: GraphQL, REST, WebSockets,
 SOAP, RPC, gRPC](./web-apis.jpg)
 
-Nesse ponto, espero que você esteja se questionando por que desenhar uma API
-como Produto?! De forma geral, desenhar uma API como produto significa tratá-la
-com a mesma atenção aos detalhes e ao ciclo de vida que qualquer outro produto
-de software. Isso envolve:
+Nesse ponto, espero que você já tenha se convencido sobre a relevância das
+APIs, contudo, quais seriam as vantagens de se desenhar uma API como produto?!
+De forma geral, projetar uma API como produto significa tratá-la com a mesma
+atenção aos detalhes como qualquer outro produto de software. Para que um
+produto seja bem desenhado, os seguintes pontos deveriam ser considerados:
 
  - **Entendimento do Usuário**: Compreender quem são os usuários da API e quais
    são suas necessidades.
@@ -116,8 +119,7 @@ de software. Isso envolve:
  - **Evolução Contínua**: Planejar para melhorias e atualizações constantes com
    base no feedback dos usuários.
 
-![Imagem com as hierarquias das necessidades de um
-usuário](./hierarquia-necessidades.png)
+![Imagem com as hierarquias das necessidades de um usuário](./hierarquia-necessidades.png)
 
 Um produto é algo que pode ser oferecido em um mercado para satisfazer uma
 necessidade ou desejo. Produtos são projetados cuidadosamente, evoluem com a
@@ -129,10 +131,16 @@ para sua empresa quanto para seus usuários.
 ## O Ciclo de Vida de uma API
 
 Para criar uma API bem-sucedida, é essencial seguir um ciclo de vida
-estruturado que inclui design, desenvolvimento, testes, publicação,
-monitoramento e descontinuação. Cada etapa tem suas próprias ferramentas que
-podem ajudar a garantir que a API atenda às expectativas dos usuários e dos
-stakeholders.
+estruturado que inclui:
+ - design
+ - desenvolvimento
+ - testes
+ - publicação
+ - monitoramento
+ - descontinuação
+
+Para cada etapa existem bibliotecas, ferramentas e processos que podem ajudar a
+garantir que a API atenda às expectativas dos usuários e dos stakeholders.
 
 ![Imagem do ciclo de vida de uma API](./ciclo-de-vida-geral.png)
 
@@ -155,8 +163,8 @@ estilo arquitetural da API e documentamos tudo.
 #### 2. Desenvolvimento
 
 No desenvolvimento, adotamos uma abordagem API First, criamos protótipos e
-seguimos padrões organizacionais. A segurança deve ser uma prioridade desde o
-início.
+seguimos os padrões organizacionais. *A segurança deve ser uma prioridade desde
+o início*.
 
 **Ferramentas para Desenvolvimento:**
 
@@ -207,7 +215,6 @@ futuras.
 
  - **Prometheus**: Ferramenta open-source para monitoramento e alerta.
  - **Grafana**: Plataforma para analisar e visualizar métricas.
- - **API.Guru**: Coleta e padroniza especificações de APIs públicas.
  - **Stainless**: Ferramenta para monitoramento de integridade de API.
 
 #### 6. Descontinuação
@@ -228,9 +235,9 @@ para notificar sobre a descontinuação e planeje a migração.
 
 Para que uma API seja bem-sucedida, ela deve ser desenhada e gerida como um
 produto. Isso inclui entender as necessidades dos usuários, garantir a
-qualidade e a segurança, e fornecer suporte contínuo. Ao seguir o ciclo de vida
-de uma API e utilizar as ferramentas certas em cada etapa, você pode criar APIs
-que realmente agregam valor ao seu negócio e aos seus usuários.
+qualidade e a segurança e por fim fornecer suporte contínuo. Ao seguir o ciclo
+de vida de uma API e utilizar as ferramentas certas em cada etapa, você pode
+criar APIs que realmente agregam valor ao seu negócio e aos seus usuários.
 
 As APIs devem ser pensadas como ferramentas para resolver problemas reais.
 Sempre comece identificando a dor do usuário e desenvolva a API com o objetivo
@@ -241,9 +248,9 @@ dificilmente será adotada, independentemente de sua qualidade técnica.
 
 Priorize a comunicação e o suporte acima da tecnologia. Uma documentação clara
 e acessível, um portal de desenvolvedores bem projetado e um suporte eficiente
-são tão importantes quanto a tecnologia por trás da API. Eles são fundamentais
-para garantir que os desenvolvedores possam utilizar sua API com facilidade e
-eficácia.
+são tão importantes quanto a tecnologia utilizada para desenvolver a API. Eles
+são fundamentais para garantir que os desenvolvedores possam utilizar sua API
+com facilidade e eficácia.
 
 Se importe com a adoção das suas APIs. Monitore o uso, peça feedback, e esteja
 disposto a fazer melhorias contínuas. A adoção bem-sucedida de uma API é um
@@ -255,22 +262,23 @@ também podem abrir novas fontes de receita e oportunidades de mercado. Ao
 tratar sua API como um produto, você está investindo no crescimento e no
 sucesso da sua empresa a longo prazo.
 
-Por fim, siga um ciclo de vida estruturado, utilize as ferramentas certas em
-cada etapa e mantenha o foco nas necessidades do usuário. Dessa forma, você
+Por fim, siga um ciclo de vida bem estruturado. Utilize as ferramentas certas
+em cada etapa e mantenha o foco nas necessidades do usuário. Dessa forma, você
 criará APIs que não apenas funcionam, mas que também proporcionam uma excelente
 experiência aos desenvolvedores, impulsionando a inovação e o crescimento de
 seu negócio.
 
 ## Agradecimentos
 
-Este artigo foi escrito em conjunto com [Gabriella
-Mara](https://linktr.ee/gmarap). Agradecemos muito pela parceria de sempre.
-Também gostaríamos de agradecer a [Marcelo
+Este artigo foi escrito em conjunto com a [Gabriella
+Mara](https://linktr.ee/gmarap). Agradeço muito pela parceria de sempre. Também
+gostaríamos de agradecer a [Marcelo
 Lima](https://www.linkedin.com/in/mgdlima/), um dos principais promotores da
-ideia de um portal de APIs públicas na Hotmart, que nos ajudou com o
-desenvolvimento de software. Por fim, gostaríamos de agradecer ao [Danilo
-Amaral](https://www.linkedin.com/in/it0dan/), cuja apresentação sobre o ciclo
-de vida de APIs foi utilizada como base para o ciclo descrito neste artigo.
+ideia de um portal de APIs públicas na Hotmart, que nos ajudou com toda a parte
+da analogia entre APIs e produtos de software. Por fim, gostaríamos de
+agradecer ao [Danilo Amaral](https://www.linkedin.com/in/it0dan/), cuja
+apresentação sobre o ciclo de vida de APIs foi utilizada como base para o ciclo
+descrito neste artigo.
 
 [^1]:
     API.
