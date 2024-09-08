@@ -1,0 +1,23 @@
+on:
+  push:
+    branches:
+      - main # Modify if you use a different main branch name, such as the legacy "master" name.
+  pull_request:
+    branches:
+      - main # Modify if you use a different main branch name, such as the legacy "master" name.
+
+jobs:
+  spellchecking:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Check out the code
+      - uses: actions/setup-node@v1
+        name: Run spell check
+        with:
+          node-version: "18"
+      - run: npm install -g cspell
+      - run: npm install -g @cspell/dict-pt-br
+      - run: cspell link add @cspell/dict-pt-br
+      - run: cspell --config ./cSpell.json "**/*.md"
+      - run: cspell --config ./cSpell.json "**/*.mdx"
