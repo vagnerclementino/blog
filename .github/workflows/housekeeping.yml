@@ -19,5 +19,5 @@ jobs:
       - run: npm install -g cspell
       - run: npm install -g @cspell/dict-pt-br
       - run: cspell link add @cspell/dict-pt-br
-      - run: cspell --config ./cSpell.json "**/*.md"
-      - run: cspell --config ./cSpell.json "**/*.mdx"
+      - run: cspell --config ./cspell.json "**/*.md"
+      - run: cspell --config ./cspell.json "**/*.mdx"
