@@ -1,10 +1,10 @@
 on:
   push:
     branches:
-      - main # Modify if you use a different main branch name, such as the legacy "master" name.
+      - main
   pull_request:
     branches:
-      - main # Modify if you use a different main branch name, such as the legacy "master" name.
+      - main
 
 jobs:
   spellchecking:
