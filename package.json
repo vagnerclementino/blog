@@ -46,6 +46,8 @@
     "typography-theme-wordpress-2016": "^0.16.19"
   },
   "devDependencies": {
+    "@cspell/dict-pt-br": "^2.3.3",
+    "cspell": "^8.16.0",
     "gatsby-plugin-root-import": "^2.0.9",
     "husky": "^9.1.7",
     "prettier": "^1.17.0"
@@ -72,6 +74,8 @@
     "serve": "gatsby serve",
     "debug:ga": "GATSBY_GTAG_DEBUG=true gatsby develop",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\"",
-    "clean": "gatsby clean"
+    "clean": "gatsby clean",
+    "prepare": "husky",
+    "prepush": "cspell link add @cspell/dict-pt-br && cspell --no-must-find-files --config ./cspell.json '**/*.md' && cspell --config ./cspell.json '**/*.mdx'"
   }
 }
