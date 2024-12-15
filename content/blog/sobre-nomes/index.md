@@ -7,7 +7,7 @@ featuredImage: feature.jpg
 
 ## Origens
 
-Meu nome é Vagner, sou filho de uma mineira com um italiano, ou é baiano?!.
+Meu nome é Vagner, sou filho de uma mineira com um italiano, ou é baiano...
 Nesse momento me pego em dúvidas dado que são poucas sílabas de diferença que me
 confundo. Gentílicos a parte, caso você tenha lido um artigo, assistido uma
 palestra ou recebido um e-mail meu, deve ter percebido que eu assino Vagner
@@ -59,24 +59,57 @@ fazer um curso superior eram signos que não tinham significados.
 ![Um deserto representando o sentimento de perdido ao finalizar o Ensino
 Médio](./deserto.webp)
 
-As pessoas me diziam sobre uma facilidade (natural?!) em ensinar, especialmente
-Matemática, então, por lógica, fazia sentido a licenciatura naquela área. Com
-livros emprestados e estudando por conta própria conseguir passar na primeira
-etapa da Universidade Federal de Minas Gerais[^2]. Tão impressionante quanto
-qualquer exceção que comprove regras.
+E naqueles longos meses após o término do Ensino Médio o desejo era de mudar o
+mundo pela arte. Talvez ser um escritor ou compor as letras em uma banda de
+punk rock. Sonhos de uma formiga que mesmo sabendo cantar teve que trabalhar,
+ante ao inverno inevitável da vida adulta. E assim eu fui destilar a minha arte
+como operador de telemarketing, meu primeiro trabalho (registrado) e que me
+proporcionou os recursos necessários para o próximo passo: um curso superior.
 
-O _talvez_ se transfigura em _certeza_ para quem nunca teve oportunidades. 
+As pessoas me diziam sobre uma facilidade (natural?!) em ensinar, especialmente
+Matemática, então, por lógica, fazia sentido que eu tentasse algum curso de
+licenciatura em Matemática. E para ser sincero eu não tinha muita certeza de
+qual carreira eu gostaria de seguir, o requisito na verdade é que o curso
+deveria ser gratuito. Com livros emprestados e estudando por conta própria
+conseguir passar na primeira etapa da Universidade Federal de Minas Gerais[^2].
+Tão impressionante quanto qualquer exceção que comprove uma regra.
+
+O _talvez_ se transfigura em _certeza_ para quem nunca teve oportunidades.
+Apesar de não ter conseguido passar no vestibular estudando por conta própria,
+entendia que aquilo estava muito mais próximo do que nunca. No próximo ano eu
+tinha conseguido entrar na graduação em Matemática. A partir daquele momento o
+plano era que em pouco tempo eu estaria recebendo o nome de _professor_.
+
+A vida é feita muito mais de "porém", "todavia"  e "entretanto" do que de
+linealidades. E com o passar dos dias eu me via cada mais interessado em
+Computação. Talvez por ter conseguindo o meu primeiro computador aos 20 e
+poucos anos ou ainda pela capacidade que eu tinha de formatá-lo a cada software
+com vírus que eu baixava, tudo isso em tempo recorde, para que o meu irmão mais
+velho que comprou o computador junto comigo não brigasse. Motivos a parte,
+conseguir alterar a minha graduação para Sistemas de Informação e se tudo desse
+certo, ao cabo de mais alguns anos, receberia o nome _desenvolvedor_,
+_programador_, _menino do computador_ e etc.
 
 ## Títulos
+
+Entre indas e vindas o tão ~~sonhado~~ batalhado título chegou: _Bacharel em
+Sistemas de Informação_, seguido pelo de Mestre em Ciência da Computação. No
+âmbito profissional, embora não acadêmico, o tempo me conferiu os títulos de
+desenvolvedor pleno, sênior, _Tech Leader_ e _Staff Engineering_. Essas
+conquistas foram fruto de muito esforço e dedicação, e me permitiram ascender a
+posições de destaque e liderança em minha área de atuação. Porém foram apenas
+títulos, algo para se colocar em um quadro da parede ou descrito em um
+currículo e nunca algo que seja capaz de nos resumir.
+
 
 ## Sobre Nomes
 
 Nomes e sobrenomes dão as pessoas o sentimento de pertencimento e origem, ou
-mesmo de liberdade e recomeço, como no caso dos nome sociais. 
+mesmo de liberdade e recomeço, como no caso dos nome sociais.
 
 [^1]:
     Tiririca.
-    https://pt.wikipedia.org/wiki/Tiririca
+    <https://pt.wikipedia.org/wiki/Tiririca>
 
 [^2]:
     Vestibular da UFMG.
@@ -88,4 +121,4 @@ mesmo de liberdade e recomeço, como no caso dos nome sociais.
     conseguir uma vaga na universidade.
 [^3]:
     até sua alma (part. Tasha e Tracie).
-    https://www.letras.mus.br/djonga/ate-sua-alma/
+    <https://www.letras.mus.br/djonga/ate-sua-alma/>
