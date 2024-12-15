@@ -7,19 +7,19 @@ featuredImage: feature.jpg
 
 ## Origens
 
-Meu nome é Vagner, sou filho de uma mineira com um italiano, ou é baiano...
-Nesse momento me pego em dúvidas dado que são poucas sílabas de diferença que me
-confundo. Gentílicos a parte, caso você tenha lido um artigo, assistido uma
-palestra ou recebido um e-mail meu, deve ter percebido que eu assino Vagner
-Clementino, contudo, o meu nome de registro é Vagner Clementino, dos Santos,
-_"(...) e por que não dos orixás também?"_[^3] Algo que não deixa dúvida acerca
-da minha origem baiana. E sejamos honestos, como um afro-brasileiro, a
+Meu nome é Vagner, sou filho de uma mineira com um italiano, ou talvez
+baiano... Nesse momento, me pego em dúvida, pois são poucas sílabas de
+diferença que me confundem. Gentílicos à parte, caso você tenha lido um artigo,
+assistido a uma palestra ou recebido um e-mail meu, deve ter percebido que eu
+assino como Vagner Clementino. No entanto, meu nome de registro é Vagner
+Clementino dos Santos, "e por que não dos orixás também?"[^3] Isso deixa claro
+a minha origem baiana. E sejamos honestos, como um afro-brasileiro, a
 determinação das minhas origens é tão frágil quanto acreditar em meritocracia.
 
-De inicio o sobrenome _Clementino_ não me agradava: achava estranho e nada
-comum. O meu desconforto piorou quando em 1996 foi lançada um clássico do
-cancioneiro brasileiro conhecida como "Florentina" escrita e interpretada por
-Francisco Everardo Oliveira Silva, vulgo Tiririca[^1].
+No início, o sobrenome "Clementino" não me agradava: achava estranho e pouco
+comum. Meu desconforto aumentou quando, em 1996, foi lançado um clássico do
+cancioneiro brasileiro conhecido como "Florentina", escrito e interpretado por
+Francisco Everardo Oliveira Silva, também conhecido como Tiririca[^1].
 
 <iframe width="560"
         height="315"
@@ -33,83 +33,92 @@ o meu nome, bem-vindo ao clube, pois é algo que eu me questiono desde então.
 Não sei se por sorte, destino ou delírio coletivo, as pessoas relacionam o
 refrão da música "Florentina" com o meu sobrenome. Por favor, acreditem em mim,
 inúmeras vezes, ao dizer o meu nome, eu era surpreendido com "🎵Clementino,
-Clementino, Clementino de Jesus (...)". Desde de encontros sociais até
-recepções de hotel.
+Clementino, Clementino de Jesus (...)" Desde encontros sociais até recepções de
+hotel.
 
-Por essas, e muitas outras, passei a assinar _Vagner Santos_ e me tornei mais
-uma na multidão de pessoas da família 'Santos' brasileira. Seja Sílvio, Lulu ou
-Alberto são vários os 'Santos' desse país. No Brasil são tanto os santos que em
-novembro temos um dia para todos eles.
+Por essas e muitas outras razões, passei a assinar como Vagner Santos e me
+tornei mais um na multidão de pessoas da família 'Santos' brasileira. Seja
+Sílvio, Lulu ou Alberto, são vários os 'Santos' deste país. No Brasil, há
+tantos santos que em novembro temos um dia dedicado a todos eles.
 
 E desde então carrego essa dúvida: deveria ser Santo(s), disputando devoção na
 multidão, ou Clementino, e viver ignorando as pessoas cantando refrões de
-qualidade duvidosa. Como foi dito no primeiro parágrafo, optei por
-_Clementino_, mas sigo com as benção dos Santos e dos Orixás.
+qualidade duvidosa? Como foi dito no primeiro parágrafo, optei por
+_Clementino_, mas sigo com as bênçãos dos Santos e dos Orixás.
 
 ![Imagem representando a dúvida em usar Clementino ou Santos como sobrenome](to-be-or-not-to-be.png)
 
 ## Carreira
 
-Eu concluí o Ensino Médio com louvor: professores e funcionários louvaram aos
-anjos e aos santos que eu não frequentaria a escola no próximo ano. De fato,
-naquela época, a única certeza que eu tinha, era a de estar perdido. O plano
-era mais conseguir um emprego do que ter uma profissão. Passar no vestibular e
-fazer um curso superior eram signos que não tinham significados.
+Eu concluí o Ensino Médio com louvor: professores e funcionários elogiaram os
+anjos e santos por eu não precisar frequentar a escola no próximo ano. Naquela época,
+a única certeza que eu tinha era de estar perdido. Meu plano era apenas conseguir
+um emprego, não ter uma profissão. Passar no vestibular e fazer um curso superior
+eram símbolos sem significado para mim.
 
 ![Um deserto representando o sentimento de perdido ao finalizar o Ensino
 Médio](./deserto.webp)
 
-E naqueles longos meses após o término do Ensino Médio o desejo era de mudar o
-mundo pela arte. Talvez ser um escritor ou compor as letras em uma banda de
-punk rock. Sonhos de uma formiga que mesmo sabendo cantar teve que trabalhar,
-ante ao inverno inevitável da vida adulta. E assim eu fui destilar a minha arte
-como operador de telemarketing, meu primeiro trabalho (registrado) e que me
-proporcionou os recursos necessários para o próximo passo: um curso superior.
+E naqueles longos meses após o término do Ensino Médio, o desejo era de mudar o
+mundo através da arte. Talvez ser um escritor ou compor letras em uma banda de
+punk rock. Eram sonhos de uma formiga que, mesmo sabendo cantar, teve que
+trabalhar diante do inverno inevitável da vida adulta. E assim, fui destilar
+minha arte como operador de telemarketing, meu primeiro trabalho registrado,
+que me proporcionou os recursos necessários para o próximo passo: um curso
+superior.
 
-As pessoas me diziam sobre uma facilidade (natural?!) em ensinar, especialmente
-Matemática, então, por lógica, fazia sentido que eu tentasse algum curso de
-licenciatura em Matemática. E para ser sincero eu não tinha muita certeza de
-qual carreira eu gostaria de seguir, o requisito na verdade é que o curso
-deveria ser gratuito. Com livros emprestados e estudando por conta própria
-conseguir passar na primeira etapa da Universidade Federal de Minas Gerais[^2].
-Tão impressionante quanto qualquer exceção que comprove uma regra.
+As pessoas me diziam sobre uma facilidade natural em ensinar, especialmente
+Matemática. Então, por lógica, fazia sentido que eu tentasse algum curso de
+licenciatura em Matemática. Para ser sincero, eu não tinha muita certeza de
+qual carreira eu gostaria de seguir, mas o requisito era que o curso fosse
+gratuito. Com livros emprestados e estudando por conta própria, consegui passar
+na primeira etapa da Universidade Federal de Minas Gerais. Foi tão
+impressionante quanto qualquer exceção que comprova uma regra.
 
-O _talvez_ se transfigura em _certeza_ para quem nunca teve oportunidades.
+O _talvez_ se transforma em _certeza_ para quem nunca teve oportunidades.
 Apesar de não ter conseguido passar no vestibular estudando por conta própria,
-entendia que aquilo estava muito mais próximo do que nunca. No próximo ano eu
-tinha conseguido entrar na graduação em Matemática. A partir daquele momento o
-plano era que em pouco tempo eu estaria recebendo o nome de _professor_.
+entendia que aquilo estava muito mais próximo do que nunca. No próximo ano, eu
+tinha conseguido entrar na graduação em Matemática. A partir daquele momento, o
+plano era que em pouco tempo eu estaria recebendo o título de _professor_.
 
-A vida é feita muito mais de "porém", "todavia"  e "entretanto" do que de
-linealidades. E com o passar dos dias eu me via cada mais interessado em
-Computação. Talvez por ter conseguindo o meu primeiro computador aos 20 e
-poucos anos ou ainda pela capacidade que eu tinha de formatá-lo a cada software
-com vírus que eu baixava, tudo isso em tempo recorde, para que o meu irmão mais
-velho que comprou o computador junto comigo não brigasse. Motivos a parte,
-conseguir alterar a minha graduação para Sistemas de Informação e se tudo desse
-certo, ao cabo de mais alguns anos, receberia o nome _desenvolvedor_,
-_programador_, _menino do computador_ e etc.
+A vida é feita muito mais de "poréns", "todavias" e "entretantos" do que de
+linearidades. Com o passar dos dias, eu me via cada vez mais interessado em
+Computação. Talvez por ter conseguido meu primeiro computador aos 20 e poucos
+anos, ou ainda pela habilidade que eu tinha de formatá-lo rapidamente a cada
+software com vírus que eu baixava, para evitar brigas com meu irmão mais velho,
+que comprou o computador junto comigo. Motivos à parte, consegui alterar minha
+graduação para Sistemas de Informação e, se tudo desse certo, em alguns anos
+receberia o título de "desenvolvedor", "programador", "menino do computador" e
+assim por diante.
 
 ## Títulos
 
-Entre indas e vindas o tão ~~sonhado~~ batalhado título chegou: _Bacharel em
-Sistemas de Informação_, seguido pelo de Mestre em Ciência da Computação. No
-âmbito profissional, embora não acadêmico, o tempo me conferiu os títulos de
-desenvolvedor pleno, sênior, _Tech Leader_ e _Staff Engineering_. Essas
-conquistas foram fruto de muito esforço e dedicação, e me permitiram ascender a
-posições de destaque e liderança em minha área de atuação. Porém foram apenas
-títulos, algo para se colocar em um quadro da parede ou descrito em um
-currículo e nunca algo que seja capaz de nos resumir.
+Entre idas e vindas, o tão sonhado título chegou: Bacharel em Sistemas de
+Informação, seguido pelo de Mestre em Ciência da Computação. No âmbito
+profissional, embora não acadêmico, o tempo me conferiu os títulos de
+desenvolvedor pleno, sênior, Tech Leader e Staff Engineering. Essas conquistas
+foram fruto de muito esforço e dedicação, e me permitiram ascender a posições
+de destaque e liderança em minha área de atuação. Porém, foram apenas títulos,
+algo para ser colocado em um quadro na parede ou descrito em um currículo, e
+nunca algo que seja capaz de nos resumir.
 
 ## Sobre Nomes
 
-Nomes e/ou sobrenomes dão as pessoas o sentimento de pertencimento ou origem, e
-em alguns caso até mesmo de liberdade e recomeço, como no caso dos nome
-sociais. Mas em essência os nomes existem para nos diferenciar, nos conceder um
-papel e nunca para nos resumir. Seja os nomes que já tive (marido, amigo,
+Nomes e/ou sobrenomes dão às pessoas o sentimento de pertencimento ou origem, e
+em alguns casos até mesmo de liberdade e recomeço, como no caso dos nomes
+sociais. Mas, em essência, os nomes existem para nos diferenciar, nos conceder
+um papel e nunca para nos resumir. Sejam os nomes que já tive (marido, amigo,
 irmão, filho, tio, padrinho, colega, desenvolvedor ou professor) ou aqueles que
-por ventura ainda terei (pai, avó ou doutor) serão apenas recortes de uma
-realidade maior que é a vida de qualquer pessoa.
+por ventura ainda terei (pai, avó ou doutor), serão apenas recortes de uma que
+é a nossa própria existência.
+
+Acredito que é importante lembrar que somos muito mais do que nossos nomes e
+rótulos, somos seres em constante transformação e evolução, e não devemos nos
+limitar ou nos definir apenas por essas identificações. É preciso olhar para
+além dos rótulos e enxergar a complexidade e singularidade de cada indivíduo.
+
+Em resumo, nomes e rótulos são importantes para nos identificar e nos
+diferenciar, mas não devem nos limitar ou definir completamente.
 
 [^1]:
     Tiririca.
