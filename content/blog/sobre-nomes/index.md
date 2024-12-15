@@ -101,11 +101,15 @@ posições de destaque e liderança em minha área de atuação. Porém foram ap
 títulos, algo para se colocar em um quadro da parede ou descrito em um
 currículo e nunca algo que seja capaz de nos resumir.
 
-
 ## Sobre Nomes
 
-Nomes e sobrenomes dão as pessoas o sentimento de pertencimento e origem, ou
-mesmo de liberdade e recomeço, como no caso dos nome sociais.
+Nomes e/ou sobrenomes dão as pessoas o sentimento de pertencimento ou origem, e
+em alguns caso até mesmo de liberdade e recomeço, como no caso dos nome
+sociais. Mas em essência os nomes existem para nos diferenciar, nos conceder um
+papel e nunca para nos resumir. Seja os nomes que já tive (marido, amigo,
+irmão, filho, tio, padrinho, colega, desenvolvedor ou professor) ou aqueles que
+por ventura ainda terei (pai, avó ou doutor) serão apenas recortes de uma
+realidade maior que é a vida de qualquer pessoa.
 
 [^1]:
     Tiririca.
