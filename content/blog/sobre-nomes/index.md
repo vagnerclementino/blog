@@ -1,8 +1,8 @@
 ---
 title: "Sobre Nomes"
-date: "2024-11-24"
+date: "2024-12-15"
 description: "Uma reflexão sobre como os nomes nos diferenciam mas não nos resumem" 
-featuredImage: feature.jpg
+featuredImage: feature.png
 ---
 
 ## Origens
