@@ -17,10 +17,33 @@ const getFeatureImgPath = featuredImg => {
   }
 }
 
+const translateReadingTime = stats => {
+  if (!stats) {
+    return "Unknown";
+  }
+
+  const minutes = Math.ceil(stats?.minutes || 0);
+  let readingTimeText = '';
+
+  switch (true) {
+    case minutes < 1:
+    readingTimeText = 'menos de 1 minuto';
+      break;
+    case minutes === 1:
+    readingTimeText = '1 minuto';
+      break;
+    default:
+    readingTimeText = `${minutes} minutos`;
+      break;
+  }
+  return readingTimeText;
+}
+
 class BlogPostTemplate extends React.Component {
   render() {
     const post = this.props.data.mdx
     const { previous, next } = this.props.pageContext
+    const { fields } = post
 
     const disqusConfig = {
       url: this.props.location.href,
@@ -52,6 +75,17 @@ class BlogPostTemplate extends React.Component {
           }}
         >
           {post.frontmatter.date}
+        </p>
+
+        <p
+          style={{
+            ...scale(-1 / 5),
+            display: `block`,
+            marginBottom: rhythm(1),
+            marginTop: rhythm(-1),
+          }}
+        >
+          <strong>Tempo de leitura: {translateReadingTime(fields.readingTime)}</strong>
         </p>
         <MDXRenderer>{post.body}</MDXRenderer>
         <hr
@@ -114,6 +148,12 @@ export const pageQuery = graphql`
           childImageSharp {
             gatsbyImageData(layout: FULL_WIDTH)
           }
+        }
+      }
+      fields {
+        readingTime {
+          text
+          minutes
         }
       }
     }
