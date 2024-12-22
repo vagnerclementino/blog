@@ -175,5 +175,6 @@ module.exports = {
         path: `${__dirname}/content/blog`,
       },
     },
+    `gatsby-remark-reading-time`
   ],
 }
