@@ -110,11 +110,14 @@ de um mito, ela carrega uma forte carga simbólica: a busca por um lugar onde se
 possa encerrar um ciclo de forma digna e significativa.
 
 Recentemente, essa lenda veio à minha mente ao refletir sobre a aposentadoria
-de James Gosling, um dos pais da linguagem de programação Java. Sua
-contribuição à tecnologia moderna é imensurável, e sua despedida da vida
-profissional ativa trouxe à tona uma reflexão: desenvolvedores podem realmente
-se aposentar enquanto permanecem em sua essência técnica, ou a progressão
-natural é migrar para a gestão?
+de James Gosling, um dos pais da linguagem de programação Java, por exemplo,
+ele é um dos autores da classe
+[Date](https://github.com/AdoptOpenJDK/jdk20u/blob/master/src/java.base/share/classes/java/util/Date.java#L120),
+possivelmente uma das classes mais utilizadas da linguagem. Sua contribuição à
+tecnologia moderna é imensurável, e sua despedida da vida profissional ativa
+trouxe à tona uma reflexão: desenvolvedores podem realmente se aposentar
+enquanto permanecem em sua essência técnica, ou a progressão natural é migrar
+para a gestão?
 
 “Feliz em saber que desenvolvedor aposenta. Achava que todos viravam gerentes.”
 Essa frase, que muitos diriam em tom de alívio ou ironia, ecoa um sentimento
