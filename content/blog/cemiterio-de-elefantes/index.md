@@ -128,7 +128,7 @@ alternativo e valioso para profissionais que desejam se manter no lado técnico.
 
 ## A maldição do informalismo
 
-![A espécime conhecida como desenvolvedor - Fonte Instagram.](2025-01-21-21-26-42.png)
+![A espécime conhecida como desenvolvedor - Fonte Instagram.](um-desenvolvedor.png)
 
 ## A Carreira em Y: Escolhas para Profissionais Sêniores
 
