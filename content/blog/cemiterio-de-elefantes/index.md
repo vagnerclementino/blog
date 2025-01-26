@@ -2,7 +2,7 @@
 title: "Cemitério de Elefantes"
 date: "2024-09-11"
 description: "Reflexões sobre porquê desenvolvedores não aposentam"
-featuredImage: feature.jpg
+featuredImage: feature.png
 ---
 
 ### Introdução
@@ -126,7 +126,11 @@ crescimento na carreira é a transição para a gestão. Mas, felizmente, essa
 ideia está se tornando obsoleta. Hoje, a carreira em Y oferece um caminho
 alternativo e valioso para profissionais que desejam se manter no lado técnico.
 
-### A Carreira em Y: Escolhas para Profissionais Sêniores
+## A maldição do informalismo
+
+![A espécime conhecida como desenvolvedor - Fonte Instagram.](2025-01-21-21-26-42.png)
+
+## A Carreira em Y: Escolhas para Profissionais Sêniores
 
 O conceito de carreira em Y possibilita que profissionais sêniores escolham
 entre duas trajetórias principais: a gestão de pessoas e processos ou a
