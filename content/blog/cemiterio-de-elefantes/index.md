@@ -1,6 +1,6 @@
 ---
 title: "Cemitério de Elefantes"
-date: "2024-09-11"
+date: "2025-01-08"
 description: "Reflexões sobre porquê desenvolvedores não aposentam"
 featuredImage: feature.png
 ---
