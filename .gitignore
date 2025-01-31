@@ -76,3 +76,4 @@ yarn-error.log
 
 #asdf
 .tool-versions
+.aider*
