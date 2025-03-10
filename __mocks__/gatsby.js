@@ -31,4 +31,5 @@ module.exports = {
 	),
 	useStaticQuery: jest.fn(),
 	StaticQuery: jest.fn(),
+	navigate: jest.fn(),
 }
