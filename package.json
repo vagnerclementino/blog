@@ -50,6 +50,7 @@
     "@cspell/dict-pt-br": "^2.3.3",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^12.1.5",
+    "@babel/core": "^7.22.0",
     "babel-jest": "^29.7.0",
     "babel-preset-gatsby": "^3.14.0",
     "cspell": "^8.16.0",
