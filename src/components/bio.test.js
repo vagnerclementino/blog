@@ -1,12 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { StaticQuery } from 'gatsby';
-
-jest.mock('gatsby', () => ({
-  ...jest.requireActual('gatsby'),
-  StaticQuery: jest.fn(),
-  graphql: jest.fn(),
-}));
+import Bio from './bio';
 
 beforeEach(() => {
   StaticQuery.mockImplementationOnce(({ render }) =>
@@ -22,7 +17,6 @@ beforeEach(() => {
     })
   );
 });
-import Bio from './bio';
 
 describe('Bio component', () => {
   it('renders correctly', () => {
