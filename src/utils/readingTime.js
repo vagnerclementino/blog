@@ -1,9 +1,13 @@
+const customRound = (num) => {
+  return (num % 1) < 0.5 ? Math.floor(num) : Math.ceil(num);
+}
+
 export const translateReadingTime = stats => {
   if (!stats) {
     return "Unknown";
   }
 
-  const minutes = Math.ceil(stats?.minutes || 0);
+  const minutes = customRound(stats?.minutes || 0);
   let readingTimeText = '';
 
   switch (true) {
