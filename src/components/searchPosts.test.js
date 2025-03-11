@@ -31,13 +31,11 @@ describe('SearchPosts component', () => {
       try {
         return JSON.stringify(
           {
-            "3c1c0b1b-18bf-57c9-8ea6-e147bc52679a": {
-              "id": "3c1c0b1b-18bf-57c9-8ea6-e147bc52679a",
-              "slug": "/introducao-teste-de-carga/",
-              "date": "August 25, 2022",
-              "title": "Introdução ao Teste de Carga",
-              "excerpt": "Excerpt for Introdução ao Teste de Carga",
-              "description": "Entendendo os limites do sistema"
+            "post": {
+              "title": "Test Post 1",
+              "date": "2025-03-10",
+              "description": "Description for Test Post 1",
+              "excerpt": "Excerpt for Test Post 1"
             }
           }
         );
@@ -53,7 +51,6 @@ describe('SearchPosts component', () => {
   });
 
   it('renders correctly with no query', () => {
-    console.log(typeof localSearchBlog.store)
     const { getByPlaceholderText, getAllByText } = render(
       <SearchPosts
         posts={posts}
@@ -68,8 +65,6 @@ describe('SearchPosts component', () => {
   });
 
   it('updates query and calls navigate on input change', () => {
-    console.log(localSearchBlog.store)
-
     const { getByPlaceholderText } = render(
       <SearchPosts
         posts={posts}
