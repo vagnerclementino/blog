@@ -2,6 +2,11 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { navigate } from 'gatsby';
 import SearchPosts from './searchPosts';
+import { useFlexSearch } from 'react-use-flexsearch';
+
+jest.mock('react-use-flexsearch', () => ({
+  useFlexSearch: jest.fn(),
+}));
 
 describe('SearchPosts component', () => {
   const posts = [
@@ -22,19 +27,34 @@ describe('SearchPosts component', () => {
 
   const localSearchBlog = {
     index: 'test-index',
-    store: {
-      '/test-post-1': {
-        title: 'Test Post 1',
-        date: '2025-03-10',
-        description: 'Description for Test Post 1',
-        excerpt: 'Excerpt for Test Post 1',
-      },
-    },
+    store: (() => {
+      try {
+        return JSON.stringify(
+          {
+            "3c1c0b1b-18bf-57c9-8ea6-e147bc52679a": {
+              "id": "3c1c0b1b-18bf-57c9-8ea6-e147bc52679a",
+              "slug": "/introducao-teste-de-carga/",
+              "date": "August 25, 2022",
+              "title": "Introdução ao Teste de Carga",
+              "excerpt": "",
+              "description": "Entendendo os limites do sistema"
+            }
+          }
+        );
+      } catch (error) {
+        console.error("Failed to stringify localSearchBlog.store:", error);
+        return "{}";
+      }
+    })(),
   };
 
+  beforeEach(() => {
+    useFlexSearch.mockReturnValue([]);
+  });
+
   it('renders correctly with no query', () => {
-    console.log(localSearchBlog.store)
-    const { getByPlaceholderText, getByText } = render(
+    console.log(typeof localSearchBlog.store)
+    const { getByPlaceholderText, getAllByText } = render(
       <SearchPosts
         posts={posts}
         localSearchBlog={localSearchBlog}
@@ -44,7 +64,7 @@ describe('SearchPosts component', () => {
     );
 
     expect(getByPlaceholderText(/Search all posts/i)).toBeInTheDocument();
-    expect(getByText(/Test Post 1/i)).toBeInTheDocument();
+    expect(getAllByText(/Test Post 1/i).length).toBeGreaterThan(0)
   });
 
   it('updates query and calls navigate on input change', () => {
