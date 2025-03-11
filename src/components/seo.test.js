@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import SEO from './seo';
 import { useStaticQuery } from 'gatsby';
-import { Helmet } from 'react-helmet'; // Ensure you're using a version that supports peek()
+import { Helmet } from 'react-helmet'; 
 
 beforeEach(() => {
   useStaticQuery.mockReturnValue({
