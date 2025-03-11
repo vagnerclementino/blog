@@ -36,7 +36,7 @@ describe('SearchPosts component', () => {
               "slug": "/introducao-teste-de-carga/",
               "date": "August 25, 2022",
               "title": "Introdução ao Teste de Carga",
-              "excerpt": "",
+              "excerpt": "Excerpt for Introdução ao Teste de Carga",
               "description": "Entendendo os limites do sistema"
             }
           }
