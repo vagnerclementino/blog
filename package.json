@@ -81,6 +81,7 @@
     "develop": "GATSBY_GTAG_DEBUG=true gatsby develop",
     "format": "prettier --write src/**/*.{js,jsx}",
     "start": "npm run develop",
+    "start:nocache": "npm run clean && npm start",
     "serve": "gatsby serve",
     "debug:ga": "GATSBY_GTAG_DEBUG=true gatsby develop",
     "test": "jest",
