@@ -7,6 +7,7 @@ import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { rhythm, scale } from "../utils/typography"
+import { translateReadingTime } from "../utils/readingTime"
 import { Disqus } from "gatsby-plugin-disqus"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
@@ -18,27 +19,6 @@ const getFeatureImgPath = featuredImg => {
   }
 }
 
-const translateReadingTime = stats => {
-  if (!stats) {
-    return "Unknown";
-  }
-
-  const minutes = Math.ceil(stats?.minutes || 0);
-  let readingTimeText = '';
-
-  switch (true) {
-    case minutes < 1:
-    readingTimeText = 'menos de 1 minuto';
-      break;
-    case minutes === 1:
-    readingTimeText = '1 minuto';
-      break;
-    default:
-    readingTimeText = `${minutes} minutos`;
-      break;
-  }
-  return readingTimeText;
-}
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -54,7 +34,6 @@ class BlogPostTemplate extends React.Component {
 
     let featuredImg = getImage(post.frontmatter.featuredImage?.childImageSharp?.gatsbyImageData)
 
-    console.log(`featureImg is ${JSON.stringify(featuredImg)}`)
     return (
       <Layout location={this.props.location}>
         <Helmet>

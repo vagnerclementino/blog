@@ -48,9 +48,18 @@
   },
   "devDependencies": {
     "@cspell/dict-pt-br": "^2.3.3",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^12.1.5",
+    "@babel/core": "^7.22.0",
+    "babel-jest": "^29.7.0",
+    "babel-preset-gatsby": "^3.14.0",
     "cspell": "^8.16.0",
     "gatsby-plugin-root-import": "^2.0.9",
     "husky": "^9.1.7",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jest-styled-components": "^7.2.0",
     "prettier": "^1.17.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",
@@ -75,9 +84,10 @@
     "start:nocache": "npm run clean && npm start",
     "serve": "gatsby serve",
     "debug:ga": "GATSBY_GTAG_DEBUG=true gatsby develop",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\"",
+    "test": "jest",
+    "test:watch": "jest --watch --verbose",
     "clean": "gatsby clean",
     "prepare": "husky",
-    "prepush": "cspell link add @cspell/dict-pt-br && cspell --no-must-find-files --config ./cspell.json '**/*.md' && cspell --config ./cspell.json '**/*.mdx'"
+    "prepush": "npm run test && cspell link add @cspell/dict-pt-br && cspell --no-must-find-files --config ./cspell.json '**/*.md' && cspell --config ./cspell.json '**/*.mdx'"
   }
 }
