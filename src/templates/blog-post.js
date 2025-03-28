@@ -1,4 +1,5 @@
 import React from "react"
+import { Helmet } from "react-helmet"
 import { Link, graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 
@@ -35,6 +36,9 @@ class BlogPostTemplate extends React.Component {
 
     return (
       <Layout location={this.props.location}>
+        <Helmet>
+          <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet" />
+        </Helmet>
         <SEO
           title={post.frontmatter.title}
           description={post.frontmatter.description || post.excerpt}

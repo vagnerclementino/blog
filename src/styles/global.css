@@ -60,3 +60,11 @@ h3 {
 	}
 
 }
+
+.gatsby-resp-image-figcaption {
+	font-size: 0.9em;
+	text-align: center;
+	color: #666;
+	margin-top: 5px;
+	font-style: italic;
+}

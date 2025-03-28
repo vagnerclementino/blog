@@ -9,10 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          node-version: lts/hydrogen
+          node-version: '20'
           cache: 'npm'
       - run: npm ci --legacy-peer-deps
       - run: npm test
