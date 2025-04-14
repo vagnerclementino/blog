@@ -1,9 +1,14 @@
 ---
 title: "Cemitério de Elefantes"
-date: "2025-01-08"
-description: "Uma análise sobre os caminhos profissionais na área de desenvolvimento de software e como profissionais seniores podem construir carreiras significativas"
+date: "2025-04-13"
+description: "Desafios e oportunidades para profissionais sêniors de tecnlogia em 2025"
 featuredImage: feature.jpg
 ---
+
+Include numbers (like 5).
+Include the WHO (like tech writers)
+Include the WHAT (like 5 protocols)
+Include the WHY (like to never stare at a blank page ever again)
 
 ## Introdução
 
@@ -26,49 +31,72 @@ dançavam sobre a terra silenciosa. Simba, ainda um jovem príncipe, sentia seu
 coração pulando no peito, movido por uma curiosidade incontrolável e uma
 centelha de ousadia juvenil. Ele ouvira sussurros sobre o Cemitério de
 Elefantes, um lugar que adultos tratavam com relutante respeito e temor. Com
-passo incerto mas determinado, Simba cruzou a fronteira invisível, onde a grama
-macia dava lugar a um solo árido e coberto de ossadas antigas.
+passo incerto, mas determinado, Simba cruzou a fronteira invisível, onde a
+grama macia dava lugar a um solo árido e coberto de ossadas antigas.
 
-![](2025-03-13-16-21-42.png)
+![Simba encontrando o sombrio cemitérios de elefantes - O Rei Leão da Disney™](2025-03-13-16-21-42.png)
 
-Quem já viu o filme "O Rei Leão" certamente se lembra do lendário Cemitério de
-Elefantes, um lugar envolto em mistério e temor. É lá que o jovem Simba,
-movido por uma curiosidade irresistível, decide explorar além das fronteiras
-seguras que sempre conheceu[^2]. À medida que se aventura nesse reino de sombras,
-ele é recebido por um ambiente nascido de silêncio e magia, onde grandes
-ossadas de elefantes se erguem como monumentos de uma era há muito passada.
+Quem já viu o filme _O Rei Leão_ certamente se lembra do temeroso Cemitério de
+Elefantes, um lugar envolto em mistério e temor. É lá que o jovem Simba, movido
+por uma curiosidade irresistível, decide explorar além das fronteiras seguras
+que sempre conheceu[^2]. À medida que se aventura nesse reino de sombras, ele é
+recebido por um ambiente nascido de silêncio e magia, onde grandes ossadas de
+elefantes se erguem como monumentos de uma era há muito passada.
 
-No coração desse mistério, Simba sente a presença de algo mais: uma sombra
-esquiva que parece dançar à sua volta, desafiando-o a descobrir segredos
-escondidos entre os ossos. O cemitério, mais do que um mero destino,
-transforma-se em um campo de provas pessoal, onde coragem e introspecção se
-misturam.  É nesse lugar inóspito que Simba começa sua transformação, entre a
-poeira dos antepassados e o céu amplo da savana, em um espaço onde cada ossada
-conta uma história, cada sombra guarda uma lição.
+O cemitério, mais do que um mero destino, transforma-se em um campo de provas
+pessoal, onde coragem e introspecção se misturam.  É nesse lugar inóspito que
+Simba começa sua transformação, entre a poeira dos antepassados e o céu amplo
+da savana, em um espaço onde cada ossada conta uma história, cada sombra guarda
+uma lição.
 
 ## O Mito
 
-O cemitério de elefantes é uma lenda que diz que, quando os elefantes percebem
-que estão chegando ao fim de suas vidas, afastam-se do grupo e procuram um
-lugar isolado para morrer. O mito foi popularizado pela primeira vez em filmes
-como Trader Horn (1931) e os filmes da MGM sobre Tarzan (1932-1948). Nessas
-histórias, grupos de exploradores gananciosos tentam encontrar o cemitério de
-elefantes, localizado na fictícia Escarpa Mutia, para coletar as valiosas
-presas de marfim[^3].
+Caso você nunca tenha ouvido falar, o cemitério de elefantes é uma lenda que
+diz que, quando os elefantes percebem que estão chegando ao fim de suas vidas,
+afastam-se do grupo e procuram um lugar isolado para morrer. O mito foi
+popularizado pela primeira vez em filmes como Trader Horn (1931) e os filmes da
+MGM sobre Tarzan (1932-1948). Nessas histórias, grupos de exploradores
+gananciosos tentam encontrar o cemitério de elefantes, localizado na fictícia
+_Escarpa Mutia_, para coletar as valiosas presas de marfim[^3].
 
-O mito de que elefantes viajam para um local específico para morrer não é
-verdadeiro , pois grandes acúmulos de ossos podem ser explicados por mortes em
-massa causadas por doenças. No entanto, os elefantes demonstram um interesse
-genuíno por restos mortais da própria espécie, comportamento raro no reino
-animal. Estudos demonstraram que esse comportamento dos elefantes indica uma
-forte conexão social e emocional com seus mortos, mas não há evidências de que
-eles escolham um local específico para morrer, descartando a ideia de um
-"cemitério de elefantes"[^4].
+Mas sejamos sinceros, a ideia de que elefantes viajam para um local específico
+para morrer não é verdadeira. Na realidade os grandes acúmulos de ossos podem
+ser explicados mais por mortes em massa causadas por doenças do que por um
+hábito da espécie. No entanto, os elefantes demonstram um interesse genuíno por
+restos mortais da própria espécie, comportamento raro no reino animal. Estudos
+demonstraram que esse comportamento dos elefantes indica uma forte conexão
+social e emocional com seus mortos, mas não há evidências de que eles escolham
+um local específico para morrer, descartando a ideia de um "cemitério de
+elefantes"[^4].
+![Elefante com um problema grave de saúde, porém, vivendo com a sua manada - Fonte: Rory Young](2025-03-13-16-50-07.png)
 
-Essa metáfora pode ser aplicada à
-carreira de desenvolvimento, onde muitas vezes, ao atingir uma certa idade ou
-nível de senioridade, os profissionais são incentivados a deixar de lado a
-atuação técnica e migrar para cargos de gestão.
+## Motivação
+
+O mito do cemitério de elefantes é fascinante. Segundo a lenda, elefantes
+idosos, ao perceberem a aproximação da morte, procuram um lugar isolado, longe
+dos olhos dos outros animais, para repousar em paz. Embora a história não passe
+de um mito, ela carrega uma forte carga simbólica: a busca por um lugar onde se
+possa encerrar um ciclo de forma digna e significativa.
+
+Todavia, o meu interesse nessa história não foi atoa. Surgiu quando no chat da
+empresa que eu trabalho foi anunciada a aposentadoria de James Gosling[^1]. Ele
+ficou conhecido como conhecido como o "pai do Java", um dos autores da classe
+[Date](https://github.com/AdoptOpenJDK/jdk20u/blob/master/src/java.base/share/classes/java/util/Date.java#L120),
+possivelmente uma das classes mais utilizadas da linguagem.
+
+A minha reposta ao post foi “Feliz em saber que desenvolvedor aposenta. Achava
+que todos virariam gerentes.” Essa frase, que muitos diriam em tom de alívio ou
+ironia, ecoa um sentimento comum no universo da tecnologia: a percepção de que
+a única alternativa para o crescimento na carreira seria a transição para a
+gestão. Mas, felizmente, essa ideia está se tornando obsoleta. Hoje, a carreira
+em Y oferece um caminho alternativo e valioso para profissionais que desejam se
+manter no lado técnico.
+
+![](2025-03-28-20-39-50.png)
+
+Essa metáfora pode ser aplicada à carreira de desenvolvimento, onde muitas
+vezes, ao atingir uma certa idade ou nível de senioridade, os profissionais são
+incentivados a deixar de lado a atuação técnica e migrar para cargos de gestão.
 
 No entanto, essa ideia de que a carreira de desenvolvimento seja um "cemitério de
 elefantes" está longe de ser verdadeira. A aposentadoria de James Gosling, um
@@ -116,33 +144,10 @@ para o avanço da tecnologia. E a aposentadoria de James Gosling é um lembrete
 de que a paixão pela programação não tem idade e que é possível ser um
 desenvolvedor de sucesso em qualquer fase da carreira.
 
-![Elefante com um problema grave, porém, vivendo com a sua manada - Fonte: Rory Young](2025-03-13-16-50-07.png)
-
-## Motivação
-
-O mito do cemitério de elefantes é fascinante. Segundo a lenda, elefantes
-idosos, ao perceberem a aproximação da morte, procuram um lugar isolado, longe
-dos olhos dos outros animais, para repousar em paz. Embora a história não passe
-de um mito, ela carrega uma forte carga simbólica: a busca por um lugar onde se
-possa encerrar um ciclo de forma digna e significativa.
-
-Todavia, o meu interesse nessa história não foi atoa. James Gosling, um dos
-pais da linguagem de programação Java, um dos autores da classe
-[Date](https://github.com/AdoptOpenJDK/jdk20u/blob/master/src/java.base/share/classes/java/util/Date.java#L120),
-anunciou recentemente a sua aposentadoria[^1], possivelmente uma das classes
-mais utilizadas da linguagem.
-
 Sua contribuição à Engenharia de Software é imensurável, e sua despedida da
 vida profissional ativa trouxe à tona uma reflexão: **desenvolvedores podem
 realmente se aposentar enquanto permanecem em sua essência técnica, ou a
 progressão natural é migrar para a gestão?**
-
-“Feliz em saber que desenvolvedor aposenta. Achava que todos virariam gerentes.”
-Essa frase, que muitos diriam em tom de alívio ou ironia, ecoa um sentimento
-comum no universo da tecnologia: a percepção de que a única alternativa para o
-crescimento na carreira seria a transição para a gestão. Mas, felizmente, essa
-ideia está se tornando obsoleta. Hoje, a carreira em Y oferece um caminho
-alternativo e valioso para profissionais que desejam se manter no lado técnico.
 
 ## A Lenda do Cemitério de Elefantes
 
