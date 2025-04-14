@@ -5,11 +5,6 @@ description: "Desafios e oportunidades para profissionais sêniors de tecnlogia 
 featuredImage: feature.jpg
 ---
 
-Include numbers (like 5).
-Include the WHO (like tech writers)
-Include the WHAT (like 5 protocols)
-Include the WHY (like to never stare at a blank page ever again)
-
 ## Introdução
 
 O mundo do desenvolvimento de software está em constante evolução, mas uma
