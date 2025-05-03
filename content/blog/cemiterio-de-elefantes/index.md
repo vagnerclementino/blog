@@ -22,7 +22,7 @@ Nesta jornada, vamos explorar:
 Prepare-se para desafiar crenças limitantes e descobrir que, ao contrário dos
 elefantes da lenda, profissionais experientes não precisam desaparecer.
 
-## A lenda
+## A Lenda
 
 Sob o manto prateado da lua, a savana se transformava, e as sombras da noite
 dançavam sobre a terra silenciosa. Simba, ainda um jovem príncipe, sentia seu
@@ -144,7 +144,7 @@ sua carreira.
 
 A lenda do cemitério de elefantes nos serve como uma metáfora poderosa, mas não
 como um destino inevitável. O mercado de tecnologia está evoluindo, e oferece
-um leque de opções que permitem aos profissionais se manterem ativos,
+uma variedade de opções que permitem aos profissionais se manterem ativos,
 influentes e realizados, seja como gestores ou técnicos. A história de James
 Gosling é um lembrete poderoso de que há vida (e impacto) além da transição
 para a gestão. Sob esse prisma, as diferentes possibilidades de carreira nos
