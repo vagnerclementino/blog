@@ -1,7 +1,7 @@
 ---
 title: "Cemitério de Elefantes"
 date: "2025-05-02"
-description: "Desafios e oportunidades para profissionais sêniors de tecnologia em 2025"
+description: "Desafios e oportunidades para profissionais seniores de tecnologia em 2025"
 featuredImage: feature.jpg
 ---
 
@@ -9,8 +9,8 @@ featuredImage: feature.jpg
 
 A recente aposentadoria de James Gosling, o lendário criador do Java, acendeu
 um debate crucial: qual o verdadeiro destino dos profissionais técnicos após
-décadas de carreira? Será que a única saída é virar gerente ou existe vida - e
-reconhecimento - para quem escolhe permanecer na linha de frente do código?
+décadas de carreira? Será que a única saída é virar gerente ou existe vida -- e
+reconhecimento -- para quem escolhe permanecer na linha de frente do código?
 
 Nesta jornada, vamos explorar:
 
@@ -33,7 +33,7 @@ passos incertos, todavia, determinados, Simba cruzou a fronteira invisível, ond
 a grama macia dava lugar a um solo árido e coberto de ossadas antigas: o temido
 cemitério de elefantes.
 
-![Simba encontrando o sombrio cemitério de elefantes - O Rei Leão da Disney™](2025-03-13-16-21-42.png)
+![Simba encontrando o sombrio cemitério de elefantes - O Rei Leão da Disney](2025-03-13-16-21-42.png)
 
 Quem já viu o filme _O Rei Leão_ certamente se lembra do temeroso Cemitério de
 Elefantes, um lugar envolto em mistério e temor. É lá que o jovem Simba, movido
@@ -68,7 +68,7 @@ social e emocional com seus mortos, contudo, não há evidências de que eles
 escolham um local específico para morrer, descartando a ideia de um "cemitério
 de elefantes"[^4].
 
-![Elefante com um problema grave de saúde, porém, vivendo com a sua manada - Fonte: Rory Young](2025-03-13-16-50-07.png)
+![Elefante com um problema grave de saúde, porém, vivendo com a sua manada](2025-03-13-16-50-07.png)
 
 ## Motivação
 
@@ -78,8 +78,8 @@ repousar em paz. Embora a história não passe de um mito, ela carrega uma forte
 carga simbólica: a busca por um lugar onde se possa encerrar um ciclo de forma
 digna e significativa.
 
-O meu interesse nessa história não é em vão. Surgiu quando no chat da empresa
-que eu trabalho foi anunciada a aposentadoria de James Gosling[^1], conhecido
+O meu interesse nessa história não é em vão. Surgiu no chat da empresa em que
+trabalho, quando foi anunciada a aposentadoria de James Gosling[^1], conhecido
 como o "pai do Java", um dos autores da classe
 [`Date`](https://github.com/AdoptOpenJDK/jdk20u/blob/master/src/java.base/share/classes/java/util/Date.java#L120).
 
@@ -126,12 +126,9 @@ como se o único caminho possível fosse migrar para a gestão. Mas será que es
 é a única opção? Para quem busca crescimento para além do nível sênior, existem
 três trilhas principais:
 
-- _IC (Individual Contributor)_: Ideal para quem ama detalhes técnicos,
-    mentoria e especialização (ex.: Staff/Principal Engineer)  
-- _Gestão_: Para generalistas focados em alinhamento de equipes, processos e
-    comunicação (ex.: Engineering Manager).
-- _Arquitetura_: Combina visão macro com profundidade técnica, planejando
-    soluções de longo prazo (ex.: Software Architect).
+- _IC (Individual Contributor)_: Ideal para quem ama detalhes técnicos, mentoria e especialização (ex.: Staff/Principal Engineer)
+- _Gestão_: Para generalistas focados em alinhamento de equipes, processos e comunicação (ex.: Engineering Manager).
+- _Arquitetura_: Combina visão macro com profundidade técnica, planejando soluções de longo prazo (ex.: Software Architect).
 
 Por que isso importa? Como relatado por Bukovec, a falta de clareza sobre esses
 caminhos pode levar à estagnação. Essa situação pode ser comparada à lenda do
