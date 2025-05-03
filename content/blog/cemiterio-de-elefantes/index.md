@@ -33,7 +33,7 @@ passos incertos, todavia, determinados, Simba cruzou a fronteira invisível, ond
 a grama macia dava lugar a um solo árido e coberto de ossadas antigas: o temido
 cemitério de elefantes.
 
-![Simba encontrando o sombrio cemitérios de elefantes - O Rei Leão da Disney™](2025-03-13-16-21-42.png)
+![Simba encontrando o sombrio cemitério de elefantes - O Rei Leão da Disney™](2025-03-13-16-21-42.png)
 
 Quem já viu o filme _O Rei Leão_ certamente se lembra do temeroso Cemitério de
 Elefantes, um lugar envolto em mistério e temor. É lá que o jovem Simba, movido
@@ -81,10 +81,10 @@ digna e significativa.
 O meu interesse nessa história não é em vão. Surgiu quando no chat da empresa
 que eu trabalho foi anunciada a aposentadoria de James Gosling[^1], conhecido
 como o "pai do Java", um dos autores da classe
-[Date](https://github.com/AdoptOpenJDK/jdk20u/blob/master/src/java.base/share/classes/java/util/Date.java#L120).
+[`Date`](https://github.com/AdoptOpenJDK/jdk20u/blob/master/src/java.base/share/classes/java/util/Date.java#L120).
 
 Nessa thread, quando todos falavam das reais contribuições de Gosling, a minha
-reposta ao post foi “Feliz em saber que desenvolvedor aposenta. Achava que
+resposta ao post foi “Feliz em saber que desenvolvedor aposenta. Achava que
 todos virariam gerentes.” Essa frase, que muitos diriam em tom de alívio ou
 ironia, ecoa um sentimento comum no universo da tecnologia: a percepção de que
 a única alternativa para o crescimento na carreira seria a transição para a
