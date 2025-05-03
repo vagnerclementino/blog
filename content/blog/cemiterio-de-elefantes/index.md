@@ -1,7 +1,7 @@
 ---
 title: "Cemitério de Elefantes"
 date: "2025-05-02"
-description: "Desafios e oportunidades para profissionais sêniors de tecnlogia em 2025"
+description: "Desafios e oportunidades para profissionais sêniors de tecnologia em 2025"
 featuredImage: feature.jpg
 ---
 
@@ -29,7 +29,7 @@ dançavam sobre a terra silenciosa. Simba, ainda um jovem príncipe, sentia seu
 coração pulando no peito, movido por uma curiosidade incontrolável e uma
 centelha de ousadia juvenil. Ele ouvira sussurros sobre um certo _"Cemitério de
 Elefantes"_, um lugar que adultos tratavam com relutante respeito e temor. Com
-passos incertos, todavia,determinados, Simba cruzou a fronteira invisível, onde
+passos incertos, todavia, determinados, Simba cruzou a fronteira invisível, onde
 a grama macia dava lugar a um solo árido e coberto de ossadas antigas: o temido
 cemitério de elefantes.
 
@@ -59,7 +59,7 @@ gananciosos tentam encontrar um cemitério de elefantes, localizado na fictícia
 _Escarpa Mutia_, para coletar as valiosas presas de marfim[^3].
 
 Mas sejamos sinceros, a ideia de que elefantes viajam para um local específico
-para morrer _não é nem de longe verdadeira_. Na realidade os grandes acúmulos
+para morrer _não é nem de longe verdadeira_. Na realidade, os grandes acúmulos
 de ossos podem ser explicados mais por mortes em massa causadas por doenças do
 que por um hábito da espécie. No entanto, os elefantes demonstram um interesse
 genuíno por restos mortais da própria espécie, comportamento raro no reino
@@ -88,7 +88,7 @@ reposta ao post foi “Feliz em saber que desenvolvedor aposenta. Achava que
 todos virariam gerentes.” Essa frase, que muitos diriam em tom de alívio ou
 ironia, ecoa um sentimento comum no universo da tecnologia: a percepção de que
 a única alternativa para o crescimento na carreira seria a transição para a
-gestão. 
+gestão.
 
 ![Feliz em saber que desenvolvedor aposenta. Achava que todos virariam gerentes.](2025-03-28-20-39-50.png)
 
@@ -97,10 +97,9 @@ como uma ironia, já que a maioria dos profissionais de TI, ao atingir uma certa
 idade, são incentivados a deixar de lado a atuação técnica e assumir cargos de
 liderança. No entanto, essa frase também pode ser vista como uma crítica ao
 fato de que muitos profissionais de desenvolvimento acabam deixando de lado sua
-paixão pela programação para se tornarem gestores. Ao cabo que traz à tona
-seguinte reflexão: **desenvolvedores podem realmente se aposentar enquanto
-permanecem em sua essência técnica, ou a progressão natural é migrar para a
-gestão?**
+paixão pela programação para se tornarem gestores. Isso nos leva à reflexão:
+**desenvolvedores podem realmente se aposentar enquanto permanecem em sua
+essência técnica, ou a progressão natural é migrar para a gestão?**
 
 ## Para o Sênior e Além
 
@@ -113,7 +112,7 @@ as próximas etapas na carreira de desenvolvimento.
 
 As discussões sobre carreiras em engenharia de software revelam um consenso: a
 posição de Sênior não é um ponto final, mas sim o início de múltiplas jornadas
-profissionais. Como destacado por Will Larson no livro Staff Engineer[^6] e
+profissionais[^7]. Como destacado por Will Larson no livro Staff Engineer[^6] e
 Mai-Lan Bukovec[^5], profissionais em níveis como _Principal Engineer_
 enfrentam o desafio de priorizar seu impacto. Ambos apresentam frameworks de
 papéis para posições para além de sênior. Larson propõe arquétipos como _Tech
@@ -139,7 +138,7 @@ caminhos pode levar à estagnação. Essa situação pode ser comparada à lenda
 cemitério de elefantes, onde, sem uma direção ou propósito claro, profissionais
 podem acabar se isolando em suas carreiras, como um elefante que procura um
 local solitário para morrer. Assim como o elefante que se afasta do grupo por
-medo, por um sentimento de defasagem etc., um profissional sem clareza pode
+medo, por um sentimento de defasagem, etc., um profissional sem clareza pode
 tomar decisões que o deixem estagnado ou mesmo o levem ao declínio
 profissional, sem contribuir para o crescimento pessoal ou para a evolução de
 sua carreira.
@@ -151,7 +150,7 @@ como um destino inevitável. O mercado de tecnologia está evoluindo, e oferece
 um leque de opções que permitem aos profissionais se manterem ativos,
 influentes e realizados, seja como gestores ou técnicos. A história de James
 Gosling é um lembrete poderoso de que há vida (e impacto) além da transição
-para a gestão. Sob esse prima, as diferentes possibilidades de carreira nos
+para a gestão. Sob esse prisma, as diferentes possibilidades de carreira nos
 ensinam que:
 
 1. **Escolhas conscientes são fundamentais:** Cada profissional deve refletir
