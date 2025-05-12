@@ -87,6 +87,7 @@
     "test": "jest",
     "test:watch": "jest --watch --verbose",
     "clean": "gatsby clean",
+    "prepare": "husky",
     "prepush": "npm run test && cspell link add @cspell/dict-pt-br && cspell --no-must-find-files --config ./cspell.json '**/*.md' && cspell --config ./cspell.json '**/*.mdx'"
   }
 }
