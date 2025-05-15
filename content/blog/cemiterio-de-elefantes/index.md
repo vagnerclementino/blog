@@ -12,9 +12,9 @@ um debate crucial: qual o verdadeiro destino dos profissionais técnicos após
 décadas de carreira? Será que a única saída é virar gerente ou existe vida -- e
 reconhecimento -- para quem escolhe permanecer na linha de frente do código?
 
-Nesta jornada, vamos explorar:
+Neste artigo, vamos explorar:
 
-1. 🏛️ O mito do cemitério de elefantes - uma metáfora poderosa para nossa carreira
+1. 🏛️ O mito do cemitério de elefantes: uma metáfora poderosa para nossa carreira
 2. 👨💻 A trajetória de Gosling e o que ela revela sobre valorização técnica
 3. 🛤️ Os caminhos (muitas vezes ocultos) além do título de "Sênior"
 4. 💎 Por que sua experiência vale mais do que você imagina
