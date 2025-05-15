@@ -163,7 +163,7 @@ chances de sucesso. **A mensagem central é: explore, experimente e adapte-se**.
 Sua trajetória não precisa ser linear, mas consciente. E você? Já refletiu
 sobre esses papéis ou caminhos? Compartilhe suas experiências nos comentários!
 
-## Agredecimento
+## Agradecimento
 
 Agradeço especialmente a [Andreza Vieira](https://www.linkedin.com/in/andreza-vieira-65360678/) e a [Lorena Vieira](https://www.linkedin.com/in/lorena-vieiraa/) pela ajuda na revisão
 deste texto.
