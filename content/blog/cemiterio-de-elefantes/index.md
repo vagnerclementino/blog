@@ -104,7 +104,7 @@ essência técnica ou a progressão natural é migrar para a gestão?**
 
 A verdade é que a carreira de desenvolvimento oferece diversas oportunidades
 para aqueles que desejam continuar atuando de forma técnica, mesmo com o passar
-dos anos. O conceito de carreira em Y possibilita que profissionais sêniores
+dos anos. O conceito de _carreira em Y_ possibilita que profissionais sêniores
 escolham entre duas trajetórias principais: a gestão de pessoas e processos ou
 a excelência técnica. Essas duas perspectivas complementares ajudam a entender
 as próximas etapas na carreira de desenvolvimento.
@@ -139,10 +139,10 @@ tomar decisões que o deixem estagnado ou mesmo o levem ao declínio
 profissional, sem contribuir para o crescimento pessoal ou para a evolução de
 sua carreira.
 
-## Conclusão
+## Um caminho cheio de possibilidades
 
 A lenda do cemitério de elefantes nos serve como uma metáfora poderosa, mas não
-como um destino inevitável. O mercado de tecnologia está evoluindo, e oferece
+como um destino inevitável. O mercado de tecnologia está evoluindo e oferece
 uma variedade de opções que permitem aos profissionais se manterem ativos,
 influentes e realizados, seja como gestores ou técnicos. A história de James
 Gosling é um lembrete poderoso de que há vida (e impacto) além da transição
@@ -160,8 +160,13 @@ ensinam que:
 
 Por fim, definir uma direção — mesmo que provisória — aumenta motivação e
 chances de sucesso. **A mensagem central é: explore, experimente e adapte-se**.
-Sua trajetória não precisa ser linear, mas consciente.  E você? Já refletiu
+Sua trajetória não precisa ser linear, mas consciente. E você? Já refletiu
 sobre esses papéis ou caminhos? Compartilhe suas experiências nos comentários!
+
+## Agredecimento
+
+Agradeço especialmente a [Andreza Vieira](https://www.linkedin.com/in/andreza-vieira-65360678/) e a [Lorena Vieira](https://www.linkedin.com/in/lorena-vieiraa/) pela ajuda na revisão
+deste texto.
 
 [^1]:
     James Gosling retirement announcement.
