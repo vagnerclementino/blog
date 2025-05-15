@@ -98,7 +98,7 @@ liderança. No entanto, essa frase também pode ser vista como uma crítica ao
 fato de que muitos profissionais de desenvolvimento acabam deixando de lado sua
 paixão pela programação para se tornarem gestores. Isso nos leva à reflexão:
 **desenvolvedores podem realmente se aposentar enquanto permanecem em sua
-essência técnica, ou a progressão natural é migrar para a gestão?**
+essência técnica ou a progressão natural é migrar para a gestão?**
 
 ## Para o Sênior e Além
 
