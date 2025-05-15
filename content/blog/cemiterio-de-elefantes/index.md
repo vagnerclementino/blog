@@ -24,14 +24,14 @@ elefantes da lenda, profissionais experientes não precisam desaparecer.
 
 ## A Lenda
 
-Sob o manto prateado da lua, a savana se transformava, e as sombras da noite
+Sob o manto prateado da lua, a savana se transformava e as sombras da noite
 dançavam sobre a terra silenciosa. Simba, ainda um jovem príncipe, sentia seu
 coração pulando no peito, movido por uma curiosidade incontrolável e uma
-centelha de ousadia juvenil. Ele ouvira sussurros sobre um certo _"Cemitério de
-Elefantes"_, um lugar que adultos tratavam com relutante respeito e temor. Com
-passos incertos, todavia, determinados, Simba cruzou a fronteira invisível, onde
-a grama macia dava lugar a um solo árido e coberto de ossadas antigas: o temido
-cemitério de elefantes.
+centelha de ousadia juvenil. Ele ouvira sussurros sobre um certo "Cemitério de
+Elefantes", um lugar que adultos tratavam com relutante respeito e temor. Com
+passos incertos, todavia, determinados, Simba cruzou a fronteira invisível,
+onde a grama macia dava lugar a um solo árido e coberto de ossadas antigas: o
+temido cemitério de elefantes.
 
 ![Simba encontrando o sombrio cemitério de elefantes - O Rei Leão da Disney](2025-03-13-16-21-42.png)
 
