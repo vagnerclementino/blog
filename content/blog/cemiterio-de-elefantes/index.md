@@ -12,9 +12,9 @@ um debate crucial: qual o verdadeiro destino dos profissionais técnicos após
 décadas de carreira? Será que a única saída é virar gerente ou existe vida -- e
 reconhecimento -- para quem escolhe permanecer na linha de frente do código?
 
-Nesta jornada, vamos explorar:
+Neste artigo, vamos explorar:
 
-1. 🏛️ O mito do cemitério de elefantes - uma metáfora poderosa para nossa carreira
+1. 🏛️ O mito do cemitério de elefantes: uma metáfora poderosa para nossa carreira
 2. 👨💻 A trajetória de Gosling e o que ela revela sobre valorização técnica
 3. 🛤️ Os caminhos (muitas vezes ocultos) além do título de "Sênior"
 4. 💎 Por que sua experiência vale mais do que você imagina
@@ -24,14 +24,14 @@ elefantes da lenda, profissionais experientes não precisam desaparecer.
 
 ## A Lenda
 
-Sob o manto prateado da lua, a savana se transformava, e as sombras da noite
+Sob o manto prateado da lua, a savana se transformava e as sombras da noite
 dançavam sobre a terra silenciosa. Simba, ainda um jovem príncipe, sentia seu
 coração pulando no peito, movido por uma curiosidade incontrolável e uma
-centelha de ousadia juvenil. Ele ouvira sussurros sobre um certo _"Cemitério de
-Elefantes"_, um lugar que adultos tratavam com relutante respeito e temor. Com
-passos incertos, todavia, determinados, Simba cruzou a fronteira invisível, onde
-a grama macia dava lugar a um solo árido e coberto de ossadas antigas: o temido
-cemitério de elefantes.
+centelha de ousadia juvenil. Ele ouvira sussurros sobre um certo "Cemitério de
+Elefantes", um lugar que adultos tratavam com relutante respeito e temor. Com
+passos incertos, todavia, determinados, Simba cruzou a fronteira invisível,
+onde a grama macia dava lugar a um solo árido e coberto de ossadas antigas: o
+temido cemitério de elefantes.
 
 ![Simba encontrando o sombrio cemitério de elefantes - O Rei Leão da Disney](2025-03-13-16-21-42.png)
 
@@ -48,7 +48,7 @@ Simba começa sua transformação, entre a poeira dos antepassados e o céu ampl
 da savana, em um espaço onde cada ossada conta uma história, cada sombra guarda
 uma lição.
 
-## O Mito
+## A verdade por trás do Mito
 
 Caso você nunca tenha ouvido falar, o Cemitério de Elefantes é uma lenda que
 sugere que os elefantes quando percebem que estão chegando ao fim de suas
@@ -81,9 +81,8 @@ digna e significativa.
 O meu interesse nessa história não é em vão. Surgiu no chat da empresa em que
 trabalho, quando foi anunciada a aposentadoria de James Gosling[^1], conhecido
 como o "pai do Java", um dos autores da classe
-[`Date`](https://github.com/AdoptOpenJDK/jdk20u/blob/master/src/java.base/share/classes/java/util/Date.java#L120).
-
-Nessa thread, quando todos falavam das reais contribuições de Gosling, a minha
+[`Date`](https://github.com/AdoptOpenJDK/jdk20u/blob/master/src/java.base/share/classes/java/util/Date.java#L120). Nessa
+thread, quando todos falavam das reais contribuições de Gosling, a minha
 resposta ao post foi “Feliz em saber que desenvolvedor aposenta. Achava que
 todos virariam gerentes.” Essa frase, que muitos diriam em tom de alívio ou
 ironia, ecoa um sentimento comum no universo da tecnologia: a percepção de que
@@ -99,13 +98,13 @@ liderança. No entanto, essa frase também pode ser vista como uma crítica ao
 fato de que muitos profissionais de desenvolvimento acabam deixando de lado sua
 paixão pela programação para se tornarem gestores. Isso nos leva à reflexão:
 **desenvolvedores podem realmente se aposentar enquanto permanecem em sua
-essência técnica, ou a progressão natural é migrar para a gestão?**
+essência técnica ou a progressão natural é migrar para a gestão?**
 
 ## Para o Sênior e Além
 
 A verdade é que a carreira de desenvolvimento oferece diversas oportunidades
 para aqueles que desejam continuar atuando de forma técnica, mesmo com o passar
-dos anos. O conceito de carreira em Y possibilita que profissionais sêniores
+dos anos. O conceito de _carreira em Y_ possibilita que profissionais sêniores
 escolham entre duas trajetórias principais: a gestão de pessoas e processos ou
 a excelência técnica. Essas duas perspectivas complementares ajudam a entender
 as próximas etapas na carreira de desenvolvimento.
@@ -140,10 +139,10 @@ tomar decisões que o deixem estagnado ou mesmo o levem ao declínio
 profissional, sem contribuir para o crescimento pessoal ou para a evolução de
 sua carreira.
 
-## Conclusão
+## Um caminho cheio de possibilidades
 
 A lenda do cemitério de elefantes nos serve como uma metáfora poderosa, mas não
-como um destino inevitável. O mercado de tecnologia está evoluindo, e oferece
+como um destino inevitável. O mercado de tecnologia está evoluindo e oferece
 uma variedade de opções que permitem aos profissionais se manterem ativos,
 influentes e realizados, seja como gestores ou técnicos. A história de James
 Gosling é um lembrete poderoso de que há vida (e impacto) além da transição
@@ -161,8 +160,13 @@ ensinam que:
 
 Por fim, definir uma direção — mesmo que provisória — aumenta motivação e
 chances de sucesso. **A mensagem central é: explore, experimente e adapte-se**.
-Sua trajetória não precisa ser linear, mas consciente.  E você? Já refletiu
+Sua trajetória não precisa ser linear, mas consciente. E você? Já refletiu
 sobre esses papéis ou caminhos? Compartilhe suas experiências nos comentários!
+
+## Agradecimento
+
+Agradeço especialmente a [Andreza Vieira](https://www.linkedin.com/in/andreza-vieira-65360678/) e a [Lorena Vieira](https://www.linkedin.com/in/lorena-vieiraa/) pela ajuda na revisão
+deste texto.
 
 [^1]:
     James Gosling retirement announcement.
