@@ -48,7 +48,7 @@ Simba começa sua transformação, entre a poeira dos antepassados e o céu ampl
 da savana, em um espaço onde cada ossada conta uma história, cada sombra guarda
 uma lição.
 
-## O Mito
+## A verdade por trás do Mito
 
 Caso você nunca tenha ouvido falar, o Cemitério de Elefantes é uma lenda que
 sugere que os elefantes quando percebem que estão chegando ao fim de suas
