@@ -81,7 +81,7 @@ digna e significativa
 O meu interesse nessa história não é em vão. Surgiu no chat da empresa em que
 trabalho, quando foi anunciada a aposentadoria de James Gosling[^1], conhecido
 como o "pai do Java", um dos autores da classe
-[`Date`](https://github.com/AdoptOpenJDK/jdk20u/blob/master/src/java.base/share/classes/java/util/Date.java#L120).Nessa
+[`Date`](https://github.com/AdoptOpenJDK/jdk20u/blob/master/src/java.base/share/classes/java/util/Date.java#L120). Nessa
 thread, quando todos falavam das reais contribuições de Gosling, a minha
 resposta ao post foi “Feliz em saber que desenvolvedor aposenta. Achava que
 todos virariam gerentes.” Essa frase, que muitos diriam em tom de alívio ou
