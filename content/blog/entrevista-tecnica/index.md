@@ -1,48 +1,75 @@
 ---
 title: "Entrevista Técnica"
 date: "2025-05-11"
-description: "Uma alegoria com o processo de seleção para desenvolvedores"
+description: "Uma alegoria sobre o processo de seleção para desenvolvedores"
 featuredImage: feature.png
 ---
 
 ## Prólogo
 
-**Entrevistador:** Antes de começarmos, gostaria de pedir desculpas por termos solicitado que você viesse até a sede da empresa. Devido ao contexto atual, decidimos realizar as entrevistas de forma presencial. Bem-vindo à nossa entrevista técnica. Vamos começar com algumas perguntas sobre algoritmos e estruturas de dados. Pode me explicar como você lidaria com um problema de balanceamento de árvores?
+**Entrevistador:** Antes de começarmos, gostaria de pedir desculpas por termos
+solicitado que você viesse até a sede da empresa. Devido ao contexto atual,
+decidimos realizar as entrevistas de forma presencial. Bem-vindo à nossa
+entrevista técnica. Vamos começar com algumas perguntas sobre algoritmos e
+estruturas de dados. Pode me explicar como você lidaria com um problema de
+balanceamento de árvores?
 
-**Candidato:** Claro, mas antes, gostaria de mencionar que minha experiência é mais voltada para a liderança e a tomada de decisões estratégicas.
+**Candidato:** Claro, mas antes, gostaria de mencionar que minha experiência é
+mais voltada para a liderança e a tomada de decisões estratégicas.
 
-**Entrevistador:** Entendo, mas precisamos garantir que todos os candidatos tenham uma base técnica sólida. Vamos prosseguir. Como você otimiza a busca em uma árvore binária?
+**Entrevistador:** Entendo, mas precisamos garantir que todos os candidatos
+tenham uma base técnica sólida. Vamos prosseguir. Como você otimiza a busca em
+uma árvore binária?
 
-**Candidato:** Acredito que a chave para o sucesso está na colaboração e na orientação. Em minha experiência, formar equipes fortes é essencial.
+**Candidato:** Acredito que a chave para o sucesso está na colaboração e na
+orientação. Em minha experiência, formar equipes fortes é essencial.
 
-**Entrevistador:** Interessante. Você tem uma vasta experiência em liderança espiritual e comunitária. Como isso se traduz em sua abordagem para liderar equipes técnicas?
+**Entrevistador:** Interessante. Você tem uma vasta experiência em liderança
+espiritual e comunitária. Como isso se traduz em sua abordagem para liderar
+equipes técnicas?
 
-**Candidato:** Liderar uma comunidade requer empatia, paciência e a habilidade de inspirar. Acredito que essas qualidades são igualmente importantes em liderar equipes técnicas, onde a colaboração e a visão compartilhada são essenciais.
+**Candidato:** Liderar uma comunidade requer empatia, paciência e a habilidade
+de inspirar. Acredito que essas qualidades são igualmente importantes em
+liderar equipes técnicas, onde a colaboração e a visão compartilhada são
+essenciais.
 
 **Entrevistador:** E quanto à sua experiência com sistemas distribuídos?
 
-**Candidato:** Ah, sistemas distribuídos! Eles me lembram da complexidade de gerenciar uma comunidade global. A comunicação eficaz é crucial.
+**Candidato:** Ah, sistemas distribuídos! Eles me lembram da complexidade de
+gerenciar uma comunidade global. A comunicação eficaz é crucial.
 
-**Entrevistador:** Você passou muitos anos em missões internacionais. Como essas experiências moldaram sua perspectiva sobre a inovação tecnológica?
+**Entrevistador:** Você passou muitos anos em missões internacionais. Como
+essas experiências moldaram sua perspectiva sobre a inovação tecnológica?
 
-**Candidato:** Trabalhar em diferentes culturas me ensinou a importância da adaptabilidade e da escuta ativa. A inovação tecnológica deve sempre considerar o contexto humano e cultural em que será aplicada.
+**Candidato:** Trabalhar em diferentes culturas me ensinou a importância da
+adaptabilidade e da escuta ativa. A inovação tecnológica deve sempre considerar
+o contexto humano e cultural em que será aplicada.
 
-**Entrevistador:** Vamos mudar de assunto. Como você lida com a pressão de prazos apertados?
+**Entrevistador:** Vamos mudar de assunto. Como você lida com a pressão de
+prazos apertados?
 
-**Candidato:** A pressão é uma constante em qualquer posição de liderança. Acredito que manter a calma e a clareza de propósito são fundamentais.
+**Candidato:** A pressão é uma constante em qualquer posição de liderança.
+Acredito que manter a calma e a clareza de propósito são fundamentais.
 
-**Entrevistador:** Os desafios das entrevistas técnicas em 2025 são bem conhecidos. Com a chegada de ferramentas especializadas, como você vê o impacto delas no processo de seleção?
+**Entrevistador:** Os desafios das entrevistas técnicas em 2025 são bem
+conhecidos. Com a chegada de ferramentas especializadas, como você vê o impacto
+delas no processo de seleção?
 
-**Candidato:** As ferramentas tecnológicas certamente mudaram o cenário. Elas oferecem vantagens, mas também aumentam a pressão sobre os candidatos para se destacarem em áreas que vão além do conhecimento técnico, como habilidades interpessoais e adaptabilidade.
+**Candidato:** As ferramentas tecnológicas certamente mudaram o cenário. Elas
+oferecem vantagens, mas também aumentam a pressão sobre os candidatos para se
+destacarem em áreas que vão além do conhecimento técnico, como habilidades
+interpessoais e adaptabilidade.
 
-**Entrevistador:** Por último, mas não menos importante, qual seria seu nome de escolha ao assumir esta posição?
+**Entrevistador:** Por último, mas não menos importante, qual seria seu nome de
+escolha ao assumir esta posição?
 
 **Candidato:** Após muita reflexão, escolho o nome Leão XIV.
 
-**Entrevistador:** Leão XIV? Interessante escolha. Bem, obrigado por sua participação. Entraremos em contato.
+**Entrevistador:** Leão XIV? Interessante escolha. Bem, obrigado por sua
+participação. Entraremos em contato.
 
-**Candidato:** Agradeço pela oportunidade. Estou ansioso para contribuir de maneira significativa.
-
+**Candidato:** Agradeço pela oportunidade. Estou ansioso para contribuir de
+maneira significativa.
 
 ## Desafios das Entrevistas Técnicas em 2025
 
@@ -100,8 +127,17 @@ encontrar alguém que possa crescer e se desenvolver dentro da organização.
 
 
 
-[^1]: A dura realidade das entrevistas para engenheiros de software em 2025. <https://newsletter.nagringa.dev/p/realidade-das-entrevistas-em-2025>
+[^1]: A dura realidade das entrevistas para engenheiros de software em 2025.
+    <https://newsletter.nagringa.dev/p/realidade-das-entrevistas-em-2025>
+
 [^2]: Lucas Faria no Substack. <https://substack.com/@lucasfaria>
-[^3]: Leão XIV: Tudo sobre o novo papa. <https://forbes.com.br/forbeslife/2025/05/leao-xiv-tudo-sobre-o-novo-papa/>
-[^4]: Leão XIV: Saiba a simbologia e a origem histórica do nome do novo Papa. <https://oglobo.globo.com/mundo/noticia/2025/05/08/leao-xiv-saiba-a-simbologia-e-a-origem-historica-do-nome-do-novo-papa.ghtml>
-[^5]: CNN de frente com papa Leão XIV: construtor de pontes e reformador discreto. <https://www.cnnbrasil.com.br/internacional/cnn-de-frente-com-papa-leao-xiv-construtor-de-pontes-e-reformador-discreto/>
+
+[^3]: Leão XIV: Tudo sobre o novo papa.
+    <https://forbes.com.br/forbeslife/2025/05/leao-xiv-tudo-sobre-o-novo-papa/>
+
+[^4]: Leão XIV: Saiba a simbologia e a origem histórica do nome do novo Papa.
+    <https://oglobo.globo.com/mundo/noticia/2025/05/08/leao-xiv-saiba-a-simbologia-e-a-origem-historica-do-nome-do-novo-papa.ghtml>
+
+[^5]: CNN de frente com papa Leão XIV: construtor de pontes e reformador
+    discreto.
+    <https://www.cnnbrasil.com.br/internacional/cnn-de-frente-com-papa-leao-xiv-construtor-de-pontes-e-reformador-discreto/>
