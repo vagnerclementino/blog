@@ -2,7 +2,6 @@ import React from "react"
 import { render } from "@testing-library/react"
 import BlogPostTemplate from "./blog-post"
 
-// Mock the gatsby imports
 jest.mock("gatsby", () => ({
   ...jest.requireActual("gatsby"),
   graphql: jest.fn(),

@@ -1,6 +1,9 @@
 const homepageURL = process.env.HOMEPAGE_URL || 'https://clementino.me'
 
-module.exports = {
+// Import remark-footnotes using ES module syntax
+import remarkFootnotes from 'remark-footnotes'
+
+export default {
   trailingSlash: 'always',
   siteMetadata: {
     // edit below
@@ -74,14 +77,14 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/content/blog`,
+        path: `${process.cwd()}/content/blog`,
         name: `blog`,
       },
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/content/assets`,
+        path: `${process.cwd()}/content/assets`,
         name: `assets`,
       },
     },
@@ -90,7 +93,7 @@ module.exports = {
       options: {
         extensions: [".mdx", ".md"],
         mdxOptions: {
-          remarkPlugins: [require("remark-footnotes")],
+          remarkPlugins: [remarkFootnotes],
           rehypePlugins: [],
           format: 'mdx',
         },
