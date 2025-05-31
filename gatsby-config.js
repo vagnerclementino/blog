@@ -45,7 +45,7 @@ module.exports = {
                 id
                 fields { slug }
                 excerpt
-                rawBody
+                body
                 frontmatter {
                   title
                   description
@@ -56,13 +56,13 @@ module.exports = {
           }
         `,
         ref: "id",
-        index: ["title", "rawBody"],
+        index: ["title", "body"],
         store: ["id", "slug", "date", "title", "excerpt", "description"],
         normalizer: ({ data }) =>
           data.allMdx.nodes.map(node => ({
             id: node.id,
             slug: node.fields.slug,
-            rawBody: node.rawBody,
+            rawBody: node.body,
             excerpt: node.excerpt,
             title: node.frontmatter.title,
             description: node.frontmatter.description,
@@ -90,6 +90,7 @@ module.exports = {
       options: {
         extensions: [".mdx", ".md"],
         gatsbyRemarkPlugins: [
+          // `gatsby-remark-reading-time`,
           {
             resolve: `gatsby-remark-images`,
             options: {
@@ -103,16 +104,16 @@ module.exports = {
               wrapperStyle: `margin-bottom: 1.0725rem`,
             },
           },
-          {
-            resolve: `gatsby-remark-vscode`,
-            options: {
-              theme: 'Dark+ (default dark)',
-              extensions: [],
-              inlineCode: {
-                marker: '•'
-              }
-            }
-          },
+          // {
+          //   resolve: `gatsby-remark-vscode`,
+          //   options: {
+          //     theme: 'Dark+ (default dark)',
+          //     extensions: [],
+          //     inlineCode: {
+          //       marker: '•'
+          //     }
+          //   }
+          // },
           {
             resolve: `gatsby-remark-copy-linked-files`,
           },
@@ -166,13 +167,6 @@ module.exports = {
         timezone: "America/Sao_Paulo",
         force: process.env.NODE_ENV === "development",
       },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        path: `${__dirname}/content/blog`,
-      },
-    },
-    `gatsby-remark-reading-time`
+    }
   ],
 }

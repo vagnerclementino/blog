@@ -7,26 +7,23 @@ exports.createPages = ({ graphql, actions }) => {
 
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
   return graphql(
-    `
-      {
-        allMdx(
-          sort: { fields: [frontmatter___date], order: DESC }
-          filter: { fields: { released: { eq: true } } }
-          limit: 1000
-        ) {
-          edges {
-            node {
-              fields {
-                slug
-              }
-              frontmatter {
-                title
-              }
-            }
-          }
+    `{
+  allMdx(
+    sort: {frontmatter: {date: DESC}}
+    filter: {fields: {released: {eq: true}}}
+  ) {
+    edges {
+      node {
+        fields {
+          slug
+        }
+        frontmatter {
+          title
         }
       }
-    `
+    }
+  }
+}`
   ).then(result => {
     if (result.errors) {
       throw result.errors
@@ -52,25 +49,35 @@ exports.createPages = ({ graphql, actions }) => {
 
     // Redirect requests from / to /blog
     createRedirect({
-        fromPath: "/",
-        toPath: "/blog",
-        isPermanent: true,
-        redirectInBrowser: true,
+      fromPath: "/",
+      toPath: "/blog",
+      statusCode: 301,
+      redirectInBrowser: true
     })
 
     return null
-  })
+  });
 }
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
 
   if (node.internal.type === `Mdx`) {
-    const value = createFilePath({ node, getNode })
+    const value = createFilePath({ 
+      node, 
+      getNode,
+      basePath: `content/blog/`
+    })
     createNodeField({
       name: `slug`,
       node,
       value,
     })
+    
+    // createNodeField({
+    //   node,
+    //   name: 'released',
+    //   value: node.frontmatter.released ?? false
+    // })
   }
 }
