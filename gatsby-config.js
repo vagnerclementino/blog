@@ -88,7 +88,6 @@ module.exports = {
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
-        extensions: [".mdx", ".md"],
         gatsbyRemarkPlugins: [
           // `gatsby-remark-reading-time`,
           {
@@ -143,8 +142,8 @@ module.exports = {
           },
         ],
         mdxOptions: {
-          remarkPlugins: [],
-          rehypePlugins: [],
+          remarkPlugins: [/* Adicione plugins remark se necessário */],
+          rehypePlugins: [/* Adicione plugins rehype se necessário */],
         },
       },
     },

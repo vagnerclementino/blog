@@ -8,7 +8,7 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { rhythm, scale } from "../utils/typography"
 import { translateReadingTime } from "../utils/readingTime"
-import Disqus from "gatsby-plugin-disqus"
+import { Disqus } from "gatsby-plugin-disqus"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
 const getFeatureImgPath = featuredImg => {
@@ -27,7 +27,7 @@ class BlogPostTemplate extends React.Component {
     const { fields } = post
 
     const disqusConfig = {
-      url: this.props.location.href,
+      url: `https://${this.props.location.host}${this.props.location.pathname}`,
       identifier: post.id,
       title: post.frontmatter.title,
     }
@@ -37,7 +37,8 @@ class BlogPostTemplate extends React.Component {
     return (
       <Layout location={this.props.location}>
         <Helmet>
-          <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" crossOrigin="anonymous" />
         </Helmet>
         <SEO
           title={post.frontmatter.title}
