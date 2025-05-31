@@ -13,7 +13,7 @@ module.exports = {
     },
   },
   flags: {
-    DEV_SSR: true,
+    DEV_SSR: false,
     FAST_DEV: true,
   },
   plugins: [
