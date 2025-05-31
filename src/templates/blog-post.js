@@ -1,7 +1,7 @@
 import React from "react"
 import { Helmet } from "react-helmet"
 import { Link, graphql } from "gatsby"
-import { MDXRenderer } from "gatsby-plugin-mdx"
+// MDXRenderer is no longer needed in gatsby-plugin-mdx v5+
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
@@ -71,7 +71,7 @@ class BlogPostTemplate extends React.Component {
         >
           <strong>Tempo de leitura: {translateReadingTime(fields.readingTime)}</strong>
         </p>
-        <MDXRenderer>{post.body}</MDXRenderer>
+        {post.body}
         <hr
           style={{
             marginBottom: rhythm(1),
