@@ -45,7 +45,7 @@ module.exports = {
                 id
                 fields { slug }
                 excerpt
-                rawBody
+                body
                 frontmatter {
                   title
                   description
@@ -56,13 +56,13 @@ module.exports = {
           }
         `,
         ref: "id",
-        index: ["title", "rawBody", "description"],
+        index: ["title", "body", "description"],
         store: ["id", "slug", "date", "title", "excerpt", "description"],
         normalizer: ({ data }) =>
           data.allMdx.nodes.map(node => ({
             id: node.id,
             slug: node.fields.slug,
-            rawBody: node.rawBody,
+            body: node.body,
             excerpt: node.excerpt,
             title: node.frontmatter.title,
             description: node.frontmatter.description,
@@ -166,6 +166,5 @@ module.exports = {
         force: process.env.NODE_ENV === "development",
       },
     },
-    `gatsby-remark-reading-time`
   ],
 }

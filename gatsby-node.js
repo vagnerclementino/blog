@@ -1,5 +1,6 @@
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
+const readingTime = require('reading-time')
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
@@ -73,7 +74,15 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       node,
       value,
     })
-    
+
+    const content = node.body || '';
+    const stats = readingTime(content);
+    createNodeField({
+      name: `readingTime`,
+      node,
+      value: stats,
+    })
+
     // createNodeField({
     //   node,
     //   name: 'released',
