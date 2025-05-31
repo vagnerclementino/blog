@@ -90,7 +90,7 @@ module.exports = {
       options: {
         extensions: [".mdx", ".md"],
         mdxOptions: {
-          remarkPlugins: [],
+          remarkPlugins: [require("remark-footnotes")],
           rehypePlugins: [],
           format: 'mdx',
         },
