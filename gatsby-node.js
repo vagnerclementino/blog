@@ -21,6 +21,9 @@ exports.createPages = ({ graphql, actions }) => {
         frontmatter {
           title
         }
+        internal {
+          contentFilePath
+        }
       }
     }
   }
@@ -39,7 +42,7 @@ exports.createPages = ({ graphql, actions }) => {
 
       createPage({
         path: `blog${post.node.fields.slug}`,
-        component: blogPost,
+        component: `${blogPost}?__contentFilePath=${post.node.internal.contentFilePath}`,
         context: {
           slug: post.node.fields.slug,
           previous,
