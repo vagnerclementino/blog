@@ -8,7 +8,7 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { rhythm, scale } from "../utils/typography"
 import { translateReadingTime } from "../utils/readingTime"
-import { Disqus } from "gatsby-plugin-disqus"
+import Disqus from "gatsby-plugin-disqus"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
 const getFeatureImgPath = featuredImg => {
@@ -68,7 +68,7 @@ class BlogPostTemplate extends React.Component {
             marginTop: rhythm(-1),
           }}
         >
-          <strong>Tempo de leitura: {translateReadingTime(fields.readingTime)}</strong>
+          {/* <strong>Tempo de leitura: {translateReadingTime(fields.readingTime)}</strong> */}
         </p>
         <MDXRenderer>{post.body}</MDXRenderer>
         <hr
@@ -131,12 +131,6 @@ export const pageQuery = graphql`
           childImageSharp {
             gatsbyImageData(layout: FULL_WIDTH)
           }
-        }
-      }
-      fields {
-        readingTime {
-          text
-          minutes
         }
       }
     }
