@@ -89,7 +89,6 @@ module.exports = {
       resolve: `gatsby-plugin-mdx`,
       options: {
         gatsbyRemarkPlugins: [
-          // `gatsby-remark-reading-time`,
           {
             resolve: `gatsby-remark-images`,
             options: {
@@ -166,6 +165,7 @@ module.exports = {
         timezone: "America/Sao_Paulo",
         force: process.env.NODE_ENV === "development",
       },
-    }
+    },
+    `gatsby-remark-reading-time`
   ],
 }

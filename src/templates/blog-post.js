@@ -69,7 +69,7 @@ class BlogPostTemplate extends React.Component {
             marginTop: rhythm(-1),
           }}
         >
-          {/* <strong>Tempo de leitura: {translateReadingTime(fields.readingTime)}</strong> */}
+          <strong>Tempo de leitura: {translateReadingTime(fields.readingTime)}</strong>
         </p>
         <MDXRenderer>{post.body}</MDXRenderer>
         <hr
@@ -132,6 +132,12 @@ export const pageQuery = graphql`
           childImageSharp {
             gatsbyImageData(layout: FULL_WIDTH)
           }
+        }
+      }
+      fields {
+        readingTime {
+          text
+          minutes
         }
       }
     }
