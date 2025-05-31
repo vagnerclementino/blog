@@ -19,7 +19,20 @@ beforeEach(() => {
 });
 
 describe('Bio component', () => {
-  it('renders correctly', () => {
+  // Test for author name presence
+  it('renders author name correctly', () => {
+    const { getByText } = render(<Bio />);
+    expect(getByText(/Test Author/)).toBeInTheDocument();
+  });
+
+  // Test for twitter handle presence 
+  it('renders twitter handle correctly', () => {
+    const { getByText } = render(<Bio />);
+    expect(getByText(/@testauthor/)).toBeInTheDocument();
+  });
+
+  // Test for bio text
+  it('renders bio text correctly', () => {
     const { getByText } = render(<Bio />);
     expect(getByText(/Written by/i)).toBeInTheDocument();
   });

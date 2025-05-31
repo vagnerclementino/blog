@@ -1,6 +1,6 @@
 import React from "react"
 import { render } from "@testing-library/react"
-import BlogPostTemplate from "../blog-post"
+import BlogPostTemplate from "./blog-post"
 
 // Mock the gatsby imports
 jest.mock("gatsby", () => ({
