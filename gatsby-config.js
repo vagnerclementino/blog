@@ -15,6 +15,7 @@ module.exports = {
   flags: {
     DEV_SSR: false,
     FAST_DEV: true,
+    PRESERVE_FILE_DOWNLOAD_CACHE: true,
   },
   plugins: [
     `gatsby-plugin-sharp`,
@@ -27,7 +28,6 @@ module.exports = {
       },
     },
     `gatsby-plugin-offline`,
-    `gatsby-plugin-react-helmet`,
     {
       resolve: "gatsby-plugin-local-search",
       options: {
@@ -89,6 +89,7 @@ module.exports = {
       resolve: `gatsby-plugin-mdx`,
       options: {
         extensions: [".mdx", ".md"],
+        footnotes: true,
         gatsbyRemarkPlugins: [
           {
             resolve: `gatsby-remark-images`,

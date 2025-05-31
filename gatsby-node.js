@@ -85,11 +85,5 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       node,
       value: stats,
     })
-
-    // createNodeField({
-    //   node,
-    //   name: 'released',
-    //   value: node.frontmatter.released ?? false
-    // })
   }
 }
