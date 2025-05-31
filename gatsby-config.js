@@ -45,7 +45,7 @@ module.exports = {
                 id
                 fields { slug }
                 excerpt
-                body
+                rawBody
                 frontmatter {
                   title
                   description
@@ -56,13 +56,13 @@ module.exports = {
           }
         `,
         ref: "id",
-        index: ["title", "body"],
+        index: ["title", "rawBody", "description"],
         store: ["id", "slug", "date", "title", "excerpt", "description"],
         normalizer: ({ data }) =>
           data.allMdx.nodes.map(node => ({
             id: node.id,
             slug: node.fields.slug,
-            rawBody: node.body,
+            rawBody: node.rawBody,
             excerpt: node.excerpt,
             title: node.frontmatter.title,
             description: node.frontmatter.description,
