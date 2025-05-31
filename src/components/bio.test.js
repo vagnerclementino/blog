@@ -1,37 +1,23 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { StaticQuery } from 'gatsby';
 import Bio from './bio';
 
-beforeEach(() => {
-  StaticQuery.mockImplementationOnce(({ render }) =>
-    render({
-      site: {
-        siteMetadata: {
-          author: 'Test Author',
-          social: {
-            twitter: 'testauthor',
-          },
-        },
-      },
-    })
-  );
-});
+// No need to mock useStaticQuery here as it's already mocked in __mocks__/gatsby.js
 
 describe('Bio component', () => {
-  // Test for author name presence
   it('renders author name correctly', () => {
     const { getByText } = render(<Bio />);
-    expect(getByText(/Test Author/)).toBeInTheDocument();
+    const authorElement = getByText(/Test Author/);
+    expect(authorElement).toBeInTheDocument();
   });
 
-  // Test for twitter handle presence 
-  it('renders twitter handle correctly', () => {
+  it('renders twitter link correctly', () => {
     const { getByText } = render(<Bio />);
-    expect(getByText(/@testauthor/)).toBeInTheDocument();
+    const twitterLink = getByText(/Follow me on Twitter/i);
+    expect(twitterLink).toBeInTheDocument();
+    expect(twitterLink.href).toBe('https://twitter.com/testauthor');
   });
 
-  // Test for bio text
   it('renders bio text correctly', () => {
     const { getByText } = render(<Bio />);
     expect(getByText(/Written by/i)).toBeInTheDocument();

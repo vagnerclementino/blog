@@ -4,15 +4,38 @@ import BlogPostTemplate from "./blog-post"
 
 // Mock the gatsby imports
 jest.mock("gatsby", () => ({
+  ...jest.requireActual("gatsby"),
   graphql: jest.fn(),
-  Link: jest.fn().mockImplementation(
-    // these props are invalid for an `a` tag
-    ({
-      children,
-      ...rest
-    }) => React.createElement("a", rest, children)
-  ),
-}))
+  Link: jest.fn().mockImplementation(({ children, ...rest }) => {
+    const React = jest.requireActual('react');
+    return React.createElement("a", rest, children);
+  }),
+  useStaticQuery: jest.fn().mockReturnValue({
+    site: {
+      siteMetadata: {
+        title: "Test Site",
+        author: "Test Author",
+        social: {
+          twitter: "testuser",
+        },
+      },
+    },
+  }),
+}));
+
+jest.mock("gatsby-plugin-image", () => ({
+  GatsbyImage: jest.fn().mockImplementation(({ alt }) => {
+    const React = jest.requireActual('react');
+    return React.createElement("img", { alt });
+  }),
+  getImage: jest.fn().mockReturnValue({
+    images: {
+      fallback: {
+        src: "test-image.jpg",
+      },
+    },
+  }),
+}));
 
 describe("BlogPostTemplate", () => {
   const mockProps = {
@@ -25,6 +48,11 @@ describe("BlogPostTemplate", () => {
           title: "Test Title",
           date: "January 1, 2023",
           description: "Test description",
+          featuredImage: {
+            childImageSharp: {
+              gatsbyImageData: {},
+            },
+          },
         },
         fields: {
           readingTime: {
