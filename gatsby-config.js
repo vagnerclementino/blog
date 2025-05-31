@@ -1,6 +1,7 @@
 const homepageURL = process.env.HOMEPAGE_URL || 'https://clementino.me'
 
 module.exports = {
+  trailingSlash: 'always',
   siteMetadata: {
     // edit below
     title: `Clementino's Notes`,
@@ -16,25 +17,13 @@ module.exports = {
     FAST_DEV: true,
   },
   plugins: [
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-image`,
     {
       resolve: `gatsby-plugin-styled-components`,
       options: {
         // Add any options here
-      },
-    },
-    {
-      resolve: `gatsby-plugin-sharp`,
-      options: {
-        // Defaults used for gatsbyImageData and StaticImage
-        defaults: {},
-        // Set to none to allow builds to continue on image errors
-        failOn: `warning`,
-        // deprecated options and their defaults:
-        base64Width: 20,
-        forceBase64Format: `png`, // valid formats: png,jpg,webp
-        useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
-        stripMetadata: true,
-        defaultQuality: 50,
       },
     },
     `gatsby-plugin-offline`,
@@ -116,6 +105,13 @@ module.exports = {
           },
           {
             resolve: `gatsby-remark-vscode`,
+            options: {
+              theme: 'Dark+ (default dark)',
+              extensions: [],
+              inlineCode: {
+                marker: '•'
+              }
+            }
           },
           {
             resolve: `gatsby-remark-copy-linked-files`,
@@ -145,7 +141,10 @@ module.exports = {
             },
           },
         ],
-        plugins: [`gatsby-remark-images`, `gatsby-remark-footnotes`],
+        mdxOptions: {
+          remarkPlugins: [],
+          rehypePlugins: [],
+        },
       },
     },
     {
@@ -168,8 +167,6 @@ module.exports = {
         force: process.env.NODE_ENV === "development",
       },
     },
-    `gatsby-plugin-image`,
-    `gatsby-transformer-sharp`, // Needed for dynamic images
     {
       resolve: `gatsby-source-filesystem`,
       options: {
