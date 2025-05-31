@@ -23,6 +23,10 @@ jest.mock("gatsby", () => ({
   }),
 }));
 
+jest.mock("gatsby-plugin-disqus", () => ({
+  Disqus: jest.fn().mockImplementation(() => null)
+}));
+
 jest.mock("gatsby-plugin-image", () => ({
   GatsbyImage: jest.fn().mockImplementation(({ alt }) => {
     const React = jest.requireActual('react');
@@ -70,6 +74,7 @@ describe("BlogPostTemplate", () => {
       pathname: "/test-path",
       host: "test.com",
     },
+    children: <p>Test body content</p>
   }
 
   it("renders the blog post content correctly", () => {
