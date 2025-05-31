@@ -124,7 +124,7 @@ diferenciar, mas não devem nos limitar ou definir completamente.
 
 [^1]:
     Tiririca.
-    <https://pt.wikipedia.org/wiki/Tiririca>
+    https://pt.wikipedia.org/wiki/Tiririca
 
 [^2]:
     Vestibular da UFMG.
@@ -136,4 +136,4 @@ diferenciar, mas não devem nos limitar ou definir completamente.
     conseguir uma vaga na universidade.
 [^3]:
     até sua alma (part. Tasha e Tracie).
-    <https://www.letras.mus.br/djonga/ate-sua-alma/>
+    https://www.letras.mus.br/djonga/ate-sua-alma/
