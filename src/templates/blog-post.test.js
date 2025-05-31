@@ -24,7 +24,8 @@ jest.mock("gatsby", () => ({
 }));
 
 jest.mock("gatsby-plugin-disqus", () => ({
-  Disqus: jest.fn().mockImplementation(() => null)
+  Disqus: () => null,
+  componentWillMount: jest.fn()
 }));
 
 jest.mock("gatsby-plugin-image", () => ({

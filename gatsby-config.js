@@ -89,7 +89,11 @@ module.exports = {
       resolve: `gatsby-plugin-mdx`,
       options: {
         extensions: [".mdx", ".md"],
-        footnotes: true,
+        mdxOptions: {
+          remarkPlugins: [],
+          rehypePlugins: [],
+          format: 'mdx',
+        },
         gatsbyRemarkPlugins: [
           {
             resolve: `gatsby-remark-images`,
@@ -104,16 +108,6 @@ module.exports = {
               wrapperStyle: `margin-bottom: 1.0725rem`,
             },
           },
-          // {
-          //   resolve: `gatsby-remark-vscode`,
-          //   options: {
-          //     theme: 'Dark+ (default dark)',
-          //     extensions: [],
-          //     inlineCode: {
-          //       marker: '•'
-          //     }
-          //   }
-          // },
           {
             resolve: `gatsby-remark-copy-linked-files`,
           },
@@ -127,25 +121,7 @@ module.exports = {
               rel: "noreferrer noopener",
             },
           },
-          {
-            resolve: `gatsby-remark-footnotes`,
-            options: {
-              footnoteBackRefPreviousElementDisplay: "inline",
-              footnoteBackRefDisplay: "inline",
-              footnoteBackRefInnerText: "👋", // Defaults to: "↩"
-              //use if you want the Wikipedia style ^ link without an underline beneath it
-              footnoteBackRefAnchorStyle: `text-decoration: none;`,
-              //use "front" for Wikipedia style ^ links
-              footnoteBackRefInnerTextStartPosition: "front",
-              useFootnoteMarkerText: true, // Defaults to false
-              useCustomDivider: "<hr/><strong>References:</strong>", // Defaults to <hr/>
-            },
-          },
         ],
-        mdxOptions: {
-          remarkPlugins: [/* Adicione plugins remark se necessário */],
-          rehypePlugins: [/* Adicione plugins rehype se necessário */],
-        },
       },
     },
     {
