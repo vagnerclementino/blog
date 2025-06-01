@@ -1,6 +1,6 @@
 const homepageURL = process.env.HOMEPAGE_URL || 'https://clementino.me'
 
-import remarkFootnotes from 'remark-footnotes'
+import remarkGfm from 'remark-gfm';
 
 export default {
   trailingSlash: 'always',
@@ -92,7 +92,7 @@ export default {
       options: {
         extensions: [".mdx", ".md"],
         mdxOptions: {
-          remarkPlugins: [remarkFootnotes],
+          remarkPlugins: [remarkGfm],
           rehypePlugins: [],
           format: 'mdx',
         },

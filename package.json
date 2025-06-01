@@ -43,7 +43,7 @@
     "react-typography": "^0.16.19",
     "react-use-flexsearch": "^0.1.1",
     "reading-time": "^1.5.0",
-    "remark-footnotes": "^3.0.0",
+    "remark-gfm": "^3.0.1",
     "styled-components": "^6.1.0",
     "typeface-merriweather": "0.0.72",
     "typeface-montserrat": "0.0.54",
