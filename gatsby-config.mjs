@@ -1,6 +1,5 @@
 const homepageURL = process.env.HOMEPAGE_URL || 'https://clementino.me'
 
-// Import remark-footnotes using ES module syntax
 import remarkFootnotes from 'remark-footnotes'
 
 export default {
@@ -99,16 +98,20 @@ export default {
         },
         gatsbyRemarkPlugins: [
           {
+            resolve: "gatsby-remark-embed-youtube",
+            options: {
+              width: 800,
+              height: 400
+            }
+          },
+          {
+            resolve: `gatsby-remark-responsive-iframe`,
+          },
+          {
             resolve: `gatsby-remark-images`,
             options: {
               maxWidth: 590,
               showCaptions: true
-            },
-          },
-          {
-            resolve: `gatsby-remark-responsive-iframe`,
-            options: {
-              wrapperStyle: `margin-bottom: 1.0725rem`,
             },
           },
           {

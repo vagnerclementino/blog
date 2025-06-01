@@ -23,12 +23,7 @@ clássico do cancioneiro brasileiro conhecido como "Florentina", escrito e
 interpretado por Francisco Everardo Oliveira Silva, também conhecido como
 Tiririca[^1].
 
-<iframe width="560"
-        height="315"
-        src="https://www.youtube.com/embed/uiem5_bJRLM"
-        title="Clipe oficial da música Florentina"
-        frameborder="0">
-</iframe>
+`youtube:https://www.youtube.com/embed/uiem5_bJRLM`
 
 Se você está se questionando qual é a relação entre a discografia do Tiririca e
 o meu nome, bem-vindo ao clube, pois é algo que eu me questiono desde então.
