@@ -168,24 +168,10 @@ sobre esses papéis ou caminhos? Compartilhe suas experiências nos comentários
 Agradeço especialmente a [Andreza Vieira](https://www.linkedin.com/in/andreza-vieira-65360678/) e a [Lorena Vieira](https://www.linkedin.com/in/lorena-vieiraa/) pela ajuda na revisão
 deste texto.
 
-[^1]:
-    James Gosling retirement announcement.
-    https://www.linkedin.com/posts/jamesgosling_ive-finally-retired-after-a-crazy-number-activity-7213740307538956289-26YU/
-[^2]:
-    Cemitério de Elefantes.
-    https://disney.fandom.com/pt-br/wiki/Cemit%C3%A9rio_de_Elefantes
-[^3]:
-    Elephant Graveyard.
-    https://jenmansafaris.com/elephant-graveyard-fact-fiction
-[^4]:
-    Elephants never forget.
-    https://www.theguardian.com/education/2006/jan/10/workinprogress.highereducation
-[^5]:
-    Principal Engineer Roles Framework.
-    https://www.linkedin.com/pulse/principal-engineer-roles-framework-mai-lan-tomsen-bukovec-142df
-[^6]:
-    Staff Engineer: Leadership Beyond the Management Track
-    https://goodreads.com/book/show/56481725.Staff_Engineer_Leadership_Beyond_the_Management_Track
-[^7]:
-    Sobre arquétipos e papéis
-    https://maisquesenior.substack.com/p/sobre-arquetipos-e-papeis
+[^1]: [James Gosling retirement announcement.](https://www.linkedin.com/posts/jamesgosling_ive-finally-retired-after-a-crazy-number-activity-7213740307538956289-26YU/)
+[^2]: [Cemitério de Elefantes.](https://disney.fandom.com/pt-br/wiki/Cemit%C3%A9rio_de_Elefantes)
+[^3]: [Elephant Graveyard.](https://jenmansafaris.com/elephant-graveyard-fact-fiction)
+[^4]: [Elephants never forget.](https://www.theguardian.com/education/2006/jan/10/workinprogress.highereducation)
+[^5]: [Principal Engineer Roles Framework.](https://www.linkedin.com/pulse/principal-engineer-roles-framework-mai-lan-tomsen-bukovec-142df)
+[^6]: [Staff Engineer: Leadership Beyond the Management Track](https://goodreads.com/book/show/56481725.Staff_Engineer_Leadership_Beyond_the_Management_Track)
+[^7]: [Sobre arquétipos e papéis](https://maisquesenior.substack.com/p/sobre-arquetipos-e-papeis)

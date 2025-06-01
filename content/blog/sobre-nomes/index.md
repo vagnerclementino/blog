@@ -117,10 +117,7 @@ além dos rótulos e enxergar a complexidade e singularidade de cada indivíduo.
 Em resumo, nomes e rótulos são importantes para nos identificar e nos
 diferenciar, mas não devem nos limitar ou definir completamente.
 
-[^1]:
-    Tiririca.
-    https://pt.wikipedia.org/wiki/Tiririca
-
+[^1]: [Tiririca.](https://pt.wikipedia.org/wiki/Tiririca)
 [^2]:
     Vestibular da UFMG.
     Antes da adoção do Enem como forma de ingresso na UFMG, o vestibular era
@@ -129,6 +126,4 @@ diferenciar, mas não devem nos limitar ou definir completamente.
     composta por provas discursivas específicas de acordo com o curso
     escolhido. Os candidatos precisavam ser aprovados nas duas etapas para
     conseguir uma vaga na universidade.
-[^3]:
-    até sua alma (part. Tasha e Tracie).
-    https://www.letras.mus.br/djonga/ate-sua-alma/
+[^3]: [até sua alma (part. Tasha e Tracie).](https://www.letras.mus.br/djonga/ate-sua-alma/)
