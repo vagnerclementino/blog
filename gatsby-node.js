@@ -4,7 +4,6 @@ const readingTime = require('reading-time')
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
-  const { createRedirect } = actions
 
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
   return graphql(
@@ -49,14 +48,6 @@ exports.createPages = ({ graphql, actions }) => {
           next,
         },
       })
-    })
-
-    // Redirect requests from / to /blog
-    createRedirect({
-      fromPath: "/",
-      toPath: "/blog",
-      isPermanent: true,
-      redirectInBrowser: true,
     })
 
     return null
