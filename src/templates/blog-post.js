@@ -27,7 +27,7 @@ class BlogPostTemplate extends React.Component {
     const { children } = this.props
 
     const disqusConfig = {
-      url: `https://${this.props.location.host}${this.props.location.pathname}`,
+      url: `${this.props.location.protocol}//${this.props.location.host}${this.props.location.pathname}`,
       identifier: post.id,
       title: post.frontmatter.title,
     }
