@@ -47,7 +47,6 @@ describe("BlogPostTemplate", () => {
       mdx: {
         id: "test-id",
         excerpt: "Test excerpt",
-        body: "Test body content",
         frontmatter: {
           title: "Test Title",
           date: "January 1, 2023",
