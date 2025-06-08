@@ -70,7 +70,12 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     })
 
     const content = node.body || '';
-    const stats = readingTime(content);
+    let stats = { text: '1 min read', minutes: 1, time: 60000, words: 0 };
+    try {
+      stats = readingTime(content);
+    } catch (error) {
+      console.warn(`Failed to calculate reading time for node ${node.id}:`, error);
+    }
     createNodeField({
       name: `readingTime`,
       node,

@@ -1,8 +1,8 @@
 /**
  * Bio component that queries for data
- * with Gatsby's StaticQuery component
+ * with Gatsby's useStaticQuery hook
  *
- * See: https://www.gatsbyjs.org/docs/static-query/
+ * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
 import React from "react"
