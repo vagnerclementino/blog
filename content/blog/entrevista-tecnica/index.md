@@ -125,19 +125,12 @@ ser rigorosos, é importante lembrar que a escolha do candidato ideal muitas
 vezes envolve mais do que apenas habilidades técnicas; é uma questão de
 encontrar alguém que possa crescer e se desenvolver dentro da organização.
 
+[^1]: [A dura realidade das entrevistas para engenheiros de software em 2025.](https://newsletter.nagringa.dev/p/realidade-das-entrevistas-em-2025)
 
+[^2]: [Lucas Faria no Substack.](https://substack.com/@lucasfaria)
 
-[^1]: A dura realidade das entrevistas para engenheiros de software em 2025.
-    <https://newsletter.nagringa.dev/p/realidade-das-entrevistas-em-2025>
+[^3]: [Leão XIV: Tudo sobre o novo papa.](https://forbes.com.br/forbeslife/2025/05/leao-xiv-tudo-sobre-o-novo-papa/)
 
-[^2]: Lucas Faria no Substack. <https://substack.com/@lucasfaria>
+[^4]: [Leão XIV: Saiba a simbologia e a origem histórica do nome do novo Papa.](https://oglobo.globo.com/mundo/noticia/2025/05/08/leao-xiv-saiba-a-simbologia-e-a-origem-historica-do-nome-do-novo-papa.ghtml)
 
-[^3]: Leão XIV: Tudo sobre o novo papa.
-    <https://forbes.com.br/forbeslife/2025/05/leao-xiv-tudo-sobre-o-novo-papa/>
-
-[^4]: Leão XIV: Saiba a simbologia e a origem histórica do nome do novo Papa.
-    <https://oglobo.globo.com/mundo/noticia/2025/05/08/leao-xiv-saiba-a-simbologia-e-a-origem-historica-do-nome-do-novo-papa.ghtml>
-
-[^5]: CNN de frente com papa Leão XIV: construtor de pontes e reformador
-    discreto.
-    <https://www.cnnbrasil.com.br/internacional/cnn-de-frente-com-papa-leao-xiv-construtor-de-pontes-e-reformador-discreto/>
+[^5]: [CNN de frente com papa Leão XIV: construtor de pontes e reformador discreto.](https://www.cnnbrasil.com.br/internacional/cnn-de-frente-com-papa-leao-xiv-construtor-de-pontes-e-reformador-discreto/)
