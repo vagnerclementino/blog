@@ -1,35 +1,31 @@
 /**
  * Bio component that queries for data
- * with Gatsby's StaticQuery component
+ * with Gatsby's useStaticQuery hook
  *
- * See: https://www.gatsbyjs.org/docs/static-query/
+ * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
 import React from "react"
-import { StaticQuery, graphql } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby"
 import styled from "styled-components"
 
 function Bio() {
+  const data = useStaticQuery(bioQuery)
+  
+  const { author, social } = data.site.siteMetadata
+  
   return (
-    <StaticQuery
-      query={bioQuery}
-      render={data => {
-        const { author, social } = data.site.siteMetadata
-        return (
-          <Container>
-            <p>
-              Written by <strong>{author}</strong>.
-              {` `}
-              <a href={`https://twitter.com/${social.twitter}`} 
-                 target="_blank" 
-                 rel="noopener noreferrer">
-                Follow me on Twitter
-              </a>
-            </p>
-          </Container>
-        )
-      }}
-    />
+    <Container>
+      <p>
+        Written by <strong>{author}</strong>.
+        {` `}
+        <a href={`https://twitter.com/${social.twitter}`} 
+           target="_blank" 
+           rel="noopener noreferrer">
+          Follow me on Twitter
+        </a>
+      </p>
+    </Container>
   )
 }
 

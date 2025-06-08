@@ -23,12 +23,7 @@ clássico do cancioneiro brasileiro conhecido como "Florentina", escrito e
 interpretado por Francisco Everardo Oliveira Silva, também conhecido como
 Tiririca[^1].
 
-<iframe width="560"
-        height="315"
-        src="https://www.youtube.com/embed/uiem5_bJRLM"
-        title="Clipe oficial da música Florentina"
-        frameborder="0">
-</iframe>
+`youtube:https://www.youtube.com/embed/uiem5_bJRLM`
 
 Se você está se questionando qual é a relação entre a discografia do Tiririca e
 o meu nome, bem-vindo ao clube, pois é algo que eu me questiono desde então.
@@ -122,10 +117,7 @@ além dos rótulos e enxergar a complexidade e singularidade de cada indivíduo.
 Em resumo, nomes e rótulos são importantes para nos identificar e nos
 diferenciar, mas não devem nos limitar ou definir completamente.
 
-[^1]:
-    Tiririca.
-    <https://pt.wikipedia.org/wiki/Tiririca>
-
+[^1]: [Tiririca.](https://pt.wikipedia.org/wiki/Tiririca)
 [^2]:
     Vestibular da UFMG.
     Antes da adoção do Enem como forma de ingresso na UFMG, o vestibular era
@@ -134,6 +126,4 @@ diferenciar, mas não devem nos limitar ou definir completamente.
     composta por provas discursivas específicas de acordo com o curso
     escolhido. Os candidatos precisavam ser aprovados nas duas etapas para
     conseguir uma vaga na universidade.
-[^3]:
-    até sua alma (part. Tasha e Tracie).
-    <https://www.letras.mus.br/djonga/ate-sua-alma/>
+[^3]: [até sua alma (part. Tasha e Tracie).](https://www.letras.mus.br/djonga/ate-sua-alma/)

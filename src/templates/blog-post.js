@@ -1,7 +1,6 @@
 import React from "react"
 import { Helmet } from "react-helmet"
 import { Link, graphql } from "gatsby"
-import { MDXRenderer } from "gatsby-plugin-mdx"
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
@@ -25,9 +24,10 @@ class BlogPostTemplate extends React.Component {
     const post = this.props.data.mdx
     const { previous, next } = this.props.pageContext
     const { fields } = post
+    const { children } = this.props
 
     const disqusConfig = {
-      url: this.props.location.href,
+      url: `${this.props.location.protocol}//${this.props.location.host}${this.props.location.pathname}`,
       identifier: post.id,
       title: post.frontmatter.title,
     }
@@ -37,7 +37,8 @@ class BlogPostTemplate extends React.Component {
     return (
       <Layout location={this.props.location}>
         <Helmet>
-          <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" />
         </Helmet>
         <SEO
           title={post.frontmatter.title}
@@ -70,7 +71,7 @@ class BlogPostTemplate extends React.Component {
         >
           <strong>Tempo de leitura: {translateReadingTime(fields.readingTime)}</strong>
         </p>
-        <MDXRenderer>{post.body}</MDXRenderer>
+        {children}
         <hr
           style={{
             marginBottom: rhythm(1),
@@ -122,7 +123,6 @@ export const pageQuery = graphql`
     mdx(fields: { slug: { eq: $slug } }) {
       id
       excerpt(pruneLength: 160)
-      body
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")

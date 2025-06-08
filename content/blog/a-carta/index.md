@@ -35,6 +35,4 @@ e sinto que estou vivo, e que não sonho.
 
 Saudades.
 
-[^1]:
-    Mãe, por Leandro Iamin.
-    <https://open.substack.com/pub/leandroiamin/p/mae>
+[^1]: [Mãe, por Leandro Iamin](https://open.substack.com/pub/leandroiamin/p/mae)
