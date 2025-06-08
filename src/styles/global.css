@@ -1,70 +1,157 @@
-p {
-	text-align: justify;
-	font-size: 16px;
-	line-height: 1.7;
-	word-wrap: break-word;
-	overflow-wrap: break-word;
-	-webkit-hyphens: auto;
-	hyphens: auto;
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap");
 
-	@media screen and (min-width: 600px) {
-		font-size: 18px;
-		line-height: 30px;
-	}
+p {
+  text-align: justify;
+  font-size: 16px;
+  line-height: 1.7;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+
+  @media screen and (min-width: 600px) {
+    font-size: 18px;
+    line-height: 30px;
+  }
 }
 
 img {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	width: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
 }
 
 ul {
-	margin-left: 1.25em;
-	padding-left: 1.25em;
+  margin-left: 1.25em;
+  padding-left: 1.25em;
 }
 
 blockquote::before {
-	content: open-quote;
+  content: open-quote;
 }
 
 blockquote::after {
-	content: close-quote;
+  content: close-quote;
 }
 
 blockquote {
-	margin: 1.0em;
-	background: #eee;
-	padding: 1.0em;
-	border-radius: 1em;
+  margin: 1em;
+  background: #eee;
+  padding: 1em;
+  border-radius: 1em;
 }
 
 pre {
-	white-space: pre-wrap;
-	display: block;
-	font-family: monospace;
-	white-space: pre;
-	margin: 1em 0px;
+  white-space: pre-wrap;
+  display: block;
+  font-family: monospace;
+  white-space: pre;
+  margin: 1em 0px;
 }
 
 h1 {
-	font-size: 2em !important;
+  font-size: 2em !important;
 }
 h3 {
-	font-size: 1.8em !important;
+  font-size: 1.8em !important;
 }
 @media (min-width: 48rem) {
-	h1 {
-		font-size: 4em !important;
-	}
-
+  h1 {
+    font-size: 4em !important;
+  }
 }
 
 .gatsby-resp-image-figcaption {
-	font-size: 0.9em;
-	text-align: center;
-	color: #666;
-	margin-top: 5px;
-	font-style: italic;
+  font-size: 0.9em;
+  text-align: center;
+  color: #666;
+  margin-top: 5px;
+  font-style: italic;
+}
+
+.footnotes {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+  font-size: 0.9em;
+  color: #666;
+}
+
+.footnotes ol {
+  padding-left: 1.5rem;
+}
+
+.footnote-ref {
+  vertical-align: super;
+  font-size: 0.8em;
+  margin-left: 0.2em;
+}
+
+.footnote-backref {
+  text-decoration: none !important;
+  margin-left: 0.3em;
+  color: #007acc;
+}
+
+.footnote-paragraph {
+  margin-bottom: 0.5rem;
+}
+
+.gatsby-highlight-code-line {
+  background-color: #feb;
+  display: block;
+  margin-right: -1em;
+  margin-left: -1em;
+  padding-right: 1em;
+  padding-left: 0.75em;
+  border-left: 0.25em solid #f99;
+}
+
+/**
+ * If you already use line highlighting
+ */
+
+/* Adjust the position of the line numbers */
+.gatsby-highlight pre[class*="language-"].line-numbers {
+  padding-left: 2.8em;
+}
+
+/**
+       * If you only want to use line numbering
+       */
+
+.gatsby-highlight {
+  background-color: #fdf6e3;
+  border-radius: 0.3em;
+  margin: 0.5em 0;
+  padding: 1em;
+  overflow: auto;
+}
+
+.gatsby-highlight pre[class*="language-"].line-numbers {
+  padding: 0;
+  padding-left: 2.8em;
+  overflow: initial;
+}
+
+.command-line-prompt > span:before {
+  color: #999;
+  content: " ";
+  display: block;
+  padding-right: 0.8em;
+}
+
+/* Prompt for all users */
+.command-line-prompt > span[data-user]:before {
+  content: "[" attr(data-user) "@" attr(data-host) "] $";
+}
+
+/* Prompt for root */
+.command-line-prompt > span[data-user="root"]:before {
+  content: "[" attr(data-user) "@" attr(data-host) "] #";
+}
+
+.command-line-prompt > span[data-prompt]:before {
+  content: attr(data-prompt);
 }

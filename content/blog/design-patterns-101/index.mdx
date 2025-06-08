@@ -155,7 +155,7 @@ Para ilustrar vamos imaginar um sistema que calcula o preço de um pedido de
 açaí, após a inclusão de todos os acompanhamentos que o cliente desejar. O código
 a seguir representa a classe `Acai``
 
-```java
+```java{numberLines: true}
 package me.clementino.v1.acai;
 
 public abstract class Acai {
@@ -186,7 +186,7 @@ public abstract class Acai {
 Essa classe pode ser "decorada" com diferentes ingredientes como a classe
 `LeiteEmPo`:
 
-```java
+```java{numberLines: true}
 package me.clementino.solution.acompanhamentos;
 
 import me.clementino.v1.acai.Acai;
@@ -215,7 +215,7 @@ public class LeiteEmPo extends PadraoDeProjeto {
 Veja que a classe `LeiteEmPo` é uma especialização de `PadraoDeProjeto`, que é
 exibida a seguir:'
 
-```java
+```java{numberLines: true}
 package me.clementino.solution.acompanhamentos;
 
 import me.clementino.v1.acai.Acai;

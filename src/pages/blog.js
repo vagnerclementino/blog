@@ -35,36 +35,34 @@ class Blog extends React.Component {
 
 export default Blog
 
-export const pageQuery = graphql`
-  query {
-    site {
-      siteMetadata {
-        title
-      }
+export const pageQuery = graphql`{
+  site {
+    siteMetadata {
+      title
     }
-    localSearchBlog {
-      index
-      store
-    }
-    allMdx(
-      sort: { fields: [frontmatter___date], order: DESC }
-      filter: { fields: { released: { eq: true } } }
-      ) {
-      edges {
-        node {
-          excerpt
-          fields {
-            slug
-            released
-            releasedNotForced
-          }
-          frontmatter {
-            date(formatString: "MMMM DD, YYYY")
-            title
-            description
-          }
+  }
+  localSearchBlog {
+    index
+    store
+  }
+  allMdx(
+    sort: {frontmatter: {date: DESC}}
+    filter: {fields: {released: {eq: true}}}
+  ) {
+    edges {
+      node {
+        excerpt
+        fields {
+          slug
+          released
+          releasedNotForced
+        }
+        frontmatter {
+          date(formatString: "MMMM DD, YYYY")
+          title
+          description
         }
       }
     }
   }
-`
+}`
