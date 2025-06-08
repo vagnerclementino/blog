@@ -10,6 +10,21 @@ import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
+/**
+ * React component that injects SEO and social media meta tags into the document head for a Gatsby site.
+ *
+ * Sets standard, Open Graph, and Twitter meta tags based on provided props and site metadata. Automatically falls back to site defaults for description and author if not specified.
+ *
+ * @param {Object} props - SEO configuration options.
+ * @param {string} props.title - The page title to display in the browser and meta tags.
+ * @param {string} [props.description] - Custom meta description; falls back to site default if omitted.
+ * @param {string} [props.lang] - Language attribute for the HTML tag.
+ * @param {Array} [props.meta] - Additional meta tag objects to append.
+ * @param {Array<string>} [props.keywords] - List of keywords for the keywords meta tag.
+ * @param {string} [props.featureImg] - Path to the feature image for Open Graph and Twitter cards.
+ *
+ * @returns {JSX.Element} Helmet component with configured meta tags.
+ */
 function SEO({ 
   description = '',
   lang = 'en',

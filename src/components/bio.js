@@ -9,6 +9,13 @@ import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import styled from "styled-components"
 
+/**
+ * Displays the author's bio with a link to their Twitter profile.
+ *
+ * Fetches author information and social media handle from site metadata using a static GraphQL query, and renders them in a styled container.
+ *
+ * @returns {JSX.Element} A container with the author's name and a Twitter link.
+ */
 function Bio() {
   const data = useStaticQuery(bioQuery)
   
