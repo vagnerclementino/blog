@@ -62,30 +62,30 @@ desde sua criação. Seus princípios fundamentais incluem:
 ### Exemplo Prático em Java
 
 ```java
-// Modelagem tradicional OOP
-public class ContaBancaria {
-    private String numero;
-    private BigDecimal saldo;
-    private String titular;
+// Traditional OOP modeling
+public class BankAccount {
+    private String accountNumber;
+    private BigDecimal balance;
+    private String accountHolder;
     
-    public ContaBancaria(String numero, String titular) {
-        this.numero = numero;
-        this.titular = titular;
-        this.saldo = BigDecimal.ZERO;
+    public BankAccount(String accountNumber, String accountHolder) {
+        this.accountNumber = accountNumber;
+        this.accountHolder = accountHolder;
+        this.balance = BigDecimal.ZERO;
     }
     
-    public void depositar(BigDecimal valor) {
-        if (valor.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("Valor deve ser positivo");
+    public void deposit(BigDecimal amount) {
+        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Amount must be positive");
         }
-        this.saldo = this.saldo.add(valor);
+        this.balance = this.balance.add(amount);
     }
     
-    public void sacar(BigDecimal valor) {
-        if (valor.compareTo(saldo) > 0) {
-            throw new IllegalStateException("Saldo insuficiente");
+    public void withdraw(BigDecimal amount) {
+        if (amount.compareTo(balance) > 0) {
+            throw new IllegalStateException("Insufficient balance");
         }
-        this.saldo = this.saldo.subtract(valor);
+        this.balance = this.balance.subtract(amount);
     }
     
     // getters...
@@ -108,43 +108,43 @@ inesperadas de estado. Em Java, podemos usar records para criar estruturas
 imutáveis de forma concisa:
 
 ```java
-// Dados imutáveis com records
-public record ContaInfo(
-    String numero,
-    String titular,
-    BigDecimal saldo
+// Immutable data with records
+public record AccountInfo(
+    String accountNumber,
+    String accountHolder,
+    BigDecimal balance
 ) {
-    public ContaInfo {
-        if (numero == null || numero.isBlank()) {
-            throw new IllegalArgumentException("Número da conta é obrigatório");
+    public AccountInfo {
+        if (accountNumber == null || accountNumber.isBlank()) {
+            throw new IllegalArgumentException("Account number is required");
         }
-        if (saldo.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("Saldo não pode ser negativo");
+        if (balance.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Balance cannot be negative");
         }
     }
 }
 
-// Operações como funções puras
-public class OperacoesBancarias {
-    public static ContaInfo depositar(ContaInfo conta, BigDecimal valor) {
-        if (valor.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("Valor deve ser positivo");
+// Operations as pure functions
+public class BankingOperations {
+    public static AccountInfo deposit(AccountInfo account, BigDecimal amount) {
+        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Amount must be positive");
         }
-        return new ContaInfo(
-            conta.numero(),
-            conta.titular(),
-            conta.saldo().add(valor)
+        return new AccountInfo(
+            account.accountNumber(),
+            account.accountHolder(),
+            account.balance().add(amount)
         );
     }
     
-    public static ContaInfo sacar(ContaInfo conta, BigDecimal valor) {
-        if (valor.compareTo(conta.saldo()) > 0) {
-            throw new IllegalStateException("Saldo insuficiente");
+    public static AccountInfo withdraw(AccountInfo account, BigDecimal amount) {
+        if (amount.compareTo(account.balance()) > 0) {
+            throw new IllegalStateException("Insufficient balance");
         }
-        return new ContaInfo(
-            conta.numero(),
-            conta.titular(),
-            conta.saldo().subtract(valor)
+        return new AccountInfo(
+            account.accountNumber(),
+            account.accountHolder(),
+            account.balance().subtract(amount)
         );
     }
 }
@@ -157,27 +157,27 @@ fielmente o domínio, sem adicionar complexidade desnecessária ou omitir
 informações importantes:
 
 ```java
-// Modelagem precisa do domínio
-public record Endereco(
-    String logradouro,
-    String numero,
-    String complemento,
-    String bairro,
-    String cidade,
-    String estado,
-    String cep
+// Precise domain modeling
+public record Address(
+    String street,
+    String number,
+    String complement,
+    String neighborhood,
+    String city,
+    String state,
+    String zipCode
 ) {}
 
-public record Cliente(
+public record Customer(
     String cpf,
-    String nome,
-    LocalDate dataNascimento,
-    Endereco endereco,
-    List<String> telefones
+    String name,
+    LocalDate birthDate,
+    Address address,
+    List<String> phoneNumbers
 ) {
-    public Cliente {
-        // Validações no construtor
-        telefones = List.copyOf(telefones); // Imutabilidade
+    public Customer {
+        // Validations in constructor
+        phoneNumbers = List.copyOf(phoneNumbers); // Immutability
     }
 }
 ```
@@ -187,22 +187,22 @@ public record Cliente(
 Use o sistema de tipos para prevenir estados inválidos em tempo de compilação:
 
 ```java
-// Estados mutuamente exclusivos
-public sealed interface StatusPedido 
-    permits Pendente, Processando, Enviado, Entregue, Cancelado {
+// Mutually exclusive states
+public sealed interface OrderStatus 
+    permits Pending, Processing, Shipped, Delivered, Cancelled {
 }
 
-public record Pendente(LocalDateTime criadoEm) implements StatusPedido {}
-public record Processando(LocalDateTime iniciadoEm) implements StatusPedido {}
-public record Enviado(LocalDateTime enviadoEm, String codigoRastreamento) implements StatusPedido {}
-public record Entregue(LocalDateTime entregueEm, String assinatura) implements StatusPedido {}
-public record Cancelado(LocalDateTime canceladoEm, String motivo) implements StatusPedido {}
+public record Pending(LocalDateTime createdAt) implements OrderStatus {}
+public record Processing(LocalDateTime startedAt) implements OrderStatus {}
+public record Shipped(LocalDateTime shippedAt, String trackingCode) implements OrderStatus {}
+public record Delivered(LocalDateTime deliveredAt, String signature) implements OrderStatus {}
+public record Cancelled(LocalDateTime cancelledAt, String reason) implements OrderStatus {}
 
-public record Pedido(
+public record Order(
     String id,
-    String clienteId,
-    List<ItemPedido> itens,
-    StatusPedido status
+    String customerId,
+    List<OrderItem> items,
+    OrderStatus status
 ) {}
 ```
 
@@ -212,34 +212,34 @@ Mantenha validações nas bordas do sistema, permitindo que o núcleo trabalhe c
 dados já validados:
 
 ```java
-// Validação na fronteira
-public class PedidoValidator {
-    public static ValidationResult validar(PedidoRequest request) {
-        var erros = new ArrayList<String>();
+// Boundary validation
+public class OrderValidator {
+    public static ValidationResult validate(OrderRequest request) {
+        var errors = new ArrayList<String>();
         
-        if (request.clienteId() == null || request.clienteId().isBlank()) {
-            erros.add("Cliente é obrigatório");
+        if (request.customerId() == null || request.customerId().isBlank()) {
+            errors.add("Customer is required");
         }
         
-        if (request.itens() == null || request.itens().isEmpty()) {
-            erros.add("Pedido deve ter pelo menos um item");
+        if (request.items() == null || request.items().isEmpty()) {
+            errors.add("Order must have at least one item");
         }
         
-        return erros.isEmpty() 
+        return errors.isEmpty() 
             ? ValidationResult.success()
-            : ValidationResult.failure(erros);
+            : ValidationResult.failure(errors);
     }
 }
 
-// Núcleo trabalha com dados válidos
-public class PedidoService {
-    public Pedido criarPedido(PedidoRequest request) {
-        // Assume que dados já foram validados
-        return new Pedido(
+// Core works with validated data
+public class OrderService {
+    public Order createOrder(OrderRequest request) {
+        // Assumes data has already been validated
+        return new Order(
             UUID.randomUUID().toString(),
-            request.clienteId(),
-            request.itens(),
-            new Pendente(LocalDateTime.now())
+            request.customerId(),
+            request.items(),
+            new Pending(LocalDateTime.now())
         );
     }
 }
@@ -252,41 +252,41 @@ Vamos implementar uma API REST completa para gerenciar feriados públicos, demon
 ### Estruturas de Dados
 
 ```java
-// Modelo de domínio imutável
-public record Localizacao(
-    String pais,
-    Optional<String> estado,
-    Optional<String> cidade
+// Immutable domain model
+public record Location(
+    String country,
+    Optional<String> state,
+    Optional<String> city
 ) {
-    public Localizacao {
-        if (pais == null || pais.isBlank()) {
-            throw new IllegalArgumentException("País é obrigatório");
+    public Location {
+        if (country == null || country.isBlank()) {
+            throw new IllegalArgumentException("Country is required");
         }
     }
 }
 
-public enum TipoFeriado {
-    NACIONAL, ESTADUAL, MUNICIPAL, RELIGIOSO, COMERCIAL
+public enum HolidayType {
+    NATIONAL, STATE, MUNICIPAL, RELIGIOUS, COMMERCIAL
 }
 
-public record Feriado(
+public record Holiday(
     String id,
-    String nome,
-    LocalDate data,
-    Localizacao localizacao,
-    TipoFeriado tipo,
-    boolean recorrente,
-    Optional<String> descricao
+    String name,
+    LocalDate date,
+    Location location,
+    HolidayType type,
+    boolean recurring,
+    Optional<String> description
 ) {
-    public Feriado {
+    public Holiday {
         if (id == null || id.isBlank()) {
-            throw new IllegalArgumentException("ID é obrigatório");
+            throw new IllegalArgumentException("ID is required");
         }
-        if (nome == null || nome.isBlank()) {
-            throw new IllegalArgumentException("Nome é obrigatório");
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Name is required");
         }
-        if (data == null) {
-            throw new IllegalArgumentException("Data é obrigatória");
+        if (date == null) {
+            throw new IllegalArgumentException("Date is required");
         }
     }
 }
@@ -296,73 +296,73 @@ public record Feriado(
 
 ```java
 // Request/Response DTOs
-public record CriarFeriadoRequest(
-    String nome,
-    String data, // ISO format
-    String pais,
-    String estado,
-    String cidade,
-    String tipo,
-    boolean recorrente,
-    String descricao
+public record CreateHolidayRequest(
+    String name,
+    String date, // ISO format
+    String country,
+    String state,
+    String city,
+    String type,
+    boolean recurring,
+    String description
 ) {}
 
-public record FeriadoResponse(
+public record HolidayResponse(
     String id,
-    String nome,
-    String data,
-    LocalizacaoResponse localizacao,
-    String tipo,
-    boolean recorrente,
-    String descricao
+    String name,
+    String date,
+    LocationResponse location,
+    String type,
+    boolean recurring,
+    String description
 ) {}
 
-public record LocalizacaoResponse(
-    String pais,
-    String estado,
-    String cidade
+public record LocationResponse(
+    String country,
+    String state,
+    String city
 ) {}
 
-public record FiltroFeriados(
-    Optional<String> pais,
-    Optional<String> estado,
-    Optional<String> cidade,
-    Optional<LocalDate> dataInicio,
-    Optional<LocalDate> dataFim,
-    Optional<TipoFeriado> tipo
+public record HolidayFilter(
+    Optional<String> country,
+    Optional<String> state,
+    Optional<String> city,
+    Optional<LocalDate> startDate,
+    Optional<LocalDate> endDate,
+    Optional<HolidayType> type
 ) {}
 ```
 
 ### Validação nas Fronteiras
 
 ```java
-public class FeriadoValidator {
-    public static ValidationResult validarCriacao(CriarFeriadoRequest request) {
-        var erros = new ArrayList<String>();
+public class HolidayValidator {
+    public static ValidationResult validateCreation(CreateHolidayRequest request) {
+        var errors = new ArrayList<String>();
         
-        if (request.nome() == null || request.nome().isBlank()) {
-            erros.add("Nome é obrigatório");
+        if (request.name() == null || request.name().isBlank()) {
+            errors.add("Name is required");
         }
         
-        if (request.pais() == null || request.pais().isBlank()) {
-            erros.add("País é obrigatório");
+        if (request.country() == null || request.country().isBlank()) {
+            errors.add("Country is required");
         }
         
         try {
-            LocalDate.parse(request.data());
+            LocalDate.parse(request.date());
         } catch (DateTimeParseException e) {
-            erros.add("Data deve estar no formato ISO (YYYY-MM-DD)");
+            errors.add("Date must be in ISO format (YYYY-MM-DD)");
         }
         
         try {
-            TipoFeriado.valueOf(request.tipo().toUpperCase());
+            HolidayType.valueOf(request.type().toUpperCase());
         } catch (IllegalArgumentException e) {
-            erros.add("Tipo inválido: " + request.tipo());
+            errors.add("Invalid type: " + request.type());
         }
         
-        return erros.isEmpty() 
+        return errors.isEmpty() 
             ? ValidationResult.success()
-            : ValidationResult.failure(erros);
+            : ValidationResult.failure(errors);
     }
 }
 
@@ -370,46 +370,46 @@ public sealed interface ValidationResult
     permits ValidationResult.Success, ValidationResult.Failure {
     
     record Success() implements ValidationResult {}
-    record Failure(List<String> erros) implements ValidationResult {}
+    record Failure(List<String> errors) implements ValidationResult {}
     
     static ValidationResult success() { return new Success(); }
-    static ValidationResult failure(List<String> erros) { return new Failure(erros); }
+    static ValidationResult failure(List<String> errors) { return new Failure(errors); }
 }
 ```
 
 ### Mapeadores de Dados
 
 ```java
-public class FeriadoMapper {
-    public static Feriado fromRequest(CriarFeriadoRequest request) {
-        return new Feriado(
+public class HolidayMapper {
+    public static Holiday fromRequest(CreateHolidayRequest request) {
+        return new Holiday(
             UUID.randomUUID().toString(),
-            request.nome(),
-            LocalDate.parse(request.data()),
-            new Localizacao(
-                request.pais(),
-                Optional.ofNullable(request.estado()),
-                Optional.ofNullable(request.cidade())
+            request.name(),
+            LocalDate.parse(request.date()),
+            new Location(
+                request.country(),
+                Optional.ofNullable(request.state()),
+                Optional.ofNullable(request.city())
             ),
-            TipoFeriado.valueOf(request.tipo().toUpperCase()),
-            request.recorrente(),
-            Optional.ofNullable(request.descricao())
+            HolidayType.valueOf(request.type().toUpperCase()),
+            request.recurring(),
+            Optional.ofNullable(request.description())
         );
     }
     
-    public static FeriadoResponse toResponse(Feriado feriado) {
-        return new FeriadoResponse(
-            feriado.id(),
-            feriado.nome(),
-            feriado.data().toString(),
-            new LocalizacaoResponse(
-                feriado.localizacao().pais(),
-                feriado.localizacao().estado().orElse(null),
-                feriado.localizacao().cidade().orElse(null)
+    public static HolidayResponse toResponse(Holiday holiday) {
+        return new HolidayResponse(
+            holiday.id(),
+            holiday.name(),
+            holiday.date().toString(),
+            new LocationResponse(
+                holiday.location().country(),
+                holiday.location().state().orElse(null),
+                holiday.location().city().orElse(null)
             ),
-            feriado.tipo().name(),
-            feriado.recorrente(),
-            feriado.descricao().orElse(null)
+            holiday.type().name(),
+            holiday.recurring(),
+            holiday.description().orElse(null)
         );
     }
 }
@@ -418,42 +418,42 @@ public class FeriadoMapper {
 ### Serviço de Domínio
 
 ```java
-public class FeriadoService {
-    private final FeriadoRepository repository;
+public class HolidayService {
+    private final HolidayRepository repository;
     
-    public FeriadoService(FeriadoRepository repository) {
+    public HolidayService(HolidayRepository repository) {
         this.repository = repository;
     }
     
-    public List<Feriado> buscarFeriados(FiltroFeriados filtro) {
-        return repository.buscar(filtro);
+    public List<Holiday> findHolidays(HolidayFilter filter) {
+        return repository.find(filter);
     }
     
-    public Optional<Feriado> buscarPorId(String id) {
-        return repository.buscarPorId(id);
+    public Optional<Holiday> findById(String id) {
+        return repository.findById(id);
     }
     
-    public Feriado salvar(Feriado feriado) {
-        return repository.salvar(feriado);
+    public Holiday save(Holiday holiday) {
+        return repository.save(holiday);
     }
     
-    public boolean deletar(String id) {
-        return repository.deletar(id);
+    public boolean delete(String id) {
+        return repository.delete(id);
     }
     
-    public Optional<Feriado> atualizar(String id, Feriado feriadoAtualizado) {
-        return repository.buscarPorId(id)
-            .map(existente -> {
-                var atualizado = new Feriado(
-                    id, // Mantém o ID original
-                    feriadoAtualizado.nome(),
-                    feriadoAtualizado.data(),
-                    feriadoAtualizado.localizacao(),
-                    feriadoAtualizado.tipo(),
-                    feriadoAtualizado.recorrente(),
-                    feriadoAtualizado.descricao()
+    public Optional<Holiday> update(String id, Holiday updatedHoliday) {
+        return repository.findById(id)
+            .map(existing -> {
+                var updated = new Holiday(
+                    id, // Keep original ID
+                    updatedHoliday.name(),
+                    updatedHoliday.date(),
+                    updatedHoliday.location(),
+                    updatedHoliday.type(),
+                    updatedHoliday.recurring(),
+                    updatedHoliday.description()
                 );
-                return repository.salvar(atualizado);
+                return repository.save(updated);
             });
     }
 }
@@ -462,13 +462,13 @@ public class FeriadoService {
 ### Handler do AWS Lambda
 
 ```java
-public class FeriadoLambdaHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
+public class HolidayLambdaHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
     
-    private final FeriadoService feriadoService;
+    private final HolidayService holidayService;
     private final ObjectMapper objectMapper;
     
-    public FeriadoLambdaHandler() {
-        this.feriadoService = new FeriadoService(new DynamoDBFeriadoRepository());
+    public HolidayLambdaHandler() {
+        this.holidayService = new HolidayService(new DynamoDBHolidayRepository());
         this.objectMapper = new ObjectMapper()
             .registerModule(new JavaTimeModule())
             .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
@@ -482,11 +482,11 @@ public class FeriadoLambdaHandler implements RequestHandler<APIGatewayProxyReque
                 case "POST" -> handlePost(request);
                 case "PUT" -> handlePut(request);
                 case "DELETE" -> handleDelete(request);
-                default -> createResponse(405, Map.of("erro", "Método não permitido"));
+                default -> createResponse(405, Map.of("error", "Method not allowed"));
             };
         } catch (Exception e) {
-            context.getLogger().log("Erro: " + e.getMessage());
-            return createResponse(500, Map.of("erro", "Erro interno do servidor"));
+            context.getLogger().log("Error: " + e.getMessage());
+            return createResponse(500, Map.of("error", "Internal server error"));
         }
     }
     
@@ -494,19 +494,19 @@ public class FeriadoLambdaHandler implements RequestHandler<APIGatewayProxyReque
         var pathParameters = request.getPathParameters();
         
         if (pathParameters != null && pathParameters.containsKey("id")) {
-            // GET /feriados/{id}
+            // GET /holidays/{id}
             var id = pathParameters.get("id");
-            var feriado = feriadoService.buscarPorId(id);
+            var holiday = holidayService.findById(id);
             
-            return feriado
-                .map(f -> createResponse(200, FeriadoMapper.toResponse(f)))
-                .orElse(createResponse(404, Map.of("erro", "Feriado não encontrado")));
+            return holiday
+                .map(h -> createResponse(200, HolidayMapper.toResponse(h)))
+                .orElse(createResponse(404, Map.of("error", "Holiday not found")));
         } else {
-            // GET /feriados com filtros
-            var filtro = extrairFiltros(request.getQueryStringParameters());
-            var feriados = feriadoService.buscarFeriados(filtro);
-            var responses = feriados.stream()
-                .map(FeriadoMapper::toResponse)
+            // GET /holidays with filters
+            var filter = extractFilters(request.getQueryStringParameters());
+            var holidays = holidayService.findHolidays(filter);
+            var responses = holidays.stream()
+                .map(HolidayMapper::toResponse)
                 .toList();
             
             return createResponse(200, responses);
@@ -514,70 +514,70 @@ public class FeriadoLambdaHandler implements RequestHandler<APIGatewayProxyReque
     }
     
     private APIGatewayProxyResponseEvent handlePost(APIGatewayProxyRequestEvent request) throws Exception {
-        var feriadoRequest = objectMapper.readValue(request.getBody(), CriarFeriadoRequest.class);
+        var holidayRequest = objectMapper.readValue(request.getBody(), CreateHolidayRequest.class);
         
-        var validacao = FeriadoValidator.validarCriacao(feriadoRequest);
-        if (validacao instanceof ValidationResult.Failure failure) {
-            return createResponse(400, Map.of("erros", failure.erros()));
+        var validation = HolidayValidator.validateCreation(holidayRequest);
+        if (validation instanceof ValidationResult.Failure failure) {
+            return createResponse(400, Map.of("errors", failure.errors()));
         }
         
-        var feriado = FeriadoMapper.fromRequest(feriadoRequest);
-        var feriadoSalvo = feriadoService.salvar(feriado);
+        var holiday = HolidayMapper.fromRequest(holidayRequest);
+        var savedHoliday = holidayService.save(holiday);
         
-        return createResponse(201, FeriadoMapper.toResponse(feriadoSalvo));
+        return createResponse(201, HolidayMapper.toResponse(savedHoliday));
     }
     
     private APIGatewayProxyResponseEvent handlePut(APIGatewayProxyRequestEvent request) throws Exception {
         var pathParameters = request.getPathParameters();
         if (pathParameters == null || !pathParameters.containsKey("id")) {
-            return createResponse(400, Map.of("erro", "ID é obrigatório"));
+            return createResponse(400, Map.of("error", "ID is required"));
         }
         
         var id = pathParameters.get("id");
-        var feriadoRequest = objectMapper.readValue(request.getBody(), CriarFeriadoRequest.class);
+        var holidayRequest = objectMapper.readValue(request.getBody(), CreateHolidayRequest.class);
         
-        var validacao = FeriadoValidator.validarCriacao(feriadoRequest);
-        if (validacao instanceof ValidationResult.Failure failure) {
-            return createResponse(400, Map.of("erros", failure.erros()));
+        var validation = HolidayValidator.validateCreation(holidayRequest);
+        if (validation instanceof ValidationResult.Failure failure) {
+            return createResponse(400, Map.of("errors", failure.errors()));
         }
         
-        var feriadoAtualizado = FeriadoMapper.fromRequest(feriadoRequest);
-        var resultado = feriadoService.atualizar(id, feriadoAtualizado);
+        var updatedHoliday = HolidayMapper.fromRequest(holidayRequest);
+        var result = holidayService.update(id, updatedHoliday);
         
-        return resultado
-            .map(f -> createResponse(200, FeriadoMapper.toResponse(f)))
-            .orElse(createResponse(404, Map.of("erro", "Feriado não encontrado")));
+        return result
+            .map(h -> createResponse(200, HolidayMapper.toResponse(h)))
+            .orElse(createResponse(404, Map.of("error", "Holiday not found")));
     }
     
     private APIGatewayProxyResponseEvent handleDelete(APIGatewayProxyRequestEvent request) {
         var pathParameters = request.getPathParameters();
         if (pathParameters == null || !pathParameters.containsKey("id")) {
-            return createResponse(400, Map.of("erro", "ID é obrigatório"));
+            return createResponse(400, Map.of("error", "ID is required"));
         }
         
         var id = pathParameters.get("id");
-        var deletado = feriadoService.deletar(id);
+        var deleted = holidayService.delete(id);
         
-        return deletado 
+        return deleted 
             ? createResponse(204, null)
-            : createResponse(404, Map.of("erro", "Feriado não encontrado"));
+            : createResponse(404, Map.of("error", "Holiday not found"));
     }
     
-    private FiltroFeriados extrairFiltros(Map<String, String> queryParams) {
+    private HolidayFilter extractFilters(Map<String, String> queryParams) {
         if (queryParams == null) {
-            return new FiltroFeriados(
+            return new HolidayFilter(
                 Optional.empty(), Optional.empty(), Optional.empty(),
                 Optional.empty(), Optional.empty(), Optional.empty()
             );
         }
         
-        return new FiltroFeriados(
-            Optional.ofNullable(queryParams.get("pais")),
-            Optional.ofNullable(queryParams.get("estado")),
-            Optional.ofNullable(queryParams.get("cidade")),
-            Optional.ofNullable(queryParams.get("dataInicio")).map(LocalDate::parse),
-            Optional.ofNullable(queryParams.get("dataFim")).map(LocalDate::parse),
-            Optional.ofNullable(queryParams.get("tipo")).map(t -> TipoFeriado.valueOf(t.toUpperCase()))
+        return new HolidayFilter(
+            Optional.ofNullable(queryParams.get("country")),
+            Optional.ofNullable(queryParams.get("state")),
+            Optional.ofNullable(queryParams.get("city")),
+            Optional.ofNullable(queryParams.get("startDate")).map(LocalDate::parse),
+            Optional.ofNullable(queryParams.get("endDate")).map(LocalDate::parse),
+            Optional.ofNullable(queryParams.get("type")).map(t -> HolidayType.valueOf(t.toUpperCase()))
         );
     }
     
@@ -594,7 +594,7 @@ public class FeriadoLambdaHandler implements RequestHandler<APIGatewayProxyReque
                 response.setBody(objectMapper.writeValueAsString(body));
             } catch (Exception e) {
                 response.setStatusCode(500);
-                response.setBody("{\"erro\":\"Erro na serialização\"}");
+                response.setBody("{\"error\":\"Serialization error\"}");
             }
         }
         
@@ -610,7 +610,7 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 
 Resources:
-  FeriadosApi:
+  HolidaysApi:
     Type: AWS::Serverless::Api
     Properties:
       StageName: prod
@@ -619,56 +619,56 @@ Resources:
         AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
         AllowOrigin: "'*'"
 
-  FeriadosFunction:
+  HolidaysFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: target/feriados-api-1.0.jar
-      Handler: com.exemplo.FeriadoLambdaHandler::handleRequest
+      CodeUri: target/holidays-api-1.0.jar
+      Handler: com.example.HolidayLambdaHandler::handleRequest
       Runtime: java17
       MemorySize: 512
       Timeout: 30
       Environment:
         Variables:
-          DYNAMODB_TABLE: !Ref FeriadosTable
+          DYNAMODB_TABLE: !Ref HolidaysTable
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref FeriadosTable
+            TableName: !Ref HolidaysTable
       Events:
-        GetFeriados:
+        GetHolidays:
           Type: Api
           Properties:
-            RestApiId: !Ref FeriadosApi
-            Path: /feriados
+            RestApiId: !Ref HolidaysApi
+            Path: /holidays
             Method: get
-        GetFeriado:
+        GetHoliday:
           Type: Api
           Properties:
-            RestApiId: !Ref FeriadosApi
-            Path: /feriados/{id}
+            RestApiId: !Ref HolidaysApi
+            Path: /holidays/{id}
             Method: get
-        CreateFeriado:
+        CreateHoliday:
           Type: Api
           Properties:
-            RestApiId: !Ref FeriadosApi
-            Path: /feriados
+            RestApiId: !Ref HolidaysApi
+            Path: /holidays
             Method: post
-        UpdateFeriado:
+        UpdateHoliday:
           Type: Api
           Properties:
-            RestApiId: !Ref FeriadosApi
-            Path: /feriados/{id}
+            RestApiId: !Ref HolidaysApi
+            Path: /holidays/{id}
             Method: put
-        DeleteFeriado:
+        DeleteHoliday:
           Type: Api
           Properties:
-            RestApiId: !Ref FeriadosApi
-            Path: /feriados/{id}
+            RestApiId: !Ref HolidaysApi
+            Path: /holidays/{id}
             Method: delete
 
-  FeriadosTable:
+  HolidaysTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: feriados
+      TableName: holidays
       BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:
         - AttributeName: id
@@ -679,8 +679,8 @@ Resources:
 
 Outputs:
   ApiUrl:
-    Description: "URL da API"
-    Value: !Sub "https://${FeriadosApi}.execute-api.${AWS::Region}.amazonaws.com/prod/feriados"
+    Description: "API URL"
+    Value: !Sub "https://${HolidaysApi}.execute-api.${AWS::Region}.amazonaws.com/prod/holidays"
 ```
 
 ## Conclusão
