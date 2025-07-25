@@ -21,6 +21,8 @@ oferece uma forma específica de "dobrar" a realidade em código, capturando os
 aspectos essenciais do domínio que estamos modelando enquanto abstrai detalhes
 desnecessários.
 
+![](2025-07-24-22-06-03.png)
+
 Quando desenvolvemos software, não estamos tentando recriar o mundo real em sua
 totalidade — isso seria impossível e improdutivo. Em vez disso, utilizamos
 paradigmas como ferramentas conceituais que nos permitem focar nos elementos
@@ -33,6 +35,8 @@ Ao longo da evolução da computação, diferentes paradigmas emergiram para abo
 distintos tipos de problemas e formas de pensar sobre software. Cada um oferece
 uma perspectiva única sobre como organizar código, gerenciar estado e estruturar
 soluções.
+
+![](2025-07-24-22-08-06.png)
 
 ### Comparação dos Principais Paradigmas
 
@@ -98,6 +102,8 @@ A Programação Orientada a Dados (Data-Oriented Programming) representa uma
 mudança fundamental na forma como pensamos sobre software. Em vez de focar em
 objetos que encapsulam dados e comportamento, este paradigma prioriza a
 estrutura e o fluxo dos dados, separando claramente informação de processamento.
+
+![](2025-07-24-22-21-00.png)
 
 ### Os Quatro Princípios Fundamentais
 
