@@ -7,13 +7,37 @@ featuredImage: feature.png
 
 ## A Arte de Simplificar a Complexidade
 
-Os detalhes são importante, porém trazem o custo de transformarem as coisas mais complexas. É assim na vida. É assim no desenvolvimento de software. O processo de desenhar e construir sistemas de software depende indubitavelmente das linguagens, de software ou da linguagem natural. Essa última é por essência ambígua e ambiguidade gera complexidade.
+Os detalhes são importante, porém trazem o custo de transformarem as coisas mais
+complexas. É assim na vida. É assim no desenvolvimento de software. O processo
+de desenhar e construir sistemas de software depende indubitavelmente das
+linguagens, de software ou da linguagem natural. Essa última é por essência
+ambígua e ambiguidade gera complexidade.
 
-Em seu livro *A Philosophy of Software Design,* John Ousterhout discute duas maneiras principais de lidar com a complexidade. A primeira é simplificar e tornar o código mais claro para reduzir a complexidade, por exemplo, removendo casos especiais e utilizando identificadores consistentes. A segunda abordagem é encapsular a complexidade por meio de um design modular, no qual um sistema de software é dividido em módulos, como classes em uma linguagem orientada a objetos, permitindo que os programadores trabalhem no sistema sem se sentirem sobrecarregados com toda a sua complexidade de uma só vez. Eu acrescentaria um terceiro que são os modelos.
+Em seu livro *A Philosophy of Software Design,* John Ousterhout discute duas
+maneiras principais de lidar com a complexidade. A primeira é simplificar e
+tornar o código mais claro para reduzir a complexidade, por exemplo, removendo
+casos especiais e utilizando identificadores consistentes. A segunda abordagem é
+encapsular a complexidade por meio de um design modular, no qual um sistema de
+software é dividido em módulos, como classes em uma linguagem orientada a
+objetos, permitindo que os programadores trabalhem no sistema sem se sentirem
+sobrecarregados com toda a sua complexidade de uma só vez. Eu acrescentaria um
+terceiro que são os modelos.
 
-Modelos são uma representação abstrata de um sistema (de software) que nos auxilia a compreender e simplificar a complexidade inerente. Eles nos permitem visualizar e comunicar as diferentes partes e interações do sistema, facilitando o processo de planejamento e construção. Ao fornecer uma estrutura clara e organizada, os modelos ajudam a reduzir a ambiguidade e a tornar o sistema mais compreensível.
+Modelos são uma representação abstrata de um sistema (de software) que nos
+auxilia a compreender e simplificar a complexidade inerente. Eles nos permitem
+visualizar e comunicar as diferentes partes e interações do sistema, facilitando
+o processo de planejamento e construção. Ao fornecer uma estrutura clara e
+organizada, os modelos ajudam a reduzir a ambiguidade e a tornar o sistema mais
+compreensível.
 
-Engana-se quem pensa que o uso de modelos é uma abordagem exclusiva do desenvolvimento de software para lidar com a complexidade. Imagine um artista de origami criando um cisne a partir de uma simples folha de papel. O resultado final captura a essência elegante da ave — seu pescoço curvado, suas asas dobradas, sua postura graciosa — mas deixa de lado detalhes desnecessários como a textura das penas ou a cor dos olhos. O origami não busca replicar perfeitamente a realidade, mas sim extrair e representar apenas os aspectos mais importantes e reconhecíveis.
+Engana-se quem pensa que o uso de modelos é uma abordagem exclusiva do
+desenvolvimento de software para lidar com a complexidade. Imagine um artista de
+origami criando um cisne a partir de uma simples folha de papel. O resultado
+final captura a essência elegante da ave — seu pescoço curvado, suas asas
+dobradas, sua postura graciosa — mas deixa de lado detalhes desnecessários como
+a textura das penas ou a cor dos olhos. O origami não busca replicar
+perfeitamente a realidade, mas sim extrair e representar apenas os aspectos mais
+importantes e reconhecíveis.
 
 ![](2025-07-24-22-06-03.png)
 
@@ -73,7 +97,7 @@ dos paradigmas funcional e procedural.
 
 ## Fundamentos da Programação Orientada a Objetos
 
-A Programação Orientada a Objetos (POO) deve a sua larga adoca a linguages como
+A Programação Orientada a Objetos (POO) deve a sua larga adoção a linguagens como
 Java e C++. É importante salientar que Java não é uma linguagem puramente
 orientada a objetos principalmente por conta tipos primitivos e os métodos
 estáticos (static) que pertencem à classe e não a um objeto. Um exemplo de uma
@@ -95,9 +119,9 @@ código e o encapsulamento de dados. Os Seus princípios fundamentais incluem:
 ### Exemplo Prático em Java
 
 Para exemplificar o uso dos princípios da POO vamos modelar um sistema
-responsável por gerenciar feriados (`Holiday`). Acredito que leito saiba o que é
-um feriado, contudo, listarei algumas regras que serão importante no desenho da
-solução.
+responsável por gerenciar feriados (`Holiday`). Acredito que leitor saiba o que
+é um feriado, contudo, listarei algumas regras que serão importante no desenho
+da solução.
 
 - **Existem diferentes tipos de feriados**: Nacionais (Independência), religiosos (Natal, Ramadan), regionais (São João) e comerciais (Valentine's Day) `[1][2][3'`
 
@@ -109,9 +133,162 @@ solução.
 
 - **Diferentes regras de observância**: Alguns começam no pôr do sol anterior (judaicos/islâmicos), têm duração variável (Chanukah 8 dias), só aplicam em dias úteis e não duplicam benefícios `[14][10][15][16]`
 
-```java
-// Traditional OOP modeling
+A modelagem da classe `Holiday` segue uma abordagem hierárquica típica da POO,
+onde uma classe abstrata define o contrato comum e as características
+compartilhadas por todos os tipos de feriados. A classe base encapsula
+propriedades essenciais como nome, descrição, localidades onde é observado, tipo
+de feriado e regras de "mondayisation" (ajuste para dias úteis), além de
+comportamentos comuns como verificação de fim de semana e cálculo de data
+observada. Um aspecto fundamental da POO é que a classe `Holiday` encapsula seu
+estado através da propriedade `date`, mantendo as regras de cálculo da data como
+responsabilidade interna - a própria classe gerencia como calcular a data de um
+feriado para cada ano, ocultando essa complexidade do código cliente. As
+subclasses `FixedHoliday` e `MoveableHoliday` especializam a implementação do
+método abstrato `getDate()`, onde feriados fixos simplesmente retornam a mesma
+data anual, enquanto feriados móveis executam algoritmos complexos - desde
+cálculos astronômicos para a Páscoa até regras baseadas em dias da semana ou
+dependências de outros feriados. Esta estrutura permite que o sistema trate
+uniformemente diferentes tipos de feriados através de polimorfismo, ocultando a
+complexidade específica de cada tipo de cálculo atrás de uma interface
+consistente.
+
 ```
+                    ┌─────────────────────────────────┐
+                    │           Holiday               │
+                    │         (abstract)              │
+                    ├─────────────────────────────────┤
+                    │ - name: String                  │
+                    │ - description: String           │
+                    │ - day: int                      │
+                    │ - month: Month                  │
+                    │ - localities: List<Locality>    │
+                    │ - type: HolidayType             │
+                    │ - mondayisation: boolean        │
+                    ├─────────────────────────────────┤
+                    │ + getDate(year: int): LocalDate │
+                    │ + getObserved(year: int):       │
+                    │   LocalDate                     │
+                    │ + getName(): String             │
+                    │ + getType(): HolidayType        │
+                    └─────────────────────────────────┘
+                                    △
+                                    │
+                    ┌───────────────┴───────────────┐
+                    │                               │
+        ┌─────────────────────────┐     ┌─────────────────────────┐
+        │     FixedHoliday        │     │   MoveableHoliday       │
+        ├─────────────────────────┤     ├─────────────────────────┤
+        │                         │     │ - moveableType:         │
+        │                         │     │   MoveableHolidayType   │
+        │                         │     │ - baseHoliday: Holiday  │
+        │                         │     │ - dayOffset: int        │
+        ├─────────────────────────┤     ├─────────────────────────┤
+        │ + getDate(year: int):   │     │ + getDate(year: int):   │
+        │   LocalDate             │     │   LocalDate             │
+        └─────────────────────────┘     │ + calculateEasterSunday │
+                                        │   (year: int): LocalDate│
+                                        └─────────────────────────┘
+```
+
+A modelagem orientada a objetos demonstra claramente os quatro princípios
+fundamentais da POO. O **encapsulamento** é evidenciado pela classe abstrata
+`Holiday` que agrupa dados (nome, descrição, localidades) e comportamentos
+(cálculo de datas, verificação de fim de semana) em uma única unidade coesa,
+controlando o acesso através de métodos públicos bem definidos. A **herança**
+permite que `FixedHoliday` e `MoveableHoliday` compartilhem características
+comuns da classe pai, evitando duplicação de código e estabelecendo uma
+hierarquia lógica entre os conceitos.
+
+O **polimorfismo** é implementado através do método abstrato `getDate(int
+year)`, onde cada subclasse fornece sua própria implementação específica -
+feriados fixos retornam sempre a mesma data, enquanto feriados móveis executam
+cálculos complexos como o algoritmo astronômico da Páscoa. A **abstração**
+oculta a complexidade dos diferentes tipos de cálculo de datas atrás de uma
+interface uniforme, permitindo que o código cliente trate todos os feriados de
+forma consistente, independentemente de serem fixos ou móveis.
+
+```java
+// Classe abstrata demonstrando encapsulamento e abstração
+public abstract class Holiday {
+    private String name;
+    private String description;
+    private List<Locality> localities;
+    private HolidayType type;
+    private boolean mondayisation;
+    
+    // Método abstrato para polimorfismo
+    public abstract LocalDate getDate(int year);
+    
+    // Comportamento comum encapsulado
+    public LocalDate getObserved(int year) {
+        LocalDate actualDate = getDate(year);
+        return mondayisation ? applyMondayisationRules(actualDate) : actualDate;
+    }
+    
+    public boolean isWeekend(int year) {
+        DayOfWeek dayOfWeek = getDate(year).getDayOfWeek();
+        return dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
+    }
+}
+
+// Herança: FixedHoliday especializa Holiday
+public class FixedHoliday extends Holiday {
+    @Override
+    public LocalDate getDate(int year) {
+        return LocalDate.of(year, getMonth(), getDay());
+    }
+}
+
+// Herança: MoveableHoliday com lógica complexa
+public class MoveableHoliday extends Holiday {
+    private final MoveableHolidayType moveableType;
+    private final Holiday baseHoliday;
+    private final int dayOffset;
+    
+    @Override
+    public LocalDate getDate(int year) {
+        return switch (moveableType) {
+            case LUNAR_BASED -> calculateEasterSunday(year);
+            case RELATIVE_TO_HOLIDAY -> baseHoliday.getDate(year).plusDays(dayOffset);
+            case WEEKDAY_BASED -> calculateWeekdayBasedDate(year);
+        };
+    }
+}
+
+// Uso polimórfico - mesmo código para diferentes tipos
+List<Holiday> holidays = List.of(
+    new FixedHoliday("Christmas", "Birth of Christ", 25, Month.DECEMBER, 
+                     localities, HolidayType.RELIGIOUS, true),
+    new MoveableHoliday("Easter", "Resurrection of Christ", 
+                        localities, HolidayType.RELIGIOUS, 
+                        MoveableHolidayType.LUNAR_BASED, true)
+);
+
+// Polimorfismo em ação
+for (Holiday holiday : holidays) {
+    LocalDate date = holiday.getDate(2024); // Cada tipo calcula diferentemente
+    System.out.println(holiday.getName() + ": " + date);
+}
+```
+
+Apesar dos benefícios da modelagem orientada a objetos, a implementação
+apresenta limitações inerentes ao paradigma que podem comprometer a integridade
+dos dados e a previsibilidade do sistema:
+
+• **Lista mutável exposta:** O método `getLocalities()` retorna uma referência direta à lista interna, permitindo que código externo modifique o estado do objeto sem controle da classe
+
+• **Estado mutável:** Os campos `date` e `observed` podem ser alterados após a criação do objeto através dos métodos `setDate()` e `setObserved()`, violando a expectativa de imutabilidade de um feriado
+
+• **Falta de cópia defensiva:** A lista de localidades não é protegida contra modificação externa, criando vazamentos de encapsulamento que podem levar a bugs sutis e difíceis de rastrear
+
+Essas limitações são características inerentes ao paradigma orientado a objetos,
+onde o foco no encapsulamento de dados e comportamento pode inadvertidamente
+criar pontos de mutabilidade não controlada. A Programação Orientada a Dados
+emerge como uma alternativa que aborda diretamente esses problemas, priorizando
+a imutabilidade dos dados e a separação clara entre informação e processamento,
+eliminando os riscos associados ao estado mutável compartilhado.
+
+📁 **Código Fonte Completo**: [github.com/vagnerclementino/api-holiday](https://github.com/vagnerclementino/api-holiday)
 
 ## Programação Orientada a Dados: Uma Nova Perspectiva
 
@@ -169,7 +346,7 @@ desenvolvemos uma API REST completa para gerenciar feriados públicos. O projeto
 completo está disponível no GitHub e pode ser executado localmente usando Docker
 Compose.
 
-📁 **Código Fonte Completo**: [github.com/vagnerclementino/odp-api-holiday](https://github.com/vagnerclementino/odp-api-holiday)
+📁 **Código Fonte Completo**: [github.com/vagnerclementino/odp-api-holiday](https://github.com/vagnerclementino/api-holiday)
 
 ### Handler do AWS Lambda
 
@@ -360,6 +537,7 @@ O exemplo da API de feriados demonstra como esses princípios podem ser aplicado
 A chave está em reconhecer que, assim como no origami, diferentes técnicas de "dobrar" o código podem revelar aspectos distintos da solução, e a escolha do paradigma adequado pode fazer toda a diferença na elegância e eficácia do resultado final.
 
 ```
+[^2](https://survey.stackoverflow.co/2025/technology#most-popular-technologies)
 [1] <https://en.wikipedia.org/wiki/Holiday>.
 [2] <https://en.wikipedia.org/wiki/Lists_of_holidays>
 [3] <https://www.xavier.edu/jesuitresource/online-resources/calendar-religious-holidays-and-observances/>
