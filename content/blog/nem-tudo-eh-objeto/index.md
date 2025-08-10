@@ -13,7 +13,7 @@ de desenhar e construir sistemas de software depende indubitavelmente das
 linguagens, de software ou da linguagem natural. Essa última é por essência
 ambígua e ambiguidade gera complexidade.
 
-Em seu livro *A Philosophy of Software Design,* John Ousterhout discute duas
+Em seu livro *A Philosophy of Software Design*[^24], John Ousterhout discute duas
 maneiras principais de lidar com a complexidade. A primeira é simplificar e
 tornar o código mais claro para reduzir a complexidade, por exemplo, removendo
 casos especiais e utilizando identificadores consistentes. A segunda abordagem é
@@ -42,8 +42,8 @@ importantes e reconhecíveis.
 ![](2025-07-24-22-06-03.png)
 
 O desenvolvimento de software deve considerar constantemente questões de design,
-sendo minimizar a complexidade o principal aspecto do projeto de software.
-(Ousterhout, 2021, p. 19). Em geral a primeira estratégia para reduzir a
+sendo minimizar a complexidade o principal aspecto do projeto de software[^24].
+Em geral a primeira estratégia para reduzir a
 complexidade é desenhar e construir um sistema que esteja aderente a determinado
 paradigmas de programação. Os paradigmas foram criados para nos ajudar a reduzir
 a complexidade do mundo real e mapeá-la em sistemas de software compreensíveis e
@@ -69,7 +69,7 @@ contrário. Em outras palavras, um paradigma de programação define como os
 problemas são resolvidos com código, e uma linguagem de programação é a
 ferramenta que permite a implementação dessas soluções. Dado que uma linguagem
 pode suportar um ou mais paradigmas, a partir da análise da adoção das
-linguagens[^2] possível inferir quais são os paradigmas mais utilizados.
+linguagens[^17] possível inferir quais são os paradigmas mais utilizados.
 Independente da metodologia adotada é bem possível que o resultado dos
 paradigmas mais utilizados será *procedural, orientado a objetos e funcional*,
 não necessariamente nessa ordem.
@@ -123,15 +123,15 @@ responsável por gerenciar feriados (`Holiday`). Acredito que leitor saiba o que
 é um feriado, contudo, listarei algumas regras que serão importante no desenho
 da solução.
 
-- **Existem diferentes tipos de feriados**: Nacionais (Independência), religiosos (Natal, Ramadan), regionais (São João) e comerciais (Valentine's Day) `[1][2][3'`
+- **Existem diferentes tipos de feriados**: Nacionais (Independência), religiosos (Natal, Ramadan), regionais (São João) e comerciais (Valentine's Day)[^1]
 
-- **Os feriados podem ser fixos ou móveis**: Fixos sempre na mesma data (25/12), móveis calculados por lua (Páscoa), dia da semana (Memorial Day) ou calendário lunar (Eid) `[4][5][6][7]`
+- **Os feriados podem ser fixos ou móveis**: Fixos sempre na mesma data (25/12), móveis calculados por lua (Páscoa), dia da semana (Memorial Day) ou calendário lunar (Eid)[^4]
 
-- **Os feriados dependem de qual sistemas de calendário adotado**: Gregoriano (feriados ocidentais), lunar islâmico (Ramadan "roda" 11 dias/ano), luni-solar judaico (Rosh Hashanah varia mas mantém sazonalidade) `[8][9][7]`
+- **Os feriados dependem de qual sistemas de calendário adotado**: Gregoriano (feriados ocidentais), lunar islâmico (Ramadan "roda" 11 dias/ano), luni-solar judaico (Rosh Hashanah varia mas mantém sazonalidade)[^7]
 
-- **Data agendada diferente da osbervada**: Feriado pode ter data oficial diferente da celebrada - "Mondayisation" move feriados de fim de semana para segunda-feira  `[10][11][12][13]`
+- **Data agendada diferente da osbervada**: Feriado pode ter data oficial diferente da celebrada - "Mondayisation" move feriados de fim de semana para segunda-feira[^10]
 
-- **Diferentes regras de observância**: Alguns começam no pôr do sol anterior (judaicos/islâmicos), têm duração variável (Chanukah 8 dias), só aplicam em dias úteis e não duplicam benefícios `[14][10][15][16]`
+- **Diferentes regras de observância**: Alguns começam no pôr do sol anterior (judaicos/islâmicos), têm duração variável (Chanukah 8 dias), só aplicam em dias úteis e não duplicam benefícios[^15]
 
 A modelagem da classe `Holiday` segue uma abordagem hierárquica típica da POO,
 onde uma classe abstrata define o contrato comum e as características
@@ -301,16 +301,54 @@ estrutura e o fluxo dos dados, separando claramente informação de processament
 
 ### Os Quatro Princípios Fundamentais
 
+A Programação Orientada a Dados se baseia em quatro princípios fundamentais que,
+quando aplicados em conjunto, criam sistemas mais robustos, previsíveis e fáceis
+de manter. Vamos explorar cada princípio usando nossa implementação de feriados
+como exemplo prático.
+
 #### 1. Dados são Imutáveis
 
 A imutabilidade elimina uma classe inteira de bugs relacionados a modificações
-inesperadas de estado. Em Java, podemos usar records para criar estruturas
+inesperadas de estado. Em Java, podemos usar records[^18] para criar estruturas
 imutáveis de forma concisa:
 
 ```java
-// Immutable data with records
+// Estrutura imutável usando record
+public record FixedHoliday(
+    String name, 
+    String description, 
+    LocalDate date, 
+    List<Locality> localities, 
+    HolidayType type
+) implements Holiday {
+    
+    // Compact constructor com validação
+    public FixedHoliday {
+        Objects.requireNonNull(name, "Holiday name cannot be null");
+        Objects.requireNonNull(date, "Holiday date cannot be null");
+        if (name.isBlank()) {
+            throw new IllegalArgumentException("Holiday name cannot be blank");
+        }
+    }
+}
 
-// Operations as pure functions
+// Operações como funções puras - sempre retornam novas instâncias
+public class HolidayOperations {
+    public static Holiday updateDescription(Holiday holiday, String newDescription) {
+        return switch (holiday) {
+            case FixedHoliday fixed -> new FixedHoliday(
+                fixed.name(), newDescription, fixed.date(), 
+                fixed.localities(), fixed.type()
+            );
+            case MoveableHoliday moveable -> new MoveableHoliday(
+                moveable.name(), newDescription, moveable.date(),
+                moveable.localities(), moveable.type(), 
+                moveable.knownHoliday(), moveable.mondayisation()
+            );
+            // Outros casos...
+        };
+    }
+}
 ```
 
 #### 2. Modele os Dados, Todos os Dados, e Nada Além dos Dados
@@ -320,24 +358,199 @@ fielmente o domínio, sem adicionar complexidade desnecessária ou omitir
 informações importantes:
 
 ```java
+// Interface selada que define exatamente os tipos de feriados possíveis
+public sealed interface Holiday 
+    permits FixedHoliday, ObservedHoliday, MoveableHoliday, MoveableFromBaseHoliday {
+    
+    String name();
+    String description();
+    LocalDate date();
+    List<Locality> localities();
+    HolidayType type();
+    
+    // Métodos default para funcionalidade comum
+    default boolean isWeekend() {
+        DayOfWeek dayOfWeek = date().getDayOfWeek();
+        return dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
+    }
+}
+
+// Cada tipo contém exatamente os dados necessários
+public record MoveableHoliday(
+    String name,
+    String description, 
+    LocalDate date,
+    List<Locality> localities,
+    HolidayType type,
+    KnownHoliday knownHoliday,  // Específico para feriados móveis
+    boolean mondayisation       // Específico para feriados móveis
+) implements Holiday { }
 ```
 
 #### 3. Torne Estados Ilegais Irrepresentáveis
 
-Use o sistema de tipos para prevenir estados inválidos em tempo de compilação:
+Use o sistema de tipos para prevenir estados inválidos em tempo de compilação
+através de _sealed interfaces_[^19]:
 
 ```java
+// Interface selada impede tipos inválidos de localidade
+public sealed interface Locality 
+    permits Locality.Country, Locality.Subdivision, Locality.City {
+    
+    // Hierarquia bem definida
+    record Country(String code, String name) implements Locality {
+        public Country {
+            Objects.requireNonNull(code, "Country code cannot be null");
+            Objects.requireNonNull(name, "Country name cannot be null");
+        }
+    }
+    
+    record Subdivision(Country country, String code, String name) implements Locality {
+        public Subdivision {
+            Objects.requireNonNull(country, "Country cannot be null");
+            Objects.requireNonNull(code, "Subdivision code cannot be null");
+        }
+    }
+    
+    record City(String name, Subdivision subdivision) implements Locality {
+        public City {
+            Objects.requireNonNull(name, "City name cannot be null");
+            Objects.requireNonNull(subdivision, "Subdivision cannot be null");
+        }
+    }
+}
 
+// Pattern matching garante tratamento de todos os casos
+public boolean appliesTo(Locality targetLocality) {
+    return localities().stream()
+        .anyMatch(holidayLocality -> 
+            switch (holidayLocality) {
+                case Locality.Country country -> 
+                    matchesCountry(country, targetLocality);
+                case Locality.Subdivision subdivision -> 
+                    matchesSubdivision(subdivision, targetLocality);
+                case Locality.City city -> 
+                    matchesCity(city, targetLocality);
+            }
+        );
+}
 ```
 
-#### 4. Valide nas Fronteiras
+#### 4. Separe Operações dos Dados
 
-Mantenha validações nas bordas do sistema, permitindo que o núcleo trabalhe com
-dados já validados:
+Mantenha dados e comportamentos separados, com operações implementadas como
+funções puras:
 
 ```java
+// Dados puros - apenas estrutura
+public record FixedHoliday(...) implements Holiday { }
 
+// Operações separadas - funções puras
+public class HolidayOperations {
+    
+    public static Holiday calculateDateForYear(Holiday holiday, int year) {
+        return switch (holiday) {
+            case FixedHoliday fixed -> new FixedHoliday(
+                fixed.name(), fixed.description(),
+                LocalDate.of(year, fixed.date().getMonth(), fixed.date().getDayOfMonth()),
+                fixed.localities(), fixed.type()
+            );
+            
+            case MoveableHoliday moveable -> new MoveableHoliday(
+                moveable.name(), moveable.description(),
+                calculateMoveableDate(moveable.knownHoliday(), year),
+                moveable.localities(), moveable.type(),
+                moveable.knownHoliday(), moveable.mondayisation()
+            );
+        };
+    }
+    
+    public static List<Holiday> filterByCountry(List<Holiday> holidays, String countryCode) {
+        return holidays.stream()
+            .filter(holiday -> holiday.isObservedInCountry(countryCode))
+            .toList();
+    }
+    
+    public static boolean isGovernmental(Holiday holiday) {
+        return holiday.type() == HolidayType.NATIONAL ||
+               holiday.type() == HolidayType.STATE ||
+               holiday.type() == HolidayType.MUNICIPAL;
+    }
+}
 ```
+
+### Funcionalidades Java para Data-Oriented Programming
+
+Java evoluiu significativamente para suportar melhor os princípios da
+Programação Orientada a Dados. As funcionalidades modernas da linguagem
+facilitam a implementação dos quatro princípios fundamentais:
+
+| Funcionalidade | Versão Java | Descrição | Uso em DOP |
+|---|---|---|---|
+| **Records**[^18] | Java 14 (Preview) Java 16 (Final) | Classes imutáveis concisas com equals, hashCode e toString automáticos | Modelagem de dados imutáveis |
+| **Sealed Classes/Interfaces**[^19] | Java 15 (Preview) Java 17 (Final) | Controle sobre quais classes podem estender/implementar | Estados ilegais irrepresentáveis |
+| **Pattern Matching (instanceof)**[^20] | Java 14 (Preview) Java 16 (Final) | Verificação de tipo e cast em uma operação | Operações sobre dados |
+| **Pattern Matching (switch)**[^21] | Java 17 (Preview) Java 21 (Final) | Switch expressions com pattern matching | Processamento de tipos selados |
+| **Text Blocks**[^22] | Java 13 (Preview) Java 15 (Final) | Strings multilinha mais legíveis | Documentação e exemplos |
+
+#### Exemplo Integrado das Funcionalidades
+
+```java
+// Records + Sealed Interface + Pattern Matching
+public sealed interface Holiday permits FixedHoliday, MoveableHoliday {
+    String name();
+    LocalDate date();
+    HolidayType type();
+}
+
+public record FixedHoliday(String name, LocalDate date, HolidayType type) 
+    implements Holiday { }
+
+public record MoveableHoliday(String name, LocalDate date, HolidayType type, 
+                             KnownHoliday knownHoliday) implements Holiday { }
+
+// Pattern Matching em Switch (Java 21)
+public class HolidayProcessor {
+    public String processHoliday(Holiday holiday) {
+        return switch (holiday) {
+            case FixedHoliday(var name, var date, var type) -> 
+                "Fixed: " + name + " on " + date;
+            case MoveableHoliday(var name, var date, var type, var known) -> 
+                "Moveable: " + name + " (" + known + ") on " + date;
+        };
+    }
+    
+    public List<Holiday> getGovernmentalHolidays(List<Holiday> holidays) {
+        return holidays.stream()
+            .filter(this::isGovernmental)
+            .sorted(Comparator.comparing(Holiday::date))
+            .toList();
+    }
+    
+    private boolean isGovernmental(Holiday holiday) {
+        return switch (holiday.type()) {
+            case NATIONAL, STATE, MUNICIPAL -> true;
+            case RELIGIOUS, COMMERCIAL -> false;
+        };
+    }
+}
+```
+
+Essas funcionalidades trabalham em conjunto para tornar a implementação de DOP em Java mais natural e expressiva, reduzindo significativamente o boilerplate code e aumentando a segurança de tipos.
+
+#### Diagrama de Classes - Modelagem DOP
+
+![Diagrama de Classes DOP](holiday-dop-diagram.puml)
+
+A modelagem DOP apresenta uma estrutura fundamentalmente diferente da POO. A
+sealed interface `Holiday` define apenas o contrato de dados (métodos de
+acesso), enquanto cada record implementa exatamente os dados necessários para
+seu tipo específico. Observe como não há herança de implementação - cada record
+é independente e contém apenas os dados relevantes para seu contexto, eliminando
+campos desnecessários e garantindo que estados ilegais sejam irrepresentáveis
+pelo sistema de tipos.
+
+![](2025-08-10-11-28-31.png)
 
 ## Exemplo Prático: API de Feriados Públicos
 
@@ -536,22 +749,15 @@ O exemplo da API de feriados demonstra como esses princípios podem ser aplicado
 
 A chave está em reconhecer que, assim como no origami, diferentes técnicas de "dobrar" o código podem revelar aspectos distintos da solução, e a escolha do paradigma adequado pode fazer toda a diferença na elegância e eficácia do resultado final.
 
-```
-[^2](https://survey.stackoverflow.co/2025/technology#most-popular-technologies)
-[1] <https://en.wikipedia.org/wiki/Holiday>.
-[2] <https://en.wikipedia.org/wiki/Lists_of_holidays>
-[3] <https://www.xavier.edu/jesuitresource/online-resources/calendar-religious-holidays-and-observances/>
-[4] <https://en.wikipedia.org/wiki/Moveable_feast>
-[5] <https://en.as.com/latest_news/when-is-easter-this-year-this-is-how-the-date-determined-n/>
-[6] <https://www.timeanddate.com/calendar/determining-easter-date.html>
-[7] <https://en.wikipedia.org/wiki/Islamic_calendar>
-[8] <https://www.aljazeera.com/opinions/2018/9/20/yom-kippur-and-ashoura-are-muslims-observing-a-jewish-holiday>
-[9] <https://en.wikipedia.org/wiki/Hebrew_calendar>
-[10] <https://www.employment.govt.nz/leave-and-holidays/public-holidays/when-a-public-holiday-falls-on-a-weekend>
-[11] <https://www.predicthq.com/support/what-is-the-difference-between-an-observed-holiday-and-an-observance>
-[12] <https://support.payhero.co.nz/hc/en-us/articles/360002666876-Mondayised-Public-Holidays>
-[13] <https://www.davenportslaw.co.nz/mondayisation>
-[14] <https://ing.org/when-the-muslim-and-jewish-new-years-collide/>
-[15] <https://scl.cornell.edu/religiousholidays>
-[16] <https://news.wisc.edu/religious-holidays-101-quick-start-guide-to-learning-about-holidays-beyond-christmas/>
-```
+[^1]: [Holiday](https://en.wikipedia.org/wiki/Holiday)
+[^4]: [Moveable feast](https://en.wikipedia.org/wiki/Moveable_feast)
+[^7]: [Islamic calendar](https://en.wikipedia.org/wiki/Islamic_calendar)
+[^10]: [When a public holiday falls on a weekend](https://www.employment.govt.nz/leave-and-holidays/public-holidays/when-a-public-holiday-falls-on-a-weekend)
+[^15]: [Religious Holidays](https://scl.cornell.edu/religiousholidays)
+[^17]: [Stack Overflow Developer Survey 2025 - Most Popular Technologies](https://survey.stackoverflow.co/2025/technology#most-popular-technologies)
+[^18]: [JEP 395: Records](https://openjdk.org/jeps/395)
+[^19]: [JEP 409: Sealed Classes](https://openjdk.org/jeps/409)
+[^20]: [JEP 394: Pattern Matching for instanceof](https://openjdk.org/jeps/394)
+[^21]: [JEP 441: Pattern Matching for switch](https://openjdk.org/jeps/441)
+[^22]: [JEP 378: Text Blocks](https://openjdk.org/jeps/378)
+[^24]: [A Philosophy of Software Design - Book Review](https://blog.pragmaticengineer.com/a-philosophy-of-software-design-review/)
