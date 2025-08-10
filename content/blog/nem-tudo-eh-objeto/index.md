@@ -5,23 +5,35 @@ description: "Programação Orientada a Dados em Java"
 featuredImage: feature.png
 ---
 
-## A Arte de Simplificar a Complexidade
+## A arte de Lidar com a Complexidade
 
-Os detalhes são importante, porém trazem o custo de transformarem as coisas mais
-complexas. É assim na vida. É assim no desenvolvimento de software. O processo
-de desenhar e construir sistemas de software depende indubitavelmente das
-linguagens, de software ou da linguagem natural. Essa última é por essência
-ambígua e ambiguidade gera complexidade.
+Detalhes importam! É assim na vida ou no desenvolvimento de software. O processo
+de desenhar e construir sistemas de software está condicionado indubitavelmente
+ao uso de linguagens: de software ou natural. Essa última é, por essência,
+ambígua.  Ambiguidade gera complexidade.
 
-Em seu livro *A Philosophy of Software Design*[^24], John Ousterhout discute duas
-maneiras principais de lidar com a complexidade. A primeira é simplificar e
-tornar o código mais claro para reduzir a complexidade, por exemplo, removendo
-casos especiais e utilizando identificadores consistentes. A segunda abordagem é
-encapsular a complexidade por meio de um design modular, no qual um sistema de
-software é dividido em módulos, como classes em uma linguagem orientada a
-objetos, permitindo que os programadores trabalhem no sistema sem se sentirem
-sobrecarregados com toda a sua complexidade de uma só vez. Eu acrescentaria um
-terceiro que são os modelos.
+Em diferentes áreas do conhecimento o ser humano utiliza de diferentes
+ferramentas para lidar com a complexidade, por exemplo: matemáticos usam
+notações e fórmulas para expressar conceitos complexos de forma concisa, médicos
+empregam classificações diagnósticas como CID-10 para categorizar doenças,
+arquitetos criam plantas e blueprints para representar estruturas
+tridimensionais em duas dimensões, e gestores utilizam organogramas e
+fluxogramas para mapear processos e hierarquias organizacionais.
+
+Em seu livro *A Philosophy of Software Design*[^24], John Ousterhout discute
+duas maneiras principais de lidar com a complexidade no desenvolvimento de
+software. A primeira consiste em *simplificar e tornar o código mais claro* por
+meio da remoção de casos especiais e da utilização de identificadores
+consistentes.
+
+A segunda abordagem é *encapsular a complexidade por meio de um design modular*,
+no qual um sistema de software é dividido em módulos, como classes em uma
+linguagem orientada a objetos, permitindo que os programadores trabalhem no
+sistema sem se sentirem sobrecarregados com toda a sua complexidade de uma só
+vez. As abordagens proposta por Ousterhout estão relacionadas intrinsecamente
+com o momento da escrita do código, contudo, se pensarmos para a fase de
+desenho,  eu acrescentaria uma terceira abordagem para lidar com a complexidade:
+os modelos.
 
 Modelos são uma representação abstrata de um sistema (de software) que nos
 auxilia a compreender e simplificar a complexidade inerente. Eles nos permitem
@@ -31,56 +43,51 @@ organizada, os modelos ajudam a reduzir a ambiguidade e a tornar o sistema mais
 compreensível.
 
 Engana-se quem pensa que o uso de modelos é uma abordagem exclusiva do
-desenvolvimento de software para lidar com a complexidade. Imagine um artista de
-origami criando um cisne a partir de uma simples folha de papel. O resultado
-final captura a essência elegante da ave — seu pescoço curvado, suas asas
-dobradas, sua postura graciosa — mas deixa de lado detalhes desnecessários como
-a textura das penas ou a cor dos olhos. O origami não busca replicar
-perfeitamente a realidade, mas sim extrair e representar apenas os aspectos mais
-importantes e reconhecíveis.
+desenvolvimento de software. Imagine um artista origami criando um origami de
+cisne. O resultado final captura a essência elegante da ave — seu pescoço
+curvado, suas asas dobradas, sua postura graciosa — mas deixa de lado detalhes
+desnecessários como a textura das penas ou a cor dos olhos. Um origami não busca
+replicar perfeitamente a realidade, mas sim extrair e representar apenas os
+aspectos mais importantes e reconhecíveis.
 
-![](2025-07-24-22-06-03.png)
+![Um cisne e a sua representação com um origami. Fonte: Gerado por IA](origami.png)
 
-O desenvolvimento de software deve considerar constantemente questões de design,
-sendo minimizar a complexidade o principal aspecto do projeto de software[^24].
-Em geral a primeira estratégia para reduzir a
-complexidade é desenhar e construir um sistema que esteja aderente a determinado
-paradigmas de programação. Os paradigmas foram criados para nos ajudar a reduzir
-a complexidade do mundo real e mapeá-la em sistemas de software compreensíveis e
-funcionais. Assim como o origami, cada paradigma oferece uma forma específica de
-"transformar" a realidade em código, capturando os aspectos essenciais do
-domínio que estamos modelando enquanto abstrai detalhes desnecessários.
+Nas linguagens de programação uma das maneiras para lidar com a complexidade é
+ser aderente a um ou mais paradigma de programação. Os paradigmas foram pensados
+para nos ajudar a reduzir a complexidade do mundo real e mapeá-la em sistemas de
+software compreensíveis e funcionais. Assim como o origami, cada paradigma
+oferece uma forma específica de "transformar" a realidade em código, capturando
+os aspectos essenciais do domínio que estamos modelando enquanto abstrai
+detalhes desnecessários.
 
 Quando desenvolvemos software, não estamos tentando recriar o mundo real em sua
 totalidade — isso seria impossível e improdutivo. Em vez disso, utilizamos
 paradigmas como ferramentas conceituais que nos permitem focar nos elementos
-mais relevantes para resolver problemas específicos, criando representações
-elegantes e funcionais da complexidade que nos cerca.
+mais relevantes para resolver determinado problema,  como um artista criando um
+origami.
 
 ## Panorama dos Paradigmas de Programação
 
 Ao longo do tempo diferentes paradigmas de programação emergiram para abordar
 distintos tipos de problemas e formas de pensar sobre software. Cada um oferece
-uma perspectiva única sobre como organizar código, gerenciar estado e estruturar
-soluções.
+uma perspectiva única sobre como organizar código e estruturar soluções.
 
 Um paradigma de programação determina uma linguagem de programação, e não o
 contrário. Em outras palavras, um paradigma de programação define como os
-problemas são resolvidos com código, e uma linguagem de programação é a
-ferramenta que permite a implementação dessas soluções. Dado que uma linguagem
-pode suportar um ou mais paradigmas, a partir da análise da adoção das
-linguagens[^17] possível inferir quais são os paradigmas mais utilizados.
-Independente da metodologia adotada é bem possível que o resultado dos
-paradigmas mais utilizados será *procedural, orientado a objetos e funcional*,
+problemas são resolvidos com código. Por outro lado, uma linguagem de
+programação é a ferramenta que permite a implementação dessas soluções. Dado que
+uma linguagem pode suportar um ou mais paradigma, a partir da análise da adoção
+das linguagens[^17], é possível inferir quais são os paradigmas mais utilizados.
+Independente da metodologia adotada, acredito que o resultado dos paradigmas
+mais utilizados seria *procedural, orientado a objetos e funcional*, entretato,
 não necessariamente nessa ordem.
 
-![](2025-07-24-22-08-06.png)
-
-### Comparação dos Principais Paradigmas
+![Os (possíveis) paradigmas mais adotado no mercado. Fonte: Gerado por IA.](paradigmas.png)
 
 A tabela a seguir faz uma breve comparação entre os principais paradigmas
-adotados pelo mercado, ao mesmo tempo que os compara com uma nova abordagem,
-orientado a dados, ao que explicarei com mais detalhes um pouco mais a frente.
+adotados pelo mercado, ao mesmo tempo que os compara com uma nova abordagem, de
+uma programação orientada a dados, que explicarei com mais detalhes um pouco
+mais a frente.
 
 | Aspecto | Procedural | Orientado a Objetos | Funcional | Orientado a Dados |
 |---------|------------|-------------------|-----------|------------------|
@@ -90,69 +97,77 @@ orientado a dados, ao que explicarei com mais detalhes um pouco mais a frente.
 | **Testabilidade** | Moderada (dependências) | Boa (isolamento) | Excelente (pureza) | Excelente (imutabilidade) |
 | **Tratamento de Complexidade** | Decomposição em funções | Abstração e encapsulamento | Composição de funções | Separação dados/comportamento |
 
-Para facilitar a discussão dos objetivos e limites da *Programação Orientada a
-Dados (POD)* vamos utilizar como base a Programacao Orientada a Objetos (POO).
-Entretanto, durante esse artigo você observará que a POD também bebe da fonte
-dos paradigmas funcional e procedural.
+Existem diferentes formas para descrever e avaliar os diferentes paradigmas.
+Todavia, muitas das vezes basta uma sentença: seja *"tudo é objeto"* ao falarmos
+do paradigma orientados a objetos ou *"tudo é função"* ao tratar o paradigma
+funcional. Por outro, quando apresentarmos o paradigma da *Programação Orientada
+a Dados (POD)*  você observará que a POD também bebe da fonte dos paradigmas
+funcional e orientado a objetos.
 
 ## Fundamentos da Programação Orientada a Objetos
 
-A Programação Orientada a Objetos (POO) deve a sua larga adoção a linguagens como
-Java e C++. É importante salientar que Java não é uma linguagem puramente
-orientada a objetos principalmente por conta tipos primitivos e os métodos
-estáticos (static) que pertencem à classe e não a um objeto. Um exemplo de uma
-linguagem puramente orientada a objetos é o
-[Smalltalk](https://www.gnu.org/software/smalltalk/), onde tudo é tratado como
-objeto.
+A Programação Orientada a Objetos (POO) deve a sua ampla adoção a linguagens
+como *Java* e *C++*. Cabe ressaltar que Java não é uma linguagem puramente
+orientada a objetos principalmente por conta do seus tipos primitivos e os
+métodos estáticos (*static*) que pertencem à classe e não a um objeto. Apesar de
+não ser um linguagem estritamente orientada a objetos o seu uso extensivo na
+indústria de software contribuiu para popularizar os princípios da POO. Um
+exemplo de uma linguagem puramente orientada a objetos é o Smalltalk[^25], onde
+tudo é tratado como objeto.
 
-Apesar de Java não ser um linguagem orientada a objetos "puro-sangue" o seu uso
-extensivo na indústria de software contribuiu para popularizar os princípios de
-POO. Este paradigma de programação enfatiza a modelagem de sistemas por meio de
-objetos que possuem propriedades e comportamentos, promovendo a reutilização de
-código e o encapsulamento de dados. Os Seus princípios fundamentais incluem:
+A POO enfatiza a modelagem de sistemas por meio de objetos que possuem
+propriedades e comportamentos, promovendo a reutilização de código e o
+encapsulamento de dados, dentre os seus princípios fundamentais podemos citar:
 
 - **Encapsulamento**: Agrupa dados e métodos que operam sobre esses dados em uma única unidade (classe), controlando o acesso através de modificadores de visibilidade.
 - **Herança**: Permite que classes derivem características de outras classes, promovendo reutilização de código.
 - **Abstração**: Oculta detalhes de implementação complexos, expondo apenas interfaces necessárias.
 - **Polimorfismo**: Permite que objetos de diferentes tipos sejam tratados através de uma interface comum.
 
-### Exemplo Prático em Java
+Esses princípios permitem fazer uma analogia de uma classe na POO como um
+organismo, onde o encapsulamento atua como a membrana celular que controla o que
+entra e sai, a herança funciona como a transmissão genética de características,
+e o polimorfismo se assemelha à capacidade de diferentes organismos responderem
+de forma especializada aos mesmos estímulos ambientais.
+
+### Feriados: uma modelagem orientada a objetos
 
 Para exemplificar o uso dos princípios da POO vamos modelar um sistema
 responsável por gerenciar feriados (`Holiday`). Acredito que leitor saiba o que
-é um feriado, contudo, listarei algumas regras que serão importante no desenho
-da solução.
+é um feriado, contudo, existem certas especificidades sobre o domínio que
+entendo importante explicitar:
 
-- **Existem diferentes tipos de feriados**: Nacionais (Independência), religiosos (Natal, Ramadan), regionais (São João) e comerciais (Valentine's Day)[^1]
+- **Existem diferentes tipos de feriados**: Nacionais (Independência), religiosos (Natal, Ramadan), regionais (São João) e comerciais (Dia das mães/pais)[^1]
 
-- **Os feriados podem ser fixos ou móveis**: Fixos sempre na mesma data (25/12), móveis calculados por lua (Páscoa), dia da semana (Memorial Day) ou calendário lunar (Eid)[^4]
+- **Os feriados podem ser fixos ou móveis**: Fixos acontecem sempre na mesma data (25/12) e os móveis são calculados através do calendário lunar (Páscoa), dia da semana (Memorial Day) ou baseado em outros feriados (Sexta-Feira Santa)[^4]
 
 - **Os feriados dependem de qual sistemas de calendário adotado**: Gregoriano (feriados ocidentais), lunar islâmico (Ramadan "roda" 11 dias/ano), luni-solar judaico (Rosh Hashanah varia mas mantém sazonalidade)[^7]
 
-- **Data agendada diferente da osbervada**: Feriado pode ter data oficial diferente da celebrada - "Mondayisation" move feriados de fim de semana para segunda-feira[^10]
+- **Data agendada diferente da observada**: Feriado pode ter data oficial diferente da celebrada, como por exemplo, na estratégia de *"Mondayisation"* que move feriados de fim de semana para a segunda-feira[^10]
 
 - **Diferentes regras de observância**: Alguns começam no pôr do sol anterior (judaicos/islâmicos), têm duração variável (Chanukah 8 dias), só aplicam em dias úteis e não duplicam benefícios[^15]
 
-A modelagem da classe `Holiday` segue uma abordagem hierárquica típica da POO,
-onde uma classe abstrata define o contrato comum e as características
-compartilhadas por todos os tipos de feriados. A classe base encapsula
-propriedades essenciais como nome, descrição, localidades onde é observado, tipo
-de feriado e regras de "mondayisation" (ajuste para dias úteis), além de
-comportamentos comuns como verificação de fim de semana e cálculo de data
-observada. Um aspecto fundamental da POO é que a classe `Holiday` encapsula seu
-estado através da propriedade `date`, mantendo as regras de cálculo da data como
+Para simplificar vamos considerar feriados segundo o calendário Gregoriano e com
+uma duração fixa, ou seja, o feriado inicia e finaliza em uma data específica.
+
+A modelagem da classe `Holiday` - veja diagrama a seguir - adota uma abordagem
+hierárquica típica da POO, onde uma classe abstrata define o contrato comum e as
+características compartilhadas por todos os demais tipos de feriados. A classe
+base encapsula propriedades essenciais como nome, descrição, localidades onde é
+observado, tipo de feriado e regras de *"Mondayisation"* (ajuste para dias
+úteis), além de comportamentos comuns como o cálculo de data observada. 
+
+Um aspecto fundamental da POO é que a classe `Holiday` encapsula seu estado
+através da propriedade `date`, mantendo as regras de cálculo da data como
 responsabilidade interna - a própria classe gerencia como calcular a data de um
 feriado para cada ano, ocultando essa complexidade do código cliente. As
 subclasses `FixedHoliday` e `MoveableHoliday` especializam a implementação do
 método abstrato `getDate()`, onde feriados fixos simplesmente retornam a mesma
 data anual, enquanto feriados móveis executam algoritmos complexos - desde
 cálculos astronômicos para a Páscoa até regras baseadas em dias da semana ou
-dependências de outros feriados. Esta estrutura permite que o sistema trate
-uniformemente diferentes tipos de feriados através de polimorfismo, ocultando a
-complexidade específica de cada tipo de cálculo atrás de uma interface
-consistente.
+dependências de outros feriados.
 
-```
+```bash
                     ┌─────────────────────────────────┐
                     │           Holiday               │
                     │         (abstract)              │
@@ -190,14 +205,13 @@ consistente.
                                         └─────────────────────────┘
 ```
 
-A modelagem orientada a objetos demonstra claramente os quatro princípios
-fundamentais da POO. O **encapsulamento** é evidenciado pela classe abstrata
-`Holiday` que agrupa dados (nome, descrição, localidades) e comportamentos
-(cálculo de datas, verificação de fim de semana) em uma única unidade coesa,
-controlando o acesso através de métodos públicos bem definidos. A **herança**
-permite que `FixedHoliday` e `MoveableHoliday` compartilhem características
-comuns da classe pai, evitando duplicação de código e estabelecendo uma
-hierarquia lógica entre os conceitos.
+Essa modelagem de feriado adota alguns dos princípios fundamentais da POO. O
+**encapsulamento** é evidenciado pela classe abstrata `Holiday` que agrupa dados
+(nome, descrição, localidades) e comportamentos (cálculo de datas, verificação
+de fim de semana) em uma única unidade coesa, controlando o acesso através de
+métodos públicos bem definidos. A **herança** permite que `FixedHoliday` e
+`MoveableHoliday` compartilhem características comuns da classe pai, evitando
+duplicação de código e estabelecendo uma hierarquia lógica entre os conceitos.
 
 O **polimorfismo** é implementado através do método abstrato `getDate(int
 year)`, onde cada subclasse fornece sua própria implementação específica -
@@ -205,7 +219,8 @@ feriados fixos retornam sempre a mesma data, enquanto feriados móveis executam
 cálculos complexos como o algoritmo astronômico da Páscoa. A **abstração**
 oculta a complexidade dos diferentes tipos de cálculo de datas atrás de uma
 interface uniforme, permitindo que o código cliente trate todos os feriados de
-forma consistente, independentemente de serem fixos ou móveis.
+forma consistente, independentemente de serem fixos ou móveis. A seguir temos um
+código explicitando o uso dos princípios da programação orientada a objetos.
 
 ```java
 // Classe abstrata demonstrando encapsulamento e abstração
@@ -272,23 +287,26 @@ for (Holiday holiday : holidays) {
 ```
 
 Apesar dos benefícios da modelagem orientada a objetos, a implementação
-apresenta limitações inerentes ao paradigma que podem comprometer a integridade
-dos dados e a previsibilidade do sistema:
+apresenta limitações inerentes ao paradigma e que podem comprometer a
+integridade dos dados e a previsibilidade do sistema:
 
-• **Lista mutável exposta:** O método `getLocalities()` retorna uma referência direta à lista interna, permitindo que código externo modifique o estado do objeto sem controle da classe
+• **Lista mutável exposta:** O método `getLocalities()` retorna uma referência direta à lista interna, permitindo que código externo modifique o estado do objeto sem controle da classe, que podem levar a bugs sutis e difíceis de rastrear
 
 • **Estado mutável:** Os campos `date` e `observed` podem ser alterados após a criação do objeto através dos métodos `setDate()` e `setObserved()`, violando a expectativa de imutabilidade de um feriado
 
-• **Falta de cópia defensiva:** A lista de localidades não é protegida contra modificação externa, criando vazamentos de encapsulamento que podem levar a bugs sutis e difíceis de rastrear
+• **Herança frágil:** Mudanças na classe base podem quebrar classes filhas de forma inesperada, criando dependências implícitas e dificultando a manutenção do código
 
-Essas limitações são características inerentes ao paradigma orientado a objetos,
-onde o foco no encapsulamento de dados e comportamento pode inadvertidamente
-criar pontos de mutabilidade não controlada. A Programação Orientada a Dados
-emerge como uma alternativa que aborda diretamente esses problemas, priorizando
-a imutabilidade dos dados e a separação clara entre informação e processamento,
-eliminando os riscos associados ao estado mutável compartilhado.
+• **Acoplamento temporal:** Métodos podem depender da ordem de chamada (ex: `setDate()` antes de `calculateObserved()`), criando contratos implícitos que não são expressos no sistema de tipos
 
-📁 **Código Fonte Completo**: [github.com/vagnerclementino/api-holiday](https://github.com/vagnerclementino/api-holiday)
+• **Estados ilegais representáveis:** O sistema de tipos permite criar objetos em estados inconsistentes, como um `ObservedHoliday` onde a data observada é anterior à data oficial
+
+• **Concorrência problemática:** Objetos mutáveis compartilhados entre threads requerem sincronização complexa, aumentando a possibilidade de deadlocks e condições de corrida
+
+Essas limitações são características inerentes a POO, onde o foco no
+encapsulamento de dados e comportamento pode inadvertidamente criar pontos de
+mutabilidade não controlada. A Programação Orientada a Dados emerge como uma
+alternativa que aborda diretamente esses problemas, priorizando a imutabilidade,
+a transparência dos dados e a separação clara entre dados e operações
 
 ## Programação Orientada a Dados: Uma Nova Perspectiva
 
@@ -543,7 +561,7 @@ Essas funcionalidades trabalham em conjunto para tornar a implementação de DOP
 ![Diagrama de Classes DOP](holiday-dop-diagram.puml)
 
 A modelagem DOP apresenta uma estrutura fundamentalmente diferente da POO. A
-sealed interface `Holiday` define apenas o contrato de dados (métodos de
+*sealed interface* `Holiday` define apenas o contrato de dados (métodos de
 acesso), enquanto cada record implementa exatamente os dados necessários para
 seu tipo específico. Observe como não há herança de implementação - cada record
 é independente e contém apenas os dados relevantes para seu contexto, eliminando
@@ -560,6 +578,9 @@ completo está disponível no GitHub e pode ser executado localmente usando Dock
 Compose.
 
 📁 **Código Fonte Completo**: [github.com/vagnerclementino/odp-api-holiday](https://github.com/vagnerclementino/api-holiday)
+
+
+📁 **Código Fonte Completo**: [github.com/vagnerclementino/api-holiday](https://github.com/vagnerclementino/api-holiday)
 
 ### Handler do AWS Lambda
 
@@ -761,3 +782,4 @@ A chave está em reconhecer que, assim como no origami, diferentes técnicas de 
 [^21]: [JEP 441: Pattern Matching for switch](https://openjdk.org/jeps/441)
 [^22]: [JEP 378: Text Blocks](https://openjdk.org/jeps/378)
 [^24]: [A Philosophy of Software Design - Book Review](https://blog.pragmaticengineer.com/a-philosophy-of-software-design-review/)
+[^25]: [GNU Smalltalk](https://www.gnu.org/software/smalltalk/)
