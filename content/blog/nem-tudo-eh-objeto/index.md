@@ -79,7 +79,7 @@ programação é a ferramenta que permite a implementação dessas soluções. D
 uma linguagem pode suportar um ou mais paradigma, a partir da análise da adoção
 das linguagens[^17], é possível inferir quais são os paradigmas mais utilizados.
 Independente da metodologia adotada, acredito que o resultado dos paradigmas
-mais utilizados seria *procedural, orientado a objetos e funcional*, entretato,
+mais utilizados seria *procedural, orientado a objetos e funcional*, entretanto,
 não necessariamente nessa ordem.
 
 ![Os (possíveis) paradigmas mais adotado no mercado. Fonte: Gerado por IA.](paradigmas.png)
@@ -155,7 +155,7 @@ hierárquica típica da POO, onde uma classe abstrata define o contrato comum e 
 características compartilhadas por todos os demais tipos de feriados. A classe
 base encapsula propriedades essenciais como nome, descrição, localidades onde é
 observado, tipo de feriado e regras de *"Mondayisation"* (ajuste para dias
-úteis), além de comportamentos comuns como o cálculo de data observada. 
+úteis), além de comportamentos comuns como o cálculo de data observada.
 
 Um aspecto fundamental da POO é que a classe `Holiday` encapsula seu estado
 através da propriedade `date`, mantendo as regras de cálculo da data como
@@ -567,18 +567,6 @@ public class HolidayProcessor {
 Essas funcionalidades trabalham em conjunto para tornar a implementação de DOP
 em Java mais natural e expressiva, reduzindo significativamente o boilerplate
 code e aumentando a segurança de tipos.
-
-#### Diagrama de Classes - Modelagem DOP
-
-A modelagem DOP apresenta uma estrutura fundamentalmente diferente da POO. A
-*sealed interface* `Holiday` define apenas o contrato de dados (métodos de
-acesso), enquanto cada record implementa exatamente os dados necessários para
-seu tipo específico. Observe como não há herança de implementação - cada record
-é independente e contém apenas os dados relevantes para seu contexto, eliminando
-campos desnecessários e garantindo que estados ilegais sejam irrepresentáveis
-pelo sistema de tipos.
-
-![](2025-08-10-11-28-31.png)
 
 ## Exemplo Prático: API de Feriados Públicos
 
