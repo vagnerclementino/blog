@@ -1,6 +1,6 @@
 ---
 title: "Nem tudo é objeto"
-date: "2025-07-20"
+date: "2025-08-12"
 description: "Programação Orientada a Dados em Java"
 featuredImage: feature.png
 ---
@@ -523,6 +523,7 @@ facilitam a implementação dos quatro princípios fundamentais:
 | **Pattern Matching (switch)**[^21] | Java 17 (Preview) Java 21 (Final) | Switch expressions com pattern matching | Processamento de tipos selados |
 | **Text Blocks**[^22] | Java 13 (Preview) Java 15 (Final) | Strings multilinha mais legíveis | Documentação e exemplos |
 
+
 ```java
 // Records + Sealed Interface + Pattern Matching
 public sealed interface Holiday permits FixedHoliday, MoveableHoliday {
@@ -568,7 +569,17 @@ Essas funcionalidades trabalham em conjunto para tornar a implementação de DOP
 em Java mais natural e expressiva, reduzindo significativamente o boilerplate
 code e aumentando a segurança de tipos.
 
-## Exemplo Prático: API de Feriados Públicos
+## Vantagens da programacao orientada a dadosj
+
+O projeto demonstra como a programação orientada a dados oferece:
+
+- **Previsibilidade**: Funções puras produzem sempre o mesmo resultado
+- **Testabilidade**: Dados imutáveis facilitam testes unitários e de integração
+- **Manutenibilidade**: Separação clara entre dados e comportamento
+- **Performance**: Estruturas imutáveis podem ser otimizadas pela JVM
+- **Concorrência**: Dados imutáveis são thread-safe por design
+
+## Casos de uso
 
 Para demonstrar todos os conceitos da programação orientada a dados na prática,
 desenvolvemos uma API REST completa para gerenciar feriados públicos. O projeto
@@ -580,20 +591,10 @@ Compose.
 ### Handler do AWS Lambda
 
 ```java
-public class HolidayLambdaHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
-    
-    private final HolidayService holidayService;
-    private final ObjectMapper objectMapper;
-    
-    public HolidayLambdaHandler() {
-        this.holidayService = new HolidayService(new DynamoDBHolidayRepository());
-        this.objectMapper = new ObjectMapper()
-            .registerModule(new JavaTimeModule())
-            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-    }
+public class HolidayLambdaHandler implements RequestHandler<APIGatewayRequest, APIGatewayResponse> {
     
     @Override
-    public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent request, Context context) {
+    public APIGatewayProxyResponseEvent handleRequest(APIGatewayRequest request, Context context) {
         try {
             return switch (request.getHttpMethod()) {
                 case "GET" -> handleGet(request);
@@ -607,145 +608,8 @@ public class HolidayLambdaHandler implements RequestHandler<APIGatewayProxyReque
             return createResponse(500, Map.of("error", "Internal server error"));
         }
     }
-    
-    private APIGatewayProxyResponseEvent handleGet(APIGatewayProxyRequestEvent request) throws Exception {
-        var pathParameters = request.getPathParameters();
-        
-        if (pathParameters != null && pathParameters.containsKey("id")) {
-            // GET /holidays/{id}
-            var id = pathParameters.get("id");
-            var holiday = holidayService.findById(id);
-            
-            return holiday
-                .map(h -> createResponse(200, HolidayMapper.toResponse(h)))
-                .orElse(createResponse(404, Map.of("error", "Holiday not found")));
-        } else {
-            // GET /holidays with filters
-            var filter = extractFilters(request.getQueryStringParameters());
-            var holidays = holidayService.findHolidays(filter);
-            var responses = holidays.stream()
-                .map(HolidayMapper::toResponse)
-                .toList();
-            
-            return createResponse(200, responses);
-        }
-    }
-    
-    private APIGatewayProxyResponseEvent handlePost(APIGatewayProxyRequestEvent request) throws Exception {
-        var holidayRequest = objectMapper.readValue(request.getBody(), CreateHolidayRequest.class);
-        
-        var validation = HolidayValidator.validateCreation(holidayRequest);
-        if (validation instanceof ValidationResult.Failure failure) {
-            return createResponse(400, Map.of("errors", failure.errors()));
-        }
-        
-        var holiday = HolidayMapper.fromRequest(holidayRequest);
-        var savedHoliday = holidayService.save(holiday);
-        
-        return createResponse(201, HolidayMapper.toResponse(savedHoliday));
-    }
-    
-    private APIGatewayProxyResponseEvent handlePut(APIGatewayProxyRequestEvent request) throws Exception {
-        var pathParameters = request.getPathParameters();
-        if (pathParameters == null || !pathParameters.containsKey("id")) {
-            return createResponse(400, Map.of("error", "ID is required"));
-        }
-        
-        var id = pathParameters.get("id");
-        var holidayRequest = objectMapper.readValue(request.getBody(), CreateHolidayRequest.class);
-        
-        var validation = HolidayValidator.validateCreation(holidayRequest);
-        if (validation instanceof ValidationResult.Failure failure) {
-            return createResponse(400, Map.of("errors", failure.errors()));
-        }
-        
-        var updatedHoliday = HolidayMapper.fromRequest(holidayRequest);
-        var result = holidayService.update(id, updatedHoliday);
-        
-        return result
-            .map(h -> createResponse(200, HolidayMapper.toResponse(h)))
-            .orElse(createResponse(404, Map.of("error", "Holiday not found")));
-    }
-    
-    private APIGatewayProxyResponseEvent handleDelete(APIGatewayProxyRequestEvent request) {
-        var pathParameters = request.getPathParameters();
-        if (pathParameters == null || !pathParameters.containsKey("id")) {
-            return createResponse(400, Map.of("error", "ID is required"));
-        }
-        
-        var id = pathParameters.get("id");
-        var deleted = holidayService.delete(id);
-        
-        return deleted 
-            ? createResponse(204, null)
-            : createResponse(404, Map.of("error", "Holiday not found"));
-    }
-    
-    private HolidayFilter extractFilters(Map<String, String> queryParams) {
-        if (queryParams == null) {
-            return new HolidayFilter(
-                Optional.empty(), Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.empty(), Optional.empty()
-            );
-        }
-        
-        return new HolidayFilter(
-            Optional.ofNullable(queryParams.get("country")),
-            Optional.ofNullable(queryParams.get("state")),
-            Optional.ofNullable(queryParams.get("city")),
-            Optional.ofNullable(queryParams.get("startDate")).map(LocalDate::parse),
-            Optional.ofNullable(queryParams.get("endDate")).map(LocalDate::parse),
-            Optional.ofNullable(queryParams.get("type")).map(t -> HolidayType.valueOf(t.toUpperCase()))
-        );
-    }
-    
-    private APIGatewayProxyResponseEvent createResponse(int statusCode, Object body) {
-        var response = new APIGatewayProxyResponseEvent();
-        response.setStatusCode(statusCode);
-        response.setHeaders(Map.of(
-            "Content-Type", "application/json",
-            "Access-Control-Allow-Origin", "*"
-        ));
-        
-        if (body != null) {
-            try {
-                response.setBody(objectMapper.writeValueAsString(body));
-            } catch (Exception e) {
-                response.setStatusCode(500);
-                response.setBody("{\"error\":\"Serialization error\"}");
-            }
-        }
-        
-        return response;
-    }
 }
 ```
-
-#### Instruções de Uso
-
-Para executar o projeto localmente:
-
-```bash
-# 1. Clone o repositório e navegue até o diretório
-cd holidays-api
-
-# 2. Configure o ambiente completo
-make setup
-
-# 3. Teste a API
-make test
-
-# 4. Para desenvolvimento contínuo
-make build && make deploy
-
-# 5. Visualizar logs
-make logs
-
-# 6. Limpar ambiente
-make clean
-```
-
-### Benefícios da Abordagem Data-Oriented
 
 O projeto demonstra como a programação orientada a dados oferece:
 
@@ -755,15 +619,26 @@ O projeto demonstra como a programação orientada a dados oferece:
 - **Performance**: Estruturas imutáveis podem ser otimizadas pela JVM
 - **Concorrência**: Dados imutáveis são thread-safe por design
 
-Esta configuração oferece um ambiente de desenvolvimento completo e isolado, permitindo testar todos os aspectos da programação orientada a dados sem custos de infraestrutura na nuvem.
-
 ## Conclusão
 
-A Programação Orientada a Dados oferece uma perspectiva valiosa para o desenvolvimento de software moderno, especialmente em contextos onde a clareza dos dados, a imutabilidade e a testabilidade são prioritárias. Ao separar dados de comportamento e focar na estrutura das informações, conseguimos criar sistemas mais previsíveis, fáceis de testar e menos propensos a bugs relacionados a estado mutável.
+A Programação Orientada a Dados oferece uma perspectiva valiosa para o
+desenvolvimento de software moderno, especialmente em contextos onde a clareza
+dos dados, a imutabilidade e a testabilidade são prioritárias. Ao separar dados
+de comportamento e focar na estrutura das informações, conseguimos criar
+sistemas mais previsíveis, fáceis de testar e menos propensos a bugs
+relacionados a estado mutável.
 
-O exemplo da API de feriados demonstra como esses princípios podem ser aplicados na prática, resultando em código mais limpo, estruturas de dados bem definidas e uma arquitetura que facilita tanto a manutenção quanto a evolução do sistema. Embora a Programação Orientada a Objetos continue sendo fundamental em Java, a incorporação de conceitos orientados a dados pode significativamente melhorar a qualidade e robustez de nossas aplicações.
+O exemplo da API de feriados demonstra como esses princípios podem ser aplicados
+na prática, resultando em código mais limpo, estruturas de dados bem definidas e
+uma arquitetura que facilita tanto a manutenção quanto a evolução do sistema.
+Embora a Programação Orientada a Objetos continue sendo fundamental em Java, a
+incorporação de conceitos orientados a dados pode significativamente melhorar a
+qualidade e robustez de nossas aplicações.
 
-A chave está em reconhecer que, assim como no origami, diferentes técnicas de "dobrar" o código podem revelar aspectos distintos da solução, e a escolha do paradigma adequado pode fazer toda a diferença na elegância e eficácia do resultado final.
+A chave está em reconhecer que, assim como no origami, diferentes técnicas de
+"dobrar" o código podem revelar aspectos distintos da solução, e a escolha do
+paradigma adequado pode fazer toda a diferença na elegância e eficácia do
+resultado final.
 
 [^1]: [Holiday](https://en.wikipedia.org/wiki/Holiday)
 [^4]: [Moveable feast](https://en.wikipedia.org/wiki/Moveable_feast)
