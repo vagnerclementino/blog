@@ -213,7 +213,8 @@
     "spoilers",
     "stakeholders",
     "superset",
-    "terraplanista"
+    "terraplanista",
+    "vagnerclementino"
   ],
   "ignoreRegExpList": [
     "\\((.*)\\)", // Markdown links
