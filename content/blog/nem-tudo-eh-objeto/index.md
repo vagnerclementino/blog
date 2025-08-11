@@ -205,22 +205,22 @@ dependências de outros feriados.
                                         └─────────────────────────┘
 ```
 
-Essa modelagem de feriado adota alguns dos princípios fundamentais da POO. O
+A modelagem adota os princípios da programação orientada a objetos. O
 **encapsulamento** é evidenciado pela classe abstrata `Holiday` que agrupa dados
 (nome, descrição, localidades) e comportamentos (cálculo de datas, verificação
 de fim de semana) em uma única unidade coesa, controlando o acesso através de
-métodos públicos bem definidos. A **herança** permite que `FixedHoliday` e
-`MoveableHoliday` compartilhem características comuns da classe pai, evitando
-duplicação de código e estabelecendo uma hierarquia lógica entre os conceitos.
+métodos públicos. A **herança** permite que `FixedHoliday` e `MoveableHoliday`
+compartilhem características comuns da classe herdada, evitando duplicação de
+código e estabelecendo uma hierarquia lógica entre os conceitos.
 
 O **polimorfismo** é implementado através do método abstrato `getDate(int
 year)`, onde cada subclasse fornece sua própria implementação específica -
 feriados fixos retornam sempre a mesma data, enquanto feriados móveis executam
-cálculos complexos como o algoritmo astronômico da Páscoa. A **abstração**
-oculta a complexidade dos diferentes tipos de cálculo de datas atrás de uma
-interface uniforme, permitindo que o código cliente trate todos os feriados de
-forma consistente, independentemente de serem fixos ou móveis. A seguir temos um
-código explicitando o uso dos princípios da programação orientada a objetos.
+cálculos complexos, como o algoritmo astronômico para definir a data da Páscoa.
+A **abstração** oculta a complexidade dos diferentes tipos de cálculo de datas
+atrás de uma interface uniforme, permitindo que o código cliente trate todos os
+feriados de forma consistente, independentemente de serem fixos ou móveis. A
+seguir temos um código explicitando o uso de cada um dos princípios da POO.
 
 ```java
 // Classe abstrata demonstrando encapsulamento e abstração
@@ -290,17 +290,17 @@ Apesar dos benefícios da modelagem orientada a objetos, a implementação
 apresenta limitações inerentes ao paradigma e que podem comprometer a
 integridade dos dados e a previsibilidade do sistema:
 
-• **Lista mutável exposta:** O método `getLocalities()` retorna uma referência direta à lista interna, permitindo que código externo modifique o estado do objeto sem controle da classe, que podem levar a bugs sutis e difíceis de rastrear
+- **Lista mutável exposta:** O método `getLocalities()` retorna uma referência direta à lista interna, permitindo que código externo modifique o estado do objeto sem o controle da classe, que podem levar a problemas difíceis de rastrear
 
-• **Estado mutável:** Os campos `date` e `observed` podem ser alterados após a criação do objeto através dos métodos `setDate()` e `setObserved()`, violando a expectativa de imutabilidade de um feriado
+- **Estado mutável:** Os campos `date` e `observed` podem ser alterados após a criação do objeto através dos métodos `setDate()` e `setObserved()`, violando a expectativa de imutabilidade de um feriado
 
-• **Herança frágil:** Mudanças na classe base podem quebrar classes filhas de forma inesperada, criando dependências implícitas e dificultando a manutenção do código
+- **Herança frágil:** Mudanças na classe base podem quebrar classes filhas de forma inesperada, criando dependências implícitas e dificultando a manutenção do código
 
-• **Acoplamento temporal:** Métodos podem depender da ordem de chamada (ex: `setDate()` antes de `calculateObserved()`), criando contratos implícitos que não são expressos no sistema de tipos
+- **Acoplamento temporal:** Métodos podem depender da ordem de chamada (ex: `setDate()` antes de `calculateObserved()`), criando contratos implícitos que não são expressos no sistema de tipos
 
-• **Estados ilegais representáveis:** O sistema de tipos permite criar objetos em estados inconsistentes, como um `ObservedHoliday` onde a data observada é anterior à data oficial
+- **Estados ilegais representáveis:** O sistema de tipos permite criar objetos em estados inconsistentes, como um `ObservedHoliday` onde a data observada é anterior à data oficial
 
-• **Concorrência problemática:** Objetos mutáveis compartilhados entre threads requerem sincronização complexa, aumentando a possibilidade de deadlocks e condições de corrida
+- **Concorrência problemática:** Objetos mutáveis compartilhados entre threads requerem sincronização complexa, aumentando a possibilidade de deadlocks e condições de corrida
 
 Essas limitações são características inerentes a POO, onde o foco no
 encapsulamento de dados e comportamento pode inadvertidamente criar pontos de
@@ -310,25 +310,25 @@ a transparência dos dados e a separação clara entre dados e operações
 
 ## Programação Orientada a Dados: Uma Nova Perspectiva
 
-A Programação Orientada a Dados (Data-Oriented Programming) representa uma
-mudança fundamental na forma como pensamos sobre software. Em vez de focar em
-objetos que encapsulam dados e comportamento, este paradigma prioriza a
-estrutura e o fluxo dos dados, separando claramente informação de processamento.
+A Programação Orientada a Dados (Data-Oriented Programming) - POD representa uma
+mudança na forma como pensamos sobre software. Em vez de focar em objetos que
+encapsulam dados e comportamento, este paradigma prioriza a estrutura e o fluxo
+dos dados, separando *a informação do seu processamento*.
 
-![](2025-07-24-22-21-00.png)
-
-### Os Quatro Princípios Fundamentais
+### Princípios Fundamentais da POD
 
 A Programação Orientada a Dados se baseia em quatro princípios fundamentais que,
 quando aplicados em conjunto, criam sistemas mais robustos, previsíveis e fáceis
-de manter. Vamos explorar cada princípio usando nossa implementação de feriados
-como exemplo prático.
+de manter. Vamos explorar cada princípio usando nossa implementação do sistema
+de gerenciamento de feriados como exemplo prático.
+
+![Os princípios fundamentais da POD](four-pod-principles.png)
 
 #### 1. Dados são Imutáveis
 
 A imutabilidade elimina uma classe inteira de bugs relacionados a modificações
 inesperadas de estado. Em Java, podemos usar records[^18] para criar estruturas
-imutáveis de forma concisa:
+imutáveis de forma concisa.
 
 ```java
 // Estrutura imutável usando record
@@ -373,7 +373,7 @@ public class HolidayOperations {
 
 Este princípio enfatiza que nossas estruturas de dados devem representar
 fielmente o domínio, sem adicionar complexidade desnecessária ou omitir
-informações importantes:
+informações importantes.
 
 ```java
 // Interface selada que define exatamente os tipos de feriados possíveis
@@ -408,7 +408,7 @@ public record MoveableHoliday(
 #### 3. Torne Estados Ilegais Irrepresentáveis
 
 Use o sistema de tipos para prevenir estados inválidos em tempo de compilação
-através de _sealed interfaces_[^19]:
+através de *sealed interfaces*[^19].
 
 ```java
 // Interface selada impede tipos inválidos de localidade
@@ -457,7 +457,7 @@ public boolean appliesTo(Locality targetLocality) {
 #### 4. Separe Operações dos Dados
 
 Mantenha dados e comportamentos separados, com operações implementadas como
-funções puras:
+funções puras.
 
 ```java
 // Dados puros - apenas estrutura
@@ -497,7 +497,19 @@ public class HolidayOperations {
 }
 ```
 
-### Funcionalidades Java para Data-Oriented Programming
+### Feriados: uma modelagem orientada a dados
+
+A modelagem DOP apresenta uma estrutura fundamentalmente diferente da POO. A
+*sealed interface* `Holiday` define apenas o contrato de dados (métodos de
+acesso), enquanto cada record implementa exatamente os dados necessários para
+seu tipo específico. Observe como não há herança de implementação - cada record
+é independente e contém apenas os dados relevantes para seu contexto, eliminando
+campos desnecessários e garantindo que estados ilegais sejam irrepresentáveis
+pelo sistema de tipos.
+
+![Diagrama de classe da modelagem dos feriados como DOP](class-diagram.png)
+
+### Programação orientada a dados em Java
 
 Java evoluiu significativamente para suportar melhor os princípios da
 Programação Orientada a Dados. As funcionalidades modernas da linguagem
@@ -510,8 +522,6 @@ facilitam a implementação dos quatro princípios fundamentais:
 | **Pattern Matching (instanceof)**[^20] | Java 14 (Preview) Java 16 (Final) | Verificação de tipo e cast em uma operação | Operações sobre dados |
 | **Pattern Matching (switch)**[^21] | Java 17 (Preview) Java 21 (Final) | Switch expressions com pattern matching | Processamento de tipos selados |
 | **Text Blocks**[^22] | Java 13 (Preview) Java 15 (Final) | Strings multilinha mais legíveis | Documentação e exemplos |
-
-#### Exemplo Integrado das Funcionalidades
 
 ```java
 // Records + Sealed Interface + Pattern Matching
@@ -554,11 +564,11 @@ public class HolidayProcessor {
 }
 ```
 
-Essas funcionalidades trabalham em conjunto para tornar a implementação de DOP em Java mais natural e expressiva, reduzindo significativamente o boilerplate code e aumentando a segurança de tipos.
+Essas funcionalidades trabalham em conjunto para tornar a implementação de DOP
+em Java mais natural e expressiva, reduzindo significativamente o boilerplate
+code e aumentando a segurança de tipos.
 
 #### Diagrama de Classes - Modelagem DOP
-
-![Diagrama de Classes DOP](holiday-dop-diagram.puml)
 
 A modelagem DOP apresenta uma estrutura fundamentalmente diferente da POO. A
 *sealed interface* `Holiday` define apenas o contrato de dados (métodos de
@@ -576,9 +586,6 @@ Para demonstrar todos os conceitos da programação orientada a dados na prátic
 desenvolvemos uma API REST completa para gerenciar feriados públicos. O projeto
 completo está disponível no GitHub e pode ser executado localmente usando Docker
 Compose.
-
-📁 **Código Fonte Completo**: [github.com/vagnerclementino/odp-api-holiday](https://github.com/vagnerclementino/api-holiday)
-
 
 📁 **Código Fonte Completo**: [github.com/vagnerclementino/api-holiday](https://github.com/vagnerclementino/api-holiday)
 
