@@ -1,6 +1,6 @@
 ---
 title: "Nem tudo é objeto"
-date: "2025-08-12"
+date: "2025-08-11"
 description: "Programação Orientada a Dados em Java"
 featuredImage: feature.png
 ---
