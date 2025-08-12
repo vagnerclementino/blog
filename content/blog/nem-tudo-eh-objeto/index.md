@@ -150,7 +150,7 @@ entendo importante explicitar:
 Para simplificar vamos considerar feriados segundo o calendário Gregoriano e com
 uma duração fixa, ou seja, o feriado inicia e finaliza em uma data específica.
 
-A modelagem da classe `Holiday` - veja diagrama a seguir - adota uma abordagem
+A modelagem da classe `Holiday` - veja diagrama - adota uma abordagem
 hierárquica típica da POO, onde uma classe abstrata define o contrato comum e as
 características compartilhadas por todos os demais tipos de feriados. A classe
 base encapsula propriedades essenciais como nome, descrição, localidades onde é
@@ -273,10 +273,10 @@ public class MoveableHoliday extends Holiday {
 // Uso polimórfico - mesmo código para diferentes tipos
 List<Holiday> holidays = List.of(
     new FixedHoliday("Christmas", "Birth of Christ", 25, Month.DECEMBER, 
-                     localities, HolidayType.RELIGIOUS, true),
+                     localities, HolidayType.RELIGIOUS, false),
     new MoveableHoliday("Easter", "Resurrection of Christ", 
                         localities, HolidayType.RELIGIOUS, 
-                        MoveableHolidayType.LUNAR_BASED, true)
+                        MoveableHolidayType.LUNAR_BASED, false)
 );
 
 // Polimorfismo em ação
@@ -290,212 +290,370 @@ Apesar dos benefícios da modelagem orientada a objetos, a implementação
 apresenta limitações inerentes ao paradigma e que podem comprometer a
 integridade dos dados e a previsibilidade do sistema:
 
-- **Lista mutável exposta:** O método `getLocalities()` retorna uma referência direta à lista interna, permitindo que código externo modifique o estado do objeto sem o controle da classe, que podem levar a problemas difíceis de rastrear
+- **Lista mutável exposta:** O método `getLocalities()` retorna uma referência
+direta à lista interna, permitindo que código externo modifique o estado do
+objeto sem o controle da classe, que podem levar a problemas difíceis de
+rastrear
 
-- **Estado mutável:** Os campos `date` e `observed` podem ser alterados após a criação do objeto através dos métodos `setDate()` e `setObserved()`, violando a expectativa de imutabilidade de um feriado
+- **Estado mutável:** Os campos `date` e `observed` podem ser alterados após a
+criação do objeto através dos métodos `setDate()` e `setObserved()`, violando a
+expectativa de imutabilidade de um feriado
 
-- **Herança frágil:** Mudanças na classe base podem quebrar classes filhas de forma inesperada, criando dependências implícitas e dificultando a manutenção do código
+- **Herança frágil:** Mudanças na classe base podem quebrar classes filhas de
+forma inesperada, criando dependências implícitas e dificultando a manutenção do
+código
 
-- **Acoplamento temporal:** Métodos podem depender da ordem de chamada (ex: `setDate()` antes de `calculateObserved()`), criando contratos implícitos que não são expressos no sistema de tipos
+- **Acoplamento temporal:** Métodos podem depender da ordem de chamada (ex:
+`setDate()` antes de `calculateObserved()`), criando contratos implícitos que
+não são expressos no sistema de tipos
 
-- **Estados ilegais representáveis:** O sistema de tipos permite criar objetos em estados inconsistentes, como um `ObservedHoliday` onde a data observada é anterior à data oficial
+- **Estados ilegais representáveis:** O sistema de tipos permite criar objetos
+em estados inconsistentes, como um `ObservedHoliday` onde a data observada é
+anterior à data oficial
 
-- **Concorrência problemática:** Objetos mutáveis compartilhados entre threads requerem sincronização complexa, aumentando a possibilidade de deadlocks e condições de corrida
+- **Concorrência problemática:** Objetos mutáveis compartilhados entre threads
+requerem sincronização complexa, aumentando a possibilidade de deadlocks e
+condições de corrida
 
-Essas limitações são características inerentes a POO, onde o foco no
-encapsulamento de dados e comportamento pode inadvertidamente criar pontos de
-mutabilidade não controlada. A Programação Orientada a Dados emerge como uma
-alternativa que aborda diretamente esses problemas, priorizando a imutabilidade,
-a transparência dos dados e a separação clara entre dados e operações
+Essas limitações são inerentes a POO, onde o foco no encapsulamento de dados e
+comportamento (métodos) pode inadvertidamente criar pontos de mutabilidade não
+controladas. A Programação Orientada a Dados emerge como uma alternativa que
+aborda diretamente esses problemas, priorizando a imutabilidade, a transparência
+dos dados e a separação clara entre dados e operações.
 
 ## Programação Orientada a Dados: Uma Nova Perspectiva
 
-A Programação Orientada a Dados (Data-Oriented Programming) - POD representa uma
-mudança na forma como pensamos sobre software. Em vez de focar em objetos que
-encapsulam dados e comportamento, este paradigma prioriza a estrutura e o fluxo
-dos dados, separando *a informação do seu processamento*.
+A *Programação Orientada a Dados (Data-Oriented Programming)* - POD representa
+uma mudança na forma como pensamos sobre a modelagem de software. Em vez de
+focar em objetos que encapsulam dados e comportamento, este paradigma prioriza a
+estrutura e o fluxo dos dados, de forma imutável, separando *a informação do seu
+processamento*.
 
-### Princípios Fundamentais da POD
+### Princípios Fundamentais
 
 A Programação Orientada a Dados se baseia em quatro princípios fundamentais que,
-quando aplicados em conjunto, criam sistemas mais robustos, previsíveis e fáceis
-de manter. Vamos explorar cada princípio usando nossa implementação do sistema
-de gerenciamento de feriados como exemplo prático.
+quando aplicados em conjunto, criam sistemas robustos, previsíveis e
+potencialmente mais fáceis de manter. Vamos explorar cada princípio usando nossa
+implementação do sistema de gerenciamento de feriados.
 
 ![Os princípios fundamentais da POD](four-pod-principles.png)
 
 #### 1. Dados são Imutáveis
 
-A imutabilidade elimina uma classe inteira de bugs relacionados a modificações
-inesperadas de estado. Em Java, podemos usar records[^18] para criar estruturas
-imutáveis de forma concisa.
+A imutabilidade elimina uma fonte comum de bugs: objetos modificados por diferentes subsistemas sem comunicação adequada. Um exemplo clássico é armazenar um objeto em um `HashSet` e depois alterar um campo usado no cálculo do hash code - o objeto torna-se "perdido" na estrutura. Este problema surge quando dois subsistemas (o `HashSet` e o código que modifica o objeto) têm acesso ao mesmo objeto, mas têm diferentes requisitos para modificá-lo e nenhuma forma de comunicar essas necessidades.
 
 ```java
-// Estrutura imutável usando record
+// Problema: objeto mutável em HashSet
+var holidays = new HashSet<Holiday>();
+var christmas = new MutableHoliday("Christmas", LocalDate.of(2024, 12, 25));
+holidays.add(christmas);
+christmas.setDate(LocalDate.of(2024, 12, 24)); // Quebra o HashSet!
+holidays.contains(christmas); // Retorna false - objeto "perdido"
+```
+
+A abordagem mais simples que garante correção é a imutabilidade: se nada pode mudar, tais erros não podem ocorrer. Quando subsistemas se comunicam apenas com dados imutáveis, essa fonte comum de erros desaparece completamente. Porém, se os dados não podem mudar, as mudanças de estado necessárias devem ocorrer nos sistemas que os processam. Para isso, os objetos devem ser **transparentes** - seu estado interno deve ser acessível e construível via API. Transparência significa que deve haver um método de acesso para cada campo e um construtor que aceita valores para todos os campos, permitindo recriar uma instância indistinguível da original.
+
+```java
+// Solução: record imutável e transparente
 public record FixedHoliday(
-    String name, 
-    String description, 
-    LocalDate date, 
-    List<Locality> localities, 
-    HolidayType type
+    String name, String description, LocalDate date, 
+    List<Locality> localities, HolidayType type
 ) implements Holiday {
     
-    // Compact constructor com validação
     public FixedHoliday {
         Objects.requireNonNull(name, "Holiday name cannot be null");
-        Objects.requireNonNull(date, "Holiday date cannot be null");
         if (name.isBlank()) {
             throw new IllegalArgumentException("Holiday name cannot be blank");
         }
-    }
-}
-
-// Operações como funções puras - sempre retornam novas instâncias
-public class HolidayOperations {
-    public static Holiday updateDescription(Holiday holiday, String newDescription) {
-        return switch (holiday) {
-            case FixedHoliday fixed -> new FixedHoliday(
-                fixed.name(), newDescription, fixed.date(), 
-                fixed.localities(), fixed.type()
-            );
-            case MoveableHoliday moveable -> new MoveableHoliday(
-                moveable.name(), newDescription, moveable.date(),
-                moveable.localities(), moveable.type(), 
-                moveable.knownHoliday(), moveable.mondayisation()
-            );
-            // Outros casos...
-        };
+        // Defensive copying para imutabilidade profunda
+        localities = List.copyOf(localities);
     }
 }
 ```
+
+Records[^18] foram projetados exatamente como portadores transparentes de dados imutáveis. Eles atendem automaticamente aos requisitos de transparência: campos final para cada componente, construtor canônico que aceita e atribui valores, métodos de acesso que os retornam, e implementações de `equals` e `hashCode` baseadas nos dados. O defensive copying no compact constructor garante imutabilidade profunda, prevenindo modificações através de referências a objetos mutáveis. Transformações retornam novas instâncias, mantendo a imutabilidade.
+
+```java
+// Transformações retornam novas instâncias
+public FixedHoliday withDate(LocalDate newDate) {
+    return new FixedHoliday(name, description, newDate, localities, type);
+}
+
+// Uso seguro - impossível quebrar o HashSet
+var holidays = new HashSet<Holiday>();
+var christmas = new FixedHoliday("Christmas", "...", LocalDate.of(2024, 12, 25), localities, type);
+holidays.add(christmas);
+var christmasEve = christmas.withDate(LocalDate.of(2024, 12, 24)); // Nova instância
+holidays.contains(christmas); // Sempre true - objeto original inalterado
+```
+
+**Benefícios:** Thread-safety automática, caching seguro, debugging simplificado e testes mais simples.
+
+**Benefícios da imutabilidade:**
+• Thread-safety automática • Caching seguro • Debugging simplificado • Testes mais simples
 
 #### 2. Modele os Dados, Todos os Dados, e Nada Além dos Dados
 
-Este princípio enfatiza que nossas estruturas de dados devem representar
-fielmente o domínio, sem adicionar complexidade desnecessária ou omitir
-informações importantes.
+Este princípio enfatiza criar **agregados sob medida** que representem fielmente o domínio, evitando tipos genéricos com campos opcionais problemáticos. O mundo é caótico e toda regra parece ter uma exceção - "todo feriado tem uma data" rapidamente se torna "todo feriado fixo tem uma data fixa, mas feriados móveis têm algoritmos de cálculo, e feriados observados podem ter datas diferentes da oficial". Quando modelamos isso com um tipo genérico, acabamos com um `GenericHoliday` que tem campos que podem ser `null` a qualquer momento, e o fato de que diferentes tipos de feriados têm diferentes requisitos fica implícito no melhor dos casos.
 
 ```java
-// Interface selada que define exatamente os tipos de feriados possíveis
-public sealed interface Holiday 
-    permits FixedHoliday, ObservedHoliday, MoveableHoliday, MoveableFromBaseHoliday {
-    
-    String name();
-    String description();
-    LocalDate date();
-    List<Locality> localities();
-    HolidayType type();
-    
-    // Métodos default para funcionalidade comum
-    default boolean isWeekend() {
-        DayOfWeek dayOfWeek = date().getDayOfWeek();
-        return dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
-    }
-}
+// ANTES - Tipo genérico problemático
+public record GenericHoliday(
+    String name, LocalDate date,
+    LocalDate observed,        // null para feriados fixos
+    KnownHoliday knownHoliday, // null para feriados fixos  
+    Holiday baseHoliday,       // null para não-derivados
+    int dayOffset,             // irrelevante para feriados fixos
+    boolean mondayisation      // nem sempre aplicável
+) {}
+```
 
+Com tal design, não estamos nos fazendo nenhum favor! Em qualquer sistema, mas especialmente em um com design focado em dados, você se beneficiará de tornar apenas estados legais representáveis. Se um feriado fixo não precisa de algoritmo de cálculo, o construtor deve garantir que isso seja o caso. Se nenhum feriado pode ter tanto uma data fixa quanto um algoritmo móvel, isso deve ser prevenido - idealmente modelando os dados de forma tão precisa que não existe tipo que tenha ambos os campos. Tipos precisos como esses não apenas têm a vantagem de que seu criador não precisa escrever construtores e testes que verificam que combinações ilegais não ocorram, mas também ajudam os desenvolvedores que os usam.
+
+```java
+// DEPOIS - Sealed interface com tipos específicos
+public sealed interface Holiday
+    permits FixedHoliday, ObservedHoliday, MoveableHoliday, MoveableFromBaseHoliday {
+
+  String name();
+  String description();
+  LocalDate date();
+  List<Locality> localities();
+  HolidayType type();
+
+  // Funcionalidade compartilhada
+  default boolean isWeekend() {
+    DayOfWeek dayOfWeek = date().getDayOfWeek();
+    return dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
+  }
+}
+```
+
+A estratégia é usar sealed interfaces para modelar alternativas e records específicos para cada variação. Em vez de múltiplos campos com requisitos mutuamente exclusivos ou condicionais, criamos uma sealed interface para modelar as alternativas e a usamos como tipo para um campo obrigatório. Cada record implementa exatamente os dados necessários para seu tipo específico, eliminando campos irrelevantes e tornando o código mais claro. A funcionalidade compartilhada é implementada através de métodos default na interface, evitando repetição entre implementações.
+
+```java
 // Cada tipo contém exatamente os dados necessários
+public record FixedHoliday(
+    String name, String description, LocalDate date,
+    List<Locality> localities, HolidayType type
+) implements Holiday { }
+
 public record MoveableHoliday(
-    String name,
-    String description, 
-    LocalDate date,
-    List<Locality> localities,
-    HolidayType type,
-    KnownHoliday knownHoliday,  // Específico para feriados móveis
-    boolean mondayisation       // Específico para feriados móveis
+    String name, String description, LocalDate date,
+    List<Locality> localities, HolidayType type,
+    KnownHoliday knownHoliday,    // Específico para feriados móveis
+    boolean mondayisation         // Específico para feriados móveis
+) implements Holiday { }
+
+public record MoveableFromBaseHoliday(
+    String name, String description, LocalDate date,
+    List<Locality> localities, HolidayType type,
+    KnownHoliday knownHoliday,    // Algoritmo base
+    Holiday baseHoliday,          // Feriado de referência
+    int dayOffset,                // Dias de diferença do base
+    boolean mondayisation         // Regra de ajuste
 ) implements Holiday { }
 ```
 
-#### 3. Torne Estados Ilegais Irrepresentáveis
-
-Use o sistema de tipos para prevenir estados inválidos em tempo de compilação
-através de *sealed interfaces*[^19].
+**Resultado:** Cada record contém exatamente os dados necessários para seu tipo específico, eliminando campos irrelevantes e tornando o código mais claro e maintível.
 
 ```java
-// Interface selada impede tipos inválidos de localidade
-public sealed interface Locality 
-    permits Locality.Country, Locality.Subdivision, Locality.City {
-    
-    // Hierarquia bem definida
-    record Country(String code, String name) implements Locality {
-        public Country {
-            Objects.requireNonNull(code, "Country code cannot be null");
-            Objects.requireNonNull(name, "Country name cannot be null");
-        }
-    }
-    
-    record Subdivision(Country country, String code, String name) implements Locality {
-        public Subdivision {
-            Objects.requireNonNull(country, "Country cannot be null");
-            Objects.requireNonNull(code, "Subdivision code cannot be null");
-        }
-    }
-    
-    record City(String name, Subdivision subdivision) implements Locality {
-        public City {
-            Objects.requireNonNull(name, "City name cannot be null");
-            Objects.requireNonNull(subdivision, "Subdivision cannot be null");
-        }
-    }
-}
+public sealed interface Holiday
+    permits FixedHoliday, ObservedHoliday, MoveableHoliday, MoveableFromBaseHoliday {
 
-// Pattern matching garante tratamento de todos os casos
-public boolean appliesTo(Locality targetLocality) {
+  String name();
+  String description();
+  LocalDate date();
+  List<Locality> localities();
+**Resultado:** Cada record contém exatamente os dados necessários para seu tipo específico, eliminando campos irrelevantes e tornando o código mais claro e maintível.
+
+```java
+public sealed interface Holiday permits ... {
+  
+  // Matching hierárquico: feriado nacional aplica-se a estados e cidades
+  default boolean appliesTo(Locality targetLocality) {
     return localities().stream()
-        .anyMatch(holidayLocality -> 
-            switch (holidayLocality) {
-                case Locality.Country country -> 
-                    matchesCountry(country, targetLocality);
-                case Locality.Subdivision subdivision -> 
-                    matchesSubdivision(subdivision, targetLocality);
-                case Locality.City city -> 
-                    matchesCity(city, targetLocality);
-            }
-        );
+        .anyMatch(holidayLocality -> localityMatches(holidayLocality, targetLocality));
+  }
 }
 ```
+
+**Resultado:** Sistema que espelha fielmente o domínio de feriados com zero repetição, segurança de tipos e dados específicos para cada tipo.
+
+#### 3. Torne Estados Ilegais Irrepresentáveis
+
+Este princípio garante que apenas combinações legais de dados possam ser representadas no sistema. Um sistema focado em dados deve assegurar que apenas combinações legais dos dados possam ser representadas, e assim um princípio orientador da programação orientada a dados é tornar estados ilegais irrepresentáveis. O mundo é caótico e toda regra parece ter uma exceção - "todo usuário tem um endereço de email" rapidamente se torna "todo usuário registrado tem um endereço de email, mas pode estar ausente durante o processo de registro". Quando modelamos isso, podemos ficar presos com um `User` que tem um campo `String email` que pode ser `null` a qualquer momento, e o fato de que usuários registrados devem ter um endereço de email fica implícito no melhor dos casos, mas não é mais aplicado.
+
+```java
+// Nível 1: Sealed interface impede tipos inválidos
+public sealed interface Holiday
+    permits FixedHoliday, ObservedHoliday, MoveableHoliday, MoveableFromBaseHoliday {
+    
+    String name();
+    LocalDate date();
+    List<Locality> localities();
+    HolidayType type();
+}
+
+// Nível 2: Enum previne valores inválidos
+public enum KnownHoliday {
+    NEW_YEAR("New Year's Day"),
+    CHRISTMAS("Christmas Day"),
+    EASTER("Easter Sunday");
+    
+    private final String displayName;
+    KnownHoliday(String displayName) { this.displayName = displayName; }
+    public String getDisplayName() { return displayName; }
+}
+```
+
+A estratégia segue três níveis progressivos: primeiro, use tipos precisos (sealed interfaces + records) para descrever os dados; segundo, em situações de either/or, evite múltiplos campos com requisitos mutuamente exclusivos ou condicionais e, em vez disso, crie uma sealed interface para modelar as alternativas; terceiro, apenas se essas técnicas de design, ambas suportadas pelo compilador, não forem suficientes, recorra a verificações em tempo de execução no construtor. Quando uma propriedade dos dados não pode ser expressa de forma que o compilador a aplique, ela deve ser validada em tempo de execução, mas não a qualquer momento - geralmente deve acontecer o mais cedo possível, idealmente na fronteira entre o mundo externo e seu sistema.
+
+```java
+// Nível 3: Validação runtime para regras complexas
+public record FixedHoliday(
+    String name, String description, LocalDate date,
+    List<Locality> localities, HolidayType type
+) implements Holiday {
+    
+    public FixedHoliday {
+        Objects.requireNonNull(name, "Holiday name cannot be null");
+        if (name.isBlank()) {
+            throw new IllegalArgumentException("Holiday name cannot be blank");
+        }
+        if (localities.isEmpty()) {
+            throw new IllegalArgumentException("Holiday must have at least one locality");
+        }
+        localities = List.copyOf(localities);
+    }
+}
+```
+
+Validar os dados tão cedo garante que nenhum dado quebrado entre no sistema, mas também é importante garantir que o sistema não gere dados quebrados. Isso significa que as instâncias que ele cria que podem posteriormente ser mapeadas de volta para CSV, JSON, uma consulta SQL, etc., também devem ser validadas. Isso torna os construtores desses tipos o local ideal para a lógica de validação. Em casos mais complicados, métodos ou classes de factory podem estar envolvidos, caso em que eles precisam aplicar essas verificações, é claro.
+
+```java
+// Validate at the Boundary: validação na fronteira do sistema
+public final class HolidayFactory {
+    public static Holiday fromJson(String json) {
+        var data = parseJson(json);
+        // Validação acontece aqui, na entrada do sistema
+        return new FixedHoliday(data.name(), data.description(), 
+                               data.date(), data.localities(), data.type());
+    }
+    
+    public static FixedHoliday createFixed(String name, int day, Month month, 
+                                          List<Locality> localities, HolidayType type) {
+        // Valida combinação dia/mês impossível
+        LocalDate calculatedDate;
+        try {
+            calculatedDate = LocalDate.of(LocalDate.now().getYear(), month, day);
+        } catch (DateTimeException e) {
+            throw new IllegalArgumentException(
+                "Invalid day/month combination: day=" + day + ", month=" + month, e);
+        }
+        return new FixedHoliday(name, "", calculatedDate, localities, type);
+    }
+}
+```
+
+**Resultado:** Impossível criar feriados inválidos - o compilador previne tipos incorretos, enums previnem valores inválidos, e validações runtime capturam regras complexas na fronteira do sistema.
+
+**Resultado:** Impossível criar feriados inválidos - o compilador e validações runtime previnem todos os estados ilegais.
 
 #### 4. Separe Operações dos Dados
 
-Mantenha dados e comportamentos separados, com operações implementadas como
-funções puras.
+Este princípio mantém dados e comportamentos separados, com records contendo apenas estrutura e operações implementadas como funções puras em classes dedicadas. Não é surpreendente que a programação orientada a dados tenha um foco forte em dados - de fato, três dos quatro princípios orientadores da DOP aconselham como melhor modelar isso. Este quarto princípio diz respeito aos métodos que implementam a maior parte da lógica de domínio, aconselhando separar operações dos dados. Quando exploramos como modelar dados, basicamente excluímos todos os métodos que contêm lógica de domínio não trivial ou interagem com tipos que não representam dados - vamos chamá-los de operações.
 
 ```java
-// Dados puros - apenas estrutura
-public record FixedHoliday(...) implements Holiday { }
+// Dados puros - apenas estrutura, sem comportamento
+public record FixedHoliday(
+    String name, String description, LocalDate date,
+    List<Locality> localities, HolidayType type
+) implements Holiday { }
 
-// Operações separadas - funções puras
-public class HolidayOperations {
+public record MoveableHoliday(
+    String name, String description, LocalDate date,
+    List<Locality> localities, HolidayType type,
+    KnownHoliday knownHoliday, boolean mondayisation
+) implements Holiday { }
+```
+
+Em programação orientada a dados, operações não devem ser definidas em records, mas em outras classes. Adicionar um item ao carrinho de compras não seria nem `Item.addToCart(Cart)` nem `Cart.add(Item)` porque `Item` e `Cart` são dados e, portanto, imutáveis. Em vez disso, o sistema de pedidos `Orders` deve assumir essa tarefa, por exemplo, com `Orders.add(Cart, Item)`, que retorna uma nova instância `Cart` que reflete o resultado da operação. A comunicação entre subsistemas não é implementada implicitamente compartilhando estado mutável, mas sim explicitamente através de solicitações para o estado atual. Mudanças de estado ainda são possíveis, mas há restrições sobre onde devem ocorrer - idealmente apenas nos subsistemas responsáveis pelo subdomínio respectivo.
+
+```java
+// Operações separadas - funções puras que implementam dynamic dispatch manual
+public final class HolidayOperations {
     
-    public static Holiday calculateDateForYear(Holiday holiday, int year) {
+    // Em vez de holiday.calculateDate(year), usamos HolidayOperations.calculateDate(holiday, year)
+    public static Holiday calculateDate(Holiday holiday, int year) {
         return switch (holiday) {
-            case FixedHoliday fixed -> new FixedHoliday(
-                fixed.name(), fixed.description(),
-                LocalDate.of(year, fixed.date().getMonth(), fixed.date().getDayOfMonth()),
-                fixed.localities(), fixed.type()
-            );
-            
-            case MoveableHoliday moveable -> new MoveableHoliday(
-                moveable.name(), moveable.description(),
-                calculateMoveableDate(moveable.knownHoliday(), year),
-                moveable.localities(), moveable.type(),
-                moveable.knownHoliday(), moveable.mondayisation()
-            );
+            case FixedHoliday fixed -> {
+                LocalDate newDate = fixed.date().withYear(year);
+                yield fixed.withDate(newDate);
+            }
+            case MoveableHoliday moveable -> {
+                LocalDate newDate = calculateMoveableDate(moveable, year);
+                yield moveable.withDate(newDate);
+            }
+            case ObservedHoliday observed -> {
+                LocalDate newDate = observed.date().withYear(year);
+                LocalDate newObserved = observed.mondayisation() 
+                    ? applyMondayisationRules(newDate) 
+                    : newDate;
+                yield observed.withDate(newDate).withObserved(newObserved);
+            }
+            case MoveableFromBaseHoliday derived -> {
+                LocalDate newDate = calculateDerivedDate(derived, year);
+                yield derived.withDate(newDate);
+            }
         };
     }
     
-    public static List<Holiday> filterByCountry(List<Holiday> holidays, String countryCode) {
+    // Comunicação entre subsistemas via estado atual, não estado mutável compartilhado
+    public static List<Holiday> getHolidaysForYear(List<Holiday> holidays, int year) {
         return holidays.stream()
-            .filter(holiday -> holiday.isObservedInCountry(countryCode))
+            .map(holiday -> calculateDate(holiday, year))
             .toList();
-    }
-    
-    public static boolean isGovernmental(Holiday holiday) {
-        return holiday.type() == HolidayType.NATIONAL ||
-               holiday.type() == HolidayType.STATE ||
-               holiday.type() == HolidayType.MUNICIPAL;
     }
 }
 ```
+
+Mas como essas operações são implementadas? À primeira vista, parece bastante difícil fazer algo útil com um `Holiday` se a interface não define nenhum método. É aqui que o pattern matching com `switch` entra em jogo. O switch implementa dynamic dispatch: selecionar qual pedaço de código deve ser executado para um determinado tipo. Se tivéssemos definido o método `calculateDate` na interface `Holiday` e então chamado `holiday.calculateDate(year)`, o runtime decidiria qual das implementações seria executada. Com `switch` fazemos isso manualmente, o que nos permite não definir os métodos na interface. Pattern matching é muito mais simples e direto que o visitor pattern, oferecendo a mesma funcionalidade com menos complexidade.
+
+```java
+// Pattern matching é mais simples que Visitor Pattern
+// Em vez de: holiday.accept(new ProcessingVisitor())
+// Usamos: switch com pattern matching direto
+public static String getHolidayInfo(Holiday holiday) {
+    return switch (holiday) {
+        case FixedHoliday(var name, var description, var date, var localities, var type) -> 
+            "Fixed: " + name + " on " + date;
+        case MoveableHoliday(var name, var description, var date, var localities, var type, var known, var monday) -> 
+            "Moveable: " + name + " (" + known + ") on " + date;
+        case ObservedHoliday(var name, var description, var date, var localities, var type, var observed, var monday) -> 
+            "Observed: " + name + " (observed on " + observed + ")";
+        case MoveableFromBaseHoliday(var name, var description, var date, var localities, var type, var known, var base, var offset, var monday) -> 
+            "Derived: " + name + " (from " + base.name() + ", " + offset + " days)";
+    };
+}
+
+// Métodos auxiliares privados
+private static LocalDate calculateMoveableDate(MoveableHoliday moveable, int year) {
+    return moveable.date().withYear(year); // Implementação simplificada
+}
+
+private static LocalDate applyMondayisationRules(LocalDate date) {
+    return date; // Implementação simplificada
+}
+
+private static LocalDate calculateDerivedDate(MoveableFromBaseHoliday derived, int year) {
+    return derived.date().withYear(year); // Implementação simplificada
+}
+```
+
+**Resultado:** Dados simples e operações poderosas com total separação de responsabilidades. Pattern matching oferece dynamic dispatch manual mais simples que o Visitor Pattern, e record patterns (Java 21) tornam o código ainda mais expressivo.
+
+**Resultado:** Dados simples e operações poderosas, com total separação de responsabilidades e funções puras fáceis de testar.
 
 ### Feriados: uma modelagem orientada a dados
 
