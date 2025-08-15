@@ -507,93 +507,86 @@ public record MoveableFromBaseHoliday(
 #### 3. Torne Estados Ilegais Irrepresentáveis
 
 Este princípio garante que apenas combinações legais de dados possam ser
-representadas no sistema[^21]. Um sistema focado em dados deve assegurar que
-apenas combinações legais dos dados possam ser representadas, e assim um
-princípio orientador da programação orientada a dados é tornar estados ilegais
-irrepresentáveis. O mundo é caótico e toda regra parece ter uma exceção - "todo
-usuário tem um endereço de email" rapidamente se torna "todo usuário registrado
-tem um endereço de email, mas pode estar ausente durante o processo de
-registro". Quando modelamos isso, podemos ficar presos com um `User` que tem um
-campo `String email` que pode ser `null` a qualquer momento, e o fato de que
-usuários registrados devem ter um endereço de email fica implícito no melhor dos
-casos, mas não é mais aplicado.
+representadas no sistema[^21]. O mundo é caótico e toda regra parece ter uma
+exceção - "todo usuário tem um endereço de email" rapidamente se torna "todo
+usuário registrado tem um endereço de email, mas pode estar ausente durante o
+processo de registro". Quando modelamos isso de forma inadequada, podemos ficar
+presos com estruturas que permitem estados inconsistentes.
+
+Considere uma modelagem problemática para feriados que tenta acomodar todos os tipos em uma única classe genérica. Esta abordagem apresenta vários problemas fundamentais: campos opcionais desnecessários (um feriado fixo como o Natal não precisa de `knownType`, `baseHoliday` ou `dayOffset`), estados inconsistentes (é possível criar um feriado móvel sem `knownType` ou um feriado derivado sem `baseHoliday`), regras implícitas que não são expressas no código (ficando apenas na documentação), validação espalhada que precisa ser repetida em vários pontos, e confusão para desenvolvedores que não sabem quais campos são relevantes para cada situação, levando a erros e código defensivo desnecessário.
 
 ```java
-// Nível 1: Sealed interface impede tipos inválidos
-public sealed interface Holiday
-    permits FixedHoliday, ObservedHoliday, MoveableHoliday, MoveableFromBaseHoliday {
+// PROBLEMA: Estados ilegais são representáveis
+public class BadHoliday {
+    private String name;
+    private LocalDate actualDate;
+    private LocalDate observedDate;    // pode ser null
+    private KnownHoliday knownType;    // pode ser null  
+    private Holiday baseHoliday;       // pode ser null
+    private int dayOffset;             // irrelevante para feriados fixos
+    private boolean mondayisation;     // nem sempre aplicável
     
+    // Permite criar: feriado fixo COM baseHoliday e dayOffset
+    // Permite criar: feriado móvel SEM knownType  
+    // Permite criar: feriado observado com observedDate anterior à actualDate
+}
+```
+
+Um sistema focado em dados deve assegurar que apenas combinações legais dos
+dados possam ser representadas. A estratégia segue três níveis progressivos de
+proteção: primeiro, use tipos precisos (sealed interfaces e records) para que o compilador impeça a criação de tipos inválidos; segundo, em situações onde dados são mutuamente exclusivos, evite múltiplos campos opcionais criando records específicos para cada variação; terceiro, quando uma propriedade não pode ser expressa pelo sistema de tipos, valide no construtor o mais cedo possível, idealmente na fronteira entre o mundo externo e seu sistema.
+
+```java
+// Exemplo completo dos 3 níveis de proteção
+public sealed interface Holiday  // Nível 1: Tipos precisos
+    permits FixedHoliday, ObservedHoliday, MoveableHoliday {
     String name();
     LocalDate date();
     List<Locality> localities();
-    HolidayType type();
 }
 
-// Nível 2: Enum previne valores inválidos
-public enum KnownHoliday {
-    NEW_YEAR("New Year's Day"),
-    CHRISTMAS("Christmas Day"),
-    EASTER("Easter Sunday");
-    
-    private final String displayName;
-    KnownHoliday(String displayName) { this.displayName = displayName; }
-    public String getDisplayName() { return displayName; }
-}
-```
+// Nível 2: Records específicos para cada variação
+public record FixedHoliday(String name, LocalDate date, List<Locality> localities) 
+    implements Holiday { }
 
-A estratégia segue três níveis progressivos: primeiro, use tipos precisos (sealed interfaces + records) para descrever os dados; segundo, em situações de either/or, evite múltiplos campos com requisitos mutuamente exclusivos ou condicionais e, em vez disso, crie uma sealed interface para modelar as alternativas; terceiro, apenas se essas técnicas de design, ambas suportadas pelo compilador, não forem suficientes, recorra a verificações em tempo de execução no construtor. Quando uma propriedade dos dados não pode ser expressa de forma que o compilador a aplique, ela deve ser validada em tempo de execução, mas não a qualquer momento - geralmente deve acontecer o mais cedo possível, idealmente na fronteira entre o mundo externo e seu sistema.
-
-```java
 // Nível 3: Validação runtime para regras complexas
-public record FixedHoliday(
-    String name, String description, LocalDate date,
-    List<Locality> localities, HolidayType type
+public record ObservedHoliday(
+    String name, LocalDate date, List<Locality> localities,
+    LocalDate observed, boolean mondayisation
 ) implements Holiday {
     
-    public FixedHoliday {
-        Objects.requireNonNull(name, "Holiday name cannot be null");
+    public ObservedHoliday {
+        Objects.requireNonNull(name, "Nome não pode ser nulo");
         if (name.isBlank()) {
-            throw new IllegalArgumentException("Holiday name cannot be blank");
+            throw new IllegalArgumentException("Nome não pode estar vazio");
         }
-        if (localities.isEmpty()) {
-            throw new IllegalArgumentException("Holiday must have at least one locality");
+        
+        // Regra complexa: mondayisation em fim de semana deve ajustar a data
+        if (mondayisation && date.equals(observed)) {
+            DayOfWeek dayOfWeek = date.getDayOfWeek();
+            if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
+                throw new IllegalArgumentException(
+                    "Mondayisation habilitada mas data não foi ajustada para dia útil");
+            }
         }
-        localities = List.copyOf(localities);
+        
+        localities = List.copyOf(localities); // Defensive copying
     }
 }
+
+// RESULTADO: Apenas estados legais são representáveis
+var christmas = new FixedHoliday("Natal", "Nascimento de Cristo", 
+                                date, localities, RELIGIOUS);
+var easter = new MoveableHoliday("Páscoa", "Ressurreição de Cristo", 
+                                date, localities, RELIGIOUS, EASTER, false);
+var newYear = new ObservedHoliday("Ano Novo", "Primeiro dia do ano", 
+                                 date, localities, NATIONAL, observedDate, true);
+
+// Estes são IMPOSSÍVEIS de criar:
+// - FixedHoliday com knownHoliday
+// - MoveableHoliday sem knownHoliday  
+// - ObservedHoliday com observed anterior ao actual em fim de semana com mondayisation
 ```
-
-Validar os dados tão cedo garante que nenhum dado quebrado entre no sistema, mas também é importante garantir que o sistema não gere dados quebrados. Isso significa que as instâncias que ele cria que podem posteriormente ser mapeadas de volta para CSV, JSON, uma consulta SQL, etc., também devem ser validadas. Isso torna os construtores desses tipos o local ideal para a lógica de validação. Em casos mais complicados, métodos ou classes de factory podem estar envolvidos, caso em que eles precisam aplicar essas verificações, é claro.
-
-```java
-// Validate at the Boundary: validação na fronteira do sistema
-public final class HolidayFactory {
-    public static Holiday fromJson(String json) {
-        var data = parseJson(json);
-        // Validação acontece aqui, na entrada do sistema
-        return new FixedHoliday(data.name(), data.description(), 
-                               data.date(), data.localities(), data.type());
-    }
-    
-    public static FixedHoliday createFixed(String name, int day, Month month, 
-                                          List<Locality> localities, HolidayType type) {
-        // Valida combinação dia/mês impossível
-        LocalDate calculatedDate;
-        try {
-            calculatedDate = LocalDate.of(LocalDate.now().getYear(), month, day);
-        } catch (DateTimeException e) {
-            throw new IllegalArgumentException(
-                "Invalid day/month combination: day=" + day + ", month=" + month, e);
-        }
-        return new FixedHoliday(name, "", calculatedDate, localities, type);
-    }
-}
-```
-
-**Resultado:** Impossível criar feriados inválidos - o compilador previne tipos incorretos, enums previnem valores inválidos, e validações runtime capturam regras complexas na fronteira do sistema.
-
-**Resultado:** Impossível criar feriados inválidos - o compilador e validações runtime previnem todos os estados ilegais.
-
 #### 4. Separe Operações dos Dados
 
 Este princípio mantém dados e comportamentos separados[^22], com records
