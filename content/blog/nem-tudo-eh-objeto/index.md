@@ -597,101 +597,46 @@ A comunicação entre subsistemas não é implementada implicitamente compartilh
 A implementação dessas operações utiliza pattern matching com `switch`, que oferece dynamic dispatch manual mais simples que o Visitor Pattern. O switch implementa a seleção de qual código deve ser executado para um determinado tipo: se tivéssemos definido `calculateDate` na interface `Holiday` e chamado `holiday.calculateDate(year)`, o runtime decidiria qual implementação executar. Com `switch` fazemos isso manualmente, permitindo não definir métodos na interface e mantendo os dados puros. Pattern matching com record patterns (Java 21) torna o código ainda mais expressivo, permitindo desconstruir records diretamente durante a correspondência de padrões, como `case FixedHoliday(var name, var date, ...)` em vez de casting manual.
 
 ```java
-// Dados puros - apenas estrutura, sem comportamento complexo
-public record FixedHoliday(
-    String name, String description, LocalDate date,
-    List<Locality> localities, HolidayType type
-) implements Holiday { }
+// Dados puros - apenas estrutura
+public record FixedHoliday(String name, LocalDate date, HolidayType type) implements Holiday { }
+public record MoveableHoliday(String name, LocalDate date, HolidayType type, 
+                             KnownHoliday knownHoliday) implements Holiday { }
 
-public record MoveableHoliday(
-    String name, String description, LocalDate date,
-    List<Locality> localities, HolidayType type,
-    KnownHoliday knownHoliday, boolean mondayisation
-) implements Holiday { }
-
-// Operações separadas - funções puras que implementam dynamic dispatch manual
+// Operações separadas - funções puras
 public final class HolidayOperations {
     
-    // Em vez de holiday.calculateDate(year), usamos HolidayOperations.calculateDate(holiday, year)
     public static Holiday calculateDate(Holiday holiday, int year) {
-        Objects.requireNonNull(holiday, "Holiday cannot be null");
-        validateYear(year);
-        
         return switch (holiday) {
-            case FixedHoliday fixed -> {
-                LocalDate newDate = fixed.date().withYear(year);
-                yield fixed.withDate(newDate);
-            }
-            case MoveableHoliday moveable -> {
-                LocalDate newDate = calculateMoveableDate(moveable, year);
-                yield moveable.withDate(newDate);
-            }
-            case ObservedHoliday observed -> {
-                LocalDate newDate = observed.date().withYear(year);
-                LocalDate newObserved = observed.mondayisation() 
-                    ? applyMondayisationRules(newDate) 
-                    : newDate;
-                yield observed.withDate(newDate).withObserved(newObserved);
-            }
-            case MoveableFromBaseHoliday derived -> {
-                LocalDate baseDate = getDateOnly(derived.baseHoliday(), year);
-                LocalDate newDate = baseDate.plusDays(derived.dayOffset());
-                yield derived.withDate(newDate);
-            }
+            case FixedHoliday fixed -> fixed.withDate(fixed.date().withYear(year));
+            case MoveableHoliday moveable -> moveable.withDate(calculateMoveableDate(moveable, year));
+            case ObservedHoliday observed -> calculateObservedDate(observed, year);
         };
     }
     
-    // Pattern matching com record patterns (Java 21+) - desconstrução direta
-    public static String formatHolidayInfo(Holiday holiday) {
+    // Pattern matching com record patterns
+    public static String formatInfo(Holiday holiday) {
         return switch (holiday) {
-            case FixedHoliday(var name, var description, var date, var localities, var type) -> 
+            case FixedHoliday(var name, var date, var type) -> 
                 "Fixo: " + name + " em " + date.getDayOfMonth() + "/" + date.getMonthValue();
-            case MoveableHoliday(var name, _, var date, _, _, var known, var monday) -> 
-                "Móvel: " + name + " (" + known + ") em " + date;
-            case ObservedHoliday(var name, _, var date, _, _, var observed, var monday) -> 
-                "Observado: " + name + " (observado em " + observed + ")";
-            case MoveableFromBaseHoliday(var name, _, _, _, _, _, var base, var offset, _) -> 
-                "Derivado: " + name + " (de " + base.name() + ", " + offset + " dias)";
+            case MoveableHoliday(var name, var date, var type, var known) -> 
+                "Móvel: " + name + " (" + known + ")";
+            case ObservedHoliday(var name, _, var observed, _) -> 
+                "Observado: " + name + " em " + observed;
         };
     }
     
-    // Comunicação entre subsistemas via estado atual, não estado mutável compartilhado
     public static List<Holiday> getHolidaysForYear(List<Holiday> holidays, int year) {
         return holidays.stream()
             .map(holiday -> calculateDate(holiday, year))
             .toList();
     }
-    
-    // Operações específicas do domínio como funções puras
-    public static List<Holiday> filterByType(List<Holiday> holidays, HolidayType type) {
-        return holidays.stream()
-            .filter(holiday -> holiday.type() == type)
-            .toList();
-    }
-    
-    public static boolean isHoliday(LocalDate date, List<Holiday> holidays) {
-        return holidays.stream()
-            .anyMatch(holiday -> holiday.date().equals(date));
-    }
-    
-    public static List<Holiday> getHolidaysInMonth(List<Holiday> holidays, Month month, int year) {
-        return getHolidaysForYear(holidays, year).stream()
-            .filter(holiday -> holiday.date().getMonth() == month)
-            .toList();
-    }
 }
 
-// Resultado: Dados simples e operações poderosas com total separação de responsabilidades
-var christmas = new FixedHoliday("Natal", "Nascimento de Cristo", date, localities, RELIGIOUS);
-var easter = new MoveableHoliday("Páscoa", "Ressurreição de Cristo", date, localities, RELIGIOUS, EASTER, false);
-
-// Operações como funções puras - sem efeitos colaterais
+// Uso: operações como funções puras
+var christmas = new FixedHoliday("Natal", date, RELIGIOUS);
 var christmasIn2025 = HolidayOperations.calculateDate(christmas, 2025);
-var holidayInfo = HolidayOperations.formatHolidayInfo(easter);
+var info = HolidayOperations.formatInfo(christmas);
 var allHolidays2025 = HolidayOperations.getHolidaysForYear(holidays, 2025);
-var religiousHolidays = HolidayOperations.filterByType(holidays, RELIGIOUS);
-var decemberHolidays = HolidayOperations.getHolidaysInMonth(holidays, Month.DECEMBER, 2025);
-var isChristmas = HolidayOperations.isHoliday(LocalDate.of(2025, 12, 25), holidays);
 ```
 
 ### Quando e Por Que Usar Programação Orientada a Dados
