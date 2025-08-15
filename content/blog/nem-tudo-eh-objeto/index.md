@@ -477,8 +477,8 @@ para modelar as alternativas e a usamos como tipo para um campo obrigatório.
 Cada record implementa exatamente os dados necessários para seu tipo específico,
 eliminando campos irrelevantes, melhorando a legibilidade e tornando o código
 mais fácil de manter. As funcionalidades compartilhadas podem ser implementadas
-através de métodos
-*default* na interface, evitando repetição entre implementações.
+através de métodos *default* na interface, evitando repetição entre
+implementações.
 
 ```java
 // Cada tipo contém exatamente os dados necessários
@@ -639,64 +639,6 @@ var info = HolidayOperations.formatInfo(christmas);
 var allHolidays2025 = HolidayOperations.getHolidaysForYear(holidays, 2025);
 ```
 
-### Quando e Por Que Usar Programação Orientada a Dados
-
-A Programação Orientada a Dados não pretende substituir completamente a Programação Orientada a Objetos, mas oferece uma abordagem complementar que pode ser aplicada em situações específicas onde seus benefícios são mais evidentes[^23].
-
-#### Por Que Usar DOP?
-
-DOP posiciona-se entre a Programação Funcional (FP) e a Programação Orientada a Objetos (OOP), mas mais próxima da primeira. Enquanto a programação funcional propõe que todas as operações sejam funções puras sem efeitos colaterais, isso pode ser difícil de alcançar ou manter em muitos projetos reais. DOP aproveita os benefícios da pureza funcional onde possível e isola os desvios necessários nos subsistemas responsáveis pela lógica correspondente.
-
-A força da DOP, similar à programação funcional, é que sua abordagem funciona muito bem mesmo em pequena escala. Qualquer pedaço de lógica de domínio representado como função - seja um pipeline de stream simples ou uma cadeia de funções escritas à mão - torna a base de código mais confiável e geralmente mais maintível também. O uso de records, a prevenção de mutação, evitar colocar operações complexas nos dados, e a clareza do `switch` sobre o visitor pattern - qualquer pedaço de código que use essas técnicas no ambiente certo será mais claro e maintível.
-
-#### Quando Usar DOP?
-
-Similar à programação funcional, as vantagens da programação orientada a dados podem ser sentidas mesmo em pequena escala. Não é necessário desenvolver sistemas inteiros de forma orientada a dados. Se você quiser começar em pequena escala, deve procurar duas situações específicas:
-
-**1. Sistemas de Processamento de Dados**
-Sistemas que diretamente ingerem e produzem dados são candidatos ideais para DOP. Exemplos incluem:
-- Jobs de processamento em lote (batch jobs)
-- Ferramentas de análise de dados  
-- Sistemas de processamento de eventos (onde os eventos são "os dados")
-- APIs que modelam estruturas existentes para permitir sua manipulação
-
-**2. Problemas Pequenos que Não Requerem Modularização Adicional**
-Problemas parciais ou subsistemas que podem ser resolvidos de forma relativamente isolada se beneficiam da clareza e simplicidade da DOP.
-
-#### Exemplo Prático: Sistema de Feriados
-
-O sistema de feriados que desenvolvemos é um exemplo perfeito de quando usar DOP:
-
-```java
-// Dados claramente definidos com tipos específicos
-public sealed interface Holiday permits FixedHoliday, MoveableHoliday, ObservedHoliday {}
-
-// Operações como funções puras
-public final class HolidayOperations {
-    public static List<Holiday> getHolidaysForYear(List<Holiday> holidays, int year) {
-        return holidays.stream()
-            .map(holiday -> calculateDate(holiday, year))
-            .toList();
-    }
-}
-```
-
-Este sistema processa dados (feriados), transforma-os (calcula datas para anos específicos), e produz resultados sem efeitos colaterais. A separação clara entre dados e operações torna o código fácil de entender, testar e manter.
-
-#### Requisitos Técnicos
-
-Para implementar DOP efetivamente em Java, você precisa de **Java 21 ou superior**[^24]. Embora records e sealed types estejam presentes no JDK 17, os patterns essenciais em `switch` não foram finalizados até o JDK 21, tornando-o o requisito mínimo para programação orientada a dados.
-
-#### Benefícios Observados na Prática
-
-Da experiência prática com DOP, os benefícios incluem:
-- **Código legível** graças à separação de dados e operações
-- **Facilidade de verificação e teste** individual de dados e operações
-- **Arquitetura compreensível** com responsabilidades claras
-- **Manutenibilidade** através de funções puras e dados imutáveis
-
-Uma vez que você experimenta a programação orientada a dados na prática, logo começará a ver casos de uso pequenos e grandes em todos os lugares, e os resultados tendem a ser consistentemente positivos.
-
 ### Feriados: uma modelagem orientada a dados
 
 A modelagem DOP apresenta uma estrutura fundamentalmente diferente da POO. A
@@ -708,6 +650,8 @@ campos desnecessários e garantindo que estados ilegais sejam irrepresentáveis
 pelo sistema de tipos.
 
 ![Diagrama de classe da modelagem dos feriados como DOP](class-diagram.png)
+
+Assim como fizemos uma analogia de uma classe na POO com um organismo, podemos comparar a Programação Orientada a Dados com uma linha de montagem industrial moderna. Nesta analogia, os dados imutáveis são como peças padronizadas que fluem pela linha sem serem alteradas em sua essência, as operações funcionam como estações de trabalho especializadas que processam essas peças de forma previsível, o pattern matching atua como um sistema de classificação automática que direciona cada peça para a estação correta, e a separação entre dados e operações espelha a divisão clara entre matéria-prima e processos de fabricação. Esta analogia faz sentido porque ambos os sistemas priorizam eficiência, previsibilidade, especialização de funções e fluxo controlado de informação, onde cada componente tem uma responsabilidade bem definida e o resultado final é construído através da composição ordenada de operações simples e confiáveis.
 
 ### Programação orientada a dados em Java
 
@@ -723,72 +667,63 @@ facilitam a implementação dos quatro princípios fundamentais:
 | **Pattern Matching (switch)**[^29] | Java 17 (Preview) Java 21 (Final) | Switch expressions com pattern matching | Processamento de tipos selados |
 | **Text Blocks**[^30] | Java 13 (Preview) Java 15 (Final) | Strings multilinha mais legíveis | Documentação e exemplos |
 
+### Quando e Por Que Usar Programação Orientada a Dados
 
-```java
-// Records + Sealed Interface + Pattern Matching
-public sealed interface Holiday permits FixedHoliday, MoveableHoliday {
-    String name();
-    LocalDate date();
-    HolidayType type();
-}
+A Programação Orientada a Dados não pretende substituir completamente a Programação Orientada a Objetos, mas oferece uma abordagem complementar que pode ser aplicada em situações específicas onde seus benefícios são mais evidentes[^23].
 
-public record FixedHoliday(String name, LocalDate date, HolidayType type) 
-    implements Holiday { }
+#### Por Que Usar DOP?
 
-public record MoveableHoliday(String name, LocalDate date, HolidayType type, 
-                             KnownHoliday knownHoliday) implements Holiday { }
+DOP posiciona-se entre a Programação Funcional (FP) e a Programação Orientada a
+Objetos (OOP), mas mais próxima da primeira. Enquanto a programação funcional
+propõe que todas as operações sejam funções puras sem efeitos colaterais, isso
+pode ser difícil de alcançar ou manter em muitos projetos reais. DOP aproveita
+os benefícios da pureza funcional onde possível e isola os desvios necessários
+nos subsistemas responsáveis pela lógica correspondente.
 
-// Pattern Matching em Switch (Java 21)
-public class HolidayProcessor {
-    public String processHoliday(Holiday holiday) {
-        return switch (holiday) {
-            case FixedHoliday(var name, var date, var type) -> 
-                "Fixed: " + name + " on " + date;
-            case MoveableHoliday(var name, var date, var type, var known) -> 
-                "Moveable: " + name + " (" + known + ") on " + date;
-        };
-    }
-    
-    public List<Holiday> getGovernmentalHolidays(List<Holiday> holidays) {
-        return holidays.stream()
-            .filter(this::isGovernmental)
-            .sorted(Comparator.comparing(Holiday::date))
-            .toList();
-    }
-    
-    private boolean isGovernmental(Holiday holiday) {
-        return switch (holiday.type()) {
-            case NATIONAL, STATE, MUNICIPAL -> true;
-            case RELIGIOUS, COMMERCIAL -> false;
-        };
-    }
-}
-```
+A força da DOP, similar à programação funcional, é que sua abordagem funciona
+muito bem mesmo em pequena escala. Qualquer pedaço de lógica de domínio
+representado como função - seja um pipeline de stream simples ou uma cadeia de
+funções escritas à mão - torna a base de código mais confiável e geralmente mais
+maintível também. O uso de records, a prevenção de mutação, evitar colocar
+operações complexas nos dados, e a clareza do `switch` sobre o visitor pattern -
+qualquer pedaço de código que use essas técnicas no ambiente certo será mais
+claro e maintível.
 
-Essas funcionalidades trabalham em conjunto para tornar a implementação de DOP
-em Java mais natural e expressiva, reduzindo significativamente o boilerplate
-code e aumentando a segurança de tipos.
+#### Quando Usar DOP?
 
-## Vantagens da programacao orientada a dadosj
+Similar à programação funcional, as vantagens da programação orientada a dados podem ser sentidas mesmo em pequena escala. Não é necessário desenvolver sistemas inteiros de forma orientada a dados. Se você quiser começar em pequena escala, deve procurar duas situações específicas:
 
-O projeto demonstra como a programação orientada a dados oferece:
+**1. Sistemas de Processamento de Dados**
+Sistemas que diretamente ingerem e produzem dados são candidatos ideais para DOP. Exemplos incluem:
 
-- **Previsibilidade**: Funções puras produzem sempre o mesmo resultado
-- **Testabilidade**: Dados imutáveis facilitam testes unitários e de integração
-- **Manutenibilidade**: Separação clara entre dados e comportamento
-- **Performance**: Estruturas imutáveis podem ser otimizadas pela JVM
-- **Concorrência**: Dados imutáveis são thread-safe por design
+- Jobs de processamento em lote (batch jobs)
+- Ferramentas de análise de dados  
+- Sistemas de processamento de eventos (onde os eventos são "os dados")
+- APIs que modelam estruturas existentes para permitir sua manipulação
 
-## Casos de uso
+**2. Problemas Pequenos que Não Requerem Modularização Adicional**
+Problemas parciais ou subsistemas que podem ser resolvidos de forma relativamente isolada se beneficiam da clareza e simplicidade da DOP.
+
+### Casos de uso
 
 Para demonstrar todos os conceitos da programação orientada a dados na prática,
 desenvolvemos uma API REST completa para gerenciar feriados públicos. O projeto
 completo está disponível no GitHub e pode ser executado localmente usando Docker
-Compose.
+Compose. 📁 **Código Fonte Completo**: [github.com/vagnerclementino/api-holiday](https://github.com/vagnerclementino/api-holiday)
 
-📁 **Código Fonte Completo**: [github.com/vagnerclementino/api-holiday](https://github.com/vagnerclementino/api-holiday)
-
-### Handler do AWS Lambda
+A Programação Orientada a Dados é especialmente valiosa em handlers de funções
+Lambda como este exemplo. O ambiente serverless beneficia-se enormemente da
+imutabilidade dos dados, que elimina problemas de concorrência entre invocações
+simultâneas da função, e da separação clara entre dados e operações, que
+facilita o teste unitário de cada método handler individualmente. O pattern
+matching com `switch` torna o roteamento de requisições HTTP mais legível e
+maintível que uma cadeia de `if-else`, enquanto a ausência de estado mutável
+compartilhado reduz significativamente a complexidade de debugging em um
+ambiente distribuído. Além disso, a natureza funcional da DOP alinha-se
+perfeitamente com o modelo de execução stateless das funções Lambda, onde cada
+invocação deve ser independente e previsível, características essenciais para
+sistemas que podem escalar automaticamente e processar milhares de requisições
+concorrentes.
 
 ```java
 public class HolidayLambdaHandler implements RequestHandler<APIGatewayRequest, APIGatewayResponse> {
@@ -811,14 +746,6 @@ public class HolidayLambdaHandler implements RequestHandler<APIGatewayRequest, A
 }
 ```
 
-O projeto demonstra como a programação orientada a dados oferece:
-
-- **Previsibilidade**: Funções puras produzem sempre o mesmo resultado
-- **Testabilidade**: Dados imutáveis facilitam testes unitários e de integração
-- **Manutenibilidade**: Separação clara entre dados e comportamento
-- **Performance**: Estruturas imutáveis podem ser otimizadas pela JVM
-- **Concorrência**: Dados imutáveis são thread-safe por design
-
 ## Conclusão
 
 A Programação Orientada a Dados oferece uma perspectiva valiosa para o
@@ -826,7 +753,18 @@ desenvolvimento de software moderno, especialmente em contextos onde a clareza
 dos dados, a imutabilidade e a testabilidade são prioritárias. Ao separar dados
 de comportamento e focar na estrutura das informações, conseguimos criar
 sistemas mais previsíveis, fáceis de testar e menos propensos a bugs
-relacionados a estado mutável.
+relacionados a estado mutável. Da experiência prática com DOP, os benefícios
+incluem:
+
+- **Código legível** graças à separação de dados e operações
+- **Facilidade de verificação e teste** individual de dados e operações
+- **Arquitetura compreensível** com responsabilidades claras
+- **Manutenibilidade** através de funções puras e dados imutáveis
+- **Previsibilidade**: Funções puras produzem sempre o mesmo resultado
+- **Testabilidade**: Dados imutáveis facilitam testes unitários e de integração
+- **Manutenibilidade**: Separação clara entre dados e comportamento
+- **Performance**: Estruturas imutáveis podem ser otimizadas pela JVM
+- **Concorrência**: Dados imutáveis são thread-safe por design
 
 O exemplo da API de feriados demonstra como esses princípios podem ser aplicados
 na prática, resultando em código mais limpo, estruturas de dados bem definidas e
