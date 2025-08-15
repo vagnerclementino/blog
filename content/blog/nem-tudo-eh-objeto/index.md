@@ -653,7 +653,7 @@ pelo sistema de tipos.
 
 Assim como fizemos uma analogia de uma classe na POO com um organismo, podemos comparar a Programação Orientada a Dados com uma linha de montagem industrial moderna. Nesta analogia, os dados imutáveis são como peças padronizadas que fluem pela linha sem serem alteradas em sua essência, as operações funcionam como estações de trabalho especializadas que processam essas peças de forma previsível, o pattern matching atua como um sistema de classificação automática que direciona cada peça para a estação correta, e a separação entre dados e operações espelha a divisão clara entre matéria-prima e processos de fabricação. Esta analogia faz sentido porque ambos os sistemas priorizam eficiência, previsibilidade, especialização de funções e fluxo controlado de informação, onde cada componente tem uma responsabilidade bem definida e o resultado final é construído através da composição ordenada de operações simples e confiáveis.
 
-### Programação orientada a dados em Java
+## Programação orientada a dados em Java
 
 Java evoluiu significativamente para suportar melhor os princípios da
 Programação Orientada a Dados. As funcionalidades modernas da linguagem
@@ -667,11 +667,12 @@ facilitam a implementação dos quatro princípios fundamentais:
 | **Pattern Matching (switch)**[^29] | Java 17 (Preview) Java 21 (Final) | Switch expressions com pattern matching | Processamento de tipos selados |
 | **Text Blocks**[^30] | Java 13 (Preview) Java 15 (Final) | Strings multilinha mais legíveis | Documentação e exemplos |
 
-### Quando e Por Que Usar Programação Orientada a Dados
+## Quando Usar a Programação Orientada a Dados
 
-A Programação Orientada a Dados não pretende substituir completamente a Programação Orientada a Objetos, mas oferece uma abordagem complementar que pode ser aplicada em situações específicas onde seus benefícios são mais evidentes[^23].
-
-#### Por Que Usar DOP?
+A Programação Orientada a Dados não pretende substituir completamente a
+Programação Orientada a Objetos, mas oferece uma abordagem complementar que pode
+ser aplicada em situações específicas onde seus benefícios são mais
+evidentes[^23].
 
 DOP posiciona-se entre a Programação Funcional (FP) e a Programação Orientada a
 Objetos (OOP), mas mais próxima da primeira. Enquanto a programação funcional
@@ -689,27 +690,27 @@ operações complexas nos dados, e a clareza do `switch` sobre o visitor pattern
 qualquer pedaço de código que use essas técnicas no ambiente certo será mais
 claro e maintível.
 
-#### Quando Usar DOP?
+Similar à programação funcional, as vantagens da programação orientada a dados
+podem ser sentidas mesmo em pequena escala. Não é necessário desenvolver
+sistemas inteiros de forma orientada a dados. Se você quiser começar em pequena
+escala, deve procurar duas situações específicas:
 
-Similar à programação funcional, as vantagens da programação orientada a dados podem ser sentidas mesmo em pequena escala. Não é necessário desenvolver sistemas inteiros de forma orientada a dados. Se você quiser começar em pequena escala, deve procurar duas situações específicas:
-
-**1. Sistemas de Processamento de Dados**
-Sistemas que diretamente ingerem e produzem dados são candidatos ideais para DOP. Exemplos incluem:
+**1. Sistemas de Processamento de Dados**: Sistemas que diretamente ingerem e produzem dados são candidatos ideais para DOP. Exemplos incluem:
 
 - Jobs de processamento em lote (batch jobs)
 - Ferramentas de análise de dados  
 - Sistemas de processamento de eventos (onde os eventos são "os dados")
 - APIs que modelam estruturas existentes para permitir sua manipulação
 
-**2. Problemas Pequenos que Não Requerem Modularização Adicional**
-Problemas parciais ou subsistemas que podem ser resolvidos de forma relativamente isolada se beneficiam da clareza e simplicidade da DOP.
+**2. Problemas Pequenos que Não Requerem Modularização Adicional**: Problemas parciais ou subsistemas que podem ser resolvidos de forma relativamente isolada se beneficiam da clareza e simplicidade da DOP.
 
 ### Casos de uso
 
 Para demonstrar todos os conceitos da programação orientada a dados na prática,
 desenvolvemos uma API REST completa para gerenciar feriados públicos. O projeto
-completo está disponível no GitHub e pode ser executado localmente usando Docker
-Compose. 📁 **Código Fonte Completo**: [github.com/vagnerclementino/api-holiday](https://github.com/vagnerclementino/api-holiday)
+completo está disponível em
+[github.com/vagnerclementino/api-holiday](https://github.com/vagnerclementino/api-holiday)
+e pode ser executado localmente usando Docker Compose.
 
 A Programação Orientada a Dados é especialmente valiosa em handlers de funções
 Lambda como este exemplo. O ambiente serverless beneficia-se enormemente da
@@ -748,35 +749,11 @@ public class HolidayLambdaHandler implements RequestHandler<APIGatewayRequest, A
 
 ## Conclusão
 
-A Programação Orientada a Dados oferece uma perspectiva valiosa para o
-desenvolvimento de software moderno, especialmente em contextos onde a clareza
-dos dados, a imutabilidade e a testabilidade são prioritárias. Ao separar dados
-de comportamento e focar na estrutura das informações, conseguimos criar
-sistemas mais previsíveis, fáceis de testar e menos propensos a bugs
-relacionados a estado mutável. Da experiência prática com DOP, os benefícios
-incluem:
+A Programação Orientada a Dados (POD) representa uma abordagem complementar à Programação Orientada a Objetos que prioriza a estrutura e o fluxo dos dados de forma imutável, separando informação do seu processamento. Baseada em quatro princípios fundamentais - dados imutáveis e transparentes, modelagem precisa de todos os dados necessários, prevenção de estados ilegais, e separação entre operações e dados - a POD oferece uma perspectiva que se posiciona entre a programação funcional e orientada a objetos, aproveitando os benefícios da pureza funcional onde possível.
 
-- **Código legível** graças à separação de dados e operações
-- **Facilidade de verificação e teste** individual de dados e operações
-- **Arquitetura compreensível** com responsabilidades claras
-- **Manutenibilidade** através de funções puras e dados imutáveis
-- **Previsibilidade**: Funções puras produzem sempre o mesmo resultado
-- **Testabilidade**: Dados imutáveis facilitam testes unitários e de integração
-- **Manutenibilidade**: Separação clara entre dados e comportamento
-- **Performance**: Estruturas imutáveis podem ser otimizadas pela JVM
-- **Concorrência**: Dados imutáveis são thread-safe por design
+Os benefícios da POD são evidentes tanto em pequena quanto em grande escala. A **imutabilidade** elimina uma fonte comum de bugs relacionados a objetos modificados por diferentes subsistemas, enquanto a **transparência** dos dados facilita a construção e reconstrução de instâncias. A **modelagem precisa** com sealed interfaces e records específicos torna estados ilegais irrepresentáveis pelo sistema de tipos, reduzindo significativamente a necessidade de validações defensivas. A **separação de operações** mantém os dados simples e as operações poderosas, utilizando pattern matching para implementar dynamic dispatch de forma mais clara que o Visitor Pattern. Esses princípios resultam em código mais **legível**, **testável**, **maintível** e **thread-safe por design**, características especialmente valiosas em ambientes distribuídos e serverless.
 
-O exemplo da API de feriados demonstra como esses princípios podem ser aplicados
-na prática, resultando em código mais limpo, estruturas de dados bem definidas e
-uma arquitetura que facilita tanto a manutenção quanto a evolução do sistema.
-Embora a Programação Orientada a Objetos continue sendo fundamental em Java, a
-incorporação de conceitos orientados a dados pode significativamente melhorar a
-qualidade e robustez de nossas aplicações.
-
-A chave está em reconhecer que, assim como no origami, diferentes técnicas de
-"dobrar" o código podem revelar aspectos distintos da solução, e a escolha do
-paradigma adequado pode fazer toda a diferença na elegância e eficácia do
-resultado final.
+A POD é particularmente adequada para sistemas de processamento de dados que ingerem e produzem informações de forma previsível, como jobs de processamento em lote, ferramentas de análise, sistemas de processamento de eventos, e APIs que modelam estruturas existentes. Também se beneficia de problemas menores que podem ser resolvidos de forma isolada, aproveitando a clareza e simplicidade do paradigma. O exemplo da API de feriados demonstra como esses conceitos se aplicam na prática: handlers de Lambda que se beneficiam da ausência de estado mutável para concorrência segura, operações de cálculo de datas que retornam novas instâncias sem efeitos colaterais, e validações concentradas na fronteira do sistema que garantem integridade dos dados. A chave está em reconhecer que diferentes paradigmas revelam aspectos distintos da solução, e a escolha adequada pode fazer toda a diferença na elegância e eficácia do resultado final.
 
 [^1]: [Holiday](https://en.wikipedia.org/wiki/Holiday)
 [^4]: [Moveable feast](https://en.wikipedia.org/wiki/Moveable_feast)
