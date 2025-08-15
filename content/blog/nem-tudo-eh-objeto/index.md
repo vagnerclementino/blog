@@ -329,7 +329,7 @@ focar em objetos que encapsulam dados e comportamento, este paradigma prioriza a
 estrutura e o fluxo dos dados, de forma imutável, separando *a informação do seu
 processamento*.
 
-A ideia de uma programacao orientada a dados foi proposta originalmente por
+A ideia de uma programação orientada a dados foi proposta originalmente por
 Brian Goetz[^16], posteriormente, Nicolai Parlogfoi[^17], refinou o conceito,
 organizando melhor os princípios fundamentais e incorporando as funcionalidades
 mais recentes de Java. Este artigo apresenta uma visão prática dos conceitos
@@ -367,7 +367,7 @@ holidays.contains(christmas); // Retorna false - objeto "perdido"
 O remédio é simples: se nada pode mudar, tais erros não podem ocorrer. Quando
 subsistemas se comunicam apenas com dados imutáveis, essa fonte comum de erros
 desaparece completamente. Porém, mudança no estado interno das classes são
-inevitáveis.  Logo os objetos devem ser **transparentes** - seu estado interno
+inevitáveis. Logo os objetos devem ser **transparentes** - seu estado interno
 deve ser acessível e construível uma interface bem definida. Na prática, ser
 transparente significa que a classe deve haver um método de acesso para cada
 campo e um construtor que aceita valores para todos os campos, permitindo
@@ -391,14 +391,14 @@ public record FixedHoliday(
 }
 ```
 
-Em Java, *Records[^26]* foram projetados exatamente como portadores
-transparentes de dados imutáveis. Eles atendem automaticamente aos requisitos de
-transparência: campos final para cada componente, construtor canônico que aceita
-e atribui valores, métodos de acesso que os retornam, e implementações de
-`equals` e `hashCode` baseadas nos dados. O defensive copying no compact
-constructor garante imutabilidade profunda, prevenindo modificações através de
-referências a objetos mutáveis. Transformações retornam novas instâncias,
-mantendo a imutabilidade.
+Em Java, *Records[^26]* foram projetados para serem portadores transparentes e
+imutáveis de dados. Eles atendem automaticamente aos requisitos de
+transparência: campos final para cada componente, construtor que aceita e
+atribui valores, métodos de acesso que os retornam, e implementações de `equals`
+e `hashCode` baseadas nos dados. Além disso, o uso da técnica de *defensive
+copying* (ex. `List.copyOf()`) previne modificações através de referências a
+objetos mutáveis. Por fim, transformações retornam novas instâncias, mantendo a
+imutabilidade.
 
 ```java
 // Transformações retornam novas instâncias
@@ -414,16 +414,22 @@ var christmasEve = christmas.withDate(LocalDate.of(2024, 12, 24)); // Nova inst�
 holidays.contains(christmas); // Sempre true - objeto original inalterado
 ```
 
-**Benefícios da imutabilidade:**
-
-- Thread-safety automática
-- Caching seguro
-- Debugging simplificado
-- Testes mais simples
-
 #### 2. Modele os Dados, Todos os Dados, e Nada Além dos Dados
 
-Este princípio enfatiza criar **agregados sob medida** que representem fielmente o domínio[^20], evitando tipos genéricos com campos opcionais problemáticos. O mundo é caótico e toda regra parece ter uma exceção - "todo feriado tem uma data" rapidamente se torna "todo feriado fixo tem uma data fixa, mas feriados móveis têm algoritmos de cálculo, e feriados observados podem ter datas diferentes da oficial". Quando modelamos isso com um tipo genérico, acabamos com um `GenericHoliday` que tem campos que podem ser `null` a qualquer momento, e o fato de que diferentes tipos de feriados têm diferentes requisitos fica implícito no melhor dos casos.
+Este princípio enfatiza a criação de tipos específicos que representem fielmente
+cada variação do domínio, evitando tipos genéricos com campos opcionais[^20].
+Por exemplo, ao modelar feriados, poderíamos ter a tentação de criar um tipo
+genérico que tente acomodar todas as variações:
+
+- Feriados fixos têm uma data definida
+- Feriados móveis têm um algoritmo de cálculo 
+- Feriados observados podem ter datas diferentes da oficial
+
+Se usarmos um tipo genérico `GenericHoliday` para todos os casos, como realizado na
+modelagem orientada a objetos, acabamos com campos que podem ser nulos e regras
+implícitas sobre quais campos devem ou não estar preenchidos para cada tipo de
+feriado. Isso torna o código frágil e propenso a erros, já que o compilador não
+pode nos ajudar a garantir que as combinações de campos estejam corretas.
 
 ```java
 // ANTES - Tipo genérico problemático
@@ -437,7 +443,13 @@ public record GenericHoliday(
 ) {}
 ```
 
-Com tal design, não estamos nos fazendo nenhum favor! Em qualquer sistema, mas especialmente em um com design focado em dados, você se beneficiará de tornar apenas estados legais representáveis. Se um feriado fixo não precisa de algoritmo de cálculo, o construtor deve garantir que isso seja o caso. Se nenhum feriado pode ter tanto uma data fixa quanto um algoritmo móvel, isso deve ser prevenido - idealmente modelando os dados de forma tão precisa que não existe tipo que tenha ambos os campos. Tipos precisos como esses não apenas têm a vantagem de que seu criador não precisa escrever construtores e testes que verificam que combinações ilegais não ocorram, mas também ajudam os desenvolvedores que os usam.
+Deveria fazer parte do desenho de qualquer sistema permitir que apenas estados
+legais possam ser representados. Se um feriado fixo não precisa de algoritmo de
+cálculo, o construtor deve garantir que isso seja o caso. Se nenhum feriado pode
+ter tanto uma data fixa quanto um algoritmo móvel, isso deve ser prevenido.
+Tipos precisos como esses não só simplificam o trabalho do desenvolvedor ao
+eliminar a necessidade de validações complexas, mas também tornam o código mais
+seguro e simples.
 
 ```java
 // DEPOIS - Sealed interface com tipos específicos
@@ -458,7 +470,15 @@ public sealed interface Holiday
 }
 ```
 
-A estratégia é usar sealed interfaces para modelar alternativas e records específicos para cada variação. Em vez de múltiplos campos com requisitos mutuamente exclusivos ou condicionais, criamos uma sealed interface para modelar as alternativas e a usamos como tipo para um campo obrigatório. Cada record implementa exatamente os dados necessários para seu tipo específico, eliminando campos irrelevantes e tornando o código mais claro. A funcionalidade compartilhada é implementada através de métodos default na interface, evitando repetição entre implementações.
+A estratégia é usar *sealed interfaces* para modelar alternativas e criar
+*records* específicos para cada variação. Em vez de múltiplos campos com
+requisitos mutuamente exclusivos ou condicionais, criamos uma *sealed interface*
+para modelar as alternativas e a usamos como tipo para um campo obrigatório.
+Cada record implementa exatamente os dados necessários para seu tipo específico,
+eliminando campos irrelevantes, melhorando a legibilidade e tornando o código
+mais fácil de manter. As funcionalidades compartilhadas podem ser implementadas
+através de métodos
+*default* na interface, evitando repetição entre implementações.
 
 ```java
 // Cada tipo contém exatamente os dados necessários
@@ -483,32 +503,6 @@ public record MoveableFromBaseHoliday(
     boolean mondayisation         // Regra de ajuste
 ) implements Holiday { }
 ```
-
-**Resultado:** Cada record contém exatamente os dados necessários para seu tipo específico, eliminando campos irrelevantes e tornando o código mais claro e maintível.
-
-```java
-public sealed interface Holiday
-    permits FixedHoliday, ObservedHoliday, MoveableHoliday, MoveableFromBaseHoliday {
-
-  String name();
-  String description();
-  LocalDate date();
-  List<Locality> localities();
-**Resultado:** Cada record contém exatamente os dados necessários para seu tipo específico, eliminando campos irrelevantes e tornando o código mais claro e maintível.
-
-```java
-public sealed interface Holiday permits ... {
-  
-  // Matching hierárquico: feriado nacional aplica-se a estados e cidades
-  default boolean appliesTo(Locality targetLocality) {
-    return localities().stream()
-        .anyMatch(holidayLocality -> localityMatches(holidayLocality, targetLocality));
-  }
-}
-```
-
-**Resultado:** Sistema que espelha fielmente o domínio de feriados com zero
-*repetição, segurança de tipos e dados específicos para cada tipo.
 
 #### 3. Torne Estados Ilegais Irrepresentáveis
 
@@ -602,7 +596,15 @@ public final class HolidayFactory {
 
 #### 4. Separe Operações dos Dados
 
-Este princípio mantém dados e comportamentos separados[^22], com records contendo apenas estrutura e operações implementadas como funções puras em classes dedicadas. Não é surpreendente que a programação orientada a dados tenha um foco forte em dados - de fato, três dos quatro princípios orientadores da DOP aconselham como melhor modelar isso. Este quarto princípio diz respeito aos métodos que implementam a maior parte da lógica de domínio, aconselhando separar operações dos dados. Quando exploramos como modelar dados, basicamente excluímos todos os métodos que contêm lógica de domínio não trivial ou interagem com tipos que não representam dados - vamos chamá-los de operações.
+Este princípio mantém dados e comportamentos separados[^22], com records
+contendo apenas estrutura e operações implementadas como funções puras em
+classes dedicadas. Não é surpreendente que a programação orientada a dados tenha
+um foco forte em dados - de fato, três dos quatro princípios orientadores da DOP
+aconselham como melhor modelar isso. Este quarto princípio diz respeito aos
+métodos que implementam a maior parte da lógica de domínio, aconselhando separar
+operações dos dados. Quando exploramos como modelar dados, basicamente excluímos
+todos os métodos que contêm lógica de domínio não trivial ou interagem com tipos
+que não representam dados - vamos chamá-los de operações.
 
 ```java
 // Dados puros - apenas estrutura, sem comportamento
