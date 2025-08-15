@@ -587,20 +587,17 @@ var newYear = new ObservedHoliday("Ano Novo", "Primeiro dia do ano",
 // - MoveableHoliday sem knownHoliday  
 // - ObservedHoliday com observed anterior ao actual em fim de semana com mondayisation
 ```
+
 #### 4. Separe Operações dos Dados
 
-Este princípio mantém dados e comportamentos separados[^22], com records
-contendo apenas estrutura e operações implementadas como funções puras em
-classes dedicadas. Não é surpreendente que a programação orientada a dados tenha
-um foco forte em dados - de fato, três dos quatro princípios orientadores da DOP
-aconselham como melhor modelar isso. Este quarto princípio diz respeito aos
-métodos que implementam a maior parte da lógica de domínio, aconselhando separar
-operações dos dados. Quando exploramos como modelar dados, basicamente excluímos
-todos os métodos que contêm lógica de domínio não trivial ou interagem com tipos
-que não representam dados - vamos chamá-los de operações.
+Este princípio mantém dados e comportamentos separados[^22], com records contendo apenas estrutura e operações implementadas como funções puras em classes dedicadas. Para manter os records livres de lógica de domínio não trivial e prevenir APIs inchadas, as operações não devem ser implementadas neles, mas sim em subsistemas dedicados. Em vez de `holiday.calculateDate(year)` ou `holiday.formatInfo()`, usamos `HolidayOperations.calculateDate(holiday, year)` e `HolidayOperations.formatInfo(holiday)`, que retornam novas instâncias ou resultados refletindo o resultado da operação. Esta abordagem evita que tipos centrais do domínio atraiam funcionalidades excessivas e se tornem difíceis de manter, um problema comum na programação orientada a objetos onde classes como `Holiday` acabariam acumulando dezenas de métodos para cálculo de datas, formatação, validação, comparação e processamento.
+
+A comunicação entre subsistemas não é implementada implicitamente compartilhando estado mutável, mas explicitamente através de solicitações para o estado atual. Se um subsistema de relatórios precisa dos feriados de um ano específico, ele deve consultar o sistema `HolidayOperations` via `HolidayOperations.getHolidaysForYear(holidays, year)`, em vez de manter referências diretas a feriados mutáveis. Se um subsistema de calendário precisa verificar se uma data é feriado, ele consulta `HolidayOperations.isHoliday(date, holidays)`. Mudanças de estado ainda são possíveis, mas há restrições sobre onde devem ocorrer - idealmente apenas nos subsistemas responsáveis pelo subdomínio respectivo. Esta separação clara de responsabilidades torna o sistema mais previsível, facilita a manutenção e reduz o acoplamento entre componentes.
+
+A implementação dessas operações utiliza pattern matching com `switch`, que oferece dynamic dispatch manual mais simples que o Visitor Pattern. O switch implementa a seleção de qual código deve ser executado para um determinado tipo: se tivéssemos definido `calculateDate` na interface `Holiday` e chamado `holiday.calculateDate(year)`, o runtime decidiria qual implementação executar. Com `switch` fazemos isso manualmente, permitindo não definir métodos na interface e mantendo os dados puros. Pattern matching com record patterns (Java 21) torna o código ainda mais expressivo, permitindo desconstruir records diretamente durante a correspondência de padrões, como `case FixedHoliday(var name, var date, ...)` em vez de casting manual.
 
 ```java
-// Dados puros - apenas estrutura, sem comportamento
+// Dados puros - apenas estrutura, sem comportamento complexo
 public record FixedHoliday(
     String name, String description, LocalDate date,
     List<Locality> localities, HolidayType type
@@ -611,16 +608,15 @@ public record MoveableHoliday(
     List<Locality> localities, HolidayType type,
     KnownHoliday knownHoliday, boolean mondayisation
 ) implements Holiday { }
-```
 
-Em programação orientada a dados, operações não devem ser definidas em records, mas em outras classes. Adicionar um item ao carrinho de compras não seria nem `Item.addToCart(Cart)` nem `Cart.add(Item)` porque `Item` e `Cart` são dados e, portanto, imutáveis. Em vez disso, o sistema de pedidos `Orders` deve assumir essa tarefa, por exemplo, com `Orders.add(Cart, Item)`, que retorna uma nova instância `Cart` que reflete o resultado da operação. A comunicação entre subsistemas não é implementada implicitamente compartilhando estado mutável, mas sim explicitamente através de solicitações para o estado atual. Mudanças de estado ainda são possíveis, mas há restrições sobre onde devem ocorrer - idealmente apenas nos subsistemas responsáveis pelo subdomínio respectivo.
-
-```java
 // Operações separadas - funções puras que implementam dynamic dispatch manual
 public final class HolidayOperations {
     
     // Em vez de holiday.calculateDate(year), usamos HolidayOperations.calculateDate(holiday, year)
     public static Holiday calculateDate(Holiday holiday, int year) {
+        Objects.requireNonNull(holiday, "Holiday cannot be null");
+        validateYear(year);
+        
         return switch (holiday) {
             case FixedHoliday fixed -> {
                 LocalDate newDate = fixed.date().withYear(year);
@@ -638,9 +634,24 @@ public final class HolidayOperations {
                 yield observed.withDate(newDate).withObserved(newObserved);
             }
             case MoveableFromBaseHoliday derived -> {
-                LocalDate newDate = calculateDerivedDate(derived, year);
+                LocalDate baseDate = getDateOnly(derived.baseHoliday(), year);
+                LocalDate newDate = baseDate.plusDays(derived.dayOffset());
                 yield derived.withDate(newDate);
             }
+        };
+    }
+    
+    // Pattern matching com record patterns (Java 21+) - desconstrução direta
+    public static String formatHolidayInfo(Holiday holiday) {
+        return switch (holiday) {
+            case FixedHoliday(var name, var description, var date, var localities, var type) -> 
+                "Fixo: " + name + " em " + date.getDayOfMonth() + "/" + date.getMonthValue();
+            case MoveableHoliday(var name, _, var date, _, _, var known, var monday) -> 
+                "Móvel: " + name + " (" + known + ") em " + date;
+            case ObservedHoliday(var name, _, var date, _, _, var observed, var monday) -> 
+                "Observado: " + name + " (observado em " + observed + ")";
+            case MoveableFromBaseHoliday(var name, _, _, _, _, _, var base, var offset, _) -> 
+                "Derivado: " + name + " (de " + base.name() + ", " + offset + " dias)";
         };
     }
     
@@ -650,43 +661,38 @@ public final class HolidayOperations {
             .map(holiday -> calculateDate(holiday, year))
             .toList();
     }
+    
+    // Operações específicas do domínio como funções puras
+    public static List<Holiday> filterByType(List<Holiday> holidays, HolidayType type) {
+        return holidays.stream()
+            .filter(holiday -> holiday.type() == type)
+            .toList();
+    }
+    
+    public static boolean isHoliday(LocalDate date, List<Holiday> holidays) {
+        return holidays.stream()
+            .anyMatch(holiday -> holiday.date().equals(date));
+    }
+    
+    public static List<Holiday> getHolidaysInMonth(List<Holiday> holidays, Month month, int year) {
+        return getHolidaysForYear(holidays, year).stream()
+            .filter(holiday -> holiday.date().getMonth() == month)
+            .toList();
+    }
 }
+
+// Resultado: Dados simples e operações poderosas com total separação de responsabilidades
+var christmas = new FixedHoliday("Natal", "Nascimento de Cristo", date, localities, RELIGIOUS);
+var easter = new MoveableHoliday("Páscoa", "Ressurreição de Cristo", date, localities, RELIGIOUS, EASTER, false);
+
+// Operações como funções puras - sem efeitos colaterais
+var christmasIn2025 = HolidayOperations.calculateDate(christmas, 2025);
+var holidayInfo = HolidayOperations.formatHolidayInfo(easter);
+var allHolidays2025 = HolidayOperations.getHolidaysForYear(holidays, 2025);
+var religiousHolidays = HolidayOperations.filterByType(holidays, RELIGIOUS);
+var decemberHolidays = HolidayOperations.getHolidaysInMonth(holidays, Month.DECEMBER, 2025);
+var isChristmas = HolidayOperations.isHoliday(LocalDate.of(2025, 12, 25), holidays);
 ```
-
-Mas como essas operações são implementadas? À primeira vista, parece bastante difícil fazer algo útil com um `Holiday` se a interface não define nenhum método. É aqui que o pattern matching com `switch` entra em jogo. O switch implementa dynamic dispatch: selecionar qual pedaço de código deve ser executado para um determinado tipo. Se tivéssemos definido o método `calculateDate` na interface `Holiday` e então chamado `holiday.calculateDate(year)`, o runtime decidiria qual das implementações seria executada. Com `switch` fazemos isso manualmente, o que nos permite não definir os métodos na interface. Pattern matching é muito mais simples e direto que o visitor pattern, oferecendo a mesma funcionalidade com menos complexidade.
-
-```java
-// Pattern matching é mais simples que Visitor Pattern
-// Em vez de: holiday.accept(new ProcessingVisitor())
-// Usamos: switch com pattern matching direto
-public static String getHolidayInfo(Holiday holiday) {
-    return switch (holiday) {
-        case FixedHoliday(var name, var description, var date, var localities, var type) -> 
-            "Fixed: " + name + " on " + date;
-        case MoveableHoliday(var name, var description, var date, var localities, var type, var known, var monday) -> 
-            "Moveable: " + name + " (" + known + ") on " + date;
-        case ObservedHoliday(var name, var description, var date, var localities, var type, var observed, var monday) -> 
-            "Observed: " + name + " (observed on " + observed + ")";
-        case MoveableFromBaseHoliday(var name, var description, var date, var localities, var type, var known, var base, var offset, var monday) -> 
-            "Derived: " + name + " (from " + base.name() + ", " + offset + " days)";
-    };
-}
-
-// Métodos auxiliares privados
-private static LocalDate calculateMoveableDate(MoveableHoliday moveable, int year) {
-    return moveable.date().withYear(year); // Implementação simplificada
-}
-
-private static LocalDate applyMondayisationRules(LocalDate date) {
-    return date; // Implementação simplificada
-}
-
-private static LocalDate calculateDerivedDate(MoveableFromBaseHoliday derived, int year) {
-    return derived.date().withYear(year); // Implementação simplificada
-}
-```
-
-**Resultado:** Dados simples e operações poderosas com total separação de responsabilidades. Pattern matching oferece dynamic dispatch manual mais simples que o Visitor Pattern, e record patterns (Java 21) tornam o código ainda mais expressivo.
 
 ### Quando e Por Que Usar Programação Orientada a Dados
 
