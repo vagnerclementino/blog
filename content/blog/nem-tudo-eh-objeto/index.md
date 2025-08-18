@@ -770,7 +770,7 @@ Para demonstrar todos os conceitos da programação orientada a dados na prátic
 desenvolvemos uma API REST completa para gerenciar feriados. O projeto completo
 está disponível em [github.com/vagnerclementino/api-holiday](https://github.com/vagnerclementino/api-holiday) e pode ser executado localmente usando Docker Compose.
 
-Um outro exemplo de bom uso da DOP é em *handlers* de funções AWS Lambda. O
+Um outro exemplo de bom uso da DOP é em *handlers* de funções AWS Lambda[^31]. O
 ambiente serverless beneficia-se enormemente da imutabilidade dos dados, que
 elimina problemas de concorrência entre invocações simultâneas da função, e da
 separação clara entre dados e operações, que facilita o teste unitário de cada
@@ -861,5 +861,6 @@ chance para a DOP em seu próximo projeto?
 [^28]: [JEP 394: Pattern Matching for instanceof](https://openjdk.org/jeps/394)
 [^29]: [JEP 441: Pattern Matching for switch](https://openjdk.org/jeps/441)
 [^30]: [JEP 378: Text Blocks](https://openjdk.org/jeps/378)
-[^31]: [A Philosophy of Software Design - Book Review](https://blog.pragmaticengineer.com/a-philosophy-of-software-design-review/)
-[^32]: [GNU Smalltalk](https://www.gnu.org/software/smalltalk/)
+[^31]: [AWS Lambda](https://aws.amazon.com/lambda/) - Amazon Web Services
+[^32]: [A Philosophy of Software Design - Book Review](https://blog.pragmaticengineer.com/a-philosophy-of-software-design-review/)
+[^33]: [GNU Smalltalk](https://www.gnu.org/software/smalltalk/)
