@@ -76,7 +76,7 @@ Um paradigma de programação influencia significativamente o design de uma ling
 problemas são resolvidos com código. Por outro lado, uma linguagem de
 programação é a ferramenta que permite a implementação dessas soluções. Dado que
 uma linguagem pode suportar um ou mais paradigma, a partir da análise da adoção
-das linguagens[^17], é possível inferir quais são os paradigmas mais utilizados.
+das linguagens[^23], é possível inferir quais são os paradigmas mais utilizados.
 Independente da metodologia adotada, acredito que o resultado dos paradigmas
 mais utilizados seria *procedural, orientado a objetos e funcional*, entretanto,
 não necessariamente nessa ordem.
@@ -352,12 +352,13 @@ acesso ao mesmo objeto, mas têm diferentes requisitos para modificá-lo e nenhu
 forma de comunicar essas necessidades. O exemplo a seguir apresenta o problema.
 
 ```java
-// Problema: objeto mutável em HashSet
+// Problema conceitual: objeto mutável em HashSet
+// Imagine uma classe Holiday mutável com método setDate()
 var holidays = new HashSet<Holiday>();
-var christmas = new MutableHoliday("Christmas", LocalDate.of(2024, 12, 25));
+var christmas = createMutableHoliday("Christmas", LocalDate.of(2024, 12, 25));
 holidays.add(christmas);
-christmas.setDate(LocalDate.of(2024, 12, 24)); // Quebra o HashSet!
-holidays.contains(christmas); // Retorna false - objeto "perdido"
+// Se christmas.setDate(LocalDate.of(2024, 12, 24)) fosse chamado aqui:
+// holidays.contains(christmas) retornaria false - objeto "perdido"
 ```
 
 O remédio é simples: se nada pode mudar, tais erros não podem ocorrer. Quando
@@ -403,6 +404,10 @@ mantendo a imutabilidade. A seguir temos um exemplo seguro do uso de um
 // Transformações retornam novas instâncias
 public FixedHoliday withDate(LocalDate newDate) {
     return new FixedHoliday(name, description, newDate, localities, type);
+}
+
+public FixedHoliday withYear(int year) {
+    return new FixedHoliday(name, description, date.withYear(year), localities, type);
 }
 
 // Uso seguro - impossível quebrar o HashSet
@@ -576,17 +581,20 @@ public record ObservedHoliday(
 ) implements Holiday {
     
     public ObservedHoliday {
-        Objects.requireNonNull(name, "Nome não pode ser nulo");
+        Objects.requireNonNull(name, "Holiday name cannot be null");
         if (name.isBlank()) {
-            throw new IllegalArgumentException("Nome não pode estar vazio");
+            throw new IllegalArgumentException("Holiday name cannot be blank");
         }
         
         // Regra complexa: mondayisation em fim de semana deve ajustar a data
-        if (mondayisation && date.equals(observed)) {
+        if (mondayisation) {
             DayOfWeek dayOfWeek = date.getDayOfWeek();
-            if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
+            boolean isWeekend = DayOfWeek.SATURDAY.equals(dayOfWeek) || DayOfWeek.SUNDAY.equals(dayOfWeek);
+            boolean dateWasAdjusted = !date.equals(observed);
+            
+            if (isWeekend && !dateWasAdjusted) {
                 throw new IllegalArgumentException(
-                    "Mondayisation habilitada mas data não foi ajustada para dia útil");
+                    "Weekend holiday must have adjusted observed date when mondayisation is enabled");
             }
         }
         
@@ -620,8 +628,10 @@ formatação, validação, comparação e processamento.
 
 ```java
 // Dados puros - apenas estrutura
-public record FixedHoliday(String name, LocalDate date, HolidayType type) implements Holiday { }
-public record MoveableHoliday(String name, LocalDate date, HolidayType type, 
+public record FixedHoliday(String name, String description, LocalDate date, 
+                          List<Locality> localities, HolidayType type) implements Holiday { }
+public record MoveableHoliday(String name, String description, LocalDate date, 
+                             List<Locality> localities, HolidayType type, 
                              KnownHoliday knownHoliday) implements Holiday { }
 
 // Operações separadas - funções puras
@@ -629,7 +639,13 @@ public final class HolidayOperations {
     
     public static Holiday calculateDate(Holiday holiday, int year) {
         return switch (holiday) {
-            case FixedHoliday fixed -> fixed.withDate(fixed.date().withYear(year));
+            case FixedHoliday fixed -> new FixedHoliday(
+                fixed.name(), 
+                fixed.description(), 
+                LocalDate.of(year, fixed.month(), fixed.day()), 
+                fixed.localities(), 
+                fixed.type()
+            );
             case MoveableHoliday moveable -> moveable.withDate(calculateMoveableDate(moveable, year));
             case ObservedHoliday observed -> calculateObservedDate(observed, year);
         };
@@ -774,10 +790,10 @@ e previsível, características essenciais para sistemas que podem escalar
 automaticamente e processar milhares de requisições concorrentes. A seguir temos um exemplo do uso da DOP em uma função Lambda.
 
 ```java
-public class HolidayLambdaHandler implements RequestHandler<APIGatewayRequest, APIGatewayResponse> {
+public class HolidayLambdaHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
     
     @Override
-    public APIGatewayProxyResponseEvent handleRequest(APIGatewayRequest request, Context context) {
+    public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent request, Context context) {
         try {
             return switch (request.getHttpMethod()) {
                 case "GET" -> handleGet(request);
