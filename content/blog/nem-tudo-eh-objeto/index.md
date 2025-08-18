@@ -8,11 +8,11 @@ featuredImage: feature.png
 ## A arte de Lidar com a Complexidade
 
 Detalhes importam! É assim na vida ou no desenvolvimento de software. O processo
-de desenhar e construir sistemas de software está condicionado indubitavelmente
+de projetar e construir sistemas de software está condicionado indubitavelmente
 ao uso de linguagens: de software ou natural. Essa última é, por essência,
 ambígua. Ambiguidade, por sua natureza, gera complexidade.
 
-Em diferentes áreas do conhecimento o ser humano utiliza de diferentes
+Em diferentes áreas do conhecimento o ser humano utiliza diferentes
 ferramentas para lidar com a complexidade, por exemplo: matemáticos usam
 notações e fórmulas para expressar conceitos complexos de forma concisa, médicos
 empregam classificações diagnósticas como CID-10 para categorizar doenças,
@@ -30,7 +30,7 @@ A segunda abordagem é *encapsular a complexidade por meio de um design modular*
 no qual um sistema de software é dividido em módulos, como classes em uma
 linguagem orientada a objetos, permitindo que os programadores trabalhem no
 sistema sem se sentirem sobrecarregados com toda a sua complexidade de uma só
-vez. As abordagens proposta por Ousterhout estão relacionadas intrinsecamente
+vez. As abordagens propostas por Ousterhout estão relacionadas intrinsecamente
 com o momento da escrita do código, contudo, se considerarmos a fase de
 design, eu acrescentaria uma terceira abordagem para lidar com a complexidade:
 os modelos.
@@ -53,7 +53,7 @@ aspectos mais importantes e reconhecíveis.
 ![Um cisne e a sua representação com um origami. Fonte: Gerado por IA](origami.png)
 
 Nas linguagens de programação uma das maneiras para lidar com a complexidade é
-ser aderente a um ou mais paradigma de programação. Os paradigmas foram pensados
+aderir a um ou mais paradigmas de programação. Os paradigmas foram pensados
 para nos ajudar a reduzir a complexidade do mundo real e mapeá-la em sistemas de
 software compreensíveis e funcionais. Assim como o origami, cada paradigma
 oferece uma forma específica de "transformar" a realidade em código, capturando
@@ -63,8 +63,7 @@ detalhes desnecessários.
 Quando desenvolvemos software, não estamos tentando recriar o mundo real em sua
 totalidade — isso seria impossível e improdutivo. Em vez disso, utilizamos
 paradigmas como ferramentas conceituais que nos permitem focar nos elementos
-mais relevantes para resolver determinado problema,  como um artista criando um
-origami.
+mais relevantes para resolver determinado problema, como um artista do origami.
 
 ## Panorama dos Paradigmas de Programação
 
@@ -75,13 +74,13 @@ uma perspectiva única sobre como organizar código e estruturar soluções.
 Um paradigma de programação influencia significativamente o design de uma linguagem, embora linguagens modernas possam suportar múltiplos paradigmas. Em outras palavras, um paradigma de programação define como os
 problemas são resolvidos com código. Por outro lado, uma linguagem de
 programação é a ferramenta que permite a implementação dessas soluções. Dado que
-uma linguagem pode suportar um ou mais paradigma, a partir da análise da adoção
+uma linguagem pode suportar um ou mais paradigmas, a partir da análise da adoção
 das linguagens[^23], é possível inferir quais são os paradigmas mais utilizados.
 Independente da metodologia adotada, acredito que o resultado dos paradigmas
 mais utilizados seria *procedural, orientado a objetos e funcional*, entretanto,
 não necessariamente nessa ordem.
 
-![Os (possíveis) paradigmas mais adotado no mercado. Fonte: Gerado por IA.](paradigmas.png)
+![Os (possíveis) paradigmas mais adotados no mercado. Fonte: Gerado por IA.](paradigmas.png)
 
 A tabela a seguir faz uma breve comparação entre os principais paradigmas
 adotados pelo mercado, ao mesmo tempo que os compara com uma nova abordagem, de
@@ -97,11 +96,9 @@ mais a frente.
 | **Tratamento de Complexidade** | Decomposição em funções | Abstração e encapsulamento | Composição de funções | Separação dados/comportamento |
 
 Existem diferentes formas para descrever e avaliar os diferentes paradigmas.
-Todavia, muitas das vezes basta uma sentença: seja *"tudo é objeto"* ao falarmos
+Todavia, muitas vezes basta uma sentença: seja *"tudo é objeto"* ao falarmos
 do paradigma orientado a objetos ou *"tudo é função"* ao tratar o paradigma
-funcional. Por outro lado, quando apresentarmos o paradigma da *Programação Orientada
-a Dados (Data-Oriented Programming - DOP)*, você observará que a DOP também bebe da fonte dos paradigmas
-funcional e orientado a objetos.
+funcional. Por outro lado, quando apresentarmos o paradigma da *Programação Orientada a Dados (Data-Oriented Programming - DOP)*, você observará que a DOP também bebe da fonte dos paradigmas funcional e orientado a objetos.
 
 ## Fundamentos da Programação Orientada a Objetos
 
@@ -116,20 +113,20 @@ tudo é tratado como objeto.
 
 A OOP enfatiza a modelagem de sistemas por meio de objetos que possuem
 propriedades e comportamentos, promovendo a reutilização de código e o
-encapsulamento de dados, dentre os seus princípios fundamentais podemos citar:
+encapsulamento de dados. Dentre os seus princípios fundamentais podemos citar:
 
 - **Encapsulamento**: Agrupa dados e métodos que operam sobre esses dados em uma única unidade (classe), controlando o acesso através de modificadores de visibilidade.
 - **Herança**: Permite que classes derivem características de outras classes, promovendo reutilização de código.
 - **Abstração**: Oculta detalhes de implementação complexos, expondo apenas interfaces necessárias.
 - **Polimorfismo**: Permite que objetos de diferentes tipos sejam tratados através de uma interface comum.
 
-Esses princípios permitem fazer uma analogia de uma classe na OOP como um
+Esses princípios permitem fazer uma analogia entre uma classe na OOP e um
 organismo, onde o encapsulamento atua como a membrana celular que controla o que
 entra e sai, a herança funciona como a transmissão genética de características,
 e o polimorfismo se assemelha à capacidade de diferentes organismos responderem
 de forma especializada aos mesmos estímulos ambientais.
 
-### Feriados: uma modelagem orientada a objetos
+## Feriados: uma modelagem orientada a objetos
 
 Para exemplificar o uso dos princípios da OOP vamos modelar um sistema
 responsável por gerenciar feriados (`Holiday`). Acredito que o leitor saiba o que
@@ -165,43 +162,7 @@ data anual, enquanto feriados móveis executam algoritmos complexos - desde
 cálculos astronômicos para a Páscoa até regras baseadas em dias da semana ou
 dependências de outros feriados.
 
-```bash
-                    ┌─────────────────────────────────┐
-                    │           Holiday               │
-                    │         (abstract)              │
-                    ├─────────────────────────────────┤
-                    │ - name: String                  │
-                    │ - description: String           │
-                    │ - day: int                      │
-                    │ - month: Month                  │
-                    │ - localities: List<Locality>    │
-                    │ - type: HolidayType             │
-                    │ - mondayisation: boolean        │
-                    ├─────────────────────────────────┤
-                    │ + getDate(year: int): LocalDate │
-                    │ + getObserved(year: int):       │
-                    │   LocalDate                     │
-                    │ + getName(): String             │
-                    │ + getType(): HolidayType        │
-                    └─────────────────────────────────┘
-                                    △
-                                    │
-                    ┌───────────────┴───────────────┐
-                    │                               │
-        ┌─────────────────────────┐     ┌─────────────────────────┐
-        │     FixedHoliday        │     │   MoveableHoliday       │
-        ├─────────────────────────┤     ├─────────────────────────┤
-        │                         │     │ - moveableType:         │
-        │                         │     │   MoveableHolidayType   │
-        │                         │     │ - baseHoliday: Holiday  │
-        │                         │     │ - dayOffset: int        │
-        ├─────────────────────────┤     ├─────────────────────────┤
-        │ + getDate(year: int):   │     │ + getDate(year: int):   │
-        │   LocalDate             │     │   LocalDate             │
-        └─────────────────────────┘     │ + calculateEasterSunday │
-                                        │   (year: int): LocalDate│
-                                        └─────────────────────────┘
-```
+![Diagrama de classes da modelagem orientada a objetos para feriados](holiday-class-diagram.png)
 
 A modelagem adota os princípios da programação orientada a objetos. O
 **encapsulamento** é evidenciado pela classe abstrata `Holiday` que agrupa dados
@@ -246,6 +207,14 @@ public abstract class Holiday {
 
 // Herança: FixedHoliday especializa Holiday
 public class FixedHoliday extends Holiday {
+    private final int day;
+    private final Month month;
+    
+    // Getters/setters removidos para melhorar legibilidade
+    
+    public int getDay() { return day; }
+    public Month getMonth() { return month; }
+    
     @Override
     public LocalDate getDate(int year) {
         return LocalDate.of(year, getMonth(), getDay());
@@ -293,9 +262,9 @@ direta à lista interna, permitindo que código externo modifique o estado do
 objeto sem o controle da classe, o que pode levar a problemas difíceis de
 rastrear
 
-- **Estado mutável:** Os campos `date` e `observed` podem ser alterados após a
-criação do objeto através dos métodos `setDate()` e `setObserved()`, violando a
-expectativa de imutabilidade de um feriado
+- **Estado mutável:** Os campos podem ser alterados após a criação do objeto
+através de métodos *"setter"*, violando a expectativa de imutabilidade de um
+feriado
 
 - **Herança frágil:** Mudanças na classe base podem quebrar classes filhas de
 forma inesperada, criando dependências implícitas e dificultando a manutenção do
@@ -313,7 +282,7 @@ anterior à data oficial
 requerem sincronização complexa, aumentando a possibilidade de deadlocks e
 condições de corrida
 
-Essas limitações são inerentes a OOP, onde o foco no encapsulamento de dados e
+Essas limitações são inerentes à OOP, onde o foco no encapsulamento de dados e
 comportamento (métodos) pode inadvertidamente criar pontos de mutabilidade não
 controladas. A Programação Orientada a Dados emerge como uma alternativa que
 aborda diretamente esses problemas, priorizando a imutabilidade, a transparência
@@ -331,11 +300,11 @@ Brian Goetz[^16], posteriormente, Nicolai Parlog[^17] refinou o conceito,
 organizando melhor os princípios fundamentais. Este artigo apresenta uma visão
 prática dos conceitos propostos por Parlog.
 
-### Princípios Fundamentais
+## Princípios Fundamentais
 
 A Programação Orientada a Dados se baseia em quatro princípios fundamentais[^18]
 que, quando aplicados em conjunto, criam sistemas robustos, previsíveis e
-potencialmente mais fáceis de manter. A figura abaixo ilustra esses quatro princípios fundamentais que exploraremos usando como
+potencialmente mais fáceis de manter. A figura abaixo ilustra esses quatro princípios fundamentais. Exploraremos cada um usando como
 exemplo a nossa implementação do sistema de gerenciamento de feriados.
 
 ![Os princípios fundamentais da DOP](four-pod-principles.png)
@@ -363,7 +332,7 @@ holidays.add(christmas);
 
 O remédio é simples: se nada pode mudar, tais erros não podem ocorrer. Quando
 subsistemas se comunicam apenas com dados imutáveis, essa fonte comum de erros
-desaparece. Todavia, mudanças no estado interno das classes são inevitáveis.
+desaparece. Todavia, a necessidade de representar mudanças de estado é inevitável.
 Para mitigar esse tipo de problema, o primeiro princípio da DOP define que os
 objetos sejam **transparentes** - seu estado interno deve ser acessível e
 construível por meio de uma interface bem definida. Na prática, ser transparente
@@ -390,7 +359,7 @@ public record FixedHoliday(
 }
 ```
 
-Em Java, *Records[^26]* foram projetados para serem portadores transparentes e
+Em Java, *Records[^24]* foram projetados para serem portadores transparentes e
 imutáveis de dados. Eles atendem automaticamente aos requisitos de
 transparência: campos final para cada componente, construtor que aceita e
 atribui valores, métodos de acesso que os retornam, e implementações de `equals`
@@ -412,10 +381,11 @@ public FixedHoliday withYear(int year) {
 
 // Uso seguro - impossível quebrar o HashSet
 var holidays = new HashSet<Holiday>();
-var christmas = new FixedHoliday("Christmas", "...", LocalDate.of(2024, 12, 25), localities, type);
+var christmas = new FixedHoliday("Christmas", "...", 25, Month.DECEMBER, LocalDate.of(2024, 12, 25), localities, type);
 holidays.add(christmas);
 var christmasEve = christmas.withDate(LocalDate.of(2024, 12, 24)); // Nova instância
 holidays.contains(christmas); // Sempre true - objeto original inalterado
+holidays.contains(christmasEve); // false - nova instância não está no set
 ```
 
 #### 2. Modele os Dados, Todos os Dados, e Nada Além dos Dados
@@ -433,7 +403,7 @@ Se usarmos um tipo genérico `GenericHoliday` para todos os casos, como realizad
 na modelagem orientada a objetos, acabamos com campos que podem ser nulos e
 regras implícitas sobre quais campos devem ou não estar preenchidos para cada
 tipo de feriado. Isso torna o código frágil e propenso a erros, especialmente
-pelo fato de ser possível usar o compilador para nos ajudar a garantir que as
+pelo fato de não ser possível usar o compilador para nos ajudar a garantir que as
 combinações de campos estejam corretas.
 
 ```java
@@ -458,7 +428,7 @@ seguro e simples.
 
 ```java
 // DEPOIS - Sealed interface com tipos específicos
-public sealed interface Holiday permits FixedHoliday, ObservedHoliday, MoveableHoliday, MoveableFromBaseHoliday {
+public sealed interface Holiday permits FixedHoliday, MoveableHoliday, ObservedHoliday {
 
   String name();
   String description();
@@ -475,7 +445,7 @@ public sealed interface Holiday permits FixedHoliday, ObservedHoliday, MoveableH
 ```
 
 Uma alternativa para alcançar o segundo princípio é por meio de *sealed
-interfaces*[^27] para modelar alternativas e criar
+interfaces*[^26] para modelar alternativas e criar
 *records* específicos para cada variação. Em vez de múltiplos campos com
 requisitos mutuamente exclusivos ou condicionais, criamos uma *sealed interface*
 para modelar as alternativas e a usamos como tipo para um campo obrigatório.
@@ -488,7 +458,7 @@ implementações.
 ```java
 // Cada tipo contém exatamente os dados necessários
 public record FixedHoliday(
-    String name, String description, LocalDate date,
+    String name, String description, int day, Month month, LocalDate date,
     List<Locality> localities, HolidayType type
 ) implements Holiday { }
 
@@ -498,32 +468,23 @@ public record MoveableHoliday(
     KnownHoliday knownHoliday,    // Específico para feriados móveis
     boolean mondayisation         // Específico para feriados móveis
 ) implements Holiday { }
-
-public record MoveableFromBaseHoliday(
-    String name, String description, LocalDate date,
-    List<Locality> localities, HolidayType type,
-    KnownHoliday knownHoliday,    // Algoritmo base
-    Holiday baseHoliday,          // Feriado de referência
-    int dayOffset,                // Dias de diferença do base
-    boolean mondayisation         // Regra de ajuste
-) implements Holiday { }
 ```
 
 #### 3. Torne Estados Ilegais Irrepresentáveis
 
 Este princípio garante que apenas combinações legais de dados possam ser
 representadas no sistema[^21]. O mundo é caótico e toda regra parece ter uma
-exceção - "todo usuário tem um endereço de email" rapidamente se torna "todo
-usuário registrado tem um endereço de email, mas pode estar ausente durante o
-processo de registro". Quando modelamos isso de forma inadequada, podemos ficar
+exceção - "todo feriado tem uma data fixa" rapidamente se torna "todo feriado
+fixo tem uma data fixa, mas feriados móveis dependem de cálculos complexos, e
+feriados observados podem ter datas diferentes da oficial". Quando modelamos isso de forma inadequada, podemos ficar
 presos com estruturas que permitem estados inconsistentes.
 
 Considere uma modelagem problemática para feriados que tenta acomodar todos os
 tipos em uma única classe genérica. Esta abordagem apresenta vários problemas
-fundamentais: campos opcionais desnecessários como em um feriado fixo como o
+fundamentais: campos opcionais desnecessários - um feriado fixo como o
 Natal não precisa de feriado base (`baseHoliday`) ou uma quantidade de dias
 entre os feriados (`dayOffset`) como para calcular a Sexta Feira Santa a partir
-da Pascoa. Esse cuidado simples de tornar estados inconsistentes impossíveis evita que:
+da Páscoa. Esse cuidado simples de tornar estados inconsistentes impossíveis evita que:
 
 - regras implícitas não sejam expressas no código
 - validações fiquem espalhadas e precisem ser repetidas em vários pontos
@@ -604,11 +565,14 @@ public record ObservedHoliday(
 
 // RESULTADO: Apenas estados legais são representáveis
 var christmas = new FixedHoliday("Natal", "Nascimento de Cristo", 
-                                date, localities, RELIGIOUS);
+                                25, Month.DECEMBER, LocalDate.of(2024, 12, 25),
+                                List.of(Locality.NATIONAL), HolidayType.RELIGIOUS);
 var easter = new MoveableHoliday("Páscoa", "Ressurreição de Cristo", 
-                                date, localities, RELIGIOUS, EASTER, false);
+                                LocalDate.of(2024, 3, 31), List.of(Locality.NATIONAL), 
+                                HolidayType.RELIGIOUS, KnownHoliday.EASTER);
 var newYear = new ObservedHoliday("Ano Novo", "Primeiro dia do ano", 
-                                 date, localities, NATIONAL, observedDate, true);
+                                 LocalDate.of(2024, 1, 1), List.of(Locality.NATIONAL), 
+                                 HolidayType.NATIONAL, LocalDate.of(2024, 1, 1), false);
 
 // Estes são IMPOSSÍVEIS de criar:
 // - FixedHoliday com knownHoliday
@@ -628,8 +592,20 @@ formatação, validação, comparação e processamento.
 
 ```java
 // Dados puros - apenas estrutura
-public record FixedHoliday(String name, String description, LocalDate date, 
-                          List<Locality> localities, HolidayType type) implements Holiday { }
+public record FixedHoliday(String name, String description, int day, Month month, LocalDate date, 
+                          List<Locality> localities, HolidayType type) implements Holiday { 
+    
+    public FixedHoliday {
+        Objects.requireNonNull(month, "Month cannot be null");
+        if (day < 1 || day > month.maxLength()) {
+            throw new IllegalArgumentException("Invalid day for month: " + day);
+        }
+        if (date != null && (date.getDayOfMonth() != day || date.getMonth() != month)) {
+            throw new IllegalArgumentException("Date must be consistent with day and month");
+        }
+        localities = List.copyOf(localities);
+    }
+}
 public record MoveableHoliday(String name, String description, LocalDate date, 
                              List<Locality> localities, HolidayType type, 
                              KnownHoliday knownHoliday) implements Holiday { }
@@ -646,7 +622,14 @@ public final class HolidayOperations {
                 fixed.localities(), 
                 fixed.type()
             );
-            case MoveableHoliday moveable -> moveable.withDate(calculateMoveableDate(moveable, year));
+            case MoveableHoliday moveable -> new MoveableHoliday(
+                moveable.name(), 
+                moveable.description(), 
+                calculateMoveableDate(moveable, year), 
+                moveable.localities(), 
+                moveable.type(), 
+                moveable.knownHoliday()
+            );
             case ObservedHoliday observed -> calculateObservedDate(observed, year);
         };
     }
@@ -654,11 +637,11 @@ public final class HolidayOperations {
     // Pattern matching com record patterns
     public static String formatInfo(Holiday holiday) {
         return switch (holiday) {
-            case FixedHoliday(var name, var date, var type) -> 
-                "Fixo: " + name + " em " + date.getDayOfMonth() + "/" + date.getMonthValue();
-            case MoveableHoliday(var name, var date, var type, var known) -> 
+            case FixedHoliday(var name, _, var day, var month, _, _, _) -> 
+                "Fixo: " + name + " em " + day + "/" + month.getValue();
+            case MoveableHoliday(var name, _, var date, _, _, var known) -> 
                 "Móvel: " + name + " (" + known + ")";
-            case ObservedHoliday(var name, _, var observed, _) -> 
+            case ObservedHoliday(var name, _, _, _, _, var observed, _) -> 
                 "Observado: " + name + " em " + observed;
         };
     }
@@ -686,7 +669,7 @@ na interface e mantendo os dados puros. O uso de *Pattern matching* com *record
 patterns* (Java 21+) torna o código ainda mais expressivo, permitindo
 desconstruir records diretamente durante a correspondência de padrões, como por
 exemplo, `case FixedHoliday(var name, var date, ...)` ao invés de ser necessário
-fazer de *casting* manual.
+fazer *casting* manual.
 
 Agora que detalhamos os quatro princípios fundamentais da DOP vamos analisar
 como eles podem ser utilizados para modelar o nosso sistema de gestão de
@@ -727,11 +710,11 @@ fundamentais:
 
 | Funcionalidade | Versão Java | Descrição | Uso em DOP |
 |---|---|---|---|
-| **Records**[^26] | Java 14 (Preview) Java 16 (Final) | Classes imutáveis concisas com equals, hashCode e toString automáticos | Modelagem de dados imutáveis |
-| **Sealed Classes/Interfaces**[^27] | Java 15 (Preview) Java 17 (Final) | Controle sobre quais classes podem estender/implementar | Estados ilegais irrepresentáveis |
-| **Pattern Matching (instanceof)**[^28] | Java 14 (Preview) Java 16 (Final) | Verificação de tipo e cast em uma operação | Operações sobre dados |
-| **Pattern Matching (switch)**[^29] | Java 17 (Preview) Java 21 (Final) | Switch expressions com pattern matching | Processamento de tipos selados |
-| **Text Blocks**[^30] | Java 13 (Preview) Java 15 (Final) | Strings multilinha mais legíveis | Documentação e exemplos |
+| **Records**[^24] | Java 14 (Preview) Java 16 (Final) | Classes imutáveis concisas com equals, hashCode e toString automáticos | Modelagem de dados imutáveis |
+| **Sealed Classes/Interfaces**[^26] | Java 15 (Preview) Java 17 (Final) | Controle sobre quais classes podem estender/implementar | Estados ilegais irrepresentáveis |
+| **Pattern Matching (instanceof)**[^27] | Java 14 (Preview) Java 16 (Final) | Verificação de tipo e cast em uma operação | Operações sobre dados |
+| **Pattern Matching (switch)**[^28] | Java 17 (Preview) Java 21 (Final) | Switch expressions com pattern matching | Processamento de tipos selados |
+| **Text Blocks**[^29] | Java 13 (Preview) Java 15 (Final) | Strings multilinha mais legíveis | Documentação e exemplos |
 
 ## Quando Usar a Programação Orientada a Dados
 
@@ -768,7 +751,7 @@ em que o uso da DOP pode ser um bom ponto de partida.
 - *Parsers* de configuração (JSON, XML)
 - Calculadoras de domínio específico
 
-### Casos de uso
+## Casos de uso
 
 Para demonstrar todos os conceitos da programação orientada a dados na prática,
 desenvolvemos uma API REST completa para gerenciar feriados. O projeto completo
