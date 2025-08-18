@@ -324,36 +324,34 @@ dos dados e a separação clara entre dados e operações.
 ## Programação Orientada a Dados: Uma Nova Perspectiva
 
 A *Programação Orientada a Dados (Data-Oriented Programming)* - POD representa
-uma mudança na forma como pensamos sobre a modelagem de software. Em vez de
-focar em objetos que encapsulam dados e comportamento, este paradigma prioriza a
-estrutura e o fluxo dos dados, de forma imutável, separando *a informação do seu
-processamento*.
+uma nova perspectiva de como pensamos a modelagem de software. Em vez de focar
+em objetos que encapsulam dados e comportamento, o paradigma prioriza a
+estrutura e o fluxo dos dados, separando *a informação do seu processamento*.
 
 A ideia de uma programação orientada a dados foi proposta originalmente por
 Brian Goetz[^16], posteriormente, Nicolai Parlogfoi[^17], refinou o conceito,
-organizando melhor os princípios fundamentais e incorporando as funcionalidades
-mais recentes de Java. Este artigo apresenta uma visão prática dos conceitos
-propostos por Parlogfoi.
+organizando melhor os princípios fundamentais. Este artigo apresenta uma visão
+prática dos conceitos propostos por Parlogfoi.
 
 ### Princípios Fundamentais
 
 A Programação Orientada a Dados se baseia em quatro princípios fundamentais[^18]
 que, quando aplicados em conjunto, criam sistemas robustos, previsíveis e
-potencialmente mais fáceis de manter. Vamos explorar cada princípio usando nossa
-implementação do sistema de gerenciamento de feriados.
+potencialmente mais fáceis de manter. Vamos explorar cada princípio usando como
+exemplo a nossa implementação do sistema de gerenciamento de feriados.
 
 ![Os princípios fundamentais da POD](four-pod-principles.png)
 
 #### 1. Dados são Imutáveis
 
-A imutabilidade elimina uma fonte comum de bugs: objetos modificados por
-diferentes subsistemas sem comunicação adequada[^19]. Um exemplo clássico é
-armazenar um objeto em um `HashSet` e depois alterar um campo usado no cálculo
-do hash code. Essa alteração torna o objeto "perdido" na estrutura, ou seja, não
-será possível recuperar o objeto pelo seu *hash*. Este problema surge quando
-dois subsistemas (o `HashSet` e o código que modifica o objeto) têm acesso ao
-mesmo objeto, mas têm diferentes requisitos para modificá-lo e nenhuma forma de
-comunicar essas necessidades.
+A imutabilidade mitiga uma fonte comum de bugs: objetos modificados por
+diferentes subsistemas sem comunicação adequada[^19]. Um exemplo é quando
+armazenamos um objeto em um `HashSet` e depois alterar um campo usado no cálculo
+do hash code. Essa alteração torna o objeto "inalcançável" na estrutura, ou
+seja, não será possível recuperar o objeto pelo seu *hash*. Este problema surge
+quando dois subsistemas (o `HashSet` e o código que modifica o objeto) têm
+acesso ao mesmo objeto, mas têm diferentes requisitos para modificá-lo e nenhuma
+forma de comunicar essas necessidades. O exemplo a seguir apresenta o problema.
 
 ```java
 // Problema: objeto mutável em HashSet
@@ -366,12 +364,14 @@ holidays.contains(christmas); // Retorna false - objeto "perdido"
 
 O remédio é simples: se nada pode mudar, tais erros não podem ocorrer. Quando
 subsistemas se comunicam apenas com dados imutáveis, essa fonte comum de erros
-desaparece completamente. Porém, mudança no estado interno das classes são
-inevitáveis. Logo os objetos devem ser **transparentes** - seu estado interno
-deve ser acessível e construível uma interface bem definida. Na prática, ser
-transparente significa que a classe deve haver um método de acesso para cada
-campo e um construtor que aceita valores para todos os campos, permitindo
-recriar uma instância indistinguível da original.
+desaparece. Todavia, mudanças no estado interno das classes são inevitáveis.
+Para mitigar esse tipo de problema, o primeiro principio da DOP define que os
+objetos sejam **transparentes** - seu estado interno deve ser acessível e
+construível por meio de uma interface bem definida. Na prática, ser transparente
+significa que a classe deve haver um método de acesso para cada campo e um
+construtor que aceita valores para todos os campos, permitindo recriar uma
+instância indistinguível da original. A seguir temos um exemplo de código
+imutável e transparente.
 
 ```java
 // Solução: record imutável e transparente
@@ -397,8 +397,9 @@ transparência: campos final para cada componente, construtor que aceita e
 atribui valores, métodos de acesso que os retornam, e implementações de `equals`
 e `hashCode` baseadas nos dados. Além disso, o uso da técnica de *defensive
 copying* (ex. `List.copyOf()`) previne modificações através de referências a
-objetos mutáveis. Por fim, transformações retornam novas instâncias, mantendo a
-imutabilidade.
+objetos mutáveis. Por fim, alterações no estado devem retornar novas instâncias,
+mantendo a imutabilidade. A seguir temos um exemplo seguro do uso de um
+``HashSet`.
 
 ```java
 // Transformações retornam novas instâncias
@@ -422,14 +423,15 @@ Por exemplo, ao modelar feriados, poderíamos ter a tentação de criar um tipo
 genérico que tente acomodar todas as variações:
 
 - Feriados fixos têm uma data definida
-- Feriados móveis têm um algoritmo de cálculo 
+- Feriados móveis têm um algoritmo de cálculo
 - Feriados observados podem ter datas diferentes da oficial
 
-Se usarmos um tipo genérico `GenericHoliday` para todos os casos, como realizado na
-modelagem orientada a objetos, acabamos com campos que podem ser nulos e regras
-implícitas sobre quais campos devem ou não estar preenchidos para cada tipo de
-feriado. Isso torna o código frágil e propenso a erros, já que o compilador não
-pode nos ajudar a garantir que as combinações de campos estejam corretas.
+Se usarmos um tipo genérico `GenericHoliday` para todos os casos, como realizado
+na modelagem orientada a objetos, acabamos com campos que podem ser nulos e
+regras implícitas sobre quais campos devem ou não estar preenchidos para cada
+tipo de feriado. Isso torna o código frágil e propenso a erros, especialmente
+pelo fato de ser possível usar o compilador para nos ajudar a garantir que as
+combinações de campos estejam corretas.
 
 ```java
 // ANTES - Tipo genérico problemático
@@ -443,8 +445,8 @@ public record GenericHoliday(
 ) {}
 ```
 
-Deveria fazer parte do desenho de qualquer sistema permitir que apenas estados
-legais possam ser representados. Se um feriado fixo não precisa de algoritmo de
+Em um sistema (verdadeiramente) orientado a dados a modelagem deveria focar em
+permitir estados válidos. Se um feriado fixo não precisa de algoritmo de
 cálculo, o construtor deve garantir que isso seja o caso. Se nenhum feriado pode
 ter tanto uma data fixa quanto um algoritmo móvel, isso deve ser prevenido.
 Tipos precisos como esses não só simplificam o trabalho do desenvolvedor ao
@@ -453,8 +455,7 @@ seguro e simples.
 
 ```java
 // DEPOIS - Sealed interface com tipos específicos
-public sealed interface Holiday
-    permits FixedHoliday, ObservedHoliday, MoveableHoliday, MoveableFromBaseHoliday {
+public sealed interface Holiday permits FixedHoliday, ObservedHoliday, MoveableHoliday, MoveableFromBaseHoliday {
 
   String name();
   String description();
@@ -470,7 +471,8 @@ public sealed interface Holiday
 }
 ```
 
-A estratégia é usar *sealed interfaces* para modelar alternativas e criar
+Uma alternativa para alcançar o segundo principio é por meio de *sealed
+interfaces*[^27] para modelar alternativas e criar
 *records* específicos para cada variação. Em vez de múltiplos campos com
 requisitos mutuamente exclusivos ou condicionais, criamos uma *sealed interface*
 para modelar as alternativas e a usamos como tipo para um campo obrigatório.
@@ -513,7 +515,17 @@ usuário registrado tem um endereço de email, mas pode estar ausente durante o
 processo de registro". Quando modelamos isso de forma inadequada, podemos ficar
 presos com estruturas que permitem estados inconsistentes.
 
-Considere uma modelagem problemática para feriados que tenta acomodar todos os tipos em uma única classe genérica. Esta abordagem apresenta vários problemas fundamentais: campos opcionais desnecessários (um feriado fixo como o Natal não precisa de `knownType`, `baseHoliday` ou `dayOffset`), estados inconsistentes (é possível criar um feriado móvel sem `knownType` ou um feriado derivado sem `baseHoliday`), regras implícitas que não são expressas no código (ficando apenas na documentação), validação espalhada que precisa ser repetida em vários pontos, e confusão para desenvolvedores que não sabem quais campos são relevantes para cada situação, levando a erros e código defensivo desnecessário.
+Considere uma modelagem problemática para feriados que tenta acomodar todos os
+tipos em uma única classe genérica. Esta abordagem apresenta vários problemas
+fundamentais: campos opcionais desnecessários como em um feriado fixo como o
+Natal não precisa de feriado base (`baseHoliday`) ou uma quantidade de dias
+entre os feriados (`dayOffset`) como para calcular a Sexta Feira Santa a partir
+da Pascoa. Esse aparentemente cuidado simples de não ser possível criar estados
+inconsistentes evita que:
+
+- regras implícitas não estejam expressas no código, que
+- validações fiquem espalhadas e que precisem ser repetidas em vários pontos do código
+- confusão dos desenvolvedores que não sabem quais campos são relevantes para cada situação
 
 ```java
 // PROBLEMA: Estados ilegais são representáveis
@@ -534,7 +546,18 @@ public class BadHoliday {
 
 Um sistema focado em dados deve assegurar que apenas combinações legais dos
 dados possam ser representadas. A estratégia segue três níveis progressivos de
-proteção: primeiro, use tipos precisos (sealed interfaces e records) para que o compilador impeça a criação de tipos inválidos; segundo, em situações onde dados são mutuamente exclusivos, evite múltiplos campos opcionais criando records específicos para cada variação; terceiro, quando uma propriedade não pode ser expressa pelo sistema de tipos, valide no construtor o mais cedo possível, idealmente na fronteira entre o mundo externo e seu sistema.
+proteção:
+
+- primeiro, use tipos precisos (sealed interfaces e records) para que o
+compilador impeça a criação de tipos inválidos;
+- segundo, em situações onde dados são mutuamente exclusivos, evite múltiplos
+campos opcionais criando records específicos para cada variação; 
+- terceiro, quando uma propriedade não pode ser expressa pelo sistema de tipos,
+valide no construtor o mais cedo possível, idealmente na fronteira entre o mundo
+externo e seu sistema.
+
+O código a seguir detalha os tês níveis de proteção que podem ser usados para
+evitar estados inválidos.
 
 ```java
 // Exemplo completo dos 3 níveis de proteção
@@ -590,11 +613,19 @@ var newYear = new ObservedHoliday("Ano Novo", "Primeiro dia do ano",
 
 #### 4. Separe Operações dos Dados
 
-Este princípio mantém dados e comportamentos separados[^22], com records contendo apenas estrutura e operações implementadas como funções puras em classes dedicadas. Para manter os records livres de lógica de domínio não trivial e prevenir APIs inchadas, as operações não devem ser implementadas neles, mas sim em subsistemas dedicados. Em vez de `holiday.calculateDate(year)` ou `holiday.formatInfo()`, usamos `HolidayOperations.calculateDate(holiday, year)` e `HolidayOperations.formatInfo(holiday)`, que retornam novas instâncias ou resultados refletindo o resultado da operação. Esta abordagem evita que tipos centrais do domínio atraiam funcionalidades excessivas e se tornem difíceis de manter, um problema comum na programação orientada a objetos onde classes como `Holiday` acabariam acumulando dezenas de métodos para cálculo de datas, formatação, validação, comparação e processamento.
-
-A comunicação entre subsistemas não é implementada implicitamente compartilhando estado mutável, mas explicitamente através de solicitações para o estado atual. Se um subsistema de relatórios precisa dos feriados de um ano específico, ele deve consultar o sistema `HolidayOperations` via `HolidayOperations.getHolidaysForYear(holidays, year)`, em vez de manter referências diretas a feriados mutáveis. Se um subsistema de calendário precisa verificar se uma data é feriado, ele consulta `HolidayOperations.isHoliday(date, holidays)`. Mudanças de estado ainda são possíveis, mas há restrições sobre onde devem ocorrer - idealmente apenas nos subsistemas responsáveis pelo subdomínio respectivo. Esta separação clara de responsabilidades torna o sistema mais previsível, facilita a manutenção e reduz o acoplamento entre componentes.
-
-A implementação dessas operações utiliza pattern matching com `switch`, que oferece dynamic dispatch manual mais simples que o Visitor Pattern. O switch implementa a seleção de qual código deve ser executado para um determinado tipo: se tivéssemos definido `calculateDate` na interface `Holiday` e chamado `holiday.calculateDate(year)`, o runtime decidiria qual implementação executar. Com `switch` fazemos isso manualmente, permitindo não definir métodos na interface e mantendo os dados puros. Pattern matching com record patterns (Java 21) torna o código ainda mais expressivo, permitindo desconstruir records diretamente durante a correspondência de padrões, como `case FixedHoliday(var name, var date, ...)` em vez de casting manual.
+Este princípio mantém dados e comportamentos separados[^22], com records
+contendo apenas estrutura e operações implementadas como funções puras em
+classes dedicadas. Para manter os records livres de lógica de domínio não
+trivial e prevenir classes com muitas responsabilidades, as operações não devem
+ser implementadas neles, mas sim em subsistemas dedicados. Em vez de
+`holiday.calculateDate(year)` ou `holiday.formatInfo()`, usamos
+`HolidayOperations.calculateDate(holiday, year)` e
+`HolidayOperations.formatInfo(holiday)`, que retornam novas instâncias ou
+resultados refletindo o resultado da operação. Esta abordagem evita que tipos
+centrais do domínio atraiam funcionalidades excessivas e se tornem difíceis de
+manter, um problema comum na programação orientada a objetos onde classes como
+`Holiday` acabariam acumulando dezenas de métodos para cálculo de datas,
+formatação, validação, comparação e processamento.
 
 ```java
 // Dados puros - apenas estrutura
@@ -638,6 +669,21 @@ var christmasIn2025 = HolidayOperations.calculateDate(christmas, 2025);
 var info = HolidayOperations.formatInfo(christmas);
 var allHolidays2025 = HolidayOperations.getHolidaysForYear(holidays, 2025);
 ```
+
+A implementação dessas operações utiliza *pattern matching* com `switch`. O
+switch implementa a seleção de qual código deve ser executado para um
+determinado tipo: se tivéssemos definido `calculateDate` na interface `Holiday`
+e chamado `holiday.calculateDate(year)`, o runtime decidiria qual implementação
+executar.  Com `switch` fazemos isso manualmente, permitindo não definir métodos
+na interface e mantendo os dados puros. O uso de *Pattern matching* com *record
+patterns* (Java 21+) torna o código ainda mais expressivo, permitindo
+desconstruir records diretamente durante a correspondência de padrões, como por
+exemplo, `case FixedHoliday(var name, var date, ...)` ao invés de ser necessário
+fazer de *casting* manual.
+
+Agora que detalhamos os quatro princípios fundamentais da POD vamos analisar
+como eles podem ser utilizados para modelar o nosso sistema de gestão de
+feriados.
 
 ### Feriados: uma modelagem orientada a dados
 
