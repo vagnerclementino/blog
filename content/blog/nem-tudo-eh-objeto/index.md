@@ -101,21 +101,21 @@ Existem diferentes formas para descrever e avaliar os diferentes paradigmas.
 Todavia, muitas das vezes basta uma sentença: seja *"tudo é objeto"* ao falarmos
 do paradigma orientados a objetos ou *"tudo é função"* ao tratar o paradigma
 funcional. Por outro, quando apresentarmos o paradigma da *Programação Orientada
-a Dados (POD)*  você observará que a POD também bebe da fonte dos paradigmas
+a Dados (Data-Oriented Programming - DOP)*  você observará que a DOP também bebe da fonte dos paradigmas
 funcional e orientado a objetos.
 
 ## Fundamentos da Programação Orientada a Objetos
 
-A Programação Orientada a Objetos (POO) deve a sua ampla adoção a linguagens
+A Programação Orientada a Objetos (Object-Oriented Programming - OOP) deve a sua ampla adoção a linguagens
 como *Java* e *C++*. Cabe ressaltar que Java não é uma linguagem puramente
 orientada a objetos principalmente por conta do seus tipos primitivos e os
 métodos estáticos (*static*) que pertencem à classe e não a um objeto. Apesar de
 não ser um linguagem estritamente orientada a objetos o seu uso extensivo na
-indústria de software contribuiu para popularizar os princípios da POO. Um
+indústria de software contribuiu para popularizar os princípios da OOP. Um
 exemplo de uma linguagem puramente orientada a objetos é o Smalltalk[^25], onde
 tudo é tratado como objeto.
 
-A POO enfatiza a modelagem de sistemas por meio de objetos que possuem
+A OOP enfatiza a modelagem de sistemas por meio de objetos que possuem
 propriedades e comportamentos, promovendo a reutilização de código e o
 encapsulamento de dados, dentre os seus princípios fundamentais podemos citar:
 
@@ -124,7 +124,7 @@ encapsulamento de dados, dentre os seus princípios fundamentais podemos citar:
 - **Abstração**: Oculta detalhes de implementação complexos, expondo apenas interfaces necessárias.
 - **Polimorfismo**: Permite que objetos de diferentes tipos sejam tratados através de uma interface comum.
 
-Esses princípios permitem fazer uma analogia de uma classe na POO como um
+Esses princípios permitem fazer uma analogia de uma classe na OOP como um
 organismo, onde o encapsulamento atua como a membrana celular que controla o que
 entra e sai, a herança funciona como a transmissão genética de características,
 e o polimorfismo se assemelha à capacidade de diferentes organismos responderem
@@ -132,7 +132,7 @@ de forma especializada aos mesmos estímulos ambientais.
 
 ### Feriados: uma modelagem orientada a objetos
 
-Para exemplificar o uso dos princípios da POO vamos modelar um sistema
+Para exemplificar o uso dos princípios da OOP vamos modelar um sistema
 responsável por gerenciar feriados (`Holiday`). Acredito que leitor saiba o que
 é um feriado, contudo, existem certas especificidades sobre o domínio que
 entendo importante explicitar:
@@ -151,13 +151,13 @@ Para simplificar vamos considerar feriados segundo o calendário Gregoriano e co
 uma duração fixa, ou seja, o feriado inicia e finaliza em uma data específica.
 
 A modelagem da classe `Holiday` - veja diagrama - adota uma abordagem
-hierárquica típica da POO, onde uma classe abstrata define o contrato comum e as
+hierárquica típica da OOP, onde uma classe abstrata define o contrato comum e as
 características compartilhadas por todos os demais tipos de feriados. A classe
 base encapsula propriedades essenciais como nome, descrição, localidades onde é
 observado, tipo de feriado e regras de *"Mondayisation"* (ajuste para dias
 úteis), além de comportamentos comuns como o cálculo de data observada.
 
-Um aspecto fundamental da POO é que a classe `Holiday` encapsula seu estado
+Um aspecto fundamental da OOP é que a classe `Holiday` encapsula seu estado
 através da propriedade `date`, mantendo as regras de cálculo da data como
 responsabilidade interna - a própria classe gerencia como calcular a data de um
 feriado para cada ano, ocultando essa complexidade do código cliente. As
@@ -220,7 +220,7 @@ cálculos complexos, como o algoritmo astronômico para definir a data da Pásco
 A **abstração** oculta a complexidade dos diferentes tipos de cálculo de datas
 atrás de uma interface uniforme, permitindo que o código cliente trate todos os
 feriados de forma consistente, independentemente de serem fixos ou móveis. A
-seguir temos um código explicitando o uso de cada um dos princípios da POO.
+seguir temos um código explicitando o uso de cada um dos princípios da OOP.
 
 ```java
 // Classe abstrata demonstrando encapsulamento e abstração
@@ -315,7 +315,7 @@ anterior à data oficial
 requerem sincronização complexa, aumentando a possibilidade de deadlocks e
 condições de corrida
 
-Essas limitações são inerentes a POO, onde o foco no encapsulamento de dados e
+Essas limitações são inerentes a OOP, onde o foco no encapsulamento de dados e
 comportamento (métodos) pode inadvertidamente criar pontos de mutabilidade não
 controladas. A Programação Orientada a Dados emerge como uma alternativa que
 aborda diretamente esses problemas, priorizando a imutabilidade, a transparência
@@ -323,7 +323,7 @@ dos dados e a separação clara entre dados e operações.
 
 ## Programação Orientada a Dados: Uma Nova Perspectiva
 
-A *Programação Orientada a Dados (Data-Oriented Programming)* - POD representa
+A *Programação Orientada a Dados (Data-Oriented Programming)* - DOP representa
 uma nova perspectiva de como pensamos a modelagem de software. Em vez de focar
 em objetos que encapsulam dados e comportamento, o paradigma prioriza a
 estrutura e o fluxo dos dados, separando *a informação do seu processamento*.
@@ -340,7 +340,7 @@ que, quando aplicados em conjunto, criam sistemas robustos, previsíveis e
 potencialmente mais fáceis de manter. Vamos explorar cada princípio usando como
 exemplo a nossa implementação do sistema de gerenciamento de feriados.
 
-![Os princípios fundamentais da POD](four-pod-principles.png)
+![Os princípios fundamentais da DOP](four-pod-principles.png)
 
 #### 1. Dados são Imutáveis
 
@@ -681,13 +681,13 @@ desconstruir records diretamente durante a correspondência de padrões, como po
 exemplo, `case FixedHoliday(var name, var date, ...)` ao invés de ser necessário
 fazer de *casting* manual.
 
-Agora que detalhamos os quatro princípios fundamentais da POD vamos analisar
+Agora que detalhamos os quatro princípios fundamentais da DOP vamos analisar
 como eles podem ser utilizados para modelar o nosso sistema de gestão de
 feriados.
 
 ### Feriados: uma modelagem orientada a dados
 
-A modelagem DOP apresenta uma estrutura fundamentalmente diferente da POO. A
+A modelagem DOP apresenta uma estrutura fundamentalmente diferente da OOP. A
 *sealed interface* `Holiday` define apenas o contrato de dados (métodos de
 acesso), enquanto cada record implementa exatamente os dados necessários para
 seu tipo específico. Observe como não há herança de implementação - cada record
@@ -697,7 +697,7 @@ pelo sistema de tipos.
 
 ![Diagrama de classe da modelagem dos feriados como DOP](class-diagram.png)
 
-Assim como fizemos uma analogia de uma classe na POO com um organismo, podemos comparar a Programação Orientada a Dados com uma linha de montagem industrial moderna. Nesta analogia, os dados imutáveis são como peças padronizadas que fluem pela linha sem serem alteradas em sua essência, as operações funcionam como estações de trabalho especializadas que processam essas peças de forma previsível, o pattern matching atua como um sistema de classificação automática que direciona cada peça para a estação correta, e a separação entre dados e operações espelha a divisão clara entre matéria-prima e processos de fabricação. Esta analogia faz sentido porque ambos os sistemas priorizam eficiência, previsibilidade, especialização de funções e fluxo controlado de informação, onde cada componente tem uma responsabilidade bem definida e o resultado final é construído através da composição ordenada de operações simples e confiáveis.
+Assim como fizemos uma analogia de uma classe na OOP com um organismo, podemos comparar a Programação Orientada a Dados com uma linha de montagem industrial moderna. Nesta analogia, os dados imutáveis são como peças padronizadas que fluem pela linha sem serem alteradas em sua essência, as operações funcionam como estações de trabalho especializadas que processam essas peças de forma previsível, o pattern matching atua como um sistema de classificação automática que direciona cada peça para a estação correta, e a separação entre dados e operações espelha a divisão clara entre matéria-prima e processos de fabricação. Esta analogia faz sentido porque ambos os sistemas priorizam eficiência, previsibilidade, especialização de funções e fluxo controlado de informação, onde cada componente tem uma responsabilidade bem definida e o resultado final é construído através da composição ordenada de operações simples e confiáveis.
 
 ## Programação orientada a dados em Java
 
@@ -795,11 +795,11 @@ public class HolidayLambdaHandler implements RequestHandler<APIGatewayRequest, A
 
 ## Conclusão
 
-A Programação Orientada a Dados (POD) representa uma abordagem complementar à Programação Orientada a Objetos que prioriza a estrutura e o fluxo dos dados de forma imutável, separando informação do seu processamento. Baseada em quatro princípios fundamentais - dados imutáveis e transparentes, modelagem precisa de todos os dados necessários, prevenção de estados ilegais, e separação entre operações e dados - a POD oferece uma perspectiva que se posiciona entre a programação funcional e orientada a objetos, aproveitando os benefícios da pureza funcional onde possível.
+A Programação Orientada a Dados (Data-Oriented Programming - DOP) representa uma abordagem complementar à Programação Orientada a Objetos que prioriza a estrutura e o fluxo dos dados de forma imutável, separando informação do seu processamento. Baseada em quatro princípios fundamentais - dados imutáveis e transparentes, modelagem precisa de todos os dados necessários, prevenção de estados ilegais, e separação entre operações e dados - a DOP oferece uma perspectiva que se posiciona entre a programação funcional e orientada a objetos, aproveitando os benefícios da pureza funcional onde possível.
 
-Os benefícios da POD são evidentes tanto em pequena quanto em grande escala. A **imutabilidade** elimina uma fonte comum de bugs relacionados a objetos modificados por diferentes subsistemas, enquanto a **transparência** dos dados facilita a construção e reconstrução de instâncias. A **modelagem precisa** com sealed interfaces e records específicos torna estados ilegais irrepresentáveis pelo sistema de tipos, reduzindo significativamente a necessidade de validações defensivas. A **separação de operações** mantém os dados simples e as operações poderosas, utilizando pattern matching para implementar dynamic dispatch de forma mais clara que o Visitor Pattern. Esses princípios resultam em código mais **legível**, **testável**, **maintível** e **thread-safe por design**, características especialmente valiosas em ambientes distribuídos e serverless.
+Os benefícios da DOP são evidentes tanto em pequena quanto em grande escala. A **imutabilidade** elimina uma fonte comum de bugs relacionados a objetos modificados por diferentes subsistemas, enquanto a **transparência** dos dados facilita a construção e reconstrução de instâncias. A **modelagem precisa** com sealed interfaces e records específicos torna estados ilegais irrepresentáveis pelo sistema de tipos, reduzindo significativamente a necessidade de validações defensivas. A **separação de operações** mantém os dados simples e as operações poderosas, utilizando pattern matching para implementar dynamic dispatch de forma mais clara que o Visitor Pattern. Esses princípios resultam em código mais **legível**, **testável**, **maintível** e **thread-safe por design**, características especialmente valiosas em ambientes distribuídos e serverless.
 
-A POD é particularmente adequada para sistemas de processamento de dados que ingerem e produzem informações de forma previsível, como jobs de processamento em lote, ferramentas de análise, sistemas de processamento de eventos, e APIs que modelam estruturas existentes. Também se beneficia de problemas menores que podem ser resolvidos de forma isolada, aproveitando a clareza e simplicidade do paradigma. O exemplo da API de feriados demonstra como esses conceitos se aplicam na prática: handlers de Lambda que se beneficiam da ausência de estado mutável para concorrência segura, operações de cálculo de datas que retornam novas instâncias sem efeitos colaterais, e validações concentradas na fronteira do sistema que garantem integridade dos dados. A chave está em reconhecer que diferentes paradigmas revelam aspectos distintos da solução, e a escolha adequada pode fazer toda a diferença na elegância e eficácia do resultado final.
+A DOP é particularmente adequada para sistemas de processamento de dados que ingerem e produzem informações de forma previsível, como jobs de processamento em lote, ferramentas de análise, sistemas de processamento de eventos, e APIs que modelam estruturas existentes. Também se beneficia de problemas menores que podem ser resolvidos de forma isolada, aproveitando a clareza e simplicidade do paradigma. O exemplo da API de feriados demonstra como esses conceitos se aplicam na prática: handlers de Lambda que se beneficiam da ausência de estado mutável para concorrência segura, operações de cálculo de datas que retornam novas instâncias sem efeitos colaterais, e validações concentradas na fronteira do sistema que garantem integridade dos dados. A chave está em reconhecer que diferentes paradigmas revelam aspectos distintos da solução, e a escolha adequada pode fazer toda a diferença na elegância e eficácia do resultado final.
 
 [^1]: [Holiday](https://en.wikipedia.org/wiki/Holiday)
 [^4]: [Moveable feast](https://en.wikipedia.org/wiki/Moveable_feast)
