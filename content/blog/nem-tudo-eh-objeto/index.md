@@ -1,7 +1,7 @@
 ---
 title: "Nem tudo é objeto"
 date: "2025-08-11"
-description: "Programação Orientada a Dados em Java"
+description: "Como dados imutáveis e operações separadas podem tornar seu código mais limpo, seguro e fácil de manter"
 featuredImage: feature.png
 ---
 
@@ -846,21 +846,19 @@ chance para a DOP em seu próximo projeto?
 [^7]: [Islamic calendar](https://en.wikipedia.org/wiki/Islamic_calendar)
 [^10]: [When a public holiday falls on a weekend](https://www.employment.govt.nz/leave-and-holidays/public-holidays/when-a-public-holiday-falls-on-a-weekend)
 [^15]: [Religious Holidays](https://scl.cornell.edu/religiousholidays)
-[^16]: [Data-Oriented Programming in Java](https://www.infoq.com/articles/data-oriented-programming-java/) - Brian Goetz
-[^17]: [Data-Oriented Programming in Java - Version 1.1](https://inside.java/2024/05/23/dop-v1-1-introduction/) - Nicolai Parlog
-[^18]: [Data-Oriented Programming in Java - Version 1.1](https://inside.java/2024/05/23/dop-v1-1-introduction/) - Nicolai Parlog
-[^19]: [Model data immutably and transparently - DOP v1.1](https://inside.java/2024/05/27/dop-v1-1-immutable-transparent-data/) - Nicolai Parlog
-[^20]: [Model the data, the whole data, and nothing but the data - DOP v1.1](https://inside.java/2024/05/29/dop-v1-1-model-data/) - Nicolai Parlog
-[^21]: [Make illegal states unrepresentable - DOP v1.1](https://inside.java/2024/06/03/dop-v1-1-illegal-states/) - Nicolai Parlog
-[^22]: [Separate operations from data - DOP v1.1](https://inside.java/2024/06/05/dop-v1-1-separate-operations/) - Nicolai Parlog
-[^23]: [When to use Data-Oriented Programming v1.1](https://inside.java/2024/06/10/dop-v1-1-wrap-up/) - Nicolai Parlog
-[^24]: [When to use Data-Oriented Programming v1.1](https://inside.java/2024/06/10/dop-v1-1-wrap-up/) - Nicolai Parlog
-[^25]: [Stack Overflow Developer Survey 2025 - Most Popular Technologies](https://survey.stackoverflow.co/2025/technology#most-popular-technologies)
-[^26]: [JEP 395: Records](https://openjdk.org/jeps/395)
-[^27]: [JEP 409: Sealed Classes](https://openjdk.org/jeps/409)
-[^28]: [JEP 394: Pattern Matching for instanceof](https://openjdk.org/jeps/394)
-[^29]: [JEP 441: Pattern Matching for switch](https://openjdk.org/jeps/441)
-[^30]: [JEP 378: Text Blocks](https://openjdk.org/jeps/378)
-[^31]: [AWS Lambda](https://aws.amazon.com/lambda/) - Amazon Web Services
-[^32]: [A Philosophy of Software Design - Book Review](https://blog.pragmaticengineer.com/a-philosophy-of-software-design-review/)
-[^33]: [GNU Smalltalk](https://www.gnu.org/software/smalltalk/)
+[^16]: [Data-Oriented Programming in Java](https://www.infoq.com/articles/data-oriented-programming-java/)
+[^17]: [Data-Oriented Programming in Java - Version 1.1](https://inside.java/2024/05/23/dop-v1-1-introduction/)
+[^18]: [Model data immutably and transparently - DOP v1.1](https://inside.java/2024/05/27/dop-v1-1-immutable-transparent-data/)
+[^19]: [Model the data, the whole data, and nothing but the data - DOP v1.1](https://inside.java/2024/05/29/dop-v1-1-model-data/)
+[^20]: [Make illegal states unrepresentable - DOP v1.1](https://inside.java/2024/06/03/dop-v1-1-illegal-states/)
+[^21]: [Separate operations from data - DOP v1.1](https://inside.java/2024/06/05/dop-v1-1-separate-operations/)
+[^22]: [When to use Data-Oriented Programming v1.1](https://inside.java/2024/06/10/dop-v1-1-wrap-up/)
+[^23]: [Stack Overflow Developer Survey 2025 - Most Popular Technologies](https://survey.stackoverflow.co/2025/technology#most-popular-technologies)
+[^24]: [JEP 395: Records](https://openjdk.org/jeps/395)
+[^25]: [GNU Smalltalk](https://www.gnu.org/software/smalltalk/)
+[^26]: [JEP 409: Sealed Classes](https://openjdk.org/jeps/409)
+[^27]: [JEP 394: Pattern Matching for instanceof](https://openjdk.org/jeps/394)
+[^28]: [JEP 441: Pattern Matching for switch](https://openjdk.org/jeps/441)
+[^29]: [JEP 378: Text Blocks](https://openjdk.org/jeps/378)
+[^30]: [A Philosophy of Software Design - Book Review](https://blog.pragmaticengineer.com/a-philosophy-of-software-design-review/)
+[^31]: [AWS Lambda](https://aws.amazon.com/lambda/)
