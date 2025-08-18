@@ -524,8 +524,10 @@ da Pascoa. Esse aparentemente cuidado simples de não ser possível criar estado
 inconsistentes evita que:
 
 - regras implícitas não estejam expressas no código, que
-- validações fiquem espalhadas e que precisem ser repetidas em vários pontos do código
-- confusão dos desenvolvedores que não sabem quais campos são relevantes para cada situação
+- validações fiquem espalhadas e que precisem ser repetidas em vários pontos do
+código
+- confusão dos desenvolvedores que não sabem quais campos são relevantes para
+cada situação
 
 ```java
 // PROBLEMA: Estados ilegais são representáveis
@@ -697,13 +699,27 @@ pelo sistema de tipos.
 
 ![Diagrama de classe da modelagem dos feriados como DOP](class-diagram.png)
 
-Assim como fizemos uma analogia de uma classe na OOP com um organismo, podemos comparar a Programação Orientada a Dados com uma linha de montagem industrial moderna. Nesta analogia, os dados imutáveis são como peças padronizadas que fluem pela linha sem serem alteradas em sua essência, as operações funcionam como estações de trabalho especializadas que processam essas peças de forma previsível, o pattern matching atua como um sistema de classificação automática que direciona cada peça para a estação correta, e a separação entre dados e operações espelha a divisão clara entre matéria-prima e processos de fabricação. Esta analogia faz sentido porque ambos os sistemas priorizam eficiência, previsibilidade, especialização de funções e fluxo controlado de informação, onde cada componente tem uma responsabilidade bem definida e o resultado final é construído através da composição ordenada de operações simples e confiáveis.
+Assim como fizemos uma analogia de uma classe na OOP se comporta com um
+organismo vivo, podemos comparar a DOP com uma linha de montagem industrial
+moderna. Nesta analogia, os dados imutáveis são como peças padronizadas que
+fluem pela linha sem serem alteradas em sua essência, as operações funcionam
+como estações de trabalho especializadas que processam essas peças de forma
+previsível. Por outro lado, o *pattern matching* atua como um sistema de
+classificação automática que direciona cada peça para a estação correta. Por
+fim, a separação entre dados e operações espelha a divisão clara entre
+matéria-prima e processos de fabricação. Esta analogia faz sentido porque, tanto
+a DOP quanto uma linha de montagem, priorizam eficiência, previsibilidade,
+especialização de funções e fluxo controlado de informação, onde cada componente
+tem uma responsabilidade bem definida e o resultado final é construído através
+da composição ordenada de operações simples e confiáveis.
 
 ## Programação orientada a dados em Java
 
-Java evoluiu significativamente para suportar melhor os princípios da
-Programação Orientada a Dados. As funcionalidades modernas da linguagem
-facilitam a implementação dos quatro princípios fundamentais:
+A linguagem Java evoluiu com algumas funcionalidades que isoladas podem não ser
+percebidas como relevantes, porém, em conjuntos, servem  para suportar os
+princípios da Programação Orientada a Dados. A seguir listamos algumas
+funcionalidades da linguagem que facilitam a implementação dos quatro princípios
+fundamentais:
 
 | Funcionalidade | Versão Java | Descrição | Uso em DOP |
 |---|---|---|---|
@@ -720,57 +736,53 @@ Programação Orientada a Objetos, mas oferece uma abordagem complementar que po
 ser aplicada em situações específicas onde seus benefícios são mais
 evidentes[^23].
 
-DOP posiciona-se entre a Programação Funcional (FP) e a Programação Orientada a
-Objetos (OOP), mas mais próxima da primeira. Enquanto a programação funcional
-propõe que todas as operações sejam funções puras sem efeitos colaterais, isso
-pode ser difícil de alcançar ou manter em muitos projetos reais. DOP aproveita
-os benefícios da pureza funcional onde possível e isola os desvios necessários
-nos subsistemas responsáveis pela lógica correspondente.
+A DOP posiciona-se entre a Programação Funcional (FP) e a Programação Orientada
+a Objetos (OOP), sendo, na prática, mais próxima da primeira. Enquanto a
+programação funcional propõe que todas as operações sejam funções puras sem
+efeitos colaterais, requisito que pode ser difícil de alcançar ou manter em
+muitos projetos reais. Todavia, a DOP aproveita os benefícios da pureza
+funcional onde possível e isola os desvios necessários nos subsistemas
+responsáveis pela lógica correspondente.
 
 A força da DOP, similar à programação funcional, é que sua abordagem funciona
-muito bem mesmo em pequena escala. Qualquer pedaço de lógica de domínio
-representado como função - seja um pipeline de stream simples ou uma cadeia de
-funções escritas à mão - torna a base de código mais confiável e geralmente mais
-maintível também. O uso de records, a prevenção de mutação, evitar colocar
-operações complexas nos dados, e a clareza do `switch` sobre o visitor pattern -
-qualquer pedaço de código que use essas técnicas no ambiente certo será mais
-claro e maintível.
+muito bem em pequena escala. Qualquer pedaço de lógica de domínio representado
+como função - seja um pipeline de stream simples ou uma cadeia de funções
+escritas à mão - torna a base de código mais confiável e mais fácil de se
+manter. Não é necessário desenvolver sistemas inteiros de forma orientada a
+dados. Se você quiser começar em pequena escala, a seguir temos alguns cenários
+em que o uso da DOP pode ser um bom ponto de partida.
 
-Similar à programação funcional, as vantagens da programação orientada a dados
-podem ser sentidas mesmo em pequena escala. Não é necessário desenvolver
-sistemas inteiros de forma orientada a dados. Se você quiser começar em pequena
-escala, deve procurar duas situações específicas:
-
-**1. Sistemas de Processamento de Dados**: Sistemas que diretamente ingerem e produzem dados são candidatos ideais para DOP. Exemplos incluem:
+*1. Sistemas de Processamento de Dados*: Sistemas que diretamente ingerem e produzem dados são candidatos ideais para DOP. Exemplos incluem:
 
 - Jobs de processamento em lote (batch jobs)
 - Ferramentas de análise de dados  
 - Sistemas de processamento de eventos (onde os eventos são "os dados")
-- APIs que modelam estruturas existentes para permitir sua manipulação
 
-**2. Problemas Pequenos que Não Requerem Modularização Adicional**: Problemas parciais ou subsistemas que podem ser resolvidos de forma relativamente isolada se beneficiam da clareza e simplicidade da DOP.
+*2. Problemas Pequenos que Não Requerem Modularização Adicional*: Problemas parciais ou subsistemas que podem ser resolvidos de forma relativamente isolada se beneficiam da clareza e simplicidade da DOP. Exemplos incluem:
+
+- Utilitários de validação e formatação
+- *Parsers* de configuração (JSON, XML)
+- Calculadoras de domínio específico
 
 ### Casos de uso
 
 Para demonstrar todos os conceitos da programação orientada a dados na prática,
-desenvolvemos uma API REST completa para gerenciar feriados públicos. O projeto
-completo está disponível em
-[github.com/vagnerclementino/api-holiday](https://github.com/vagnerclementino/api-holiday)
-e pode ser executado localmente usando Docker Compose.
+desenvolvemos uma API REST completa para gerenciar feriados. O projeto completo
+está disponível em [github.com/vagnerclementino/api-holiday](https://github.com/vagnerclementino/api-holiday) e pode ser executado localmente usando Docker Compose.
 
-A Programação Orientada a Dados é especialmente valiosa em handlers de funções
-Lambda como este exemplo. O ambiente serverless beneficia-se enormemente da
-imutabilidade dos dados, que elimina problemas de concorrência entre invocações
-simultâneas da função, e da separação clara entre dados e operações, que
-facilita o teste unitário de cada método handler individualmente. O pattern
-matching com `switch` torna o roteamento de requisições HTTP mais legível e
-maintível que uma cadeia de `if-else`, enquanto a ausência de estado mutável
-compartilhado reduz significativamente a complexidade de debugging em um
-ambiente distribuído. Além disso, a natureza funcional da DOP alinha-se
-perfeitamente com o modelo de execução stateless das funções Lambda, onde cada
-invocação deve ser independente e previsível, características essenciais para
-sistemas que podem escalar automaticamente e processar milhares de requisições
-concorrentes.
+Um outro exemplo de bom uso da DOP é em *handlers* de funções AWS Lambda. O
+ambiente serverless beneficia-se enormemente da imutabilidade dos dados, que
+elimina problemas de concorrência entre invocações simultâneas da função, e da
+separação clara entre dados e operações, que facilita o teste unitário de cada
+*handler* individualmente. O pattern matching com `switch` torna o
+roteamento de requisições HTTP mais legível e fácil de manter em comparação com
+uma sequência de `if-else`. Ademais, a ausência de estado mutável compartilhado
+reduz significativamente a complexidade de debugging em um ambiente distribuído.
+Além disso, a natureza funcional da DOP alinha-se perfeitamente com o modelo de
+execução stateless das funções Lambda, onde cada invocação deve ser independente
+e previsível, características essenciais para sistemas que podem escalar
+automaticamente e processar milhares de requisições concorrentes. A seguir temos
+ume exemplo do uso da DOP em uma função Lambda.
 
 ```java
 public class HolidayLambdaHandler implements RequestHandler<APIGatewayRequest, APIGatewayResponse> {
@@ -795,11 +807,39 @@ public class HolidayLambdaHandler implements RequestHandler<APIGatewayRequest, A
 
 ## Conclusão
 
-A Programação Orientada a Dados (Data-Oriented Programming - DOP) representa uma abordagem complementar à Programação Orientada a Objetos que prioriza a estrutura e o fluxo dos dados de forma imutável, separando informação do seu processamento. Baseada em quatro princípios fundamentais - dados imutáveis e transparentes, modelagem precisa de todos os dados necessários, prevenção de estados ilegais, e separação entre operações e dados - a DOP oferece uma perspectiva que se posiciona entre a programação funcional e orientada a objetos, aproveitando os benefícios da pureza funcional onde possível.
+A Programação Orientada a Dados (Data-Oriented Programming - DOP) representa uma
+abordagem complementar à Programação Orientada a Objetos que prioriza a
+estrutura e o fluxo dos dados de forma imutável, separando informação do seu
+processamento. Baseada em quatro princípios fundamentais - dados imutáveis e
+transparentes, modelagem precisa de todos os dados necessários, prevenção de
+estados ilegais, e separação entre operações e dados - a DOP oferece uma
+perspectiva que se posiciona entre a programação funcional e orientada a
+objetos, aproveitando os benefícios da pureza funcional onde possível.
 
-Os benefícios da DOP são evidentes tanto em pequena quanto em grande escala. A **imutabilidade** elimina uma fonte comum de bugs relacionados a objetos modificados por diferentes subsistemas, enquanto a **transparência** dos dados facilita a construção e reconstrução de instâncias. A **modelagem precisa** com sealed interfaces e records específicos torna estados ilegais irrepresentáveis pelo sistema de tipos, reduzindo significativamente a necessidade de validações defensivas. A **separação de operações** mantém os dados simples e as operações poderosas, utilizando pattern matching para implementar dynamic dispatch de forma mais clara que o Visitor Pattern. Esses princípios resultam em código mais **legível**, **testável**, **maintível** e **thread-safe por design**, características especialmente valiosas em ambientes distribuídos e serverless.
+Os benefícios da DOP são evidentes tanto em pequena quanto em grande escala. A
+**imutabilidade** elimina uma fonte comum de bugs relacionados a objetos
+modificados por diferentes subsistemas, enquanto a **transparência** dos dados
+facilita a construção e reconstrução de instâncias. A **modelagem precisa** com
+sealed interfaces e records específicos torna estados ilegais irrepresentáveis
+pelo sistema de tipos, reduzindo significativamente a necessidade de validações
+defensivas. A **separação de operações** mantém os dados simples e as operações
+poderosas, utilizando correspondência de padrões para escolher automaticamente
+qual código executar para cada tipo de dado, de forma mais simples e direta que
+padrões tradicionais de design. Esses princípios resultam em código mais
+**legível**, **testável**, **mais fácil de manter** e **thread-safe por design**,
+características especialmente valiosas em ambientes distribuídos e serverless.
 
-A DOP é particularmente adequada para sistemas de processamento de dados que ingerem e produzem informações de forma previsível, como jobs de processamento em lote, ferramentas de análise, sistemas de processamento de eventos, e APIs que modelam estruturas existentes. Também se beneficia de problemas menores que podem ser resolvidos de forma isolada, aproveitando a clareza e simplicidade do paradigma. O exemplo da API de feriados demonstra como esses conceitos se aplicam na prática: handlers de Lambda que se beneficiam da ausência de estado mutável para concorrência segura, operações de cálculo de datas que retornam novas instâncias sem efeitos colaterais, e validações concentradas na fronteira do sistema que garantem integridade dos dados. A chave está em reconhecer que diferentes paradigmas revelam aspectos distintos da solução, e a escolha adequada pode fazer toda a diferença na elegância e eficácia do resultado final.
+A DOP é particularmente adequada para sistemas de processamento de dados que
+ingerem e produzem informações de forma previsível, como jobs de processamento
+em lote, ferramentas de análise, sistemas de processamento de eventos, e APIs
+que modelam estruturas existentes. Também se beneficia de problemas menores que
+podem ser resolvidos de forma isolada, aproveitando a clareza e simplicidade do
+paradigma. Por fim, e não menos importante, a chave está em reconhecer que
+diferentes paradigmas revelam aspectos distintos da solução, e a escolha
+adequada pode fazer toda a diferença na elegância e eficácia do resultado final.
+
+E aí, curtiu a ideia de dados simples e operações poderosas? Que tal dar uma
+chance para a DOP em seu próximo projeto?
 
 [^1]: [Holiday](https://en.wikipedia.org/wiki/Holiday)
 [^4]: [Moveable feast](https://en.wikipedia.org/wiki/Moveable_feast)
