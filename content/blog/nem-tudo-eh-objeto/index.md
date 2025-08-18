@@ -10,7 +10,7 @@ featuredImage: feature.png
 Detalhes importam! É assim na vida ou no desenvolvimento de software. O processo
 de desenhar e construir sistemas de software está condicionado indubitavelmente
 ao uso de linguagens: de software ou natural. Essa última é, por essência,
-ambígua.  Ambiguidade gera complexidade.
+ambígua. Ambiguidade, por sua natureza, gera complexidade.
 
 Em diferentes áreas do conhecimento o ser humano utiliza de diferentes
 ferramentas para lidar com a complexidade, por exemplo: matemáticos usam
@@ -31,8 +31,8 @@ no qual um sistema de software é dividido em módulos, como classes em uma
 linguagem orientada a objetos, permitindo que os programadores trabalhem no
 sistema sem se sentirem sobrecarregados com toda a sua complexidade de uma só
 vez. As abordagens proposta por Ousterhout estão relacionadas intrinsecamente
-com o momento da escrita do código, contudo, se pensarmos para a fase de
-desenho,  eu acrescentaria uma terceira abordagem para lidar com a complexidade:
+com o momento da escrita do código, contudo, se considerarmos a fase de
+design, eu acrescentaria uma terceira abordagem para lidar com a complexidade:
 os modelos.
 
 Modelos são uma representação abstrata de um sistema (de software) que nos
@@ -72,8 +72,7 @@ Ao longo do tempo diferentes paradigmas de programação emergiram para abordar
 distintos tipos de problemas e formas de pensar sobre software. Cada um oferece
 uma perspectiva única sobre como organizar código e estruturar soluções.
 
-Um paradigma de programação determina uma linguagem de programação, e não o
-contrário. Em outras palavras, um paradigma de programação define como os
+Um paradigma de programação influencia significativamente o design de uma linguagem, embora linguagens modernas possam suportar múltiplos paradigmas. Em outras palavras, um paradigma de programação define como os
 problemas são resolvidos com código. Por outro lado, uma linguagem de
 programação é a ferramenta que permite a implementação dessas soluções. Dado que
 uma linguagem pode suportar um ou mais paradigma, a partir da análise da adoção
@@ -99,18 +98,18 @@ mais a frente.
 
 Existem diferentes formas para descrever e avaliar os diferentes paradigmas.
 Todavia, muitas das vezes basta uma sentença: seja *"tudo é objeto"* ao falarmos
-do paradigma orientados a objetos ou *"tudo é função"* ao tratar o paradigma
-funcional. Por outro, quando apresentarmos o paradigma da *Programação Orientada
-a Dados (Data-Oriented Programming - DOP)*  você observará que a DOP também bebe da fonte dos paradigmas
+do paradigma orientado a objetos ou *"tudo é função"* ao tratar o paradigma
+funcional. Por outro lado, quando apresentarmos o paradigma da *Programação Orientada
+a Dados (Data-Oriented Programming - DOP)*, você observará que a DOP também bebe da fonte dos paradigmas
 funcional e orientado a objetos.
 
 ## Fundamentos da Programação Orientada a Objetos
 
 A Programação Orientada a Objetos (Object-Oriented Programming - OOP) deve a sua ampla adoção a linguagens
 como *Java* e *C++*. Cabe ressaltar que Java não é uma linguagem puramente
-orientada a objetos principalmente por conta do seus tipos primitivos e os
+orientada a objetos principalmente por conta de seus tipos primitivos e os
 métodos estáticos (*static*) que pertencem à classe e não a um objeto. Apesar de
-não ser um linguagem estritamente orientada a objetos o seu uso extensivo na
+não ser uma linguagem estritamente orientada a objetos o seu uso extensivo na
 indústria de software contribuiu para popularizar os princípios da OOP. Um
 exemplo de uma linguagem puramente orientada a objetos é o Smalltalk[^25], onde
 tudo é tratado como objeto.
@@ -133,7 +132,7 @@ de forma especializada aos mesmos estímulos ambientais.
 ### Feriados: uma modelagem orientada a objetos
 
 Para exemplificar o uso dos princípios da OOP vamos modelar um sistema
-responsável por gerenciar feriados (`Holiday`). Acredito que leitor saiba o que
+responsável por gerenciar feriados (`Holiday`). Acredito que o leitor saiba o que
 é um feriado, contudo, existem certas especificidades sobre o domínio que
 entendo importante explicitar:
 
@@ -141,7 +140,7 @@ entendo importante explicitar:
 
 - **Os feriados podem ser fixos ou móveis**: Fixos acontecem sempre na mesma data (25/12) e os móveis são calculados através do calendário lunar (Páscoa), dia da semana (Memorial Day) ou baseado em outros feriados (Sexta-Feira Santa)[^4]
 
-- **Os feriados dependem de qual sistemas de calendário adotado**: Gregoriano (feriados ocidentais), lunar islâmico (Ramadan "roda" 11 dias/ano), luni-solar judaico (Rosh Hashanah varia mas mantém sazonalidade)[^7]
+- **Os feriados dependem de quais sistemas de calendário adotados**: Gregoriano (feriados ocidentais), lunar islâmico (Ramadan "roda" 11 dias/ano), luni-solar judaico (Rosh Hashanah varia mas mantém sazonalidade)[^7]
 
 - **Data agendada diferente da observada**: Feriado pode ter data oficial diferente da celebrada, como por exemplo, na estratégia de *"Mondayisation"* que move feriados de fim de semana para a segunda-feira[^10]
 
@@ -150,12 +149,11 @@ entendo importante explicitar:
 Para simplificar vamos considerar feriados segundo o calendário Gregoriano e com
 uma duração fixa, ou seja, o feriado inicia e finaliza em uma data específica.
 
-A modelagem da classe `Holiday` - veja diagrama - adota uma abordagem
+A modelagem da classe `Holiday` (veja diagrama abaixo) adota uma abordagem
 hierárquica típica da OOP, onde uma classe abstrata define o contrato comum e as
 características compartilhadas por todos os demais tipos de feriados. A classe
 base encapsula propriedades essenciais como nome, descrição, localidades onde é
-observado, tipo de feriado e regras de *"Mondayisation"* (ajuste para dias
-úteis), além de comportamentos comuns como o cálculo de data observada.
+observado, tipo de feriado e regras de *"Mondayisation"* (transferência de feriados de fim de semana para segunda-feira), além de comportamentos comuns como o cálculo de data observada.
 
 Um aspecto fundamental da OOP é que a classe `Holiday` encapsula seu estado
 através da propriedade `date`, mantendo as regras de cálculo da data como
@@ -292,7 +290,7 @@ integridade dos dados e a previsibilidade do sistema:
 
 - **Lista mutável exposta:** O método `getLocalities()` retorna uma referência
 direta à lista interna, permitindo que código externo modifique o estado do
-objeto sem o controle da classe, que podem levar a problemas difíceis de
+objeto sem o controle da classe, o que pode levar a problemas difíceis de
 rastrear
 
 - **Estado mutável:** Os campos `date` e `observed` podem ser alterados após a
@@ -329,15 +327,15 @@ em objetos que encapsulam dados e comportamento, o paradigma prioriza a
 estrutura e o fluxo dos dados, separando *a informação do seu processamento*.
 
 A ideia de uma programação orientada a dados foi proposta originalmente por
-Brian Goetz[^16], posteriormente, Nicolai Parlogfoi[^17], refinou o conceito,
+Brian Goetz[^16], posteriormente, Nicolai Parlog[^17] refinou o conceito,
 organizando melhor os princípios fundamentais. Este artigo apresenta uma visão
-prática dos conceitos propostos por Parlogfoi.
+prática dos conceitos propostos por Parlog.
 
 ### Princípios Fundamentais
 
 A Programação Orientada a Dados se baseia em quatro princípios fundamentais[^18]
 que, quando aplicados em conjunto, criam sistemas robustos, previsíveis e
-potencialmente mais fáceis de manter. Vamos explorar cada princípio usando como
+potencialmente mais fáceis de manter. A figura abaixo ilustra esses quatro princípios fundamentais que exploraremos usando como
 exemplo a nossa implementação do sistema de gerenciamento de feriados.
 
 ![Os princípios fundamentais da DOP](four-pod-principles.png)
@@ -346,7 +344,7 @@ exemplo a nossa implementação do sistema de gerenciamento de feriados.
 
 A imutabilidade mitiga uma fonte comum de bugs: objetos modificados por
 diferentes subsistemas sem comunicação adequada[^19]. Um exemplo é quando
-armazenamos um objeto em um `HashSet` e depois alterar um campo usado no cálculo
+armazenamos um objeto em um `HashSet` e depois alteramos um campo usado no cálculo
 do hash code. Essa alteração torna o objeto "inalcançável" na estrutura, ou
 seja, não será possível recuperar o objeto pelo seu *hash*. Este problema surge
 quando dois subsistemas (o `HashSet` e o código que modifica o objeto) têm
@@ -365,10 +363,10 @@ holidays.contains(christmas); // Retorna false - objeto "perdido"
 O remédio é simples: se nada pode mudar, tais erros não podem ocorrer. Quando
 subsistemas se comunicam apenas com dados imutáveis, essa fonte comum de erros
 desaparece. Todavia, mudanças no estado interno das classes são inevitáveis.
-Para mitigar esse tipo de problema, o primeiro principio da DOP define que os
+Para mitigar esse tipo de problema, o primeiro princípio da DOP define que os
 objetos sejam **transparentes** - seu estado interno deve ser acessível e
 construível por meio de uma interface bem definida. Na prática, ser transparente
-significa que a classe deve haver um método de acesso para cada campo e um
+significa que a classe deve ter um método de acesso para cada campo e um
 construtor que aceita valores para todos os campos, permitindo recriar uma
 instância indistinguível da original. A seguir temos um exemplo de código
 imutável e transparente.
@@ -399,7 +397,7 @@ e `hashCode` baseadas nos dados. Além disso, o uso da técnica de *defensive
 copying* (ex. `List.copyOf()`) previne modificações através de referências a
 objetos mutáveis. Por fim, alterações no estado devem retornar novas instâncias,
 mantendo a imutabilidade. A seguir temos um exemplo seguro do uso de um
-``HashSet`.
+`HashSet`.
 
 ```java
 // Transformações retornam novas instâncias
@@ -471,7 +469,7 @@ public sealed interface Holiday permits FixedHoliday, ObservedHoliday, MoveableH
 }
 ```
 
-Uma alternativa para alcançar o segundo principio é por meio de *sealed
+Uma alternativa para alcançar o segundo princípio é por meio de *sealed
 interfaces*[^27] para modelar alternativas e criar
 *records* específicos para cada variação. Em vez de múltiplos campos com
 requisitos mutuamente exclusivos ou condicionais, criamos uma *sealed interface*
@@ -520,14 +518,11 @@ tipos em uma única classe genérica. Esta abordagem apresenta vários problemas
 fundamentais: campos opcionais desnecessários como em um feriado fixo como o
 Natal não precisa de feriado base (`baseHoliday`) ou uma quantidade de dias
 entre os feriados (`dayOffset`) como para calcular a Sexta Feira Santa a partir
-da Pascoa. Esse aparentemente cuidado simples de não ser possível criar estados
-inconsistentes evita que:
+da Pascoa. Esse cuidado simples de tornar estados inconsistentes impossíveis evita que:
 
-- regras implícitas não estejam expressas no código, que
-- validações fiquem espalhadas e que precisem ser repetidas em vários pontos do
-código
-- confusão dos desenvolvedores que não sabem quais campos são relevantes para
-cada situação
+- regras implícitas não sejam expressas no código
+- validações fiquem espalhadas e precisem ser repetidas em vários pontos
+- desenvolvedores fiquem confusos sobre quais campos são relevantes para cada situação
 
 ```java
 // PROBLEMA: Estados ilegais são representáveis
@@ -558,7 +553,7 @@ campos opcionais criando records específicos para cada variação;
 valide no construtor o mais cedo possível, idealmente na fronteira entre o mundo
 externo e seu sistema.
 
-O código a seguir detalha os tês níveis de proteção que podem ser usados para
+O código a seguir detalha os três níveis de proteção que podem ser usados para
 evitar estados inválidos.
 
 ```java
@@ -617,13 +612,7 @@ var newYear = new ObservedHoliday("Ano Novo", "Primeiro dia do ano",
 
 Este princípio mantém dados e comportamentos separados[^22], com records
 contendo apenas estrutura e operações implementadas como funções puras em
-classes dedicadas. Para manter os records livres de lógica de domínio não
-trivial e prevenir classes com muitas responsabilidades, as operações não devem
-ser implementadas neles, mas sim em subsistemas dedicados. Em vez de
-`holiday.calculateDate(year)` ou `holiday.formatInfo()`, usamos
-`HolidayOperations.calculateDate(holiday, year)` e
-`HolidayOperations.formatInfo(holiday)`, que retornam novas instâncias ou
-resultados refletindo o resultado da operação. Esta abordagem evita que tipos
+classes dedicadas. Para manter os records livres de lógica de domínio não trivial, as operações não devem ser implementadas neles, mas sim em subsistemas dedicados. Esta abordagem previne classes com muitas responsabilidades e evita que tipos
 centrais do domínio atraiam funcionalidades excessivas e se tornem difíceis de
 manter, um problema comum na programação orientada a objetos onde classes como
 `Holiday` acabariam acumulando dezenas de métodos para cálculo de datas,
@@ -699,8 +688,7 @@ pelo sistema de tipos.
 
 ![Diagrama de classe da modelagem dos feriados como DOP](class-diagram.png)
 
-Assim como fizemos uma analogia de uma classe na OOP se comporta com um
-organismo vivo, podemos comparar a DOP com uma linha de montagem industrial
+Assim como fizemos uma analogia de uma classe na OOP com um organismo vivo, podemos comparar a DOP com uma linha de montagem industrial
 moderna. Nesta analogia, os dados imutáveis são como peças padronizadas que
 fluem pela linha sem serem alteradas em sua essência, as operações funcionam
 como estações de trabalho especializadas que processam essas peças de forma
@@ -716,7 +704,7 @@ da composição ordenada de operações simples e confiáveis.
 ## Programação orientada a dados em Java
 
 A linguagem Java evoluiu com algumas funcionalidades que isoladas podem não ser
-percebidas como relevantes, porém, em conjuntos, servem  para suportar os
+percebidas como relevantes, porém, em conjunto, servem para suportar os
 princípios da Programação Orientada a Dados. A seguir listamos algumas
 funcionalidades da linguagem que facilitam a implementação dos quatro princípios
 fundamentais:
@@ -736,11 +724,11 @@ Programação Orientada a Objetos, mas oferece uma abordagem complementar que po
 ser aplicada em situações específicas onde seus benefícios são mais
 evidentes[^23].
 
-A DOP posiciona-se entre a Programação Funcional (FP) e a Programação Orientada
-a Objetos (OOP), sendo, na prática, mais próxima da primeira. Enquanto a
+A DOP posiciona-se entre a Programação Funcional e a Programação Orientada
+a Objetos, sendo, na prática, mais próxima da primeira. Enquanto a
 programação funcional propõe que todas as operações sejam funções puras sem
-efeitos colaterais, requisito que pode ser difícil de alcançar ou manter em
-muitos projetos reais. Todavia, a DOP aproveita os benefícios da pureza
+efeitos colaterais - requisito que pode ser difícil de alcançar em
+muitos projetos reais - a DOP aproveita os benefícios da pureza
 funcional onde possível e isola os desvios necessários nos subsistemas
 responsáveis pela lógica correspondente.
 
@@ -752,13 +740,13 @@ manter. Não é necessário desenvolver sistemas inteiros de forma orientada a
 dados. Se você quiser começar em pequena escala, a seguir temos alguns cenários
 em que o uso da DOP pode ser um bom ponto de partida.
 
-*1. Sistemas de Processamento de Dados*: Sistemas que diretamente ingerem e produzem dados são candidatos ideais para DOP. Exemplos incluem:
+**1. Sistemas de Processamento de Dados**: Sistemas que diretamente ingerem e produzem dados são candidatos ideais para DOP. Exemplos incluem:
 
 - Jobs de processamento em lote (batch jobs)
 - Ferramentas de análise de dados  
 - Sistemas de processamento de eventos (onde os eventos são "os dados")
 
-*2. Problemas Pequenos que Não Requerem Modularização Adicional*: Problemas parciais ou subsistemas que podem ser resolvidos de forma relativamente isolada se beneficiam da clareza e simplicidade da DOP. Exemplos incluem:
+**2. Problemas Pequenos que Não Requerem Modularização Adicional**: Problemas parciais ou subsistemas que podem ser resolvidos de forma relativamente isolada se beneficiam da clareza e simplicidade da DOP. Exemplos incluem:
 
 - Utilitários de validação e formatação
 - *Parsers* de configuração (JSON, XML)
@@ -774,15 +762,16 @@ Um outro exemplo de bom uso da DOP é em *handlers* de funções AWS Lambda[^31]
 ambiente serverless beneficia-se enormemente da imutabilidade dos dados, que
 elimina problemas de concorrência entre invocações simultâneas da função, e da
 separação clara entre dados e operações, que facilita o teste unitário de cada
-*handler* individualmente. O pattern matching com `switch` torna o
-roteamento de requisições HTTP mais legível e fácil de manter em comparação com
+*handler* individualmente. 
+
+O pattern matching com `switch` torna o roteamento de requisições HTTP mais legível e fácil de manter em comparação com
 uma sequência de `if-else`. Ademais, a ausência de estado mutável compartilhado
 reduz significativamente a complexidade de debugging em um ambiente distribuído.
+
 Além disso, a natureza funcional da DOP alinha-se perfeitamente com o modelo de
 execução stateless das funções Lambda, onde cada invocação deve ser independente
 e previsível, características essenciais para sistemas que podem escalar
-automaticamente e processar milhares de requisições concorrentes. A seguir temos
-ume exemplo do uso da DOP em uma função Lambda.
+automaticamente e processar milhares de requisições concorrentes. A seguir temos um exemplo do uso da DOP em uma função Lambda.
 
 ```java
 public class HolidayLambdaHandler implements RequestHandler<APIGatewayRequest, APIGatewayResponse> {
