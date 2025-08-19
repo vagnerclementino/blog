@@ -12,15 +12,14 @@ de projetar e construir sistemas de software está condicionado indubitavelmente
 ao uso de linguagens: de software ou natural. Essa última é, por essência,
 ambígua. Ambiguidade, por sua natureza, gera complexidade.
 
-Em diferentes áreas do conhecimento o ser humano utiliza diferentes
-ferramentas para lidar com a complexidade, por exemplo: matemáticos usam
-notações e fórmulas para expressar conceitos complexos de forma concisa, médicos
-empregam classificações diagnósticas como CID-10 para categorizar doenças,
-arquitetos criam plantas e blueprints para representar estruturas
-tridimensionais em duas dimensões, e gestores utilizam organogramas e
+O ser humano utiliza diferentes estratégias para lidar com a complexidade:
+matemáticos usam notações e fórmulas para expressar conceitos complexos, médicos
+utilizam classificações como a Classificação Internacional de Doenças (CID-10)
+para categorizar doenças, arquitetos criam plantas e blueprints para representar
+estruturas tridimensionais em duas dimensões e gestores utilizam organogramas e
 fluxogramas para mapear processos e hierarquias organizacionais.
 
-Em seu livro *A Philosophy of Software Design*[^24], John Ousterhout discute
+Em seu livro *A Philosophy of Software Design*[^30], John Ousterhout discute
 duas maneiras principais de lidar com a complexidade no desenvolvimento de
 software. A primeira consiste em *simplificar e tornar o código mais claro* por
 meio da remoção de casos especiais e da utilização de identificadores
@@ -75,7 +74,7 @@ Um paradigma de programação influencia significativamente o design de uma ling
 problemas são resolvidos com código. Por outro lado, uma linguagem de
 programação é a ferramenta que permite a implementação dessas soluções. Dado que
 uma linguagem pode suportar um ou mais paradigmas, a partir da análise da adoção
-das linguagens[^23], é possível inferir quais são os paradigmas mais utilizados.
+das linguagens[^22], é possível inferir quais são os paradigmas mais utilizados.
 Independente da metodologia adotada, acredito que o resultado dos paradigmas
 mais utilizados seria *procedural, orientado a objetos e funcional*, entretanto,
 não necessariamente nessa ordem.
@@ -312,7 +311,7 @@ exemplo a nossa implementação do sistema de gerenciamento de feriados.
 #### 1. Dados são Imutáveis
 
 A imutabilidade mitiga uma fonte comum de bugs: objetos modificados por
-diferentes subsistemas sem comunicação adequada[^19]. Um exemplo é quando
+diferentes subsistemas sem comunicação adequada[^18]. Um exemplo é quando
 armazenamos um objeto em um `HashSet` e depois alteramos um campo usado no cálculo
 do hash code. Essa alteração torna o objeto "inalcançável" na estrutura, ou
 seja, não será possível recuperar o objeto pelo seu *hash*. Este problema surge
@@ -359,7 +358,7 @@ public record FixedHoliday(
 }
 ```
 
-Em Java, *Records[^24]* foram projetados para serem portadores transparentes e
+Em Java, *Records[^32]* foram projetados para serem portadores transparentes e
 imutáveis de dados. Eles atendem automaticamente aos requisitos de
 transparência: campos final para cada componente, construtor que aceita e
 atribui valores, métodos de acesso que os retornam, e implementações de `equals`
@@ -391,7 +390,7 @@ holidays.contains(christmasEve); // false - nova instância não está no set
 #### 2. Modele os Dados, Todos os Dados, e Nada Além dos Dados
 
 Este princípio enfatiza a criação de tipos específicos que representem fielmente
-cada variação do domínio, evitando tipos genéricos com campos opcionais[^20].
+cada variação do domínio, evitando tipos genéricos com campos opcionais[^19].
 Por exemplo, ao modelar feriados, poderíamos ter a tentação de criar um tipo
 genérico que tente acomodar todas as variações:
 
@@ -473,7 +472,7 @@ public record MoveableHoliday(
 #### 3. Torne Estados Ilegais Irrepresentáveis
 
 Este princípio garante que apenas combinações legais de dados possam ser
-representadas no sistema[^21]. O mundo é caótico e toda regra parece ter uma
+representadas no sistema[^20]. O mundo é caótico e toda regra parece ter uma
 exceção - "todo feriado tem uma data fixa" rapidamente se torna "todo feriado
 fixo tem uma data fixa, mas feriados móveis dependem de cálculos complexos, e
 feriados observados podem ter datas diferentes da oficial". Quando modelamos isso de forma inadequada, podemos ficar
@@ -582,7 +581,7 @@ var newYear = new ObservedHoliday("Ano Novo", "Primeiro dia do ano",
 
 #### 4. Separe Operações dos Dados
 
-Este princípio mantém dados e comportamentos separados[^22], com records
+Este princípio mantém dados e comportamentos separados[^21], com records
 contendo apenas estrutura e operações implementadas como funções puras em
 classes dedicadas. Para manter os records livres de lógica de domínio não trivial, as operações não devem ser implementadas neles, mas sim em subsistemas dedicados. Esta abordagem previne classes com muitas responsabilidades e evita que tipos
 centrais do domínio atraiam funcionalidades excessivas e se tornem difíceis de
@@ -710,7 +709,7 @@ fundamentais:
 
 | Funcionalidade | Versão Java | Descrição | Uso em DOP |
 |---|---|---|---|
-| **Records**[^24] | Java 14 (Preview) Java 16 (Final) | Classes imutáveis concisas com equals, hashCode e toString automáticos | Modelagem de dados imutáveis |
+| **Records**[^32] | Java 14 (Preview) Java 16 (Final) | Classes imutáveis concisas com equals, hashCode e toString automáticos | Modelagem de dados imutáveis |
 | **Sealed Classes/Interfaces**[^26] | Java 15 (Preview) Java 17 (Final) | Controle sobre quais classes podem estender/implementar | Estados ilegais irrepresentáveis |
 | **Pattern Matching (instanceof)**[^27] | Java 14 (Preview) Java 16 (Final) | Verificação de tipo e cast em uma operação | Operações sobre dados |
 | **Pattern Matching (switch)**[^28] | Java 17 (Preview) Java 21 (Final) | Switch expressions com pattern matching | Processamento de tipos selados |
@@ -721,7 +720,7 @@ fundamentais:
 A Programação Orientada a Dados não pretende substituir completamente a
 Programação Orientada a Objetos, mas oferece uma abordagem complementar que pode
 ser aplicada em situações específicas onde seus benefícios são mais
-evidentes[^23].
+evidentes[^22].
 
 A DOP posiciona-se entre a Programação Funcional e a Programação Orientada
 a Objetos, sendo, na prática, mais próxima da primeira. Enquanto a
@@ -757,7 +756,7 @@ Para demonstrar todos os conceitos da programação orientada a dados na prátic
 desenvolvemos uma API REST completa para gerenciar feriados. O projeto completo
 está disponível em [github.com/vagnerclementino/api-holiday](https://github.com/vagnerclementino/api-holiday) e pode ser executado localmente usando Docker Compose.
 
-Um outro exemplo de bom uso da DOP é em *handlers* de funções AWS Lambda[^31]. O
+Um outro exemplo de bom uso da DOP é em *handlers* de funções AWS Lambda[^23]. O
 ambiente serverless beneficia-se enormemente da imutabilidade dos dados, que
 elimina problemas de concorrência entre invocações simultâneas da função, e da
 separação clara entre dados e operações, que facilita o teste unitário de cada
@@ -840,13 +839,12 @@ chance para a DOP em seu próximo projeto?
 [^19]: [Model the data, the whole data, and nothing but the data - DOP v1.1](https://inside.java/2024/05/29/dop-v1-1-model-data/)
 [^20]: [Make illegal states unrepresentable - DOP v1.1](https://inside.java/2024/06/03/dop-v1-1-illegal-states/)
 [^21]: [Separate operations from data - DOP v1.1](https://inside.java/2024/06/05/dop-v1-1-separate-operations/)
-[^22]: [When to use Data-Oriented Programming v1.1](https://inside.java/2024/06/10/dop-v1-1-wrap-up/)
-[^23]: [Stack Overflow Developer Survey 2025 - Most Popular Technologies](https://survey.stackoverflow.co/2025/technology#most-popular-technologies)
-[^24]: [JEP 395: Records](https://openjdk.org/jeps/395)
+[^22]: [Stack Overflow Developer Survey 2025 - Most Popular Technologies](https://survey.stackoverflow.co/2025/technology#most-popular-technologies)
+[^23]: [AWS Lambda](https://aws.amazon.com/lambda/)
 [^25]: [GNU Smalltalk](https://www.gnu.org/software/smalltalk/)
 [^26]: [JEP 409: Sealed Classes](https://openjdk.org/jeps/409)
 [^27]: [JEP 394: Pattern Matching for instanceof](https://openjdk.org/jeps/394)
 [^28]: [JEP 441: Pattern Matching for switch](https://openjdk.org/jeps/441)
 [^29]: [JEP 378: Text Blocks](https://openjdk.org/jeps/378)
 [^30]: [A Philosophy of Software Design - Book Review](https://blog.pragmaticengineer.com/a-philosophy-of-software-design-review/)
-[^31]: [AWS Lambda](https://aws.amazon.com/lambda/)
+[^32]: [JEP 395: Records](https://openjdk.org/jeps/395)
