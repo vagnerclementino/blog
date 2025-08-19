@@ -15,12 +15,12 @@ ambígua. Ambiguidade, por sua natureza, gera complexidade.
 O ser humano utiliza diferentes estratégias para lidar com a complexidade:
 matemáticos usam notações e fórmulas para expressar conceitos complexos, médicos
 utilizam classificações como a Classificação Internacional de Doenças (CID-10)
-para categorizar doenças, arquitetos criam plantas e blueprints para representar
+para categorizar doenças, arquitetos criam plantas e blueprints, para representar
 estruturas tridimensionais em duas dimensões e gestores utilizam organogramas e
 fluxogramas para mapear processos e hierarquias organizacionais.
 
-Em seu livro *A Philosophy of Software Design*[^30], John Ousterhout propões
-duas formas de lidar com a complexidade no desenvolvimento de software. A
+Em seu livro *A Philosophy of Software Design*[^30], John Ousterhout propõe
+duas abordagens para lidar com a complexidade no desenvolvimento de software. A
 primeira consiste em *simplificar e tornar o código mais claro* por meio da
 remoção de casos especiais e da utilização de identificadores consistentes. A
 segunda abordagem é *encapsular a complexidade por meio de um design modular*,
