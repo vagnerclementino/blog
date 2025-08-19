@@ -19,20 +19,20 @@ para categorizar doenças, arquitetos criam plantas e blueprints para representa
 estruturas tridimensionais em duas dimensões e gestores utilizam organogramas e
 fluxogramas para mapear processos e hierarquias organizacionais.
 
-Em seu livro *A Philosophy of Software Design*[^30], John Ousterhout discute
-duas maneiras principais de lidar com a complexidade no desenvolvimento de
-software. A primeira consiste em *simplificar e tornar o código mais claro* por
-meio da remoção de casos especiais e da utilização de identificadores
-consistentes.
-
-A segunda abordagem é *encapsular a complexidade por meio de um design modular*,
+Em seu livro *A Philosophy of Software Design*[^30], John Ousterhout propões
+duas formas de lidar com a complexidade no desenvolvimento de software. A
+primeira consiste em *simplificar e tornar o código mais claro* por meio da
+remoção de casos especiais e da utilização de identificadores consistentes. A
+segunda abordagem é *encapsular a complexidade por meio de um design modular*,
 no qual um sistema de software é dividido em módulos, como classes em uma
 linguagem orientada a objetos, permitindo que os programadores trabalhem no
 sistema sem se sentirem sobrecarregados com toda a sua complexidade de uma só
-vez. As abordagens propostas por Ousterhout estão relacionadas intrinsecamente
-com o momento da escrita do código, contudo, se considerarmos a fase de
-design, eu acrescentaria uma terceira abordagem para lidar com a complexidade:
-os modelos.
+vez.
+
+As abordagens propostas por Ousterhout estão relacionadas intrinsecamente com o
+momento da escrita do código, contudo, se considerarmos a fase de design,
+podemos acrescentar uma terceira abordagem para abordar a complexidade: os
+modelos.
 
 Modelos são uma representação abstrata de um sistema (de software) que nos
 auxilia a compreender e simplificar a complexidade inerente. Eles nos permitem
@@ -51,15 +51,14 @@ aspectos mais importantes e reconhecíveis.
 
 ![Um cisne e a sua representação com um origami. Fonte: Gerado por IA](origami.png)
 
-Nas linguagens de programação uma das maneiras para lidar com a complexidade é
-aderir a um ou mais paradigmas de programação. Os paradigmas foram pensados
-para nos ajudar a reduzir a complexidade do mundo real e mapeá-la em sistemas de
-software compreensíveis e funcionais. Assim como o origami, cada paradigma
-oferece uma forma específica de "transformar" a realidade em código, capturando
-os aspectos essenciais do domínio que estamos modelando enquanto abstrai
-detalhes desnecessários.
+Nas linguagens de programação os paradigmas são uma das ferramentas para lidar
+com a complexidade. Eles foram pensados para capturar as nuances do "mundo real"
+e mapeá-las em sistemas de software compreensíveis e funcionais. Assim como o
+origami, cada paradigma oferece uma forma específica de "transformar" a
+realidade em código, capturando os aspectos essenciais do domínio que estamos
+modelando enquanto abstrai detalhes desnecessários.
 
-Quando desenvolvemos software, não estamos tentando recriar o mundo real em sua
+Quando desenvolvemos software, não estamos tentando recriar a realidade em sua
 totalidade — isso seria impossível e improdutivo. Em vez disso, utilizamos
 paradigmas como ferramentas conceituais que nos permitem focar nos elementos
 mais relevantes para resolver determinado problema, como um artista do origami.
@@ -70,34 +69,49 @@ Ao longo do tempo diferentes paradigmas de programação emergiram para abordar
 distintos tipos de problemas e formas de pensar sobre software. Cada um oferece
 uma perspectiva única sobre como organizar código e estruturar soluções.
 
-Um paradigma de programação influencia significativamente o design de uma linguagem, embora linguagens modernas possam suportar múltiplos paradigmas. Em outras palavras, um paradigma de programação define como os
-problemas são resolvidos com código. Por outro lado, uma linguagem de
-programação é a ferramenta que permite a implementação dessas soluções. Dado que
-uma linguagem pode suportar um ou mais paradigmas, a partir da análise da adoção
-das linguagens[^22], é possível inferir quais são os paradigmas mais utilizados.
+Um paradigma de programação influencia significativamente o design de uma
+linguagem, embora linguagens modernas possam suportar múltiplos paradigmas. Em
+outras palavras, um paradigma de programação define como os problemas são
+resolvidos com código. Por outro lado, uma linguagem de programação é a
+ferramenta que permite a implementação dessas soluções. Dado que uma linguagem
+pode suportar um ou mais paradigmas, a partir da análise da adoção das
+linguagens[^22], é possível inferir quais são os paradigmas mais utilizados.
 Independente da metodologia adotada, acredito que o resultado dos paradigmas
 mais utilizados seria *procedural, orientado a objetos e funcional*, entretanto,
 não necessariamente nessa ordem.
 
 ![Os (possíveis) paradigmas mais adotados no mercado. Fonte: Gerado por IA.](paradigmas.png)
 
-A tabela a seguir faz uma breve comparação entre os principais paradigmas
-adotados pelo mercado, ao mesmo tempo que os compara com uma nova abordagem, de
-uma programação orientada a dados, que explicarei com mais detalhes um pouco
-mais a frente.
+Os principais paradigmas de programação adotam diferentes abordagens para
+resolver problemas, diferindo em aspectos como gerenciamento de estado,
+estruturação de código e tratamento de complexidade. Mais adiante, apresentarei
+também uma nova abordagem: a programação orientada a dados.
 
-| Aspecto | Procedural | Orientado a Objetos | Funcional | Orientado a Dados |
-|---------|------------|-------------------|-----------|------------------|
-| **Foco Principal** | Sequência de procedimentos | Objetos e suas interações | Funções e transformações | Estrutura e fluxo de dados |
-| **Gerenciamento de Estado** | Estado global/local mutável | Estado encapsulado em objetos | Estado imutável | Dados imutáveis |
-| **Reutilização** | Funções e módulos | Herança e composição | Funções puras | Estruturas de dados |
-| **Testabilidade** | Moderada (dependências) | Boa (isolamento) | Excelente (pureza) | Excelente (imutabilidade) |
-| **Tratamento de Complexidade** | Decomposição em funções | Abstração e encapsulamento | Composição de funções | Separação dados/comportamento |
+🔧 **Procedural** → "Como fazer passo a passo"
+
+- Divide o problema em funções menores
+- Controle explícito do fluxo de execução
+- Exemplos: C, Pascal, COBOL
+
+🧬 **Orientado a Objetos** → "Quem faz o quê"  
+
+- Modela entidades do mundo real como objetos
+- Encapsula dados e comportamentos juntos
+- Exemplos: Java, C#, Python
+
+λ **Funcional** → "O que transformar"
+
+- Trata computação como avaliação de funções
+- Evita mudanças de estado e efeitos colaterais  
+- Exemplos: Haskell, Lisp, Erlang
 
 Existem diferentes formas para descrever e avaliar os diferentes paradigmas.
-Todavia, muitas vezes basta uma sentença: seja *"tudo é objeto"* ao falarmos
-do paradigma orientado a objetos ou *"tudo é função"* ao tratar o paradigma
-funcional. Por outro lado, quando apresentarmos o paradigma da *Programação Orientada a Dados (Data-Oriented Programming - DOP)*, você observará que a DOP também bebe da fonte dos paradigmas funcional e orientado a objetos.
+Todavia, muitas vezes basta uma sentença: seja *"tudo é objeto"* ao falarmos do
+paradigma orientado a objetos ou *"tudo é função"* ao tratar o paradigma
+funcional. Por outro lado, quando apresentarmos o paradigma da
+*Programação Orientada a Dados (Data-Oriented Programming - DOP)*,
+você observará que a DOP também bebe da fonte dos paradigmas funcional e
+orientado a objetos.
 
 ## Fundamentos da Programação Orientada a Objetos
 
