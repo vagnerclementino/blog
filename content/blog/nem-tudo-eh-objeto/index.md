@@ -42,12 +42,12 @@ organizada, os modelos ajudam a reduzir a ambiguidade e a tornar a solução mai
 compreensível.
 
 Engana-se quem pensa que o uso de modelos é uma abordagem exclusiva do
-desenvolvimento de software. Imagine um artista criando um origami de
-cisne. O resultado final captura a essência elegante da ave — seu pescoço
-curvado, suas asas dobradas, sua postura graciosa — mas deixa de lado detalhes
-desnecessários como a textura das penas ou a cor dos olhos. Um origami não busca
-replicar perfeitamente a realidade, mas sim extrair e representar apenas os
-aspectos mais importantes e reconhecíveis.
+desenvolvimento de software. Imagine um artista criando um origami de cisne. O
+resultado final captura a essência elegante da ave — seu pescoço curvo, suas
+asas dobradas, sua postura graciosa — mas deixa de lado detalhes desnecessários
+como a textura das penas ou a cor dos olhos. Um origami não busca replicar
+perfeitamente a realidade, mas sim extrair e representar apenas os aspectos mais
+importantes e reconhecíveis.
 
 ![Um cisne e a sua representação com um origami. Fonte: Gerado por IA](origami.png)
 
