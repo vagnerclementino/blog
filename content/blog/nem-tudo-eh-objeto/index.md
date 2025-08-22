@@ -9,7 +9,7 @@ featuredImage: feature.png
 
 Detalhes importam! É assim na vida ou no desenvolvimento de software. O processo
 de projetar e construir sistemas de software está condicionado indubitavelmente
-ao uso de linguagens: de software ou natural. Essa última é, por essência,
+ao uso de linguagens: de software ou natural. Esta última é, por essência,
 ambígua. Ambiguidade, por sua natureza, gera complexidade.
 
 O ser humano utiliza diferentes estratégias para lidar com a complexidade:
@@ -19,8 +19,8 @@ para categorizar doenças, arquitetos criam plantas e blueprints, para represent
 estruturas tridimensionais em duas dimensões e gestores utilizam organogramas e
 fluxogramas para mapear processos e hierarquias organizacionais.
 
-Em seu livro *A Philosophy of Software Design*[^30], John Ousterhout propõe
-duas abordagens para lidar com a complexidade no desenvolvimento de software. A
+Em seu livro *A Philosophy of Software Design*[^30], John Ousterhout propõe duas
+abordagens para lidar com a complexidade no desenvolvimento de software. A
 primeira consiste em *simplificar e tornar o código mais claro* por meio da
 remoção de casos especiais e da utilização de identificadores consistentes. A
 segunda abordagem é *encapsular a complexidade por meio de um design modular*,
@@ -29,20 +29,20 @@ linguagem orientada a objetos, permitindo que os programadores trabalhem no
 sistema sem se sentirem sobrecarregados com toda a sua complexidade de uma só
 vez.
 
-As abordagens propostas por Ousterhout estão relacionadas intrinsecamente com o
-momento da escrita do código, contudo, se considerarmos a fase de design,
-podemos acrescentar uma terceira abordagem para abordar a complexidade: os
+As abordagens propostas por Ousterhout estão intrinsecamente relacionadas com o
+momento da escrita do código. Contudo, se considerarmos a fase de design,
+podemos acrescentar uma terceira abordagem para lidar com a complexidade: os
 modelos.
 
 Modelos são uma representação abstrata de um sistema (de software) que nos
 auxilia a compreender e simplificar a complexidade inerente. Eles nos permitem
-visualizar e comunicar as diferentes partes e interações do sistema, facilitando
+visualizar e comunicar as diferentes partes e interações da aplicação, facilitando
 o processo de planejamento e construção. Ao fornecer uma estrutura clara e
-organizada, os modelos ajudam a reduzir a ambiguidade e a tornar o sistema mais
+organizada, os modelos ajudam a reduzir a ambiguidade e a tornar a solução mais
 compreensível.
 
 Engana-se quem pensa que o uso de modelos é uma abordagem exclusiva do
-desenvolvimento de software. Imagine um artista origami criando um origami de
+desenvolvimento de software. Imagine um artista criando um origami de
 cisne. O resultado final captura a essência elegante da ave — seu pescoço
 curvado, suas asas dobradas, sua postura graciosa — mas deixa de lado detalhes
 desnecessários como a textura das penas ou a cor dos olhos. Um origami não busca
@@ -77,7 +77,7 @@ ferramenta que permite a implementação dessas soluções. Dado que uma linguag
 pode suportar um ou mais paradigmas, a partir da análise da adoção das
 linguagens[^22], é possível inferir quais são os paradigmas mais utilizados.
 Independente da metodologia adotada, acredito que o resultado dos paradigmas
-mais utilizados seria *procedural, orientado a objetos e funcional*, entretanto,
+mais utilizados seria *procedural, orientado a objetos e funcional*. Entretanto,
 não necessariamente nessa ordem.
 
 ![Os (possíveis) paradigmas mais adotados no mercado. Fonte: Gerado por IA.](paradigmas.png)
@@ -111,7 +111,7 @@ paradigma orientado a objetos ou *"tudo é função"* ao tratar o paradigma
 funcional. Por outro lado, quando apresentarmos o paradigma da
 *Programação Orientada a Dados (Data-Oriented Programming - DOP)*,
 você observará que a DOP também bebe da fonte dos paradigmas funcional e
-orientado a objetos.
+**orientado a objetos**.
 
 ## Fundamentos da Programação Orientada a Objetos
 
@@ -128,14 +128,14 @@ A OOP enfatiza a modelagem de sistemas por meio de objetos que possuem
 propriedades e comportamentos, promovendo a reutilização de código e o
 encapsulamento de dados. Dentre os seus princípios fundamentais podemos citar:
 
-- **Encapsulamento**: Agrupa dados e métodos que operam sobre esses dados em uma única unidade (classe), controlando o acesso através de modificadores de visibilidade.
+- **Encapsulamento**: Agrupa dados e métodos que operam sobre essas informações em uma única unidade (classe), controlando o acesso através de modificadores de visibilidade.
 - **Herança**: Permite que classes derivem características de outras classes, promovendo reutilização de código.
 - **Abstração**: Oculta detalhes de implementação complexos, expondo apenas interfaces necessárias.
 - **Polimorfismo**: Permite que objetos de diferentes tipos sejam tratados através de uma interface comum.
 
 Esses princípios permitem fazer uma analogia entre uma classe na OOP e um
 organismo, onde o encapsulamento atua como a membrana celular que controla o que
-entra e sai, a herança funciona como a transmissão genética de características,
+entra e sai, a herança funciona como a transmissão genética de características
 e o polimorfismo se assemelha à capacidade de diferentes organismos responderem
 de forma especializada aos mesmos estímulos ambientais.
 
@@ -148,9 +148,9 @@ entendo importante explicitar:
 
 - **Existem diferentes tipos de feriados**: Nacionais (Independência), religiosos (Natal, Ramadan), regionais (São João) e comerciais (Dia das mães/pais)[^1]
 
-- **Os feriados podem ser fixos ou móveis**: Fixos acontecem sempre na mesma data (25/12) e os móveis são calculados através do calendário lunar (Páscoa), dia da semana (Memorial Day) ou baseado em outros feriados (Sexta-Feira Santa)[^4]
+- **Os feriados podem ser fixos ou móveis**: Fixos acontecem sempre na mesma data (25/12) e os móveis são calculados através do calendário lunar (Páscoa), dia da semana (Memorial Day) ou baseado em outras celebrações (Sexta-Feira Santa)[^4]
 
-- **Os feriados dependem de quais sistemas de calendário adotados**: Gregoriano (feriados ocidentais), lunar islâmico (Ramadan "roda" 11 dias/ano), luni-solar judaico (Rosh Hashanah varia mas mantém sazonalidade)[^7]
+- **Os feriados dependem de quais sistemas de calendário adotados**: Gregoriano (celebrações ocidentais), lunar islâmico (Ramadan "roda" 11 dias/ano), luni-solar judaico (Rosh Hashanah varia mas mantém sazonalidade)[^7]
 
 - **Data agendada diferente da observada**: Feriado pode ter data oficial diferente da celebrada, como por exemplo, na estratégia de *"Mondayisation"* que move feriados de fim de semana para a segunda-feira[^10]
 
@@ -187,11 +187,10 @@ código e estabelecendo uma hierarquia lógica entre os conceitos.
 
 O **polimorfismo** é implementado através do método abstrato `getDate(int
 year)`, onde cada subclasse fornece sua própria implementação específica -
-feriados fixos retornam sempre a mesma data, enquanto feriados móveis executam
+feriados fixos retornam sempre a mesma data, enquanto os móveis executam
 cálculos complexos, como o algoritmo astronômico para definir a data da Páscoa.
 A **abstração** oculta a complexidade dos diferentes tipos de cálculo de datas
-atrás de uma interface uniforme, permitindo que o código cliente trate todos os
-feriados de forma consistente, independentemente de serem fixos ou móveis. A
+atrás de uma interface uniforme, permitindo que o código cliente trate todas essas celebrações de forma consistente, independentemente de serem fixas ou móveis. A
 seguir temos um código explicitando o uso de cada um dos princípios da OOP.
 
 ```java
@@ -299,7 +298,7 @@ Essas limitações são inerentes à OOP, onde o foco no encapsulamento de dados
 comportamento (métodos) pode inadvertidamente criar pontos de mutabilidade não
 controladas. A Programação Orientada a Dados emerge como uma alternativa que
 aborda diretamente esses problemas, priorizando a imutabilidade, a transparência
-dos dados e a separação clara entre dados e operações.
+e a separação clara entre dados e operações.
 
 ## Programação Orientada a Dados: Uma Nova Perspectiva
 
@@ -317,7 +316,7 @@ prática dos conceitos propostos por Parlog.
 
 A Programação Orientada a Dados se baseia em quatro princípios fundamentais[^18]
 que, quando aplicados em conjunto, criam sistemas robustos, previsíveis e
-potencialmente mais fáceis de manter. A figura abaixo ilustra esses quatro princípios fundamentais. Exploraremos cada um usando como
+mais fáceis de manter. A figura abaixo ilustra esses quatro princípios fundamentais. Exploraremos cada um usando como
 exemplo a nossa implementação do sistema de gerenciamento de feriados.
 
 ![Os princípios fundamentais da DOP](four-pod-principles.png)
@@ -488,16 +487,17 @@ public record MoveableHoliday(
 Este princípio garante que apenas combinações legais de dados possam ser
 representadas no sistema[^20]. O mundo é caótico e toda regra parece ter uma
 exceção - "todo feriado tem uma data fixa" rapidamente se torna "todo feriado
-fixo tem uma data fixa, mas feriados móveis dependem de cálculos complexos, e
-feriados observados podem ter datas diferentes da oficial". Quando modelamos isso de forma inadequada, podemos ficar
+fixo tem uma data fixa, mas os móveis dependem de cálculos complexos, e
+os observados podem ter datas diferentes da oficial". Quando modelamos isso de forma inadequada, podemos ficar
 presos com estruturas que permitem estados inconsistentes.
 
 Considere uma modelagem problemática para feriados que tenta acomodar todos os
 tipos em uma única classe genérica. Esta abordagem apresenta vários problemas
-fundamentais: campos opcionais desnecessários - um feriado fixo como o
-Natal não precisa de feriado base (`baseHoliday`) ou uma quantidade de dias
-entre os feriados (`dayOffset`) como para calcular a Sexta Feira Santa a partir
-da Páscoa. Esse cuidado simples de tornar estados inconsistentes impossíveis evita que:
+fundamentais: campos opcionais desnecessários - um feriado fixo como o Natal não
+precisa de feriado base (`baseHoliday`) ou uma quantidade de dias entre os
+feriados (`dayOffset`) como para calcular a Sexta Feira Santa a partir da
+Páscoa. Esse cuidado simples de tornar estados inconsistentes impossíveis evita
+que:
 
 - regras implícitas não sejam expressas no código
 - validações fiquem espalhadas e precisem ser repetidas em vários pontos
@@ -597,11 +597,13 @@ var newYear = new ObservedHoliday("Ano Novo", "Primeiro dia do ano",
 
 Este princípio mantém dados e comportamentos separados[^21], com records
 contendo apenas estrutura e operações implementadas como funções puras em
-classes dedicadas. Para manter os records livres de lógica de domínio não trivial, as operações não devem ser implementadas neles, mas sim em subsistemas dedicados. Esta abordagem previne classes com muitas responsabilidades e evita que tipos
-centrais do domínio atraiam funcionalidades excessivas e se tornem difíceis de
-manter, um problema comum na programação orientada a objetos onde classes como
-`Holiday` acabariam acumulando dezenas de métodos para cálculo de datas,
-formatação, validação, comparação e processamento.
+classes dedicadas. Para manter os records livres de lógica de domínio não
+trivial, as operações não devem ser implementadas neles, mas sim em subsistemas
+dedicados. Esta abordagem previne classes com muitas responsabilidades e evita
+que tipos centrais do domínio atraiam funcionalidades excessivas e se tornem
+difíceis de manter, um problema comum na programação orientada a objetos onde
+classes como `Holiday` acabariam acumulando dezenas de métodos para cálculo de
+datas, formatação, validação, comparação e processamento.
 
 ```java
 // Dados puros - apenas estrutura
