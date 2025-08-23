@@ -10,6 +10,7 @@ export default {
     author: `Vagner Clementino`,
     description: `A personal blog with styled components and dark mode`,
     siteUrl: `https://notes.clementino.me`,
+    language: `pt-BR`,
     social: {
       twitter: `vclementino`,
     },
