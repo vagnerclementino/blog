@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap");
+@import "./hyphenation.css";
 
 p {
   text-align: justify;
@@ -6,8 +7,23 @@ p {
   line-height: 1.7;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  /* Configuração de hifenização otimizada para português brasileiro */
   -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
   hyphens: auto;
+  /* Controla onde as quebras de linha podem ocorrer */
+  -webkit-hyphenate-limit-before: 3;
+  -webkit-hyphenate-limit-after: 3;
+  -webkit-hyphenate-limit-chars: 6 3 3;
+  -webkit-hyphenate-limit-lines: 2;
+  -webkit-hyphenate-limit-last: always;
+  -webkit-hyphenate-limit-zone: 8%;
+  /* Configurações para outros navegadores */
+  hyphenate-limit-chars: 6 3 3;
+  hyphenate-limit-lines: 2;
+  hyphenate-limit-last: always;
+  hyphenate-limit-zone: 8%;
 
   @media screen and (min-width: 600px) {
     font-size: 18px;
