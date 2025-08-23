@@ -5,20 +5,27 @@ import rehypeRewrite from 'rehype-rewrite';
 
 /**
  * Localiza o título das footnotes de "Footnotes" para "Referências" em português brasileiro.
- * Esta função é usada como plugin rehype para modificar o HTML gerado pelo processamento MDX.
+ * Utiliza destructuring e guards para uma abordagem funcional minimalista.
  * 
  * @param {Object} node - Nó do AST HTML a ser processado
  */
 const localizeFootnotesTitle = (node) => {
-  if (node.type === 'element' && 
-      node.tagName === 'h2' && 
-      node.properties && 
-      node.properties.id === 'footnote-label' &&
-      node.children && 
-      node.children[0] && 
-      node.children[0].type === 'text' && 
-      node.children[0].value === 'Footnotes') {
-    node.children[0].value = 'Referências';
+  const {
+    type,
+    tagName,
+    properties: { id } = {},
+    children: [firstChild] = []
+  } = node || {};
+
+  const isFootnoteHeader = 
+    type === 'element' &&
+    tagName === 'h2' &&
+    id === 'footnote-label' &&
+    firstChild?.type === 'text' &&
+    firstChild?.value === 'Footnotes';
+
+  if (isFootnoteHeader) {
+    firstChild.value = 'Referências';
   }
 };
 
