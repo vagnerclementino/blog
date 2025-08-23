@@ -3,6 +3,25 @@ const homepageURL = process.env.HOMEPAGE_URL || 'https://clementino.me'
 import remarkGfm from 'remark-gfm';
 import rehypeRewrite from 'rehype-rewrite';
 
+/**
+ * Localiza o título das footnotes de "Footnotes" para "Referências" em português brasileiro.
+ * Esta função é usada como plugin rehype para modificar o HTML gerado pelo processamento MDX.
+ * 
+ * @param {Object} node - Nó do AST HTML a ser processado
+ */
+const localizeFootnotesTitle = (node) => {
+  if (node.type === 'element' && 
+      node.tagName === 'h2' && 
+      node.properties && 
+      node.properties.id === 'footnote-label' &&
+      node.children && 
+      node.children[0] && 
+      node.children[0].type === 'text' && 
+      node.children[0].value === 'Footnotes') {
+    node.children[0].value = 'Referências';
+  }
+};
+
 export default {
   trailingSlash: 'always',
   siteMetadata: {
@@ -97,18 +116,7 @@ export default {
           remarkPlugins: [remarkGfm],
           rehypePlugins: [
             [rehypeRewrite, {
-              rewrite: (node) => {
-                if (node.type === 'element' && 
-                    node.tagName === 'h2' && 
-                    node.properties && 
-                    node.properties.id === 'footnote-label' &&
-                    node.children && 
-                    node.children[0] && 
-                    node.children[0].type === 'text' && 
-                    node.children[0].value === 'Footnotes') {
-                  node.children[0].value = 'Referências';
-                }
-              }
+              rewrite: localizeFootnotesTitle
             }]
           ],
           format: 'mdx',
