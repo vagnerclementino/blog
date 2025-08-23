@@ -60,6 +60,9 @@ a {
   -moz-hyphens: none;
   -ms-hyphens: none;
   hyphens: none;
+  /* Evita overflow para URLs/textos longos sem inserir hífens */
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 /* Configurações específicas para dispositivos móveis */
