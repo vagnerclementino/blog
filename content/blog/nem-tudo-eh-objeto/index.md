@@ -7,20 +7,20 @@ featuredImage: feature.png
 
 ## A arte de Lidar com a Complexidade
 
-Detalhes importam! É assim na vida ou no desenvolvimento de software. O processo
-de projetar e construir sistemas de software está condicionado indubitavelmente
-ao uso de linguagens: de software ou natural. Esta última é, por essência,
-ambígua. Ambiguidade, por sua natureza, gera complexidade.
+Detalhes importam! É assim na vida ou no desenvolvimento de software. O
+processo de projetar e construir sistemas de software está condicionado
+indubitavelmente ao uso de linguagens: de software ou natural. Esta última é,
+por essência, ambígua. Ambiguidade, por sua natureza, gera complexidade.
 
 O ser humano utiliza diferentes estratégias para lidar com a complexidade:
-matemáticos usam notações e fórmulas para expressar conceitos complexos, médicos
-utilizam classificações como a Classificação Internacional de Doenças (CID-10)
-para categorizar doenças, arquitetos criam plantas e blueprints, para representar
-estruturas tridimensionais em duas dimensões e gestores utilizam organogramas e
-fluxogramas para mapear processos e hierarquias organizacionais.
+matemáticos usam notações e fórmulas para expressar conceitos complexos,
+médicos utilizam classificações como a Classificação Internacional de Doenças
+(CID-10) para categorizar doenças, arquitetos criam plantas e blueprints, para
+representar estruturas tridimensionais em duas dimensões e gestores utilizam
+organogramas e fluxogramas para mapear processos e hierarquias organizacionais.
 
-Em seu livro *A Philosophy of Software Design*[^30], John Ousterhout propõe duas
-abordagens para lidar com a complexidade no desenvolvimento de software. A
+Em seu livro *A Philosophy of Software Design*[^30], John Ousterhout propõe
+duas abordagens para lidar com a complexidade no desenvolvimento de software. A
 primeira consiste em *simplificar e tornar o código mais claro* por meio da
 remoção de casos especiais e da utilização de identificadores consistentes. A
 segunda abordagem é *encapsular a complexidade por meio de um design modular*,
@@ -36,18 +36,18 @@ modelos.
 
 Modelos são uma representação abstrata de um sistema (de software) que nos
 auxilia a compreender e simplificar a complexidade inerente. Eles nos permitem
-visualizar e comunicar as diferentes partes e interações da aplicação, facilitando
-o processo de planejamento e construção. Ao fornecer uma estrutura clara e
-organizada, os modelos ajudam a reduzir a ambiguidade e a tornar a solução mais
-compreensível.
+visualizar e comunicar as diferentes partes e interações da aplicação,
+facilitando o processo de planejamento e construção. Ao fornecer uma estrutura
+clara e organizada, os modelos ajudam a reduzir a ambiguidade e a tornar a
+solução mais compreensível.
 
 Engana-se quem pensa que o uso de modelos é uma abordagem exclusiva do
 desenvolvimento de software. Imagine um artista criando um origami de cisne. O
 resultado final captura a essência elegante da ave — seu pescoço curvo, suas
 asas dobradas, sua postura graciosa — mas deixa de lado detalhes desnecessários
 como a textura das penas ou a cor dos olhos. Um origami não busca replicar
-perfeitamente a realidade, mas sim extrair e representar apenas os aspectos mais
-importantes e reconhecíveis.
+perfeitamente a realidade, mas sim extrair e representar apenas os aspectos
+mais importantes e reconhecíveis.
 
 ![Um cisne e a sua representação com um origami. Fonte: Gerado por IA](origami.png)
 
@@ -65,7 +65,7 @@ mais relevantes para resolver determinado problema, como um artista do origami.
 
 ## Panorama dos Paradigmas de Programação
 
-Ao longo do tempo diferentes paradigmas de programação emergiram para abordar
+Ao longo do tempo, diferentes paradigmas de programação surgiram para abordar
 distintos tipos de problemas e formas de pensar sobre software. Cada um oferece
 uma perspectiva única sobre como organizar código e estruturar soluções.
 
@@ -85,7 +85,7 @@ não necessariamente nessa ordem.
 Os principais paradigmas de programação adotam diferentes abordagens para
 resolver problemas, diferindo em aspectos como gerenciamento de estado,
 estruturação de código e tratamento de complexidade. Mais adiante, apresentarei
-também uma nova abordagem: a programação orientada a dados.
+também uma nova abordagem: uma *programação orientada a dados*.
 
 🔧 **Procedural** → "Como fazer passo a passo"
 
@@ -115,14 +115,14 @@ você observará que a DOP também bebe da fonte dos paradigmas funcional e
 
 ## Fundamentos da Programação Orientada a Objetos
 
-A Programação Orientada a Objetos (Object-Oriented Programming - OOP) deve a sua ampla adoção a linguagens
-como *Java* e *C++*. Cabe ressaltar que Java não é uma linguagem puramente
-orientada a objetos principalmente por conta de seus tipos primitivos e os
-métodos estáticos (*static*) que pertencem à classe e não a um objeto. Apesar de
-não ser uma linguagem estritamente orientada a objetos o seu uso extensivo na
-indústria de software contribuiu para popularizar os princípios da OOP. Um
-exemplo de uma linguagem puramente orientada a objetos é o Smalltalk[^25], onde
-tudo é tratado como objeto.
+A Programação Orientada a Objetos (Object-Oriented Programming - OOP) deve a sua
+ampla adoção a linguagens como *Java* e *C++*. Cabe ressaltar que Java não é uma
+linguagem puramente orientada a objetos principalmente por conta de seus tipos
+primitivos e os métodos estáticos (*static*) que pertencem à classe e não a um
+objeto. Apesar de não ser uma linguagem estritamente orientada a objetos, o seu
+uso extensivo na indústria de software contribuiu para popularizar os princípios
+da OOP. Um exemplo de uma linguagem puramente orientada a objetos é o
+Smalltalk[^25], onde tudo é tratado como objeto.
 
 A OOP enfatiza a modelagem de sistemas por meio de objetos que possuem
 propriedades e comportamentos, promovendo a reutilização de código e o
@@ -312,7 +312,7 @@ Brian Goetz[^16], posteriormente, Nicolai Parlog[^17] refinou o conceito,
 organizando melhor os princípios fundamentais. Este artigo apresenta uma visão
 prática dos conceitos propostos por Parlog.
 
-## Princípios Fundamentais
+### Princípios Fundamentais
 
 A Programação Orientada a Dados se baseia em quatro princípios fundamentais[^18]
 que, quando aplicados em conjunto, criam sistemas robustos, previsíveis e
@@ -696,26 +696,27 @@ A modelagem DOP apresenta uma estrutura fundamentalmente diferente da OOP. A
 *sealed interface* `Holiday` define apenas o contrato de dados (métodos de
 acesso), enquanto cada record implementa exatamente os dados necessários para
 seu tipo específico. Observe como não há herança de implementação - cada record
-é independente e contém apenas os dados relevantes para seu contexto, eliminando
-campos desnecessários e garantindo que estados ilegais sejam irrepresentáveis
-pelo sistema de tipos.
+é independente e contém apenas os dados relevantes para seu contexto,
+eliminando campos desnecessários e garantindo que estados ilegais sejam
+representáveis pelo sistema de tipos.
 
 ![Diagrama de classe da modelagem dos feriados como DOP](class-diagram.png)
 
-Assim como fizemos uma analogia de uma classe na OOP com um organismo vivo, podemos comparar a DOP com uma linha de montagem industrial
-moderna. Nesta analogia, os dados imutáveis são como peças padronizadas que
-fluem pela linha sem serem alteradas em sua essência, as operações funcionam
-como estações de trabalho especializadas que processam essas peças de forma
-previsível. Por outro lado, o *pattern matching* atua como um sistema de
-classificação automática que direciona cada peça para a estação correta. Por
-fim, a separação entre dados e operações espelha a divisão clara entre
-matéria-prima e processos de fabricação. Esta analogia faz sentido porque, tanto
-a DOP quanto uma linha de montagem, priorizam eficiência, previsibilidade,
-especialização de funções e fluxo controlado de informação, onde cada componente
-tem uma responsabilidade bem definida e o resultado final é construído através
-da composição ordenada de operações simples e confiáveis.
+Assim como fizemos uma analogia de uma classe na OOP com um organismo vivo,
+podemos comparar a DOP com uma linha de montagem industrial moderna. Nesta
+analogia, os dados imutáveis são como peças padronizadas que fluem pela linha
+sem serem alteradas em sua essência, as operações funcionam como estações de
+trabalho especializadas que processam essas peças de forma previsível. Por
+outro lado, o *pattern matching* atua como um sistema de classificação
+automática que direciona cada peça para a estação correta. Por fim, a separação
+entre dados e operações espelha a divisão clara entre matéria-prima e processos
+de fabricação. Esta analogia faz sentido porque, tanto a DOP quanto uma linha
+de montagem, priorizam eficiência, previsibilidade, especialização de funções e
+fluxo controlado de informação, onde cada componente tem uma responsabilidade
+bem definida e o resultado final é construído através da composição ordenada de
+operações simples e confiáveis.
 
-## Programação orientada a dados em Java
+### Programação orientada a dados em Java
 
 A linguagem Java evoluiu com algumas funcionalidades que isoladas podem não ser
 percebidas como relevantes, porém, em conjunto, servem para suportar os
@@ -766,26 +767,30 @@ em que o uso da DOP pode ser um bom ponto de partida.
 - *Parsers* de configuração (JSON, XML)
 - Calculadoras de domínio específico
 
-## Casos de uso
+### Casos de uso
 
 Para demonstrar todos os conceitos da programação orientada a dados na prática,
 desenvolvemos uma API REST completa para gerenciar feriados. O projeto completo
-está disponível em [github.com/vagnerclementino/api-holiday](https://github.com/vagnerclementino/api-holiday) e pode ser executado localmente usando Docker Compose.
+está disponível em
+[github.com/vagnerclementino/api-holiday](https://github.com/vagnerclementino/api-holiday)
+e pode ser executado localmente usando Docker Compose.
 
-Um outro exemplo de bom uso da DOP é em *handlers* de funções AWS Lambda[^23]. O
-ambiente serverless beneficia-se enormemente da imutabilidade dos dados, que
+Um outro exemplo de bom uso da DOP é em *handlers* de funções AWS Lambda[^23].
+O ambiente serverless beneficia-se enormemente da imutabilidade dos dados, que
 elimina problemas de concorrência entre invocações simultâneas da função, e da
 separação clara entre dados e operações, que facilita o teste unitário de cada
 *handler* individualmente. 
 
-O pattern matching com `switch` torna o roteamento de requisições HTTP mais legível e fácil de manter em comparação com
-uma sequência de `if-else`. Ademais, a ausência de estado mutável compartilhado
-reduz significativamente a complexidade de debugging em um ambiente distribuído.
+O pattern matching com `switch` torna o roteamento de requisições HTTP mais
+legível e fácil de manter em comparação com uma sequência de `if-else`.
+Ademais, a ausência de estado mutável compartilhado reduz significativamente a
+complexidade de debugging em um ambiente distribuído.
 
 Além disso, a natureza funcional da DOP alinha-se perfeitamente com o modelo de
-execução stateless das funções Lambda, onde cada invocação deve ser independente
-e previsível, características essenciais para sistemas que podem escalar
-automaticamente e processar milhares de requisições concorrentes. A seguir temos um exemplo do uso da DOP em uma função Lambda.
+execução stateless das funções Lambda, onde cada invocação deve ser
+independente e previsível, características essenciais para sistemas que podem
+escalar automaticamente e processar milhares de requisições concorrentes. A
+seguir temos um exemplo do uso da DOP em uma função Lambda.
 
 ```java
 public class HolidayLambdaHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
@@ -810,8 +815,8 @@ public class HolidayLambdaHandler implements RequestHandler<APIGatewayProxyReque
 
 ## Conclusão
 
-A Programação Orientada a Dados (Data-Oriented Programming - DOP) representa uma
-abordagem complementar à Programação Orientada a Objetos que prioriza a
+A Programação Orientada a Dados (Data-Oriented Programming - DOP) representa
+uma abordagem complementar à Programação Orientada a Objetos que prioriza a
 estrutura e o fluxo dos dados de forma imutável, separando informação do seu
 processamento. Baseada em quatro princípios fundamentais - dados imutáveis e
 transparentes, modelagem precisa de todos os dados necessários, prevenção de
@@ -829,8 +834,9 @@ defensivas. A **separação de operações** mantém os dados simples e as opera
 poderosas, utilizando correspondência de padrões para escolher automaticamente
 qual código executar para cada tipo de dado, de forma mais simples e direta que
 padrões tradicionais de design. Esses princípios resultam em código mais
-**legível**, **testável**, **mais fácil de manter** e **thread-safe por design**,
-características especialmente valiosas em ambientes distribuídos e serverless.
+**legível**, **testável**, **mais fácil de manter** e **thread-safe por
+design**, características especialmente valiosas em ambientes distribuídos e
+serverless.
 
 A DOP é particularmente adequada para sistemas de processamento de dados que
 ingerem e produzem informações de forma previsível, como jobs de processamento
@@ -839,7 +845,8 @@ que modelam estruturas existentes. Também se beneficia de problemas menores que
 podem ser resolvidos de forma isolada, aproveitando a clareza e simplicidade do
 paradigma. Por fim, e não menos importante, a chave está em reconhecer que
 diferentes paradigmas revelam aspectos distintos da solução, e a escolha
-adequada pode fazer toda a diferença na elegância e eficácia do resultado final.
+adequada pode fazer toda a diferença na elegância e eficácia do resultado
+final.
 
 E aí, curtiu a ideia de dados simples e operações poderosas? Que tal dar uma
 chance para a DOP em seu próximo projeto?
