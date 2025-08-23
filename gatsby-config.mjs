@@ -1,6 +1,7 @@
 const homepageURL = process.env.HOMEPAGE_URL || 'https://clementino.me'
 
 import remarkGfm from 'remark-gfm';
+import rehypeRewrite from 'rehype-rewrite';
 
 export default {
   trailingSlash: 'always',
@@ -94,7 +95,22 @@ export default {
         extensions: [".mdx", ".md"],
         mdxOptions: {
           remarkPlugins: [remarkGfm],
-          rehypePlugins: [],
+          rehypePlugins: [
+            [rehypeRewrite, {
+              rewrite: (node) => {
+                if (node.type === 'element' && 
+                    node.tagName === 'h2' && 
+                    node.properties && 
+                    node.properties.id === 'footnote-label' &&
+                    node.children && 
+                    node.children[0] && 
+                    node.children[0].type === 'text' && 
+                    node.children[0].value === 'Footnotes') {
+                  node.children[0].value = 'Referências';
+                }
+              }
+            }]
+          ],
           format: 'mdx',
         },
         gatsbyRemarkPlugins: [
