@@ -1,0 +1,75 @@
+html {
+  -webkit-locale: "pt-BR";
+}
+
+p, li, blockquote, figcaption {
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+  
+  -webkit-hyphenate-limit-before: 3;
+  -webkit-hyphenate-limit-after: 3;
+  -webkit-hyphenate-limit-chars: 6 3 3;
+  -webkit-hyphenate-limit-lines: 2;
+  -webkit-hyphenate-limit-last: always;
+  -webkit-hyphenate-limit-zone: 8%;
+  
+  hyphenate-limit-chars: 6 3 3;
+  hyphenate-limit-lines: 2;
+  hyphenate-limit-last: always;
+  hyphenate-limit-zone: 8%;
+}
+
+code, pre, kbd, samp, var, tt {
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+  
+  -webkit-hyphenate-limit-before: 4;
+  -webkit-hyphenate-limit-after: 4;
+  -webkit-hyphenate-limit-chars: 8 4 4;
+  -webkit-hyphenate-limit-lines: 1;
+  
+  hyphenate-limit-chars: 8 4 4;
+  hyphenate-limit-lines: 1;
+}
+
+a {
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+@media screen and (max-width: 768px) {
+  p, li, blockquote {
+    -webkit-hyphenate-limit-before: 2;
+    -webkit-hyphenate-limit-after: 2;
+    -webkit-hyphenate-limit-chars: 5 2 2;
+    
+    hyphenate-limit-chars: 5 2 2;
+  }
+}
+
+@media print {
+  p, li, blockquote {
+    -webkit-hyphenate-limit-before: 4;
+    -webkit-hyphenate-limit-after: 4;
+    -webkit-hyphenate-limit-chars: 7 4 4;
+    -webkit-hyphenate-limit-lines: 3;
+    
+    hyphenate-limit-chars: 7 4 4;
+    hyphenate-limit-lines: 3;
+  }
+}

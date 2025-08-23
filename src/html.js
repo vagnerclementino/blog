@@ -2,8 +2,9 @@ import React from "react"
 import PropTypes from "prop-types"
 
 export default function HTML(props) {
+  const langAttr = props.htmlAttributes?.lang || 'pt-BR'
   return (
-    <html {...props.htmlAttributes}>
+    <html {...props.htmlAttributes} lang={langAttr}>
       <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />

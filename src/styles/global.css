@@ -1,13 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap");
+@import "./hyphenation.css";
 
 p {
   text-align: justify;
   font-size: 16px;
   line-height: 1.7;
-  word-wrap: break-word;
   overflow-wrap: break-word;
-  -webkit-hyphens: auto;
-  hyphens: auto;
 
   @media screen and (min-width: 600px) {
     font-size: 18px;
@@ -43,11 +41,10 @@ blockquote {
 }
 
 pre {
-  white-space: pre-wrap;
   display: block;
   font-family: monospace;
   white-space: pre;
-  margin: 1em 0px;
+  margin: 1em 0;
 }
 
 h1 {
