@@ -1,0 +1,89 @@
+/* Configurações específicas de hifenização para português brasileiro */
+
+/* Configuração global para o documento */
+html {
+  /* Define o idioma para hifenização */
+  -webkit-locale: "pt-BR";
+}
+
+/* Configurações para elementos de texto */
+p, li, blockquote, figcaption {
+  /* Hifenização automática */
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+  
+  /* Controles de hifenização mais específicos */
+  -webkit-hyphenate-limit-before: 3;
+  -webkit-hyphenate-limit-after: 3;
+  -webkit-hyphenate-limit-chars: 6 3 3;
+  -webkit-hyphenate-limit-lines: 2;
+  -webkit-hyphenate-limit-last: always;
+  -webkit-hyphenate-limit-zone: 8%;
+  
+  /* Configurações para outros navegadores */
+  hyphenate-limit-chars: 6 3 3;
+  hyphenate-limit-lines: 2;
+  hyphenate-limit-last: always;
+  hyphenate-limit-zone: 8%;
+}
+
+/* Desabilitar hifenização em elementos específicos */
+code, pre, kbd, samp, var, tt {
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Títulos - hifenização mais conservadora */
+h1, h2, h3, h4, h5, h6 {
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+  
+  /* Configurações mais restritivas para títulos */
+  -webkit-hyphenate-limit-before: 4;
+  -webkit-hyphenate-limit-after: 4;
+  -webkit-hyphenate-limit-chars: 8 4 4;
+  -webkit-hyphenate-limit-lines: 1;
+  
+  hyphenate-limit-chars: 8 4 4;
+  hyphenate-limit-lines: 1;
+}
+
+/* Links - sem hifenização para evitar quebras inadequadas */
+a {
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Configurações específicas para dispositivos móveis */
+@media screen and (max-width: 768px) {
+  p, li, blockquote {
+    /* Em telas menores, permitir hifenização mais agressiva */
+    -webkit-hyphenate-limit-before: 2;
+    -webkit-hyphenate-limit-after: 2;
+    -webkit-hyphenate-limit-chars: 5 2 2;
+    
+    hyphenate-limit-chars: 5 2 2;
+  }
+}
+
+/* Configurações para impressão */
+@media print {
+  p, li, blockquote {
+    /* Na impressão, usar hifenização mais conservadora */
+    -webkit-hyphenate-limit-before: 4;
+    -webkit-hyphenate-limit-after: 4;
+    -webkit-hyphenate-limit-chars: 7 4 4;
+    -webkit-hyphenate-limit-lines: 3;
+    
+    hyphenate-limit-chars: 7 4 4;
+    hyphenate-limit-lines: 3;
+  }
+}
