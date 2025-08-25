@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, Autoplay } from 'swiper/modules'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faStar } from "@fortawesome/free-solid-svg-icons"
+import { faHeart } from "@fortawesome/free-solid-svg-icons"
 import PostCard from "./postCard"
 
 // Import Swiper styles
@@ -21,7 +21,7 @@ const FeaturedPosts = ({ posts, count = 3 }) => {
   return (
     <Container>
       <Title>
-        <FontAwesomeIcon icon={faStar} /> Posts em Destaque
+        <FontAwesomeIcon icon={faHeart} /> Posts em Destaque
       </Title>
       <CarouselContainer>
         <StyledSwiper
@@ -74,7 +74,7 @@ const Title = styled.h2`
   gap: 0.5rem;
   
   svg {
-    color: #FFD700;
+    color: #e74c3c; /* Vermelho vibrante para o coração */
   }
   
   @media (max-width: 768px) {

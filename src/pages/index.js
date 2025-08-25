@@ -10,6 +10,7 @@ import PostsList from "../components/postsList"
 import SocialLinks from "../components/socialLinks"
 import NewsletterSignup from "../components/newsletterSignup"
 import Avatar from "../components/avatar"
+import { faFire } from "@fortawesome/free-solid-svg-icons"
 
 class IndexPage extends React.Component {
   render() {
@@ -53,7 +54,8 @@ class IndexPage extends React.Component {
 
         <PostsList 
           posts={posts} 
-          title="📝 Últimos Posts" 
+          title="Últimos Posts" 
+          icon={faFire}
           count={6} 
           carousel={true}
         />

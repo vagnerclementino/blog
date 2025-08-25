@@ -14,7 +14,7 @@ jest.mock("gatsby", () => ({
 // Mock Font Awesome
 jest.mock("@fortawesome/react-fontawesome", () => ({
   FontAwesomeIcon: ({ icon, ...props }) => (
-    <i data-testid="font-awesome-icon" data-icon={icon.iconName} {...props} />
+    <i data-testid="font-awesome-icon" data-icon={icon?.iconName || icon} {...props} />
   ),
 }))
 
@@ -104,7 +104,7 @@ describe("FeaturedPosts", () => {
     
     expect(screen.getByText("Posts em Destaque")).toBeInTheDocument()
     expect(screen.getByTestId("font-awesome-icon")).toBeInTheDocument()
-    expect(screen.getByTestId("font-awesome-icon")).toHaveAttribute("data-icon", "star")
+    expect(screen.getByTestId("font-awesome-icon")).toHaveAttribute("data-icon", "heart")
   })
 
   it("displays only first 3 posts as featured in carousel", () => {

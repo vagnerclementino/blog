@@ -2,6 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, Autoplay } from 'swiper/modules'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import PostCard from "./postCard"
 
 // Import Swiper styles
@@ -9,7 +10,7 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 
-const PostsList = ({ posts, title, count, showAll = false, carousel = false, autoplay = false }) => {
+const PostsList = ({ posts, title, icon, count, showAll = false, carousel = false, autoplay = false }) => {
   const displayPosts = showAll ? posts : posts.slice(0, count)
 
   if (!displayPosts.length) {
@@ -18,7 +19,11 @@ const PostsList = ({ posts, title, count, showAll = false, carousel = false, aut
 
   return (
     <Container>
-      {title && <Title>{title}</Title>}
+      {title && (
+        <Title>
+          {icon && <FontAwesomeIcon icon={icon} />} {title}
+        </Title>
+      )}
       {carousel ? (
         <CarouselContainer>
           <StyledSwiper
@@ -69,6 +74,24 @@ const Title = styled.h2`
   color: var(--textNormal);
   font-size: 1.5rem;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  
+  svg {
+    color: var(--textLink);
+    
+    /* Cor específica para o ícone de fogo */
+    &[data-icon="fire"] {
+      color: #ff6b35;
+      background: linear-gradient(45deg, #ff6b35, #f7931e, #ffcc02);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 3px rgba(255, 107, 53, 0.3));
+    }
+  }
   
   @media (max-width: 768px) {
     font-size: 1.25rem;

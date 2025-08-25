@@ -1,6 +1,7 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
 import PostsList from "./postsList"
+import { faFire } from "@fortawesome/free-solid-svg-icons"
 
 jest.mock("./postCard", () => {
   return function MockPostCard({ post }) {
@@ -12,6 +13,12 @@ jest.mock("./postCard", () => {
     )
   }
 })
+
+jest.mock("@fortawesome/react-fontawesome", () => ({
+  FontAwesomeIcon: ({ icon, ...props }) => (
+    <i data-testid="font-awesome-icon" data-icon={icon?.iconName || icon} {...props} />
+  ),
+}))
 
 jest.mock('swiper/react', () => ({
   Swiper: ({ children, ...props }) => (
@@ -148,5 +155,20 @@ describe("PostsList", () => {
     
     expect(screen.getByTestId("swiper")).toBeInTheDocument()
     expect(screen.getAllByTestId("swiper-slide")).toHaveLength(2)
+  })
+
+  it("renders icon when provided", () => {
+    render(<PostsList posts={mockPosts} title="Test Title" icon={faFire} count={2} />)
+    
+    expect(screen.getByText("Test Title")).toBeInTheDocument()
+    expect(screen.getByTestId("font-awesome-icon")).toBeInTheDocument()
+    expect(screen.getByTestId("font-awesome-icon")).toHaveAttribute("data-icon", "fire")
+  })
+
+  it("renders title without icon when icon is not provided", () => {
+    render(<PostsList posts={mockPosts} title="Test Title" count={2} />)
+    
+    expect(screen.getByText("Test Title")).toBeInTheDocument()
+    expect(screen.queryByTestId("font-awesome-icon")).not.toBeInTheDocument()
   })
 })

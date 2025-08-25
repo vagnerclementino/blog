@@ -117,7 +117,7 @@ describe("IndexPage", () => {
     expect(screen.getByTestId("featured-posts")).toBeInTheDocument()
     
     // Recent posts section
-    expect(screen.getByText("📝 Últimos Posts")).toBeInTheDocument()
+    expect(screen.getByText("Últimos Posts")).toBeInTheDocument()
     
     // Social links and newsletter
     expect(screen.getByTestId("social-links")).toBeInTheDocument()
