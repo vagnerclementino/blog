@@ -5,17 +5,17 @@ import styled from "styled-components"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Button from "../components/button"
-import PostCard from "../components/postCard"
 import FeaturedPosts from "../components/featuredPosts"
+import PostsList from "../components/postsList"
 import SocialLinks from "../components/socialLinks"
 import NewsletterSignup from "../components/newsletterSignup"
+import Avatar from "../components/avatar"
 
 class IndexPage extends React.Component {
   render() {
     const { data } = this.props
     const siteTitle = data.site.siteMetadata.title
     const posts = data.allMdx.edges
-    const recentPosts = posts.slice(0, 6) // Últimos 6 posts
 
     return (
       <Layout location={this.props.location} title={siteTitle}>
@@ -26,12 +26,9 @@ class IndexPage extends React.Component {
         
         <HeroSection>
           <HeroContent>
-            <WelcomeTitle>
-              Olá! Bem-vindo ao meu blog{" "}
-              <span role="img" aria-label="wave emoji">
-                👋
-              </span>
-            </WelcomeTitle>
+            <AvatarContainer>
+              <Avatar size={120} />
+            </AvatarContainer>
             <HeroDescription>
               Sou <strong>Vagner Clementino</strong>, desenvolvedor apaixonado por tecnologia, 
               design patterns e boas práticas de desenvolvimento. Aqui compartilho conhecimentos, 
@@ -52,21 +49,14 @@ class IndexPage extends React.Component {
           </HeroContent>
         </HeroSection>
 
-        <FeaturedPosts posts={posts} />
+        <FeaturedPosts posts={posts} count={3} />
 
-        <RecentPostsSection>
-          <SectionTitle>📝 Últimos Posts</SectionTitle>
-          <PostsGrid>
-            {recentPosts.map(({ node: post }) => (
-              <PostCard key={post.fields.slug} post={post} />
-            ))}
-          </PostsGrid>
-          <ViewAllContainer>
-            <Link to="/blog/">
-              <Button>Ver todos os posts</Button>
-            </Link>
-          </ViewAllContainer>
-        </RecentPostsSection>
+        <PostsList 
+          posts={posts} 
+          title="📝 Últimos Posts" 
+          count={6} 
+          carousel={true}
+        />
 
         <SidebarSection>
           <SocialLinks />
@@ -91,15 +81,13 @@ const HeroContent = styled.div`
   margin: 0 auto;
 `
 
-const WelcomeTitle = styled.h1`
-  font-size: 2.5rem;
-  margin-bottom: 1.5rem;
-  color: var(--textNormal);
-  line-height: 1.2;
+const AvatarContainer = styled.div`
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
   
   @media (max-width: 768px) {
-    font-size: 2rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
   }
 `
 
@@ -140,35 +128,6 @@ const ExternalLink = styled.a`
 
 const RecentPostsSection = styled.section`
   margin: 4rem 0;
-`
-
-const SectionTitle = styled.h2`
-  font-size: 1.75rem;
-  margin-bottom: 2rem;
-  color: var(--textNormal);
-  text-align: center;
-  
-  @media (max-width: 768px) {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-`
-
-const PostsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2rem;
-  margin-bottom: 3rem;
-  
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-  }
-`
-
-const ViewAllContainer = styled.div`
-  text-align: center;
 `
 
 const SidebarSection = styled.aside`

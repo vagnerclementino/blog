@@ -43,7 +43,7 @@ const NewsletterSignup = () => {
           </InputGroup>
           
           {status === "success" && (
-            <StatusMessage success>
+            <StatusMessage $success>
               ✅ Obrigado! Você foi inscrito com sucesso.
             </StatusMessage>
           )}
@@ -149,9 +149,9 @@ const StatusMessage = styled.div`
   padding: 0.75rem;
   border-radius: 4px;
   font-size: 0.875rem;
-  background: ${props => props.success ? '#d4edda' : '#f8d7da'};
-  color: ${props => props.success ? '#155724' : '#721c24'};
-  border: 1px solid ${props => props.success ? '#c3e6cb' : '#f5c6cb'};
+  background: ${props => props.$success ? '#d4edda' : '#f8d7da'};
+  color: ${props => props.$success ? '#155724' : '#721c24'};
+  border: 1px solid ${props => props.$success ? '#c3e6cb' : '#f5c6cb'};
 `
 
 const Disclaimer = styled.small`

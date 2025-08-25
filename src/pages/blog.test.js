@@ -1,10 +1,16 @@
 import React from "react"
-import { render } from "@testing-library/react"
+import { render, screen } from "@testing-library/react"
 import { Helmet } from "react-helmet"
 import Blog from "./blog"
 
 import { useStaticQuery } from 'gatsby';
 
+// Mock Font Awesome
+jest.mock("@fortawesome/react-fontawesome", () => ({
+  FontAwesomeIcon: ({ icon, ...props }) => (
+    <i data-testid="font-awesome-icon" data-icon={icon.iconName} {...props} />
+  ),
+}))
 
 beforeEach(() => {
   useStaticQuery.mockReturnValue({
@@ -19,7 +25,7 @@ beforeEach(() => {
 // Mock child components
 jest.mock("../components/bio", () => () => <div>Mock Bio</div>)
 jest.mock("../components/searchPosts", () => () => <div>Mock SearchPosts</div>)
-jest.mock("../components/button", () => () => <button>Mock Button</button>)
+jest.mock("../components/button", () => ({ children }) => <button>{children}</button>)
 
 const mockProps = {
   data: {
@@ -75,12 +81,23 @@ describe("Blog Page", () => {
     expect(container).toBeInTheDocument()
   })
 
+  it("renders Home link with Font Awesome icon", () => {
+    render(<Blog {...mockProps} />)
+    
+    const homeLink = screen.getByRole("link", { name: /Home/i })
+    expect(homeLink).toBeInTheDocument()
+    expect(homeLink).toHaveAttribute("href", "/")
+    
+    const homeIcon = screen.getByTestId("font-awesome-icon")
+    expect(homeIcon).toHaveAttribute("data-icon", "house")
+  })
+
   it("renders all main components", () => {
     const { getByText } = render(<Blog {...mockProps} />)
     
     expect(getByText("Mock Bio")).toBeInTheDocument()
     expect(getByText("Mock SearchPosts")).toBeInTheDocument()
-    expect(getByText("Mock Button")).toBeInTheDocument()
+    expect(getByText("Ir para o Website")).toBeInTheDocument()
   })
 
   it("includes SEO component with correct title", () => {

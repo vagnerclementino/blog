@@ -37,6 +37,10 @@ jest.mock("../components/newsletterSignup", () => () => (
   <div data-testid="newsletter-signup">Newsletter Signup Component</div>
 ))
 
+jest.mock("../components/avatar", () => ({ size }) => (
+  <div data-testid="avatar" data-size={size}>Avatar Component</div>
+))
+
 // Mock do Gatsby
 jest.mock("gatsby", () => ({
   Link: ({ children, to, ...props }) => (
@@ -101,9 +105,13 @@ describe("IndexPage", () => {
   it("renders the homepage with all main sections", () => {
     render(<IndexPage {...mockProps} />)
     
-    // Hero section
-    expect(screen.getByText(/Olá! Bem-vindo ao meu blog/)).toBeInTheDocument()
-    expect(screen.getByText(/Sou Vagner Clementino/)).toBeInTheDocument()
+    // Avatar
+    expect(screen.getByTestId("avatar")).toBeInTheDocument()
+    expect(screen.getByTestId("avatar")).toHaveAttribute("data-size", "120")
+    
+    // Hero section (without welcome title)
+    expect(screen.getByText(/Sou/)).toBeInTheDocument()
+    expect(screen.getByText(/Vagner Clementino/)).toBeInTheDocument()
     
     // Featured posts
     expect(screen.getByTestId("featured-posts")).toBeInTheDocument()
@@ -155,5 +163,12 @@ describe("IndexPage", () => {
     
     const layout = screen.getByTestId("layout")
     expect(layout).toHaveAttribute("data-title", "Clementino's Notes")
+  })
+
+  it("renders avatar with correct size", () => {
+    render(<IndexPage {...mockProps} />)
+    
+    const avatar = screen.getByTestId("avatar")
+    expect(avatar).toHaveAttribute("data-size", "120")
   })
 })

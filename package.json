@@ -12,6 +12,10 @@
     "url": "https://github.com/vagnerclementino/blog/issues"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^7.0.0",
+    "@fortawesome/free-brands-svg-icons": "^7.0.0",
+    "@fortawesome/free-solid-svg-icons": "^7.0.0",
+    "@fortawesome/react-fontawesome": "^3.0.0",
     "@mdx-js/mdx": "^1.5.1",
     "@mdx-js/react": "^1.6.22",
     "ajv": "^8.12.0",
@@ -50,6 +54,7 @@
     "reading-time": "^1.5.0",
     "remark-gfm": "^3.0.1",
     "styled-components": "^6.1.0",
+    "swiper": "^11.2.10",
     "typeface-merriweather": "0.0.72",
     "typeface-montserrat": "0.0.54",
     "typography": "^0.16.19",

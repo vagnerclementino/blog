@@ -2,8 +2,6 @@ import React from "react"
 import styled from "styled-components"
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, Autoplay } from 'swiper/modules'
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faStar } from "@fortawesome/free-solid-svg-icons"
 import PostCard from "./postCard"
 
 // Import Swiper styles
@@ -11,50 +9,53 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 
-const FeaturedPosts = ({ posts, count = 3 }) => {
-  const featuredPosts = posts.slice(0, count)
+const PostsList = ({ posts, title, count, showAll = false, carousel = false, autoplay = false }) => {
+  const displayPosts = showAll ? posts : posts.slice(0, count)
 
-  if (!featuredPosts.length) {
+  if (!displayPosts.length) {
     return null
   }
 
   return (
     <Container>
-      <Title>
-        <FontAwesomeIcon icon={faStar} /> Posts em Destaque
-      </Title>
-      <CarouselContainer>
-        <StyledSwiper
-          modules={[Navigation, Pagination, Autoplay]}
-          spaceBetween={20}
-          slidesPerView={1}
-          navigation
-          pagination={{ clickable: true }}
-          autoplay={{
-            delay: 5000,
-            disableOnInteraction: false,
-          }}
-          breakpoints={{
-            640: {
-              slidesPerView: 2,
-              spaceBetween: 20,
-            },
-            1024: {
-              slidesPerView: 3,
-              spaceBetween: 30,
-            },
-          }}
-        >
-          {featuredPosts.map(({ node: post }) => (
-            <SwiperSlide key={post.fields.slug}>
-              <PostCardWrapper>
+      {title && <Title>{title}</Title>}
+      {carousel ? (
+        <CarouselContainer>
+          <StyledSwiper
+            modules={[Navigation, Pagination, ...(autoplay ? [Autoplay] : [])]}
+            spaceBetween={20}
+            slidesPerView={1}
+            navigation
+            pagination={{ clickable: true }}
+            autoplay={autoplay ? {
+              delay: 5000,
+              disableOnInteraction: false,
+            } : false}
+            breakpoints={{
+              640: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+              },
+              1024: {
+                slidesPerView: 3,
+                spaceBetween: 30,
+              },
+            }}
+          >
+            {displayPosts.map(({ node: post }) => (
+              <SwiperSlide key={post.fields.slug}>
                 <PostCard post={post} />
-                <FeaturedBadge>Destaque</FeaturedBadge>
-              </PostCardWrapper>
-            </SwiperSlide>
+              </SwiperSlide>
+            ))}
+          </StyledSwiper>
+        </CarouselContainer>
+      ) : (
+        <PostsGrid>
+          {displayPosts.map(({ node: post }) => (
+            <PostCard key={post.fields.slug} post={post} />
           ))}
-        </StyledSwiper>
-      </CarouselContainer>
+        </PostsGrid>
+      )}
     </Container>
   )
 }
@@ -68,14 +69,6 @@ const Title = styled.h2`
   color: var(--textNormal);
   font-size: 1.5rem;
   text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  
-  svg {
-    color: #FFD700;
-  }
   
   @media (max-width: 768px) {
     font-size: 1.25rem;
@@ -163,30 +156,21 @@ const StyledSwiper = styled(Swiper).withConfig({
     /* Garante que todos os cards tenham a mesma altura */
     > * {
       width: 100%;
-      display: flex;
-      flex-direction: column;
     }
   }
 `
 
-const PostCardWrapper = styled.div`
-  position: relative;
-  height: 100%;
+const PostsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-auto-rows: 1fr; /* Garante que todas as linhas tenham a mesma altura */
+  gap: 2rem;
+  align-items: stretch; /* Estica os itens para preencher a altura */
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 `
 
-const FeaturedBadge = styled.span`
-  position: absolute;
-  top: -1px;
-  right: 1rem;
-  background: var(--textLink);
-  color: white;
-  padding: 0.25rem 0.75rem;
-  border-radius: 0 0 8px 8px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  z-index: 10;
-`
-
-export default FeaturedPosts
+export default PostsList

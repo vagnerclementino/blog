@@ -23,6 +23,26 @@ const mockPost = {
   excerpt: "This is a test excerpt",
 }
 
+const mockPostWithLongContent = {
+  fields: { slug: "/long-post/" },
+  frontmatter: {
+    title: "This is a Very Long Post Title That Should Be Truncated After Two Lines to Maintain Consistent Card Heights",
+    date: "02/01/2024",
+    description: "This is a very long description that should be truncated after four lines to ensure all cards have the same height regardless of content length. This text is intentionally long to test the truncation functionality and ensure consistent card layouts across different content lengths."
+  },
+  excerpt: "Long excerpt content"
+}
+
+const mockPostWithShortContent = {
+  fields: { slug: "/short-post/" },
+  frontmatter: {
+    title: "Short",
+    date: "03/01/2024",
+    description: "Short desc."
+  },
+  excerpt: "Short."
+}
+
 describe("PostCard", () => {
   it("renders post card with title, date, and description", () => {
     render(<PostCard post={mockPost} />)
@@ -69,5 +89,46 @@ describe("PostCard", () => {
     
     expect(titleLink).toHaveAttribute("href", "/test-post/")
     expect(readMoreLink).toHaveAttribute("href", "/test-post/")
+  })
+
+  it("displays standardized 'Ler mais' text", () => {
+    render(<PostCard post={mockPost} />)
+    
+    expect(screen.getByText("Ler mais →")).toBeInTheDocument()
+  })
+
+  it("has fixed height for uniform card sizes", () => {
+    const { container: container1 } = render(<PostCard post={mockPostWithLongContent} />)
+    const { container: container2 } = render(<PostCard post={mockPostWithShortContent} />)
+    
+    const card1 = container1.querySelector('article')
+    const card2 = container2.querySelector('article')
+    
+    // Both cards should have the same fixed height
+    expect(card1).toHaveStyle('height: 320px')
+    expect(card2).toHaveStyle('height: 320px')
+  })
+
+  it("truncates long titles and descriptions with CSS", () => {
+    render(<PostCard post={mockPostWithLongContent} />)
+    
+    // Title should be present but truncated via CSS
+    expect(screen.getByText(/This is a Very Long Post Title/)).toBeInTheDocument()
+    
+    // Description should be present but truncated via CSS
+    expect(screen.getByText(/This is a very long description/)).toBeInTheDocument()
+  })
+
+  it("maintains consistent layout structure", () => {
+    const { container } = render(<PostCard post={mockPost} />)
+    
+    const card = container.querySelector('article')
+    const cardContent = card.querySelector('div')
+    
+    expect(card).toHaveStyle('display: flex')
+    expect(card).toHaveStyle('flex-direction: column')
+    expect(cardContent).toHaveStyle('display: flex')
+    expect(cardContent).toHaveStyle('flex-direction: column')
+    expect(cardContent).toHaveStyle('height: 100%')
   })
 })

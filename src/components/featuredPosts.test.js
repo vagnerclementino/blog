@@ -11,6 +11,46 @@ jest.mock("gatsby", () => ({
   ),
 }))
 
+// Mock Font Awesome
+jest.mock("@fortawesome/react-fontawesome", () => ({
+  FontAwesomeIcon: ({ icon, ...props }) => (
+    <i data-testid="font-awesome-icon" data-icon={icon.iconName} {...props} />
+  ),
+}))
+
+// Mock PostCard
+jest.mock("./postCard", () => {
+  return function MockPostCard({ post }) {
+    return (
+      <div data-testid="post-card">
+        <h3>{post.frontmatter.title}</h3>
+        <p>{post.frontmatter.date}</p>
+        <a href={post.fields.slug}>Ler mais</a>
+      </div>
+    )
+  }
+})
+
+// Mock Swiper
+jest.mock('swiper/react', () => ({
+  Swiper: ({ children, ...props }) => (
+    <div data-testid="swiper" {...props}>
+      {children}
+    </div>
+  ),
+  SwiperSlide: ({ children, ...props }) => (
+    <div data-testid="swiper-slide" {...props}>
+      {children}
+    </div>
+  ),
+}))
+
+jest.mock('swiper/modules', () => ({
+  Navigation: 'Navigation',
+  Pagination: 'Pagination',
+  Autoplay: 'Autoplay',
+}))
+
 const mockPosts = [
   {
     node: {
@@ -59,19 +99,39 @@ const mockPosts = [
 ]
 
 describe("FeaturedPosts", () => {
-  it("renders featured posts section with title", () => {
+  it("renders featured posts section with Font Awesome icon", () => {
     render(<FeaturedPosts posts={mockPosts} />)
     
-    expect(screen.getByText("⭐ Posts em Destaque")).toBeInTheDocument()
+    expect(screen.getByText("Posts em Destaque")).toBeInTheDocument()
+    expect(screen.getByTestId("font-awesome-icon")).toBeInTheDocument()
+    expect(screen.getByTestId("font-awesome-icon")).toHaveAttribute("data-icon", "star")
   })
 
-  it("displays only first 3 posts as featured", () => {
+  it("displays only first 3 posts as featured in carousel", () => {
     render(<FeaturedPosts posts={mockPosts} />)
     
+    expect(screen.getAllByTestId("post-card")).toHaveLength(3)
     expect(screen.getByText("Featured Post 1")).toBeInTheDocument()
     expect(screen.getByText("Featured Post 2")).toBeInTheDocument()
     expect(screen.getByText("Featured Post 3")).toBeInTheDocument()
     expect(screen.queryByText("Regular Post 4")).not.toBeInTheDocument()
+  })
+
+  it("respects custom count prop", () => {
+    render(<FeaturedPosts posts={mockPosts} count={2} />)
+    
+    expect(screen.getAllByTestId("post-card")).toHaveLength(2)
+    expect(screen.getByText("Featured Post 1")).toBeInTheDocument()
+    expect(screen.getByText("Featured Post 2")).toBeInTheDocument()
+    expect(screen.queryByText("Featured Post 3")).not.toBeInTheDocument()
+  })
+
+  it("renders Swiper carousel component", () => {
+    render(<FeaturedPosts posts={mockPosts} />)
+    
+    expect(screen.getByTestId("swiper")).toBeInTheDocument()
+    const slides = screen.getAllByTestId("swiper-slide")
+    expect(slides).toHaveLength(3)
   })
 
   it("shows featured badge on each post", () => {
@@ -81,13 +141,13 @@ describe("FeaturedPosts", () => {
     expect(badges).toHaveLength(3)
   })
 
-  it("renders post details correctly", () => {
+  it("renders post details correctly using PostCard", () => {
     render(<FeaturedPosts posts={mockPosts} />)
     
+    // PostCard should render the post details
+    expect(screen.getAllByTestId("post-card")).toHaveLength(3)
+    expect(screen.getByText("Featured Post 1")).toBeInTheDocument()
     expect(screen.getByText("01/01/2024")).toBeInTheDocument()
-    expect(screen.getByText("Description for post 1")).toBeInTheDocument()
-    expect(screen.getByRole("link", { name: "Featured Post 1" }))
-      .toHaveAttribute("href", "/post-1/")
   })
 
   it("renders nothing when no posts provided", () => {
@@ -96,34 +156,17 @@ describe("FeaturedPosts", () => {
     expect(container.firstChild).toBeNull()
   })
 
-  it("handles posts without description by using excerpt", () => {
-    const postsWithoutDescription = [
-      {
-        node: {
-          fields: { slug: "/post-1/" },
-          frontmatter: {
-            title: "Post without description",
-            date: "01/01/2024",
-            description: null,
-          },
-          excerpt: "This is the excerpt",
-        },
-      },
-    ]
-    
-    render(<FeaturedPosts posts={postsWithoutDescription} />)
-    
-    expect(screen.getByText("This is the excerpt")).toBeInTheDocument()
-  })
-
-  it("has read more links for each featured post", () => {
+  it("uses PostCard component for consistent styling", () => {
     render(<FeaturedPosts posts={mockPosts} />)
     
-    const readMoreLinks = screen.getAllByText("Ler post completo →")
-    expect(readMoreLinks).toHaveLength(3)
+    // Verify that PostCard components are rendered
+    expect(screen.getAllByTestId("post-card")).toHaveLength(3)
+  })
+
+  it("has standardized 'Ler mais' links for each featured post", () => {
+    render(<FeaturedPosts posts={mockPosts} />)
     
-    expect(readMoreLinks[0]).toHaveAttribute("href", "/post-1/")
-    expect(readMoreLinks[1]).toHaveAttribute("href", "/post-2/")
-    expect(readMoreLinks[2]).toHaveAttribute("href", "/post-3/")
+    const readMoreLinks = screen.getAllByText("Ler mais")
+    expect(readMoreLinks).toHaveLength(3)
   })
 })

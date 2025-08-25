@@ -1,5 +1,5 @@
 import React from "react"
-import { render, screen, fireEvent, waitFor } from "@testing-library/react"
+import { render, screen, fireEvent, waitFor, act } from "@testing-library/react"
 import NewsletterSignup from "./newsletterSignup"
 
 describe("NewsletterSignup", () => {
@@ -32,7 +32,11 @@ describe("NewsletterSignup", () => {
   it("shows error message when empty email is submitted", async () => {
     render(<NewsletterSignup />)
     
+    const emailInput = screen.getByPlaceholderText("seu@email.com")
     const submitButton = screen.getByRole("button", { name: "Inscrever-se" })
+    
+    // Remove the required attribute to test our custom validation
+    emailInput.removeAttribute('required')
     
     fireEvent.click(submitButton)
     
@@ -56,8 +60,10 @@ describe("NewsletterSignup", () => {
       expect(screen.getByText("✅ Obrigado! Você foi inscrito com sucesso.")).toBeInTheDocument()
     })
     
-    // Fast forward 3 seconds
-    jest.advanceTimersByTime(3000)
+    // Fast forward 3 seconds with act
+    await act(async () => {
+      jest.advanceTimersByTime(3000)
+    })
     
     await waitFor(() => {
       expect(screen.queryByText("✅ Obrigado! Você foi inscrito com sucesso.")).not.toBeInTheDocument()

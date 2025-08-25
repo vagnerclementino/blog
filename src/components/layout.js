@@ -13,7 +13,7 @@ class Layout extends React.Component {
 
     if (location.pathname === rootPath || location.pathname === blogPath) {
       header = (
-        <h1
+        <CenteredHeader
           style={{
             ...scale(1.5),
             marginBottom: rhythm(1.5),
@@ -30,11 +30,11 @@ class Layout extends React.Component {
           >
             {title}
           </Link>
-        </h1>
+        </CenteredHeader>
       )
     } else {
       header = (
-        <h3
+        <CenteredSubHeader
           style={{
             fontFamily: `Montserrat, sans-serif`,
             marginTop: 0,
@@ -50,7 +50,7 @@ class Layout extends React.Component {
           >
             {title}
           </Link>
-        </h3>
+        </CenteredSubHeader>
       )
     }
     return (
@@ -82,6 +82,14 @@ class Layout extends React.Component {
 
 const Wrapper = styled.div`
   min-height: 100vh;
+`
+
+const CenteredHeader = styled.h1`
+  text-align: center;
+`
+
+const CenteredSubHeader = styled.h3`
+  text-align: center;
 `
 
 const Footer = styled.footer`
