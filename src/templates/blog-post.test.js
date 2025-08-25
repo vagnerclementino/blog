@@ -1,13 +1,13 @@
 import React from "react"
-import { render } from "@testing-library/react"
+import { render, screen } from "@testing-library/react"
 import BlogPostTemplate from "./blog-post"
 
 jest.mock("gatsby", () => ({
   ...jest.requireActual("gatsby"),
   graphql: jest.fn(),
-  Link: jest.fn().mockImplementation(({ children, ...rest }) => {
+  Link: jest.fn().mockImplementation(({ children, to, ...rest }) => {
     const React = jest.requireActual('react');
-    return React.createElement("a", rest, children);
+    return React.createElement("a", { href: to, ...rest }, children);
   }),
   useStaticQuery: jest.fn().mockReturnValue({
     site: {
@@ -26,6 +26,18 @@ jest.mock("gatsby-plugin-disqus", () => ({
   Disqus: () => null,
   componentWillMount: jest.fn()
 }));
+
+jest.mock("@fortawesome/react-fontawesome", () => ({
+  FontAwesomeIcon: ({ icon, ...props }) => (
+    <i data-testid="font-awesome-icon" data-icon={icon?.iconName || icon} {...props} />
+  ),
+}));
+
+jest.mock("../components/scrollToTop", () => {
+  return function MockScrollToTop() {
+    return <div data-testid="scroll-to-top">Scroll to Top</div>
+  }
+});
 
 jest.mock("gatsby-plugin-image", () => ({
   GatsbyImage: jest.fn().mockImplementation(({ alt }) => {
@@ -90,5 +102,29 @@ describe("BlogPostTemplate", () => {
     
     // Check if body content is rendered
     expect(getByText("Test body content")).toBeInTheDocument()
+  })
+
+  it("renders navigation buttons with correct links and icons", () => {
+    render(<BlogPostTemplate {...mockProps} />)
+    
+    // Check if Home button is rendered
+    const homeButton = screen.getByText("Home").closest("a")
+    expect(homeButton).toBeInTheDocument()
+    expect(homeButton).toHaveAttribute("href", "/")
+    
+    // Check if Blog button is rendered
+    const blogButton = screen.getByText("Todos os Posts").closest("a")
+    expect(blogButton).toBeInTheDocument()
+    expect(blogButton).toHaveAttribute("href", "/blog/")
+    
+    // Check if icons are rendered
+    const icons = screen.getAllByTestId("font-awesome-icon")
+    expect(icons).toHaveLength(2)
+  })
+
+  it("renders scroll to top component", () => {
+    render(<BlogPostTemplate {...mockProps} />)
+    
+    expect(screen.getByTestId("scroll-to-top")).toBeInTheDocument()
   })
 })
