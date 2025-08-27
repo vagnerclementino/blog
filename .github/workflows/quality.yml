@@ -2,9 +2,8 @@ name: Quality
 
 on:
   pull_request:
-    branches: [ main, master ]
-  push:
-    branches: [ main, master ]
+    branches: [ main ]
+    types: [ opened, synchronize, ready_for_review ]
 
 permissions:
   contents: read
@@ -12,6 +11,7 @@ permissions:
 jobs:
   lint-and-test:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
 
     strategy:
       matrix:
@@ -43,11 +43,3 @@ jobs:
 
     - name: Build project
       run: npm run build
-
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
-      if: github.event_name == 'push'
-      with:
-        name: build-files
-        path: public/
-        retention-days: 7

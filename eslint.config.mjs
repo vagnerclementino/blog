@@ -61,15 +61,6 @@ export default [
     languageOptions: {
       globals: {
         ...globals.jest,
-        describe: "readonly",
-        it: "readonly",
-        test: "readonly",
-        expect: "readonly",
-        beforeEach: "readonly",
-        afterEach: "readonly",
-        beforeAll: "readonly",
-        afterAll: "readonly",
-        jest: "readonly",
       },
     },
     rules: {
@@ -104,6 +95,7 @@ export default [
       "node_modules/**",
       "public/**",
       ".cache/**",
+      "coverage/**",
     ],
   },
 ];
