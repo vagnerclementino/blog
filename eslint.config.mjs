@@ -15,7 +15,7 @@ export default [
       "jsx-a11y": pluginJsxA11y,
     },
     languageOptions: {
-      ecmaVersion: 2022,
+      ecmaVersion: "latest",
       sourceType: "module",
       parserOptions: {
         ecmaFeatures: {
@@ -50,9 +50,14 @@ export default [
       },
     },
   },
-  // Configuração específica para arquivos de teste
+  // Configuração específica para arquivos de teste e mocks
   {
-    files: ["**/*.test.{js,jsx}", "**/__tests__/**/*.{js,jsx}"],
+    files: [
+      "**/*.test.{js,jsx}", 
+      "**/__tests__/**/*.{js,jsx}",
+      "**/__mocks__/**/*.js",
+      "**/loadershim.js"
+    ],
     languageOptions: {
       globals: {
         ...globals.jest,
@@ -71,14 +76,34 @@ export default [
       "no-unused-vars": "off", // Mais flexível em testes
     },
   },
+  // Configuração específica para arquivos de configuração
+  {
+    files: ["gatsby-*.{js,mjs}", "*.config.{js,mjs}"],
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+      globals: {
+        ...globals.node,
+        module: "readonly",
+        require: "readonly",
+        __dirname: "readonly",
+        process: "readonly",
+      },
+    },
+    rules: {
+      "no-console": "off",
+      "no-unused-vars": ["warn", { 
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+        ignoreRestSiblings: true 
+      }],
+    },
+  },
   {
     ignores: [
       "node_modules/**",
       "public/**",
       ".cache/**",
-      "gatsby-*.js",
-      "*.config.js",
-      "*.config.mjs",
     ],
   },
 ];

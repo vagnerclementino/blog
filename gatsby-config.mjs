@@ -1,5 +1,3 @@
-const homepageURL = process.env.HOMEPAGE_URL || 'https://clementino.me'
-
 import remarkGfm from 'remark-gfm';
 
 export default {

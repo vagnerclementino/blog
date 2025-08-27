@@ -64,7 +64,6 @@
     "babel-preset-gatsby": "^3.14.0",
     "cspell": "^8.16.0",
     "eslint": "^9.34.0",
-    "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
@@ -98,8 +97,8 @@
     "build:verbose": "gatsby build --verbose --log-pages",
     "develop": "GATSBY_GTAG_DEBUG=true gatsby develop",
     "format": "prettier --write src/**/*.{js,jsx}",
-    "lint": "eslint src/**/*.js",
-    "lint:fix": "eslint src/**/*.js --fix",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "start": "npm run develop",
     "start:nocache": "npm run clean && npm start",
     "serve": "gatsby serve",
@@ -108,6 +107,6 @@
     "test:watch": "jest --watch --verbose",
     "clean": "gatsby clean",
     "prepare": "husky",
-    "prepush": "npm run lint && npm run test && cspell link add @cspell/dict-pt-br && cspell --no-must-find-files --config ./cspell.json '**/*.md' && cspell --config ./cspell.json '**/*.mdx'"
+    "prepush": "npm run lint && npm run test && cspell link add @cspell/dict-pt-br && cspell --no-must-find-files --config ./cspell.json '**/*.{md,mdx}'"
   }
 }
