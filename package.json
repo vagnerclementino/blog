@@ -57,11 +57,17 @@
   "devDependencies": {
     "@babel/core": "^7.22.0",
     "@cspell/dict-pt-br": "^2.3.3",
+    "@eslint/js": "^9.34.0",
     "@testing-library/jest-dom": "^6.0.0",
     "@testing-library/react": "^14.0.0",
     "babel-jest": "^29.7.0",
     "babel-preset-gatsby": "^3.14.0",
     "cspell": "^8.16.0",
+    "eslint": "^9.34.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
     "gatsby-plugin-root-import": "^2.0.9",
     "husky": "^9.1.7",
     "identity-obj-proxy": "^3.0.0",
@@ -91,6 +97,8 @@
     "build:verbose": "gatsby build --verbose --log-pages",
     "develop": "GATSBY_GTAG_DEBUG=true gatsby develop",
     "format": "prettier --write src/**/*.{js,jsx}",
+    "lint": "eslint src/**/*.js",
+    "lint:fix": "eslint src/**/*.js --fix",
     "start": "npm run develop",
     "start:nocache": "npm run clean && npm start",
     "serve": "gatsby serve",
@@ -99,6 +107,6 @@
     "test:watch": "jest --watch --verbose",
     "clean": "gatsby clean",
     "prepare": "husky",
-    "prepush": "npm run test && cspell link add @cspell/dict-pt-br && cspell --no-must-find-files --config ./cspell.json '**/*.md' && cspell --config ./cspell.json '**/*.mdx'"
+    "prepush": "npm run lint && npm run test && cspell link add @cspell/dict-pt-br && cspell --no-must-find-files --config ./cspell.json '**/*.md' && cspell --config ./cspell.json '**/*.mdx'"
   }
 }
