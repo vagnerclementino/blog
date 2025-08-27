@@ -39,6 +39,12 @@ jest.mock("../components/scrollToTop", () => {
   }
 });
 
+jest.mock("../components/readingProgress", () => {
+  return function MockReadingProgress() {
+    return <div data-testid="reading-progress">Reading Progress</div>
+  }
+});
+
 jest.mock("gatsby-plugin-image", () => ({
   GatsbyImage: jest.fn().mockImplementation(({ alt }) => {
     const React = jest.requireActual('react');
@@ -126,5 +132,11 @@ describe("BlogPostTemplate", () => {
     render(<BlogPostTemplate {...mockProps} />)
     
     expect(screen.getByTestId("scroll-to-top")).toBeInTheDocument()
+  })
+
+  it("renders reading progress component", () => {
+    render(<BlogPostTemplate {...mockProps} />)
+    
+    expect(screen.getByTestId("reading-progress")).toBeInTheDocument()
   })
 })

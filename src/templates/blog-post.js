@@ -9,6 +9,7 @@ import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import ScrollToTop from "../components/scrollToTop"
+import ReadingProgress from "../components/readingProgress"
 import { rhythm, scale } from "../utils/typography"
 import { translateReadingTime } from "../utils/readingTime"
 import { Disqus } from "gatsby-plugin-disqus"
@@ -40,6 +41,7 @@ class BlogPostTemplate extends React.Component {
 
     return (
       <Layout location={this.props.location}>
+        <ReadingProgress />
         <Helmet>
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
           <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" />
