@@ -2,12 +2,9 @@ import remarkGfm from 'remark-gfm';
 import rehypeRewrite from 'rehype-rewrite';
 
 /**
- * Localiza o título das footnotes de "Footnotes" para "Referências" em português brasileiro.
- * Utiliza destructuring e guards para uma abordagem funcional minimalista.
- * 
- * @param {Object} node - Nó do AST HTML a ser processado
+ * Verifica se um nó é um cabeçalho de footnotes
  */
-const localizeFootnotesTitle = (node) => {
+const isFootnoteHeader = (node) => {
   const {
     type,
     tagName,
@@ -15,14 +12,22 @@ const localizeFootnotesTitle = (node) => {
     children: [firstChild] = []
   } = node || {};
 
-  const isFootnoteHeader = 
-    type === 'element' &&
+  return type === 'element' &&
     tagName === 'h2' &&
     id === 'footnote-label' &&
     firstChild?.type === 'text' &&
     firstChild?.value === 'Footnotes';
+};
 
-  if (isFootnoteHeader) {
+/**
+ * Localiza o título das footnotes de "Footnotes" para "Referências" em português brasileiro.
+ * Utiliza destructuring e guards para uma abordagem funcional minimalista.
+ * 
+ * @param {Object} node - Nó do AST HTML a ser processado
+ */
+const localizeFootnotesTitle = (node) => {
+  if (isFootnoteHeader(node)) {
+    const [firstChild] = node.children || [];
     firstChild.value = 'Referências';
   }
 };
