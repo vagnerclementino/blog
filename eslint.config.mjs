@@ -35,7 +35,7 @@ export default [
 
       // Avisa sobre uso de console.log (pode ser removido em produção)
       // https://eslint.org/docs/latest/rules/no-console
-      "no-console": "warn",
+      "no-console": "error",
 
       // Avisa sobre variáveis não utilizadas (permite prefixo _ para ignorar)
       // https://eslint.org/docs/latest/rules/no-unused-vars
