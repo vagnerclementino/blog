@@ -20,19 +20,28 @@ const getFeatureImgPath = featuredImg => {
 
 
 class BlogPostTemplate extends React.Component {
+  getDisqusConfig(post) {
+    return {
+      url: `${this.props.location.protocol}//${this.props.location.host}${this.props.location.pathname}`,
+      identifier: post.id,
+      title: post.frontmatter.title,
+    }
+  }
+
+  getFeaturedImage(post) {
+    return post.frontmatter.featuredImage?.childImageSharp?.gatsbyImageData 
+      ? getImage(post.frontmatter.featuredImage.childImageSharp.gatsbyImageData)
+      : undefined
+  }
+
   render() {
     const post = this.props.data.mdx
     const { previous, next } = this.props.pageContext
     const { fields } = post
     const { children } = this.props
 
-    const disqusConfig = {
-      url: `${this.props.location.protocol}//${this.props.location.host}${this.props.location.pathname}`,
-      identifier: post.id,
-      title: post.frontmatter.title,
-    }
-
-    let featuredImg = getImage(post.frontmatter.featuredImage?.childImageSharp?.gatsbyImageData)
+    const disqusConfig = this.getDisqusConfig(post)
+    const featuredImg = this.getFeaturedImage(post)
 
     return (
       <Layout location={this.props.location}>
@@ -45,10 +54,12 @@ class BlogPostTemplate extends React.Component {
           description={post.frontmatter.description || post.excerpt}
           featureImg={getFeatureImgPath(featuredImg)}
         />
-        <GatsbyImage
-          image={featuredImg}
-          alt={post.frontmatter.description || post.excerpt}
-        />
+        {featuredImg && (
+          <GatsbyImage
+            image={featuredImg}
+            alt={post.frontmatter.featuredImage?.alt || post.frontmatter.title || ""}
+          />
+        )}
         <h1>{post.frontmatter.title}</h1>
         <p
           style={{
