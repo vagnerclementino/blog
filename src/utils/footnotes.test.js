@@ -10,8 +10,7 @@ describe('Footnotes Localization Integration', () => {
     const htmlPath = path.join(process.cwd(), 'public', 'blog', 'a-carta', 'index.html')
     
     if (!fs.existsSync(htmlPath)) {
-      console.warn('HTML file not found, skipping test. Run "npm run build" first.')
-      return
+      throw new Error('HTML file not found. Run "npm run build" first before running tests.');
     }
     
     const htmlContent = fs.readFileSync(htmlPath, 'utf8')
