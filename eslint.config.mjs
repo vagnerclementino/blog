@@ -46,7 +46,9 @@ export default [
         "args": "after-used",
         "caughtErrors": "all",
         "ignoreRestSiblings": false,
-        "ignoreUsingDeclarations": false,
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_",
         "reportUsedIgnorePattern": false
       }],
 
