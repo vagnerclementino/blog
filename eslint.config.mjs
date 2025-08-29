@@ -81,7 +81,7 @@ export default [
 
       // Força uso de === ao invés de ==
       // https://eslint.org/docs/latest/rules/eqeqeq
-      // "eqeqeq": "error",
+      "eqeqeq": "error",
 
       // Proíbe uso de var (prefere let/const)
       // https://eslint.org/docs/latest/rules/no-var
@@ -89,7 +89,7 @@ export default [
 
       // Prefere const quando variável não é reatribuída
       // https://eslint.org/docs/latest/rules/prefer-const
-      // "prefer-const": "error",
+      "prefer-const": "error",
 
       // Força ponto e vírgula no final das linhas
       // https://eslint.org/docs/latest/rules/semi
@@ -109,7 +109,7 @@ export default [
 
       // Limita complexidade ciclomática das funções
       // https://eslint.org/docs/latest/rules/complexity
-      // "complexity": ["warn", 10],
+      "complexity": ["warn", 10],
 
       // Limita número máximo de linhas por função
       // https://eslint.org/docs/latest/rules/max-lines-per-function

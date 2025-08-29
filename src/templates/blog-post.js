@@ -32,7 +32,7 @@ class BlogPostTemplate extends React.Component {
       title: post.frontmatter.title,
     }
 
-    let featuredImg = getImage(post.frontmatter.featuredImage?.childImageSharp?.gatsbyImageData)
+    const featuredImg = getImage(post.frontmatter.featuredImage?.childImageSharp?.gatsbyImageData)
 
     return (
       <Layout location={this.props.location}>

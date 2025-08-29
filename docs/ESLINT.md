@@ -5,32 +5,38 @@ Este projeto usa **ESLint v9** com configuração flat config para garantir qual
 ## 🎯 Regras Ativas
 
 ### JavaScript Básico
+
 - **`no-console`**: Avisa sobre `console.log` (pode ser removido em produção)
 - **`no-unused-vars`**: Avisa sobre variáveis não utilizadas (permite prefixo `_`)
 
 ### React
+
 - **`react/prop-types`**: Desabilitado (não obrigatório para este projeto)
 - **`react/react-in-jsx-scope`**: Desabilitado (React 17+ não precisa importar)
 - **`react/no-unescaped-entities`**: Desabilitado (permite aspas simples em texto)
 - **`react/display-name`**: Desabilitado (componentes anônimos permitidos)
 
 ### React Hooks
+
 - **`react-hooks/rules-of-hooks`**: **OBRIGATÓRIO** - Garante ordem correta dos hooks
 - **`react-hooks/exhaustive-deps`**: Avisa sobre dependências faltantes
 
 ## 🔧 Configurações Específicas
 
 ### Arquivos de Teste
+
 - Globais do Jest incluídas automaticamente
 - Regras mais flexíveis para variáveis não utilizadas
 
 ### Arquivos de Configuração
+
 - `console.log` permitido
 - Globais do Node.js incluídas
 
 ## 📚 Regras Comentadas (Para Análise Futura)
 
 ### JavaScript
+
 ```javascript
 // "eqeqeq": "error",                    // Força === ao invés de ==
 // "no-var": "error",                    // Proíbe var (prefere let/const)
@@ -44,6 +50,7 @@ Este projeto usa **ESLint v9** com configuração flat config para garantir qual
 ```
 
 ### React
+
 ```javascript
 // "react/sort-comp": "error",           // Ordem dos métodos em classes
 // "react/no-array-index-key": "warn",   // Proíbe índice como key
@@ -52,6 +59,7 @@ Este projeto usa **ESLint v9** com configuração flat config para garantir qual
 ```
 
 ### Acessibilidade (JSX-A11Y)
+
 ```javascript
 // "jsx-a11y/alt-text": "error",       // Alt text obrigatório
 // "jsx-a11y/anchor-is-valid": "error", // Valida links
@@ -60,6 +68,7 @@ Este projeto usa **ESLint v9** com configuração flat config para garantir qual
 ```
 
 ### Testes (Jest)
+
 ```javascript
 // "jest/expect-expect": "error",       // Força expect.assertions()
 // "jest/no-focused-tests": "error",    // Proíbe fit, fdescribe
@@ -69,13 +78,16 @@ Este projeto usa **ESLint v9** com configuração flat config para garantir qual
 ## 🚀 Como Usar
 
 ### Executar Lint
+
 ```bash
 npm run lint          # Verificar problemas
 npm run lint:fix       # Corrigir automaticamente
 ```
 
 ### Integração com Editor
+
 Instale a extensão do ESLint no seu editor para feedback em tempo real:
+
 - **VS Code**: ESLint extension
 - **WebStorm**: Suporte nativo
 - **Vim/Neovim**: coc-eslint ou similar
@@ -98,6 +110,7 @@ Para ativar uma regra comentada:
 4. Commit as mudanças
 
 Exemplo:
+
 ```javascript
 // Antes (comentado)
 // "eqeqeq": "error",
