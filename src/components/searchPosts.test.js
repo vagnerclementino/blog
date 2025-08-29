@@ -40,7 +40,6 @@ describe('SearchPosts component', () => {
           }
         );
       } catch (error) {
-        console.error("Failed to stringify localSearchBlog.store:", error);
         return "{}";
       }
     })(),
