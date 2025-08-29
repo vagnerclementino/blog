@@ -36,6 +36,9 @@ jobs:
     - name: Run tests
       run: npm run test
 
+    - name: Check unused dependencies
+      run: npm run check-deps
+
     - name: Run spell check
       run: |
         npx cspell link add @cspell/dict-pt-br
