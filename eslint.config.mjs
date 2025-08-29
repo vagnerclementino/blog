@@ -3,6 +3,7 @@ import globals from "globals";
 import pluginReact from "eslint-plugin-react";
 import pluginReactHooks from "eslint-plugin-react-hooks";
 import pluginJsxA11y from "eslint-plugin-jsx-a11y";
+import pluginJest from "eslint-plugin-jest";
 
 export default [
   js.configs.recommended,
@@ -166,9 +167,12 @@ export default [
       "**/__mocks__/**/*.js",
       "**/loadershim.js"
     ],
+    plugins: {
+      jest: pluginJest,
+    },
     languageOptions: {
       globals: {
-        ...globals.jest, // Inclui todas as globais do Jest (describe, it, expect, etc.)
+        ...globals.jest,
       },
     },
     rules: {

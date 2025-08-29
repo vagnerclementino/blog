@@ -25,13 +25,32 @@ Este projeto usa **ESLint v9** com configuração flat config para garantir qual
 
 ### Arquivos de Teste
 
-- Globais do Jest incluídas automaticamente
+- Globais do Jest explicitamente habilitadas via `languageOptions.globals`
 - Regras mais flexíveis para variáveis não utilizadas
 
 ### Arquivos de Configuração
 
 - `console.log` permitido
 - Globais do Node.js incluídas
+
+### Ignorando Diretórios de Build
+
+Para evitar lint lento e ruído, adicione diretórios de build/output ao `ignores`:
+
+```js
+export default [
+  {
+    ignores: [
+      "node_modules/**",
+      "public/**", 
+      ".cache/**"
+    ]
+  },
+  // ... resto da configuração
+]
+```
+
+Isso previne o escaneamento desses diretórios mantendo o resto da configuração inalterada.
 
 ## 📚 Regras Comentadas (Para Análise Futura)
 
