@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap");
 @import "./hyphenation.css";
 
-/* Tornar o cabeçalho das footnotes visível com estilos padrão de h2 */
 .footnotes h2#footnote-label.sr-only {
   position: static !important;
   width: auto !important;
@@ -11,7 +10,6 @@
   white-space: normal !important;
   border: 0 !important;
   padding: 0 !important;
-  /* Garantir que a cor seja a mesma dos outros h2 */
   color: inherit !important;
 }
 
@@ -88,7 +86,6 @@ h3 {
   font-size: 0.9em;
 }
 
-/* Garantir que o h2 das footnotes não herde a cor cinza da classe .footnotes */
 .footnotes h2 {
   color: inherit;
 }
