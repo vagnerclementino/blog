@@ -27,12 +27,8 @@ module.exports = {
     "no-unused-vars": ["error", {
       "vars": "all",
       "args": "after-used",
-      "caughtErrors": "all",
-      "ignoreRestSiblings": false,
       "argsIgnorePattern": "^_",
       "varsIgnorePattern": "^_",
-      "caughtErrorsIgnorePattern": "^_",
-      "reportUsedIgnorePattern": false
     }],
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
