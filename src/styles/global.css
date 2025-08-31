@@ -1,13 +1,23 @@
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap");
+@import "./hyphenation.css";
+
+.footnotes h2#footnote-label.sr-only {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+  clip: auto !important;
+  white-space: normal !important;
+  border: 0 !important;
+  padding: 0 !important;
+  color: inherit !important;
+}
 
 p {
   text-align: justify;
   font-size: 16px;
   line-height: 1.7;
-  word-wrap: break-word;
   overflow-wrap: break-word;
-  -webkit-hyphens: auto;
-  hyphens: auto;
 
   @media screen and (min-width: 600px) {
     font-size: 18px;
@@ -43,11 +53,10 @@ blockquote {
 }
 
 pre {
-  white-space: pre-wrap;
   display: block;
   font-family: monospace;
   white-space: pre;
-  margin: 1em 0px;
+  margin: 1em 0;
 }
 
 h1 {
@@ -75,7 +84,10 @@ h3 {
   padding-top: 1rem;
   border-top: 1px solid #eee;
   font-size: 0.9em;
-  color: #666;
+}
+
+.footnotes h2 {
+  color: inherit;
 }
 
 .footnotes ol {

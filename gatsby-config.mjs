@@ -1,6 +1,36 @@
-const homepageURL = process.env.HOMEPAGE_URL || 'https://clementino.me'
-
 import remarkGfm from 'remark-gfm';
+import rehypeRewrite from 'rehype-rewrite';
+
+/**
+ * Verifica se um nó é um cabeçalho de footnotes
+ */
+const isFootnoteHeader = (node) => {
+  const {
+    type,
+    tagName,
+    properties: { id } = {},
+    children: [firstChild] = []
+  } = node || {};
+
+  return type === 'element' &&
+    tagName === 'h2' &&
+    id === 'footnote-label' &&
+    firstChild?.type === 'text' &&
+    firstChild?.value === 'Footnotes';
+};
+
+/**
+ * Localiza o título das footnotes de "Footnotes" para "Referências" em português brasileiro.
+ * Utiliza destructuring e guards para uma abordagem funcional minimalista.
+ * 
+ * @param {Object} node - Nó do AST HTML a ser processado
+ */
+const localizeFootnotesTitle = (node) => {
+  if (isFootnoteHeader(node)) {
+    const [firstChild] = node.children || [];
+    firstChild.value = 'Referências';
+  }
+};
 
 export default {
   trailingSlash: 'always',
@@ -10,6 +40,7 @@ export default {
     author: `Vagner Clementino`,
     description: `A personal blog with styled components and dark mode`,
     siteUrl: `https://notes.clementino.me`,
+    language: `pt-BR`,
     social: {
       twitter: `vclementino`,
     },
@@ -93,7 +124,11 @@ export default {
         extensions: [".mdx", ".md"],
         mdxOptions: {
           remarkPlugins: [remarkGfm],
-          rehypePlugins: [],
+          rehypePlugins: [
+            [rehypeRewrite, {
+              rewrite: localizeFootnotesTitle
+            }]
+          ],
           format: 'mdx',
         },
         gatsbyRemarkPlugins: [
