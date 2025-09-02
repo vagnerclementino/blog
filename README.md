@@ -4,6 +4,32 @@
 
 This is the search-enabled version of Gatsby Personal Starter Blog!
 
+## ✍️ Criando Artigos
+
+Para facilitar a criação de novos artigos, o projeto inclui uma automação usando Gulp:
+
+```bash
+npm run article:new
+```
+
+O comando irá solicitar:
+- **Título do artigo**: O título principal do artigo
+- **Data de publicação**: No formato YYYY-MM-DD (padrão: data atual)  
+- **Subtítulo/Descrição**: Uma breve descrição do artigo
+
+### O que é criado automaticamente
+
+A automação cria:
+1. **Pasta do artigo**: `content/blog/[slug-do-titulo]/`
+2. **Arquivo principal**: `index.md` com frontmatter preenchido
+3. **Placeholder da imagem**: `feature.png` (arquivo vazio)
+
+### Próximos passos
+Após executar a automação:
+1. **Adicione a imagem destacada**: Substitua o arquivo `feature.png` vazio pela imagem real
+2. **Escreva o conteúdo**: Edite o arquivo `index.md` com o conteúdo do artigo
+3. **Teste localmente**: Execute `npm start` para visualizar o artigo
+
 ## 🚀 Quick start
 
 1.  **Create a Gatsby site.**
