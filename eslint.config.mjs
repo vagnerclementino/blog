@@ -199,7 +199,7 @@ export default [
 
   // Configuração específica para arquivos de configuração
   {
-    files: ["gatsby-*.{js,mjs}", "*.config.{js,mjs}"],
+    files: ["gatsby-*.{js,mjs}", "*.config.{js,mjs}", "gulpfile.js"],
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
