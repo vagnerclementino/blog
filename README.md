@@ -17,6 +17,16 @@ O comando irá solicitar:
 - **Data de publicação**: No formato YYYY-MM-DD (padrão: data atual)  
 - **Subtítulo/Descrição**: Uma breve descrição do artigo
 
+### Removendo Artigos
+
+Para remover um artigo existente:
+
+```bash
+npm run article:clean
+```
+
+O comando irá solicitar o caminho do artigo (ex: `meu-artigo`) e removerá toda a pasta.
+
 ### O que é criado automaticamente
 
 A automação cria:

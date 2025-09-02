@@ -85,11 +85,36 @@ async function createArticle() {
   console.log(`\n💡 Não esqueça de adicionar a imagem feature.png!`);
 }
 
+async function cleanArticle() {
+  const inquirer = await import('inquirer');
+  
+  const answers = await inquirer.default.prompt([
+    {
+      type: 'input',
+      name: 'articlePath',
+      message: 'Caminho do artigo (ex: meu-artigo):',
+      validate: input => input.trim() !== '' || 'O caminho é obrigatório'
+    }
+  ]);
+
+  const articleDir = path.join(__dirname, 'content', 'blog', answers.articlePath);
+
+  if (!fs.existsSync(articleDir)) {
+    console.log(`❌ Artigo não encontrado: ${articleDir}`);
+    return;
+  }
+
+  fs.rmSync(articleDir, { recursive: true });
+  console.log(`🗑️  Artigo removido: ${articleDir}`);
+}
+
 gulp.task('new-article', createArticle);
 gulp.task('article', createArticle);
+gulp.task('clean-article', cleanArticle);
 
 gulp.task('default', () => {
   console.log('Tarefas disponíveis:');
-  console.log('  gulp new-article  - Criar novo artigo');
-  console.log('  gulp article      - Criar novo artigo (alias)');
+  console.log('  gulp new-article    - Criar novo artigo');
+  console.log('  gulp article        - Criar novo artigo (alias)');
+  console.log('  gulp clean-article  - Remover artigo existente');
 });

@@ -116,6 +116,7 @@
     "clean": "gatsby clean",
     "prepare": "husky",
     "prepush": "npm run quality",
-    "article:new": "gulp new-article"
+    "article:new": "gulp new-article",
+    "article:clean": "gulp clean-article"
   }
 }
