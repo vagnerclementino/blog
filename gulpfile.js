@@ -1,9 +1,8 @@
 const gulp = require('gulp');
 const fs = require('fs');
 const path = require('path');
-const inquirer = require('inquirer');
 
-function createSlug(title) {
+async function createSlug(title) {
   return title
     .toLowerCase()
     .normalize('NFD')
@@ -29,7 +28,9 @@ Escreva seu artigo aqui...
 }
 
 async function createArticle() {
-  const answers = await inquirer.prompt([
+  const inquirer = await import('inquirer');
+  
+  const answers = await inquirer.default.prompt([
     {
       type: 'input',
       name: 'title',
@@ -54,7 +55,7 @@ async function createArticle() {
     }
   ]);
 
-  const slug = createSlug(answers.title);
+  const slug = await createSlug(answers.title);
   const articleDir = path.join(__dirname, 'content', 'blog', slug);
   const indexPath = path.join(articleDir, 'index.md');
   const featurePath = path.join(articleDir, 'feature.png');
