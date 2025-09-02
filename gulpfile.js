@@ -69,8 +69,14 @@ async function createArticle() {
   const template = createArticleTemplate(answers.title, answers.date, answers.description);
   fs.writeFileSync(indexPath, template);
 
-  // Criar feature.png vazio (placeholder)
-  fs.writeFileSync(featurePath, '');
+  // Copiar feature.png base
+  const baseFeaturePath = path.join(__dirname, 'static', 'images', 'feature.png');
+  if (fs.existsSync(baseFeaturePath)) {
+    fs.copyFileSync(baseFeaturePath, featurePath);
+  } else {
+    fs.writeFileSync(featurePath, '');
+    console.log('⚠️  Imagem base não encontrada em static/images/feature.png - criado placeholder vazio');
+  }
 
   console.log(`\n✅ Artigo criado com sucesso!`);
   console.log(`📁 Diretório: ${articleDir}`);
