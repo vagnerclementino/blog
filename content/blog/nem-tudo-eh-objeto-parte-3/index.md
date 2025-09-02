@@ -5,10 +5,10 @@ description: "Guia prático para implementar Programação Orientada a Dados em 
 featuredImage: feature.png
 ---
 
-> **📖 Esta é uma série em 3 partes sobre paradigmas de programação:**
-> - **[Parte 1](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1)**: A Arte de Lidar com a Complexidade
-> - **[Parte 2](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2)**: Programação Orientada a Dados
-> - **Parte 3** (você está aqui): Aplicando Programação Orientada a Dados na Prática
+📖 **Esta é uma série em 3 partes sobre o paradigma de programação orientada a dados:**
+- **[Parte 1](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1)**: A Arte de Lidar com a Complexidade
+- **[Parte 2](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2)**: Programação Orientada a Dados
+- **Parte 3**: Aplicando Programação Orientada a Dados na Prática **Você está aqui** 👈🏿
 > 
 > *Nas partes anteriores, exploramos os fundamentos da complexidade no software e os princípios da Programação Orientada a Dados. Agora é hora de colocar em prática.*
 
@@ -383,12 +383,11 @@ chance para a DOP em seu próximo projeto?
 
 ---
 
-> **🔗 Série completa:**
-> - **[Parte 1](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1)**: A Arte de Lidar com a Complexidade
-> - **[Parte 2](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2)**: Programação Orientada a Dados
-> - **Parte 3**: Aplicando Programação Orientada a Dados na Prática (você acabou de ler)
-> 
-> *Gostou da série? Compartilhe suas experiências aplicando esses conceitos!*
+📖 **Série completa:**
+- **[Parte 1](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1)**: A Arte de Lidar com a Complexidade
+- **[Parte 2](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2)**: Programação Orientada a Dados
+- **Parte 3**: Aplicando Programação Orientada a Dados na Prática **Você acabou de ler** 👈🏿
+*Gostou da série? Compartilhe suas experiências aplicando esses conceitos!*
 
 [^22]: [Stack Overflow Developer Survey 2025 - Most Popular Technologies](https://survey.stackoverflow.co/2025/technology#most-popular-technologies)
 [^23]: [AWS Lambda](https://aws.amazon.com/lambda/)

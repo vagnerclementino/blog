@@ -5,10 +5,10 @@ description: "Descubra como dados imutáveis e operações separadas podem torna
 featuredImage: feature.png
 ---
 
-> **📖 Esta é uma série em 3 partes sobre paradigmas de programação:**
-> - **[Parte 1](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1)**: A Arte de Lidar com a Complexidade
-> - **Parte 2** (você está aqui): Programação Orientada a Dados
-> - **[Parte 3](https://notes.clementino.me/nem-tudo-eh-objeto-parte-3)**: Aplicando Programação Orientada a Dados na Prática
+📖 **Esta é uma série em 3 partes sobre o paradigma de programação orientada a dados:**
+- **[Parte 1](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1)**: A Arte de Lidar com a Complexidade
+- **Parte 2**: Programação Orientada a Dados **Você está aqui** 👈🏿
+- **[Parte 3](https://notes.clementino.me/nem-tudo-eh-objeto-parte-3)**: Aplicando Programação Orientada a Dados na Prática
 > 
 > *Na Parte 1, exploramos como diferentes paradigmas lidam com complexidade e identificamos limitações da OOP. Agora vamos descobrir uma nova abordagem.*
 
@@ -444,11 +444,9 @@ fundamentais:
 | **Pattern Matching (switch)**[^28] | Java 17 (Preview) Java 21 (Final) | Switch expressions com pattern matching | Processamento de tipos selados |
 | **Text Blocks**[^29] | Java 13 (Preview) Java 15 (Final) | Strings multilinha mais legíveis | Documentação e exemplos |
 
----
+## 🤔 O que vem a seguir?
 
-> **🔗 Continue a leitura:**
-> 
-> Na **[Parte 3](https://notes.clementino.me/nem-tudo-eh-objeto-parte-3)** desta série, veremos quando aplicar a DOP na prática, com exemplos reais incluindo APIs REST e funções AWS Lambda, além de orientações para escolher o paradigma adequado para cada situação.
+Agora que você conhece os princípios da DOP, como aplicá-los em projetos reais? Na **[Parte 3](https://notes.clementino.me/nem-tudo-eh-objeto-parte-3)**, vamos implementar esses conceitos em APIs REST, funções Lambda e descobrir quando a DOP é a escolha mais adequada para seu próximo projeto.
 
 [^16]: [Data-Oriented Programming in Java](https://www.infoq.com/articles/data-oriented-programming-java/)
 [^17]: [Data-Oriented Programming in Java - Version 1.1](https://inside.java/2024/05/23/dop-v1-1-introduction/)

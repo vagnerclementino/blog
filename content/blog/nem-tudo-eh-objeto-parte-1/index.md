@@ -5,10 +5,11 @@ description: "As limitações da orientação a objetos e a busca por alternativ
 featuredImage: feature.png
 ---
 
-> **📖 Esta é uma série em 3 partes sobre paradigmas de programação:**
-> - **Parte 1** (você está aqui): A Arte de Lidar com a Complexidade
-> - **[Parte 2](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2)**: Programação Orientada a Dados  
-> - **[Parte 3](https://notes.clementino.me/nem-tudo-eh-objeto-parte-3)**: Aplicando Programação Orientada a Dados na Prática
+📖 **Esta é uma série em 3 partes sobre o paradigma de programação orientada a dados:**
+
+- **Parte 1**: A Arte de Lidar com a Complexidade **Você está aqui** 👈🏿
+- **[Parte 2](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2)**: Programação Orientada a Dados  
+- **[Parte 3](https://notes.clementino.me/nem-tudo-eh-objeto-parte-3)**: Aplicando Programação Orientada a Dados na Prática
 
 ## A Arte de Lidar com a Complexidade
 
@@ -89,8 +90,8 @@ não necessariamente nessa ordem.
 
 Os principais paradigmas de programação adotam diferentes abordagens para
 resolver problemas, diferindo em aspectos como gerenciamento de estado,
-estruturação de código e tratamento de complexidade. Mais adiante, apresentarei
-também uma nova abordagem: uma *programação orientada a dados*.
+estruturação de código e tratamento de complexidade. Nesta série, exploraremos
+também uma nova abordagem: a *programação orientada a dados*.
 
 🔧 **Procedural** → "Como fazer passo a passo"
 
@@ -305,11 +306,9 @@ controladas. A Programação Orientada a Dados emerge como uma alternativa que
 aborda diretamente esses problemas, priorizando a imutabilidade, a transparência
 e a separação clara entre dados e operações.
 
----
+## 🤔 O que vem a seguir?
 
-> **🔗 Continue a leitura:**
-> 
-> Na **[Parte 2](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2)** desta série, descobriremos como a Programação Orientada a Dados oferece uma alternativa elegante aos problemas identificados na OOP, apresentando quatro princípios fundamentais que tornam o código mais seguro e previsível.
+E se existisse uma abordagem onde bugs de concorrência fossem eliminados por design? Onde estados inconsistentes não pudessem ser representados no código? Na **[Parte 2](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2)**, exploramos os 4 princípios fundamentais da Programação Orientada a Dados e como eles resolvem os problemas que identificamos na OOP.
 
 [^1]: [Holiday](https://en.wikipedia.org/wiki/Holiday)
 [^4]: [Moveable feast](https://en.wikipedia.org/wiki/Moveable_feast)
