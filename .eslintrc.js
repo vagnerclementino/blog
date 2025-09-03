@@ -37,14 +37,8 @@ module.exports = {
   rules: {
     "no-console": "error",
     "no-unused-vars": ["error", {
-      "vars": "all",
-      "args": "after-used", 
-      "caughtErrors": "all",
-      "ignoreRestSiblings": false,
       "argsIgnorePattern": "^_",
-      "varsIgnorePattern": "^_",
-      "caughtErrorsIgnorePattern": "^_",
-      "reportUsedIgnorePattern": false
+      "varsIgnorePattern": "^_"
     }],
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
