@@ -2,7 +2,7 @@ const gulp = require('gulp');
 const fs = require('fs');
 const path = require('path');
 
-async function createSlug(title) {
+const createSlug = async (title) => {
   return title
     .toLowerCase()
     .normalize('NFD')
@@ -13,7 +13,7 @@ async function createSlug(title) {
     .trim();
 }
 
-function createArticleTemplate(title, date, description) {
+const createArticleTemplate = (title, date, description) => {
   return `---
 title: "${title}"
 date: "${date}"
@@ -21,13 +21,76 @@ description: "${description}"
 featuredImage: feature.png
 ---
 
-# ${title}
+## ${title}
 
 Escreva seu artigo aqui...
 `;
 }
 
-async function createArticle() {
+const checkExistingFiles = (indexPath, featurePath) => {
+  const indexExists = fs.existsSync(indexPath);
+  const featureExists = fs.existsSync(featurePath);
+
+  if (indexExists || featureExists) {
+    console.log('⚠️  Arquivos já existem:');
+    if (indexExists) console.log(`   - ${indexPath}`);
+    if (featureExists) console.log(`   - ${featurePath}`);
+  }
+  return { indexExists, featureExists };
+};
+
+const handleIndexFile = async (indexPath, indexExists, answers, inquirer) => {
+  if (!indexExists) {
+    const template = createArticleTemplate(answers.title, answers.date, answers.description);
+    fs.writeFileSync(indexPath, template);
+    return true;
+  }
+  
+  const overwrite = await inquirer.default.prompt([{
+    type: 'confirm',
+    name: 'confirm',
+    message: `Sobrescrever ${path.basename(indexPath)}?`,
+    default: false
+  }]);
+  
+  if (overwrite.confirm) {
+    const template = createArticleTemplate(answers.title, answers.date, answers.description);
+    fs.writeFileSync(indexPath, template);
+    return true;
+  }
+  return false;
+};
+
+const handleFeatureFile = async (featurePath, featureExists, inquirer) => {
+  const writeFeature = () => {
+    const baseFeaturePath = path.join(__dirname, 'content', 'assets', 'feature.png');
+    if (fs.existsSync(baseFeaturePath)) {
+      fs.copyFileSync(baseFeaturePath, featurePath);
+    } else {
+      fs.writeFileSync(featurePath, '');
+    }
+  };
+
+  if (!featureExists) {
+    writeFeature();
+    return true;
+  }
+  
+  const overwrite = await inquirer.default.prompt([{
+    type: 'confirm',
+    name: 'confirm',
+    message: `Sobrescrever ${path.basename(featurePath)}?`,
+    default: false
+  }]);
+  
+  if (overwrite.confirm) {
+    writeFeature();
+    return true;
+  }
+  return false;
+};
+
+const createArticle = async () => {
   const inquirer = await import('inquirer');
   
   const answers = await inquirer.default.prompt([
@@ -60,32 +123,22 @@ async function createArticle() {
   const indexPath = path.join(articleDir, 'index.md');
   const featurePath = path.join(articleDir, 'feature.png');
 
-  // Criar diretório
+  const { indexExists, featureExists } = checkExistingFiles(indexPath, featurePath);
+
   if (!fs.existsSync(articleDir)) {
     fs.mkdirSync(articleDir, { recursive: true });
   }
 
-  // Criar index.md
-  const template = createArticleTemplate(answers.title, answers.date, answers.description);
-  fs.writeFileSync(indexPath, template);
+  const indexWritten = await handleIndexFile(indexPath, indexExists, answers, inquirer);
+  const featureWritten = await handleFeatureFile(featurePath, featureExists, inquirer);
 
-  // Copiar feature.png base
-  const baseFeaturePath = path.join(__dirname, 'static', 'images', 'feature.png');
-  if (fs.existsSync(baseFeaturePath)) {
-    fs.copyFileSync(baseFeaturePath, featurePath);
-  } else {
-    fs.writeFileSync(featurePath, '');
-    console.log('⚠️  Imagem base não encontrada em static/images/feature.png - criado placeholder vazio');
-  }
-
-  console.log(`\n✅ Artigo criado com sucesso!`);
+  console.log(`\n✅ Processamento concluído!`);
   console.log(`📁 Diretório: ${articleDir}`);
-  console.log(`📝 Arquivo: ${indexPath}`);
-  console.log(`🖼️  Imagem: ${featurePath} (placeholder criado)`);
-  console.log(`\n💡 Não esqueça de adicionar a imagem feature.png!`);
+  console.log(`📝 Arquivo ${indexWritten ? 'criado' : 'mantido'}: ${indexPath}`);
+  console.log(`🖼️  Imagem ${featureWritten ? 'criada' : 'mantida'}: ${featurePath}`);
 }
 
-async function cleanArticle() {
+const cleanArticle = async () => {
   const inquirer = await import('inquirer');
   
   const answers = await inquirer.default.prompt([

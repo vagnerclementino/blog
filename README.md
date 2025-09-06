@@ -13,6 +13,7 @@ npm run article:new
 ```
 
 O comando irá solicitar:
+
 - **Título do artigo**: O título principal do artigo
 - **Data de publicação**: No formato YYYY-MM-DD (padrão: data atual)  
 - **Subtítulo/Descrição**: Uma breve descrição do artigo
@@ -30,19 +31,22 @@ O comando irá solicitar o caminho do artigo (ex: `meu-artigo`) e removerá toda
 ### O que é criado automaticamente
 
 A automação cria:
+
 1. **Pasta do artigo**: `content/blog/[slug-do-titulo]/`
 2. **Arquivo principal**: `index.md` com frontmatter preenchido
 3. **Placeholder da imagem**: `feature.png` (arquivo vazio)
 
 ### Próximos passos
+
 Após executar a automação:
+
 1. **Adicione a imagem destacada**: Substitua o arquivo `feature.png` vazio pela imagem real
 2. **Escreva o conteúdo**: Edite o arquivo `index.md` com o conteúdo do artigo
 3. **Teste localmente**: Execute `npm start` para visualizar o artigo
 
 ## 🚀 Quick start
 
-1.  **Create a Gatsby site.**
+1. **Create a Gatsby site.**
 
     Use the Gatsby CLI to create a new site, specifying the blog starter.
 
@@ -51,7 +55,7 @@ Após executar a automação:
     gatsby new my-blog-starter https://github.com/thomaswang/gatsby-personal-starter-blog
     ```
 
-1.  **Start developing.**
+1. **Start developing.**
 
     Navigate into your new site’s directory and start it up.
 
@@ -60,7 +64,7 @@ Após executar a automação:
     gatsby develop
     ```
 
-1.  **Open the source code and start editing!**
+1. **Open the source code and start editing!**
 
     Your site is now running at `http://localhost:8000`!
 
