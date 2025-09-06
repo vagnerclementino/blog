@@ -58,22 +58,24 @@
   "devDependencies": {
     "@babel/core": "^7.22.0",
     "@cspell/dict-pt-br": "^2.4.2",
-    "@eslint/js": "^9.34.0",
     "@testing-library/jest-dom": "^6.0.0",
     "@testing-library/react": "^14.0.0",
     "babel-jest": "^29.7.0",
     "babel-preset-gatsby": "^3.14.0",
     "cspell": "^8.16.0",
     "depcheck": "^1.4.7",
-    "eslint": "^9.34.0",
+    "eslint": "^8.57.1",
+    "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-jest": "^29.0.1",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "gatsby-plugin-root-import": "^2.0.9",
-    "globals": "^16.3.0",
+    "gulp": "^5.0.1",
+    "gulp-cli": "^3.1.0",
     "husky": "^9.1.7",
     "identity-obj-proxy": "^3.0.0",
+    "inquirer": "^12.9.4",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jest-styled-components": "^7.2.0",
@@ -112,6 +114,8 @@
     "quality": "npm run lint && npm run test && npm run check-deps && cspell link add @cspell/dict-pt-br && cspell --no-must-find-files --config ./cspell.json '**/*.{md,mdx}'",
     "clean": "gatsby clean",
     "prepare": "husky",
-    "prepush": "npm run quality"
+    "prepush": "npm run quality",
+    "article:new": "gulp new-article",
+    "article:clean": "gulp clean-article"
   }
 }
