@@ -1,6 +1,6 @@
 ---
 title: "Nem tudo é objeto - Parte 3: Aplicando Programação Orientada a Dados na Prática"
-date: "2025-09-16"
+date: "2025-09-23"
 description: "Guia prático para implementar Programação Orientada a Dados em APIs REST, funções Lambda e projetos reais"
 featuredImage: feature.png
 ---

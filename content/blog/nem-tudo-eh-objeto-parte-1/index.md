@@ -1,6 +1,6 @@
 ---
 title: "Nem tudo é objeto - Parte 1: A Arte de Lidar com a Complexidade"
-date: "2025-09-02"
+date: "2025-09-09"
 description: "As limitações da orientação a objetos e a busca por alternativas"
 featuredImage: feature.png
 ---

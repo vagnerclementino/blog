@@ -1,6 +1,6 @@
 ---
 title: "Nem tudo é objeto - Parte 2: Programação Orientada a Dados"
-date: "2025-09-09"
+date: "2025-09-16"
 description: "Descubra como dados imutáveis e operações separadas podem tornar seu código mais limpo, seguro e fácil de manter"
 featuredImage: feature.png
 ---
