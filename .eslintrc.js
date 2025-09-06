@@ -62,7 +62,7 @@ module.exports = {
       },
     },
     {
-      files: ["gatsby-*.{js,mjs}", "*.config.{js,mjs}"],
+      files: ["gatsby-*.{js,mjs}", "*.config.{js,mjs}", "gulpfile.js"],
       env: {
         node: true,
       },
