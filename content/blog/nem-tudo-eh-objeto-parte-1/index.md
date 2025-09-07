@@ -8,8 +8,8 @@ featuredImage: feature.png
 📖 **Esta é uma série em 3 partes sobre o paradigma de programação orientada a dados:**
 
 - **Parte 1**: A Arte de Lidar com a Complexidade **Você está aqui** 👈🏿
-- **[Parte 2](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2)**: Programação Orientada a Dados  
-- **[Parte 3](https://notes.clementino.me/nem-tudo-eh-objeto-parte-3)**: Aplicando Programação Orientada a Dados na Prática
+- **[Parte 2](https://notes.clementino.me/blog/nem-tudo-eh-objeto-parte-2)**: Programação Orientada a Dados  
+- **[Parte 3](https://notes.clementino.me/blog/nem-tudo-eh-objeto-parte-3)**: Aplicando Programação Orientada a Dados na Prática
 
 ## A Arte de Lidar com a Complexidade
 
@@ -297,7 +297,7 @@ código
 não são expressos no sistema de tipos
 
 - **Estados ilegais representáveis:** O sistema de tipos permite criar objetos
-em estados inconsistentes, como um feriado observado (um tipo especial de feriado que veremos em detalhes no **[Artigo 2](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2)**) onde a data observada é anterior à data oficial
+em estados inconsistentes, como um feriado observado (um tipo especial de feriado que veremos em detalhes no **[Artigo 2](https://notes.clementino.me/blog/nem-tudo-eh-objeto-parte-2)**) onde a data observada é anterior à data oficial
 
 - **Concorrência problemática:** Objetos mutáveis compartilhados entre threads
 requerem sincronização complexa, aumentando a possibilidade de deadlocks e
@@ -311,7 +311,7 @@ e a separação clara entre dados e operações.
 
 ## 🤔 O que vem a seguir?
 
-E se existisse uma abordagem onde bugs de concorrência fossem eliminados por design? Onde estados inconsistentes não pudessem ser representados no código? Na **[Parte 2](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2)**, exploramos os 4 princípios fundamentais da Programação Orientada a Dados e como eles resolvem os problemas que identificamos na OOP.
+E se existisse uma abordagem onde bugs de concorrência fossem eliminados por design? Onde estados inconsistentes não pudessem ser representados no código? Na **[Parte 2](https://notes.clementino.me/blog/nem-tudo-eh-objeto-parte-2)**, exploramos os 4 princípios fundamentais da Programação Orientada a Dados e como eles resolvem os problemas que identificamos na OOP.
 
 [^1]: [A Philosophy of Software Design - Book Review](https://blog.pragmaticengineer.com/a-philosophy-of-software-design-review/)
 [^2]: [Stack Overflow Developer Survey 2025 - Most Popular Technologies](https://survey.stackoverflow.co/2025/technology#most-popular-technologies)
