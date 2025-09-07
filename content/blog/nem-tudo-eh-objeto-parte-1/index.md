@@ -25,7 +25,7 @@ médicos utilizam classificações como a Classificação Internacional de Doen�
 representar estruturas tridimensionais em duas dimensões e gestores utilizam
 organogramas e fluxogramas para mapear processos e hierarquias organizacionais.
 
-Em seu livro *A Philosophy of Software Design*[^30], John Ousterhout propõe
+Em seu livro *A Philosophy of Software Design*[^1], John Ousterhout propõe
 duas abordagens para lidar com a complexidade no desenvolvimento de software. A
 primeira consiste em *simplificar e tornar o código mais claro* por meio da
 remoção de casos especiais e da utilização de identificadores consistentes. A
@@ -81,7 +81,7 @@ outras palavras, um paradigma de programação define como os problemas são
 resolvidos com código. Por outro lado, uma linguagem de programação é a
 ferramenta que permite a implementação dessas soluções. Dado que uma linguagem
 pode suportar um ou mais paradigmas, a partir da análise da adoção das
-linguagens[^22], é possível inferir quais são os paradigmas mais utilizados.
+linguagens[^2], é possível inferir quais são os paradigmas mais utilizados.
 Independente da metodologia adotada, acredito que o resultado dos paradigmas
 mais utilizados seria *procedural, orientado a objetos e funcional*. Entretanto,
 não necessariamente nessa ordem.
@@ -128,7 +128,7 @@ primitivos e os métodos estáticos (*static*) que pertencem à classe e não a 
 objeto. Apesar de não ser uma linguagem estritamente orientada a objetos, o seu
 uso extensivo na indústria de software contribuiu para popularizar os princípios
 da OOP. Um exemplo de uma linguagem puramente orientada a objetos é o
-Smalltalk[^25], onde tudo é tratado como objeto.
+Smalltalk[^3], onde tudo é tratado como objeto.
 
 A OOP enfatiza a modelagem de sistemas por meio de objetos que possuem
 propriedades e comportamentos, promovendo a reutilização de código e o
@@ -152,15 +152,15 @@ responsável por gerenciar feriados (`Holiday`). Acredito que o leitor saiba o q
 é um feriado, contudo, existem certas especificidades sobre o domínio que
 entendo importante explicitar:
 
-- **Existem diferentes tipos de feriados**: Nacionais (Independência), religiosos (Natal, Ramadan), regionais (São João) e comerciais (Dia das mães/pais)[^1]
+- **Existem diferentes tipos de feriados**: Nacionais (Independência), religiosos (Natal, Ramadan), regionais (São João) e comerciais (Dia das mães/pais)[^4]
 
-- **Os feriados podem ser fixos ou móveis**: Fixos acontecem sempre na mesma data (25/12) e os móveis são calculados através do calendário lunar (Páscoa), dia da semana (Memorial Day) ou baseado em outras celebrações (Sexta-Feira Santa)[^4]
+- **Os feriados podem ser fixos ou móveis**: Fixos acontecem sempre na mesma data (25/12) e os móveis são calculados através do calendário lunar (Páscoa), dia da semana (Memorial Day) ou baseado em outras celebrações (Sexta-Feira Santa)[^5]
 
-- **Os feriados dependem de quais sistemas de calendário adotados**: Gregoriano (celebrações ocidentais), lunar islâmico (Ramadan "roda" 11 dias/ano), luni-solar judaico (Rosh Hashanah varia mas mantém sazonalidade)[^7]
+- **Os feriados dependem de quais sistemas de calendário adotados**: Gregoriano (celebrações ocidentais), lunar islâmico (Ramadan "roda" 11 dias/ano), luni-solar judaico (Rosh Hashanah varia mas mantém sazonalidade)[^6]
 
-- **Data agendada diferente da observada**: Feriado pode ter data oficial diferente da celebrada, como por exemplo, na estratégia de *"Mondayisation"* que move feriados de fim de semana para a segunda-feira[^10]
+- **Data agendada diferente da observada**: Feriado pode ter data oficial diferente da celebrada, como por exemplo, na estratégia de *"Mondayisation"* que move feriados de fim de semana para a segunda-feira[^7]
 
-- **Diferentes regras de observância**: Alguns começam no pôr do sol anterior (judaicos/islâmicos), têm duração variável (Chanukah 8 dias), só aplicam em dias úteis e não duplicam benefícios[^15]
+- **Diferentes regras de observância**: Alguns começam no pôr do sol anterior (judaicos/islâmicos), têm duração variável (Chanukah 8 dias), só aplicam em dias úteis e não duplicam benefícios[^8]
 
 Para simplificar vamos considerar feriados segundo o calendário Gregoriano e com
 uma duração fixa, ou seja, o feriado inicia e finaliza em uma data específica.
@@ -313,11 +313,11 @@ e a separação clara entre dados e operações.
 
 E se existisse uma abordagem onde bugs de concorrência fossem eliminados por design? Onde estados inconsistentes não pudessem ser representados no código? Na **[Parte 2](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2)**, exploramos os 4 princípios fundamentais da Programação Orientada a Dados e como eles resolvem os problemas que identificamos na OOP.
 
-[^1]: [Holiday](https://en.wikipedia.org/wiki/Holiday)
-[^4]: [Moveable feast](https://en.wikipedia.org/wiki/Moveable_feast)
-[^7]: [Islamic calendar](https://en.wikipedia.org/wiki/Islamic_calendar)
-[^10]: [When a public holiday falls on a weekend](https://www.employment.govt.nz/leave-and-holidays/public-holidays/when-a-public-holiday-falls-on-a-weekend)
-[^15]: [Religious Holidays](https://scl.cornell.edu/religiousholidays)
-[^22]: [Stack Overflow Developer Survey 2025 - Most Popular Technologies](https://survey.stackoverflow.co/2025/technology#most-popular-technologies)
-[^25]: [GNU Smalltalk](https://www.gnu.org/software/smalltalk/)
-[^30]: [A Philosophy of Software Design - Book Review](https://blog.pragmaticengineer.com/a-philosophy-of-software-design-review/)
+[^1]: [A Philosophy of Software Design - Book Review](https://blog.pragmaticengineer.com/a-philosophy-of-software-design-review/)
+[^2]: [Stack Overflow Developer Survey 2025 - Most Popular Technologies](https://survey.stackoverflow.co/2025/technology#most-popular-technologies)
+[^3]: [GNU Smalltalk](https://www.gnu.org/software/smalltalk/)
+[^4]: [Holiday](https://en.wikipedia.org/wiki/Holiday)
+[^5]: [Moveable feast](https://en.wikipedia.org/wiki/Moveable_feast)
+[^6]: [Islamic calendar](https://en.wikipedia.org/wiki/Islamic_calendar)
+[^7]: [When a public holiday falls on a weekend](https://www.employment.govt.nz/leave-and-holidays/public-holidays/when-a-public-holiday-falls-on-a-weekend)
+[^8]: [Religious Holidays](https://scl.cornell.edu/religiousholidays)

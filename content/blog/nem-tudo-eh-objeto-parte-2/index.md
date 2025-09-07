@@ -22,13 +22,13 @@ dados e comportamento, o paradigma prioriza a estrutura e o fluxo dos dados,
 separando *a informação do seu processamento*.
 
 A ideia de uma programação orientada a dados foi proposta originalmente por
-Brian Goetz[^16], posteriormente, Nicolai Parlog[^17] refinou o conceito,
+Brian Goetz[^1], posteriormente, Nicolai Parlog[^2] refinou o conceito,
 organizando melhor os princípios fundamentais. Este artigo apresenta uma visão
 prática dos conceitos propostos por Parlog.
 
 ### Princípios Fundamentais
 
-A Programação Orientada a Dados se baseia em quatro princípios fundamentais[^18]
+A Programação Orientada a Dados se baseia em quatro princípios fundamentais[^3]
 que, quando aplicados em conjunto, criam sistemas robustos, previsíveis e mais
 fáceis de manter. A figura abaixo ilustra esses quatro princípios fundamentais.
 Exploraremos cada um usando como exemplo a nossa implementação do sistema de
@@ -39,7 +39,7 @@ gerenciamento de feriados.
 #### 1. Dados são Imutáveis
 
 A imutabilidade mitiga uma fonte comum de bugs: objetos modificados por
-diferentes subsistemas sem comunicação adequada[^18]. Um exemplo é quando
+diferentes subsistemas sem comunicação adequada[^3]. Um exemplo é quando
 armazenamos um objeto em um `HashSet` e depois alteramos um campo usado no
 cálculo do hash code. Essa alteração torna o objeto "inalcançável" na estrutura,
 ou seja, não será possível recuperar o objeto pelo seu *hash*. Este problema
@@ -86,7 +86,7 @@ public record FixedHoliday(
 }
 ```
 
-Em Java, *Records[^32]* foram projetados para serem portadores transparentes e
+Em Java, *Records[^4]* foram projetados para serem portadores transparentes e
 imutáveis de dados. Eles atendem automaticamente aos requisitos de
 transparência: campos final para cada componente, construtor que aceita e
 atribui valores, métodos de acesso que os retornam, e implementações de `equals`
@@ -118,7 +118,7 @@ holidays.contains(christmasEve); // false - nova instância não está no set
 #### 2. Modele os Dados, Todos os Dados, e Nada Além dos Dados
 
 Este princípio enfatiza a criação de tipos específicos que representem fielmente
-cada variação do domínio, evitando tipos genéricos com campos opcionais[^19].
+cada variação do domínio, evitando tipos genéricos com campos opcionais[^5].
 Por exemplo, ao modelar feriados, poderíamos ter a tentação de criar um tipo
 genérico que tente acomodar todas as variações:
 
@@ -172,7 +172,7 @@ public sealed interface Holiday permits FixedHoliday, MoveableHoliday, ObservedH
 ```
 
 Uma alternativa para alcançar o segundo princípio é por meio de *sealed
-interfaces*[^26] para modelar alternativas e criar
+interfaces*[^6] para modelar alternativas e criar
 *records* específicos para cada variação. Em vez de múltiplos campos com
 requisitos mutuamente exclusivos ou condicionais, criamos uma *sealed interface*
 para modelar as alternativas e a usamos como tipo para um campo obrigatório.
@@ -200,7 +200,7 @@ public record MoveableHoliday(
 #### 3. Torne Estados Ilegais Irrepresentáveis
 
 Este princípio garante que apenas combinações legais de dados possam ser
-representadas no sistema[^20]. O mundo é caótico e toda regra parece ter uma
+representadas no sistema[^7]. O mundo é caótico e toda regra parece ter uma
 exceção - "todo feriado tem uma data fixa" rapidamente se torna "todo feriado
 fixo tem uma data fixa, mas os móveis dependem de cálculos complexos, e os
 observados podem ter datas diferentes da oficial". Quando modelamos isso de
@@ -311,7 +311,7 @@ var newYear = new ObservedHoliday("Ano Novo", "Primeiro dia do ano",
 
 #### 4. Separe Operações dos Dados
 
-Este princípio mantém dados e comportamentos separados[^21], com records
+Este princípio mantém dados e comportamentos separados[^8], com records
 contendo apenas estrutura e operações implementadas como funções puras em
 classes dedicadas. Para manter os records livres de lógica de domínio não
 trivial, as operações não devem ser implementadas neles, mas sim em subsistemas
@@ -442,11 +442,11 @@ fundamentais:
 
 | Funcionalidade | Versão Java | Descrição | Uso em DOP |
 |---|---|---|---|
-| **Records**[^32] | Java 14 (Preview) Java 16 (Final) | Classes imutáveis concisas com equals, hashCode e toString automáticos | Modelagem de dados imutáveis |
-| **Sealed Classes/Interfaces**[^26] | Java 15 (Preview) Java 17 (Final) | Controle sobre quais classes podem estender/implementar | Estados ilegais irrepresentáveis |
-| **Pattern Matching (instanceof)**[^27] | Java 14 (Preview) Java 16 (Final) | Verificação de tipo e cast em uma operação | Operações sobre dados |
-| **Pattern Matching (switch)**[^28] | Java 17 (Preview) Java 21 (Final) | Switch expressions com pattern matching | Processamento de tipos selados |
-| **Text Blocks**[^29] | Java 13 (Preview) Java 15 (Final) | Strings multilinha mais legíveis | Documentação e exemplos |
+| **Records**[^4] | Java 14 (Preview) Java 16 (Final) | Classes imutáveis concisas com equals, hashCode e toString automáticos | Modelagem de dados imutáveis |
+| **Sealed Classes/Interfaces**[^6] | Java 15 (Preview) Java 17 (Final) | Controle sobre quais classes podem estender/implementar | Estados ilegais irrepresentáveis |
+| **Pattern Matching (instanceof)**[^9] | Java 14 (Preview) Java 16 (Final) | Verificação de tipo e cast em uma operação | Operações sobre dados |
+| **Pattern Matching (switch)**[^10] | Java 17 (Preview) Java 21 (Final) | Switch expressions com pattern matching | Processamento de tipos selados |
+| **Text Blocks**[^11] | Java 13 (Preview) Java 15 (Final) | Strings multilinha mais legíveis | Documentação e exemplos |
 
 ## 🤔 O que vem a seguir?
 
@@ -455,14 +455,14 @@ Na **[Parte 3](https://notes.clementino.me/nem-tudo-eh-objeto-parte-3)**, vamos
 implementar esses conceitos em APIs REST, funções Lambda e descobrir quando a
 DOP é a escolha mais adequada para seu próximo projeto.
 
-[^16]: [Data-Oriented Programming in Java](https://www.infoq.com/articles/data-oriented-programming-java/)
-[^17]: [Data-Oriented Programming in Java - Version 1.1](https://inside.java/2024/05/23/dop-v1-1-introduction/)
-[^18]: [Model data immutably and transparently - DOP v1.1](https://inside.java/2024/05/27/dop-v1-1-immutable-transparent-data/)
-[^19]: [Model the data, the whole data, and nothing but the data - DOP v1.1](https://inside.java/2024/05/29/dop-v1-1-model-data/)
-[^20]: [Make illegal states unrepresentable - DOP v1.1](https://inside.java/2024/06/03/dop-v1-1-illegal-states/)
-[^21]: [Separate operations from data - DOP v1.1](https://inside.java/2024/06/05/dop-v1-1-separate-operations/)
-[^26]: [JEP 409: Sealed Classes](https://openjdk.org/jeps/409)
-[^27]: [JEP 394: Pattern Matching for instanceof](https://openjdk.org/jeps/394)
-[^28]: [JEP 441: Pattern Matching for switch](https://openjdk.org/jeps/441)
-[^29]: [JEP 378: Text Blocks](https://openjdk.org/jeps/378)
-[^32]: [JEP 395: Records](https://openjdk.org/jeps/395)
+[^1]: [Data-Oriented Programming in Java](https://www.infoq.com/articles/data-oriented-programming-java/)
+[^2]: [Data-Oriented Programming in Java - Version 1.1](https://inside.java/2024/05/23/dop-v1-1-introduction/)
+[^3]: [Model data immutably and transparently - DOP v1.1](https://inside.java/2024/05/27/dop-v1-1-immutable-transparent-data/)
+[^4]: [JEP 395: Records](https://openjdk.org/jeps/395)
+[^5]: [Model the data, the whole data, and nothing but the data - DOP v1.1](https://inside.java/2024/05/29/dop-v1-1-model-data/)
+[^6]: [JEP 409: Sealed Classes](https://openjdk.org/jeps/409)
+[^7]: [Make illegal states unrepresentable - DOP v1.1](https://inside.java/2024/06/03/dop-v1-1-illegal-states/)
+[^8]: [Separate operations from data - DOP v1.1](https://inside.java/2024/06/05/dop-v1-1-separate-operations/)
+[^9]: [JEP 394: Pattern Matching for instanceof](https://openjdk.org/jeps/394)
+[^10]: [JEP 441: Pattern Matching for switch](https://openjdk.org/jeps/441)
+[^11]: [JEP 378: Text Blocks](https://openjdk.org/jeps/378)
