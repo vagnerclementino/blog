@@ -440,13 +440,35 @@ princípios da Programação Orientada a Dados. A seguir listamos algumas
 funcionalidades da linguagem que facilitam a implementação dos quatro princípios
 fundamentais:
 
-| Funcionalidade | Versão Java | Descrição | Uso em DOP |
-|---|---|---|---|
-| **Records**[^4] | Java 14 (Preview) Java 16 (Final) | Classes imutáveis concisas com equals, hashCode e toString automáticos | Modelagem de dados imutáveis |
-| **Sealed Classes/Interfaces**[^6] | Java 15 (Preview) Java 17 (Final) | Controle sobre quais classes podem estender/implementar | Estados ilegais irrepresentáveis |
-| **Pattern Matching (instanceof)**[^9] | Java 14 (Preview) Java 16 (Final) | Verificação de tipo e cast em uma operação | Operações sobre dados |
-| **Pattern Matching (switch)**[^10] | Java 17 (Preview) Java 21 (Final) | Switch expressions com pattern matching | Processamento de tipos selados |
-| **Text Blocks**[^11] | Java 13 (Preview) Java 15 (Final) | Strings multilinha mais legíveis | Documentação e exemplos |
+**📦 Records**[^4]
+
+- **Versão**: Java 14 (Preview), Java 16 (Final)
+- **Descrição**: Classes imutáveis concisas com equals, hashCode e toString automáticos
+- **Uso em DOP**: Modelagem de dados imutáveis
+
+**🔒 Sealed Classes/Interfaces**[^6]
+
+- **Versão**: Java 15 (Preview), Java 17 (Final)
+- **Descrição**: Controle sobre quais classes podem estender/implementar
+- **Uso em DOP**: Estados ilegais irrepresentáveis
+
+**🔍 Pattern Matching (instanceof)**[^9]
+
+- **Versão**: Java 14 (Preview), Java 16 (Final)
+- **Descrição**: Verificação de tipo e cast em uma operação
+- **Uso em DOP**: Operações sobre dados
+
+**🔀 Pattern Matching (switch)**[^10]
+
+- **Versão**: Java 17 (Preview), Java 21 (Final)
+- **Descrição**: Switch expressions com pattern matching
+- **Uso em DOP**: Processamento de tipos selados
+
+**📝 Text Blocks**[^11]
+
+- **Versão**: Java 13 (Preview), Java 15 (Final)
+- **Descrição**: Strings multilinha mais legíveis
+- **Uso em DOP**: Documentação e exemplos
 
 ## 🤔 O que vem a seguir?
 
