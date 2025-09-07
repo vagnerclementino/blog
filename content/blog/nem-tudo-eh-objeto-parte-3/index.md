@@ -24,7 +24,7 @@ featuredImage: feature.png
  Agora é hora de colocar em prática. A Programação Orientada a Dados não
  pretende substituir completamente a Programação Orientada a Objetos, mas
  oferece uma abordagem complementar que pode ser aplicada em situações
- específicas onde seus benefícios são mais evidentes[^22].
+ específicas onde seus benefícios são mais evidentes[^1].
 
 A DOP posiciona-se entre a Programação Funcional e a Programação Orientada a
 Objetos, sendo, na prática, mais próxima da primeira. Enquanto a programação
@@ -62,7 +62,7 @@ está disponível em
 [github.com/vagnerclementino/api-holiday](https://github.com/vagnerclementino/api-holiday)
 e pode ser executado localmente usando Docker Compose.
 
-Um outro exemplo de bom uso da DOP é em *handlers* de funções AWS Lambda[^23].
+Um outro exemplo de bom uso da DOP é em *handlers* de funções AWS Lambda[^2].
 O ambiente serverless beneficia-se enormemente da imutabilidade dos dados, que
 elimina problemas de concorrência entre invocações simultâneas da função, e da
 separação clara entre dados e operações, que facilita o teste unitário de cada
@@ -403,5 +403,5 @@ chance para a DOP em seu próximo projeto?
 - **Parte 3**: Aplicando Programação Orientada a Dados na Prática **Você acabou de ler** 👈🏿
 *Gostou da série? Compartilhe suas experiências aplicando esses conceitos!*
 
-[^22]: [Stack Overflow Developer Survey 2025 - Most Popular Technologies](https://survey.stackoverflow.co/2025/technology#most-popular-technologies)
-[^23]: [AWS Lambda](https://aws.amazon.com/lambda/)
+[^1]: [Stack Overflow Developer Survey 2025 - Most Popular Technologies](https://survey.stackoverflow.co/2025/technology#most-popular-technologies)
+[^2]: [AWS Lambda](https://aws.amazon.com/lambda/)
