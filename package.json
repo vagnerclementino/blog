@@ -6,7 +6,7 @@
   },
   "private": true,
   "description": "A personal blog, based on the default blog starter",
-  "version": "5.2.0",
+  "version": "5.2.1",
   "author": "Vagner Clementino <vagner@clementino.me>",
   "bugs": {
     "url": "https://github.com/vagnerclementino/blog/issues"
