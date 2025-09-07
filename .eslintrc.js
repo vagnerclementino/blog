@@ -1,44 +1,35 @@
 module.exports = {
-  extends: [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:jsx-a11y/recommended"
-  ],
-  plugins: [
-    "react",
-    "react-hooks", 
-    "jsx-a11y",
-    "jest"
-  ],
   env: {
     browser: true,
     node: true,
     es2022: true,
-    jest: true
   },
+  extends: [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended",
+  ],
+  plugins: ["react", "react-hooks", "jsx-a11y"],
   parserOptions: {
     ecmaVersion: "latest",
     sourceType: "module",
     ecmaFeatures: {
-      jsx: true
-    }
+      jsx: true,
+    },
   },
   globals: {
     __PATH_PREFIX__: "readonly",
-    __BASE_PATH__: "readonly", 
-    __ASSET_PREFIX__: "readonly"
-  },
-  settings: {
-    react: {
-      version: "detect"
-    }
+    __BASE_PATH__: "readonly",
+    __ASSET_PREFIX__: "readonly",
   },
   rules: {
     "no-console": "error",
     "no-unused-vars": ["error", {
+      "vars": "all",
+      "args": "after-used",
       "argsIgnorePattern": "^_",
-      "varsIgnorePattern": "^_"
+      "varsIgnorePattern": "^_",
     }],
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
@@ -48,7 +39,12 @@ module.exports = {
     "react-hooks/exhaustive-deps": "warn",
     "eqeqeq": "error",
     "prefer-const": "error",
-    "complexity": ["warn", 10]
+    "complexity": ["warn", 10],
+  },
+  settings: {
+    react: {
+      version: "detect",
+    },
   },
   overrides: [
     {
@@ -58,26 +54,33 @@ module.exports = {
         "**/__mocks__/**/*.js",
         "**/loadershim.js"
       ],
+      plugins: ["jest"],
+      env: {
+        jest: true,
+      },
       rules: {
-        "no-unused-vars": "off"
-      }
+        "no-unused-vars": "off",
+      },
     },
     {
       files: ["gatsby-*.{js,mjs}", "*.config.{js,mjs}", "gulpfile.js"],
+      env: {
+        node: true,
+      },
       rules: {
         "no-console": "off",
         "no-unused-vars": ["warn", {
           argsIgnorePattern: "^_",
-          varsIgnorePattern: "^_", 
+          varsIgnorePattern: "^_",
           ignoreRestSiblings: true
-        }]
-      }
-    }
+        }],
+      },
+    },
   ],
   ignorePatterns: [
     "node_modules/",
     "public/",
     ".cache/",
-    "coverage/"
-  ]
+    "coverage/",
+  ],
 };
