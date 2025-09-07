@@ -310,9 +310,7 @@ concorrentes. A seguir temos um exemplo do uso da DOP em uma função Lambda.
 
 Ao implementar a API usando DOP, observamos vários benefícios práticos:
 
-**1. Testabilidade**: Funções puras são extremamente fáceis de testar, pois não
-dependem de estado externo e sempre produzem o mesmo resultado para as mesmas
-entradas.
+**1. Testabilidade**: Funções puras são extremamente fáceis de testar, pois não dependem de estado externo e sempre produzem o mesmo resultado para as mesmas entradas.
 
 ```java
 @Test
@@ -329,8 +327,7 @@ void shouldCalculateChristmasForDifferentYears() {
 }
 ```
 
-**2. Thread Safety**: Dados imutáveis eliminam problemas de concorrência,
-permitindo processamento paralelo seguro.
+**2. Thread Safety**: Dados imutáveis eliminam problemas de concorrência, permitindo processamento paralelo seguro.
 
 ```java
 public List<Holiday> processHolidaysInParallel(List<Holiday> holidays, int year) {
@@ -340,11 +337,9 @@ public List<Holiday> processHolidaysInParallel(List<Holiday> holidays, int year)
 }
 ```
 
-**3. Debugging Simplificado**: Estados imutáveis facilitam o rastreamento de
-bugs, pois não há modificações inesperadas de dados.
+**3. Debugging Simplificado**: Estados imutáveis facilitam o rastreamento de bugs, pois não há modificações inesperadas de dados.
 
-**4. Composabilidade**: Operações podem ser facilmente combinadas para criar
-funcionalidades mais complexas.
+**4. Composabilidade**: Operações podem ser facilmente combinadas para criar funcionalidades mais complexas.
 
 ```java
 public List<Holiday> getNationalReligiousHolidaysForYear(int year) {
