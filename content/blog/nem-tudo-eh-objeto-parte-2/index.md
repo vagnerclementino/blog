@@ -387,11 +387,14 @@ public final class HolidayOperations {
 }
 
 // Uso: operações como funções puras
-var christmas = new FixedHoliday("Natal", date, RELIGIOUS);
+var christmas = new FixedHoliday(
+    "Natal", "Nascimento de Cristo",
+    25, Month.DECEMBER, LocalDate.of(2024, 12, 25),
+    List.of(Locality.NATIONAL), HolidayType.RELIGIOUS);
 var christmasIn2025 = HolidayOperations.calculateDate(christmas, 2025);
-var info = HolidayOperations.formatInfo(christmas);
-var allHolidays2025 = HolidayOperations.getHolidaysForYear(holidays, 2025);
-```
+var info = HolidayOperations.formatInfo(christmasIn2025);
+var allHolidays2025 = HolidayOperations.getHolidaysForYear(
+    List.of(christmas), 2025);
 
 A implementação dessas operações utiliza *pattern matching* com `switch`. O
 switch implementa a seleção de qual código deve ser executado para um
