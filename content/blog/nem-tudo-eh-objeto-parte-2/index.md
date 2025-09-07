@@ -256,8 +256,10 @@ evitar estados inválidos.
 public sealed interface Holiday  // Nível 1: Tipos precisos
     permits FixedHoliday, ObservedHoliday, MoveableHoliday {
     String name();
+    String description();
     LocalDate date();
     List<Locality> localities();
+    HolidayType type();
 }
 
 // Nível 2: Records específicos para cada variação
