@@ -1,7 +1,7 @@
 ---
 title: "Nem tudo é objeto - Parte 3: Aplicando DOP na Prática"
 date: "2025-08-12"
-description: "Guia prático para implementar Programação Orientada a Dados em APIs REST, funções Lambda e projetos reais"
+description: "Guia prático para implementar Programação Orientada a Dados em projetos reais"
 featuredImage: feature.png
 ---
 
@@ -13,14 +13,13 @@ featuredImage: feature.png
 
 ## Quando Usar a Programação Orientada a Dados
 
- Nas [partes anteriores](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1), 
+ Nas [partes anteriores](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1),
  exploramos os fundamentos da complexidade no software e os princípios da
- [Programação Orientada a
- Dados](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2).  Agora é hora
- de colocar em prática. A Programação Orientada a Dados não pretende substituir
- completamente a Programação Orientada a Objetos, mas oferece uma abordagem
- complementar que pode ser aplicada em situações específicas onde seus
- benefícios são mais evidentes[^1].
+ [Programação Orientada a Dados](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2).  
+ Agora é hora de colocar em prática. A Programação Orientada a Dados não
+ pretende substituir completamente a Programação Orientada a Objetos, mas
+ oferece uma abordagem complementar que pode ser aplicada em situações
+ específicas onde seus benefícios são mais evidentes[^1].
 
 A DOP posiciona-se entre a Programação Funcional e a Programação Orientada a
 Objetos, sendo, na prática, mais próxima da primeira. Enquanto a programação
