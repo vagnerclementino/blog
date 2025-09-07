@@ -7,13 +7,13 @@ featuredImage: feature.png
 
 📖 **Esta é uma série em 3 partes sobre o paradigma de programação orientada a dados:**
 
-- **[Parte 1](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1)**: A Arte de Lidar com a Complexidade
+- **[Parte 1](https://notes.clementino.me/blog/nem-tudo-eh-objeto-parte-1)**: A Arte de Lidar com a Complexidade
 - **Parte 2**: Programação Orientada a Dados **Você está aqui** 👈🏿
-- **[Parte 3](https://notes.clementino.me/nem-tudo-eh-objeto-parte-3)**: Aplicando Programação Orientada a Dados na Prática
+- **[Parte 3](https://notes.clementino.me/blog/nem-tudo-eh-objeto-parte-3)**: Aplicando Programação Orientada a Dados na Prática
 
 ## Programação Orientada a Dados: Uma Nova Perspectiva
 
-Na [Parte 1](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1),
+Na [Parte 1](https://notes.clementino.me/blog/nem-tudo-eh-objeto-parte-1),
 exploramos como diferentes paradigmas lidam com complexidade e identificamos
 limitações da OOP. Agora vamos descobrir uma nova abordagem: a *Programação
 Orientada a Dados (Data-Oriented Programming - DOP)*. A DOP representa uma nova
@@ -484,7 +484,7 @@ fundamentais:
 ## 🤔 O que vem a seguir?
 
 Agora que você conhece os princípios da DOP, como aplicá-los em projetos reais?
-Na **[Parte 3](https://notes.clementino.me/nem-tudo-eh-objeto-parte-3)**, vamos
+Na **[Parte 3](https://notes.clementino.me/blog/nem-tudo-eh-objeto-parte-3)**, vamos
 implementar esses conceitos em APIs REST, funções Lambda e descobrir quando a
 DOP é a escolha mais adequada para seu próximo projeto.
 

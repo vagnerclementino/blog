@@ -7,15 +7,15 @@ featuredImage: feature.png
 
 📖 **Esta é uma série em 3 partes sobre o paradigma de programação orientada a dados:**
 
-- **[Parte 1](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1)**: A Arte de Lidar com a Complexidade
-- **[Parte 2](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2)**: Programação Orientada a Dados
+- **[Parte 1](https://notes.clementino.me/blog/nem-tudo-eh-objeto-parte-1)**: A Arte de Lidar com a Complexidade
+- **[Parte 2](https://notes.clementino.me/blog/nem-tudo-eh-objeto-parte-2)**: Programação Orientada a Dados
 - **Parte 3**: Aplicando Programação Orientada a Dados na Prática **Você está aqui** 👈🏿
 
 ## Quando Usar a Programação Orientada a Dados
 
- Nas [partes anteriores](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1),
+ Nas [partes anteriores](https://notes.clementino.me/blog/nem-tudo-eh-objeto-parte-1),
  exploramos os fundamentos da complexidade no software e os princípios da
- [Programação Orientada a Dados](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2).  
+ [Programação Orientada a Dados](https://notes.clementino.me/blog/nem-tudo-eh-objeto-parte-2).  
  Agora é hora de colocar em prática. A Programação Orientada a Dados não
  pretende substituir completamente a Programação Orientada a Objetos, mas
  oferece uma abordagem complementar que pode ser aplicada em situações
@@ -393,8 +393,8 @@ chance para a DOP em seu próximo projeto?
 
 📖 **Série completa:**
 
-- **[Parte 1](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1)**: A Arte de Lidar com a Complexidade
-- **[Parte 2](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2)**: Programação Orientada a Dados
+- **[Parte 1](https://notes.clementino.me/blog/nem-tudo-eh-objeto-parte-1)**: A Arte de Lidar com a Complexidade
+- **[Parte 2](https://notes.clementino.me/blog/nem-tudo-eh-objeto-parte-2)**: Programação Orientada a Dados
 - **Parte 3**: Aplicando Programação Orientada a Dados na Prática **Você acabou de ler** 👈🏿
 
 *Gostou da série? Compartilhe suas experiências aplicando esses conceitos!*
