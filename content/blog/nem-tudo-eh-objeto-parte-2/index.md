@@ -400,6 +400,7 @@ var christmasIn2025 = HolidayOperations.calculateDate(christmas, 2025);
 var info = HolidayOperations.formatInfo(christmasIn2025);
 var allHolidays2025 = HolidayOperations.getHolidaysForYear(
     List.of(christmas), 2025);
+```
 
 A implementação dessas operações utiliza *pattern matching* com `switch`. O
 switch implementa a seleção de qual código deve ser executado para um
