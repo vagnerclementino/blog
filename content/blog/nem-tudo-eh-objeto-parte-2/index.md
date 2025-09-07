@@ -349,12 +349,17 @@ public final class HolidayOperations {
     public static Holiday calculateDate(Holiday holiday, int year) {
         return switch (holiday) {
             case FixedHoliday fixed -> new FixedHoliday(
-                fixed.name(), 
-                fixed.description(), 
-                LocalDate.of(year, fixed.month(), fixed.day()), 
-                fixed.localities(), 
+                fixed.name(),
+                fixed.description(),
+                fixed.day(),
+                fixed.month(),
+                LocalDate.of(year, fixed.month(), fixed.day()),
+                fixed.localities(),
                 fixed.type()
             );
+            // … other cases …
+        };
+    }
             case MoveableHoliday moveable -> new MoveableHoliday(
                 moveable.name(), 
                 moveable.description(), 
