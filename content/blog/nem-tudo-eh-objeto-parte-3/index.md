@@ -1,6 +1,6 @@
 ---
 title: "Nem tudo é objeto - Parte 3: Aplicando Programação Orientada a Dados na Prática"
-date: "2025-09-23"
+date: "2025-08-12"
 description: "Guia prático para implementar Programação Orientada a Dados em APIs REST, funções Lambda e projetos reais"
 featuredImage: feature.png
 ---
@@ -10,7 +10,7 @@ featuredImage: feature.png
 - **[Parte 2](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2)**: Programação Orientada a Dados
 - **Parte 3**: Aplicando Programação Orientada a Dados na Prática **Você está aqui** 👈🏿
 > 
-> *Nas partes anteriores, exploramos os fundamentos da complexidade no software e os princípios da Programação Orientada a Dados. Agora é hora de colocar em prática.*
+> *Nas [partes anteriores](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1), exploramos os fundamentos da complexidade no software e os princípios da [Programação Orientada a Dados](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2). Agora é hora de colocar em prática.*
 
 ## Quando Usar a Programação Orientada a Dados
 
@@ -67,7 +67,7 @@ Ademais, a ausência de estado mutável compartilhado reduz significativamente a
 complexidade de debugging em um ambiente distribuído.
 
 Além disso, a natureza funcional da DOP alinha-se perfeitamente com o modelo de
-execução stateless das funções Lambda, onde cada invocação deve ser
+execução stateless (sem estado persistente) das funções Lambda, onde cada invocação deve ser
 independente e previsível, características essenciais para sistemas que podem
 escalar automaticamente e processar milhares de requisições concorrentes. A
 seguir temos um exemplo do uso da DOP em uma função Lambda.
@@ -365,7 +365,7 @@ poderosas, utilizando correspondência de padrões para escolher automaticamente
 qual código executar para cada tipo de dado, de forma mais simples e direta que
 padrões tradicionais de design. Esses princípios resultam em código mais
 **legível**, **testável**, **mais fácil de manter** e **thread-safe por
-design**, características especialmente valiosas em ambientes distribuídos e
+design** (seguro para execução concorrente), características especialmente valiosas em ambientes distribuídos e
 serverless.
 
 A DOP é particularmente adequada para sistemas de processamento de dados que

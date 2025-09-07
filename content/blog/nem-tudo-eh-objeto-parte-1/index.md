@@ -1,6 +1,6 @@
 ---
 title: "Nem tudo é objeto - Parte 1: A Arte de Lidar com a Complexidade"
-date: "2025-09-09"
+date: "2025-08-12"
 description: "As limitações da orientação a objetos e a busca por alternativas"
 featuredImage: feature.png
 ---
@@ -293,7 +293,7 @@ código
 não são expressos no sistema de tipos
 
 - **Estados ilegais representáveis:** O sistema de tipos permite criar objetos
-em estados inconsistentes, como um feriado observado (conceito que exploraremos no Artigo 2) onde a data observada é
+em estados inconsistentes, como um feriado observado (um tipo especial de feriado que veremos em detalhes no **[Artigo 2](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2)**) onde a data observada é
 anterior à data oficial
 
 - **Concorrência problemática:** Objetos mutáveis compartilhados entre threads

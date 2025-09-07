@@ -1,6 +1,6 @@
 ---
 title: "Nem tudo é objeto - Parte 2: Programação Orientada a Dados"
-date: "2025-09-16"
+date: "2025-08-12"
 description: "Descubra como dados imutáveis e operações separadas podem tornar seu código mais limpo, seguro e fácil de manter"
 featuredImage: feature.png
 ---
@@ -10,7 +10,7 @@ featuredImage: feature.png
 - **Parte 2**: Programação Orientada a Dados **Você está aqui** 👈🏿
 - **[Parte 3](https://notes.clementino.me/nem-tudo-eh-objeto-parte-3)**: Aplicando Programação Orientada a Dados na Prática
 > 
-> *Na Parte 1, exploramos como diferentes paradigmas lidam com complexidade e identificamos limitações da OOP. Agora vamos descobrir uma nova abordagem.*
+> *Na [Parte 1](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1), exploramos como diferentes paradigmas lidam com complexidade e identificamos limitações da OOP. Agora vamos descobrir uma nova abordagem.*
 
 ## Programação Orientada a Dados: Uma Nova Perspectiva
 
