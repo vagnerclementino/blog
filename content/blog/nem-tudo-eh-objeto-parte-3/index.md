@@ -6,26 +6,33 @@ featuredImage: feature.png
 ---
 
 📖 **Esta é uma série em 3 partes sobre o paradigma de programação orientada a dados:**
+
 - **[Parte 1](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1)**: A Arte de Lidar com a Complexidade
 - **[Parte 2](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2)**: Programação Orientada a Dados
 - **Parte 3**: Aplicando Programação Orientada a Dados na Prática **Você está aqui** 👈🏿
-> 
-> *Nas [partes anteriores](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1), exploramos os fundamentos da complexidade no software e os princípios da [Programação Orientada a Dados](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2). Agora é hora de colocar em prática.*
+
+ Nas [partes anteriores](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1), exploramos
+ os fundamentos da complexidade no software e os princípios da [Programação
+ Orientada a Dados](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2).
+ Agora é hora de colocar em prática.
 
 ## Quando Usar a Programação Orientada a Dados
 
-A Programação Orientada a Dados não pretende substituir completamente a
-Programação Orientada a Objetos, mas oferece uma abordagem complementar que pode
-ser aplicada em situações específicas onde seus benefícios são mais
-evidentes[^22].
+ Nas [partes anteriores](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1), exploramos
+ os fundamentos da complexidade no software e os princípios da [Programação
+ Orientada a Dados](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2).
+ Agora é hora de colocar em prática. A Programação Orientada a Dados não
+ pretende substituir completamente a Programação Orientada a Objetos, mas
+ oferece uma abordagem complementar que pode ser aplicada em situações
+ específicas onde seus benefícios são mais evidentes[^22].
 
-A DOP posiciona-se entre a Programação Funcional e a Programação Orientada
-a Objetos, sendo, na prática, mais próxima da primeira. Enquanto a
-programação funcional propõe que todas as operações sejam funções puras sem
-efeitos colaterais - requisito que pode ser difícil de alcançar em
-muitos projetos reais - a DOP aproveita os benefícios da pureza
-funcional onde possível e isola os desvios necessários nos subsistemas
-responsáveis pela lógica correspondente.
+A DOP posiciona-se entre a Programação Funcional e a Programação Orientada a
+Objetos, sendo, na prática, mais próxima da primeira. Enquanto a programação
+funcional propõe que todas as operações sejam funções puras sem efeitos
+colaterais - requisito que pode ser difícil de alcançar em muitos projetos reais
+
+- a DOP aproveita os benefícios da pureza funcional onde possível e isola os
+desvios necessários nos subsistemas responsáveis pela lógica correspondente.
 
 A força da DOP, similar à programação funcional, é que sua abordagem funciona
 muito bem em pequena escala. Qualquer pedaço de lógica de domínio representado
@@ -59,7 +66,7 @@ Um outro exemplo de bom uso da DOP é em *handlers* de funções AWS Lambda[^23]
 O ambiente serverless beneficia-se enormemente da imutabilidade dos dados, que
 elimina problemas de concorrência entre invocações simultâneas da função, e da
 separação clara entre dados e operações, que facilita o teste unitário de cada
-*handler* individualmente. 
+*handler* individualmente.
 
 O pattern matching com `switch` torna o roteamento de requisições HTTP mais
 legível e fácil de manter em comparação com uma sequência de `if-else`.
@@ -67,10 +74,10 @@ Ademais, a ausência de estado mutável compartilhado reduz significativamente a
 complexidade de debugging em um ambiente distribuído.
 
 Além disso, a natureza funcional da DOP alinha-se perfeitamente com o modelo de
-execução stateless (sem estado persistente) das funções Lambda, onde cada invocação deve ser
-independente e previsível, características essenciais para sistemas que podem
-escalar automaticamente e processar milhares de requisições concorrentes. A
-seguir temos um exemplo do uso da DOP em uma função Lambda.
+execução stateless (sem estado persistente) das funções Lambda, onde cada
+invocação deve ser independente e previsível, características essenciais para
+sistemas que podem escalar automaticamente e processar milhares de requisições
+concorrentes. A seguir temos um exemplo do uso da DOP em uma função Lambda.
 
 ```java
 public class HolidayLambdaHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
@@ -141,7 +148,9 @@ public class HolidayLambdaHandler implements RequestHandler<APIGatewayProxyReque
 
 ### Exemplo Prático: API REST para Feriados
 
-Vamos examinar como implementar uma API REST completa usando os princípios da DOP. Este exemplo demonstra como os quatro princípios fundamentais se aplicam em um cenário real de desenvolvimento.
+Vamos examinar como implementar uma API REST completa usando os princípios da
+DOP. Este exemplo demonstra como os quatro princípios fundamentais se aplicam em
+um cenário real de desenvolvimento.
 
 #### Estrutura de Dados Imutáveis
 
@@ -301,7 +310,9 @@ public class HolidayController {
 
 Ao implementar a API usando DOP, observamos vários benefícios práticos:
 
-**1. Testabilidade**: Funções puras são extremamente fáceis de testar, pois não dependem de estado externo e sempre produzem o mesmo resultado para as mesmas entradas.
+**1. Testabilidade**: Funções puras são extremamente fáceis de testar, pois não
+*dependem de estado externo e sempre produzem o mesmo resultado para as mesmas
+*entradas.
 
 ```java
 @Test
@@ -318,7 +329,8 @@ void shouldCalculateChristmasForDifferentYears() {
 }
 ```
 
-**2. Thread Safety**: Dados imutáveis eliminam problemas de concorrência, permitindo processamento paralelo seguro.
+**2. Thread Safety**: Dados imutáveis eliminam problemas de concorrência,
+*permitindo processamento paralelo seguro.
 
 ```java
 public List<Holiday> processHolidaysInParallel(List<Holiday> holidays, int year) {
@@ -328,9 +340,11 @@ public List<Holiday> processHolidaysInParallel(List<Holiday> holidays, int year)
 }
 ```
 
-**3. Debugging Simplificado**: Estados imutáveis facilitam o rastreamento de bugs, pois não há modificações inesperadas de dados.
+**3. Debugging Simplificado**: Estados imutáveis facilitam o rastreamento de
+*bugs, pois não há modificações inesperadas de dados.
 
-**4. Composabilidade**: Operações podem ser facilmente combinadas para criar funcionalidades mais complexas.
+**4. Composabilidade**: Operações podem ser facilmente combinadas para criar
+*funcionalidades mais complexas.
 
 ```java
 public List<Holiday> getNationalReligiousHolidaysForYear(int year) {
@@ -345,8 +359,8 @@ public List<Holiday> getNationalReligiousHolidaysForYear(int year) {
 
 ## Conclusão
 
-A Programação Orientada a Dados (Data-Oriented Programming - DOP) representa
-uma abordagem complementar à Programação Orientada a Objetos que prioriza a
+A Programação Orientada a Dados (Data-Oriented Programming - DOP) representa uma
+abordagem complementar à Programação Orientada a Objetos que prioriza a
 estrutura e o fluxo dos dados de forma imutável, separando informação do seu
 processamento. Baseada em quatro princípios fundamentais - dados imutáveis e
 transparentes, modelagem precisa de todos os dados necessários, prevenção de
@@ -365,8 +379,8 @@ poderosas, utilizando correspondência de padrões para escolher automaticamente
 qual código executar para cada tipo de dado, de forma mais simples e direta que
 padrões tradicionais de design. Esses princípios resultam em código mais
 **legível**, **testável**, **mais fácil de manter** e **thread-safe por
-design** (seguro para execução concorrente), características especialmente valiosas em ambientes distribuídos e
-serverless.
+design** (seguro para execução concorrente), características especialmente
+valiosas em ambientes distribuídos e serverless.
 
 A DOP é particularmente adequada para sistemas de processamento de dados que
 ingerem e produzem informações de forma previsível, como jobs de processamento
@@ -375,8 +389,7 @@ que modelam estruturas existentes. Também se beneficia de problemas menores que
 podem ser resolvidos de forma isolada, aproveitando a clareza e simplicidade do
 paradigma. Por fim, e não menos importante, a chave está em reconhecer que
 diferentes paradigmas revelam aspectos distintos da solução, e a escolha
-adequada pode fazer toda a diferença na elegância e eficácia do resultado
-final.
+adequada pode fazer toda a diferença na elegância e eficácia do resultado final.
 
 E aí, curtiu a ideia de dados simples e operações poderosas? Que tal dar uma
 chance para a DOP em seu próximo projeto?
@@ -384,6 +397,7 @@ chance para a DOP em seu próximo projeto?
 ---
 
 📖 **Série completa:**
+
 - **[Parte 1](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1)**: A Arte de Lidar com a Complexidade
 - **[Parte 2](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2)**: Programação Orientada a Dados
 - **Parte 3**: Aplicando Programação Orientada a Dados na Prática **Você acabou de ler** 👈🏿

@@ -1,6 +1,6 @@
 ---
 title: "Nem tudo é objeto - Parte 1: A Arte de Lidar com a Complexidade"
-date: "2025-08-12"
+date: "2025-08-10"
 description: "As limitações da orientação a objetos e a busca por alternativas"
 featuredImage: feature.png
 ---
@@ -165,11 +165,13 @@ entendo importante explicitar:
 Para simplificar vamos considerar feriados segundo o calendário Gregoriano e com
 uma duração fixa, ou seja, o feriado inicia e finaliza em uma data específica.
 
-A modelagem da classe `Holiday` adota uma abordagem
-hierárquica típica da OOP, onde uma classe abstrata define o contrato comum e as
-características compartilhadas por todos os demais tipos de feriados. A classe
-base encapsula propriedades essenciais como nome, descrição, localidades onde é
-observado, tipo de feriado e regras de *"Mondayisation"* (transferência de feriados de fim de semana para segunda-feira), além de comportamentos comuns como o cálculo de data observada.
+A modelagem da classe `Holiday` adota uma abordagem hierárquica típica da OOP,
+onde uma classe abstrata define o contrato comum e as características
+compartilhadas por todos os demais tipos de feriados. A classe base encapsula
+propriedades essenciais como nome, descrição, localidades onde é observado, tipo
+de feriado e regras de *"Mondayisation"* (transferência de feriados de fim de
+semana para segunda-feira), além de comportamentos comuns como o cálculo de data
+observada.
 
 Um aspecto fundamental da OOP é que a classe `Holiday` encapsula seu estado
 através da propriedade `date`, mantendo as regras de cálculo da data como
@@ -196,8 +198,10 @@ year)`, onde cada subclasse fornece sua própria implementação específica -
 feriados fixos retornam sempre a mesma data, enquanto os móveis executam
 cálculos complexos, como o algoritmo astronômico para definir a data da Páscoa.
 A **abstração** oculta a complexidade dos diferentes tipos de cálculo de datas
-atrás de uma interface uniforme, permitindo que o código cliente trate todas essas celebrações de forma consistente, independentemente de serem fixas ou móveis. A
-seguir temos um código explicitando o uso de cada um dos princípios da OOP.
+atrás de uma interface uniforme, permitindo que o código cliente trate todas
+essas celebrações de forma consistente, independentemente de serem fixas ou
+móveis. A seguir temos um código explicitando o uso de cada um dos princípios da
+OOP.
 
 ```java
 // Classe abstrata demonstrando encapsulamento e abstração
@@ -293,8 +297,7 @@ código
 não são expressos no sistema de tipos
 
 - **Estados ilegais representáveis:** O sistema de tipos permite criar objetos
-em estados inconsistentes, como um feriado observado (um tipo especial de feriado que veremos em detalhes no **[Artigo 2](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2)**) onde a data observada é
-anterior à data oficial
+em estados inconsistentes, como um feriado observado (um tipo especial de feriado que veremos em detalhes no **[Artigo 2](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2)**) onde a data observada é anterior à data oficial
 
 - **Concorrência problemática:** Objetos mutáveis compartilhados entre threads
 requerem sincronização complexa, aumentando a possibilidade de deadlocks e

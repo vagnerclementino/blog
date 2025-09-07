@@ -1,23 +1,25 @@
 ---
 title: "Nem tudo é objeto - Parte 2: Programação Orientada a Dados"
-date: "2025-08-12"
+date: "2025-08-11"
 description: "Descubra como dados imutáveis e operações separadas podem tornar seu código mais limpo, seguro e fácil de manter"
 featuredImage: feature.png
 ---
 
 📖 **Esta é uma série em 3 partes sobre o paradigma de programação orientada a dados:**
+
 - **[Parte 1](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1)**: A Arte de Lidar com a Complexidade
 - **Parte 2**: Programação Orientada a Dados **Você está aqui** 👈🏿
 - **[Parte 3](https://notes.clementino.me/nem-tudo-eh-objeto-parte-3)**: Aplicando Programação Orientada a Dados na Prática
-> 
-> *Na [Parte 1](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1), exploramos como diferentes paradigmas lidam com complexidade e identificamos limitações da OOP. Agora vamos descobrir uma nova abordagem.*
 
 ## Programação Orientada a Dados: Uma Nova Perspectiva
 
-A *Programação Orientada a Dados (Data-Oriented Programming)* - DOP representa
-uma nova perspectiva de como pensamos a modelagem de software. Em vez de focar
-em objetos que encapsulam dados e comportamento, o paradigma prioriza a
-estrutura e o fluxo dos dados, separando *a informação do seu processamento*.
+Na [Parte 1](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1), exploramos
+como diferentes paradigmas lidam com complexidade e identificamos limitações da
+OOP. Agora vamos descobrir uma nova abordagem.  A *Programação Orientada a Dados
+(Data-Oriented Programming)* - DOP representa uma nova perspectiva de como
+pensamos a modelagem de software. Em vez de focar em objetos que encapsulam
+dados e comportamento, o paradigma prioriza a estrutura e o fluxo dos dados,
+separando *a informação do seu processamento*.
 
 A ideia de uma programação orientada a dados foi proposta originalmente por
 Brian Goetz[^16], posteriormente, Nicolai Parlog[^17] refinou o conceito,
@@ -27,9 +29,10 @@ prática dos conceitos propostos por Parlog.
 ### Princípios Fundamentais
 
 A Programação Orientada a Dados se baseia em quatro princípios fundamentais[^18]
-que, quando aplicados em conjunto, criam sistemas robustos, previsíveis e
-mais fáceis de manter. A figura abaixo ilustra esses quatro princípios fundamentais. Exploraremos cada um usando como
-exemplo a nossa implementação do sistema de gerenciamento de feriados.
+que, quando aplicados em conjunto, criam sistemas robustos, previsíveis e mais
+fáceis de manter. A figura abaixo ilustra esses quatro princípios fundamentais.
+Exploraremos cada um usando como exemplo a nossa implementação do sistema de
+gerenciamento de feriados.
 
 ![Os princípios fundamentais da DOP](four-pod-principles.png)
 
@@ -37,10 +40,10 @@ exemplo a nossa implementação do sistema de gerenciamento de feriados.
 
 A imutabilidade mitiga uma fonte comum de bugs: objetos modificados por
 diferentes subsistemas sem comunicação adequada[^18]. Um exemplo é quando
-armazenamos um objeto em um `HashSet` e depois alteramos um campo usado no cálculo
-do hash code. Essa alteração torna o objeto "inalcançável" na estrutura, ou
-seja, não será possível recuperar o objeto pelo seu *hash*. Este problema surge
-quando dois subsistemas (o `HashSet` e o código que modifica o objeto) têm
+armazenamos um objeto em um `HashSet` e depois alteramos um campo usado no
+cálculo do hash code. Essa alteração torna o objeto "inalcançável" na estrutura,
+ou seja, não será possível recuperar o objeto pelo seu *hash*. Este problema
+surge quando dois subsistemas (o `HashSet` e o código que modifica o objeto) têm
 acesso ao mesmo objeto, mas têm diferentes requisitos para modificá-lo e nenhuma
 forma de comunicar essas necessidades. O exemplo a seguir apresenta o problema.
 
@@ -56,12 +59,12 @@ holidays.add(christmas);
 
 O remédio é simples: se nada pode mudar, tais erros não podem ocorrer. Quando
 subsistemas se comunicam apenas com dados imutáveis, essa fonte comum de erros
-desaparece. Todavia, a necessidade de representar mudanças de estado é inevitável.
-Para mitigar esse tipo de problema, o primeiro princípio da DOP define que os
-objetos sejam **transparentes** - seu estado interno deve ser acessível e
-construível por meio de uma interface bem definida. Na prática, ser transparente
-significa que a classe deve ter um método de acesso para cada campo e um
-construtor que aceita valores para todos os campos, permitindo recriar uma
+desaparece. Todavia, a necessidade de representar mudanças de estado é
+inevitável.  Para mitigar esse tipo de problema, o primeiro princípio da DOP
+define que os objetos sejam **transparentes** - seu estado interno deve ser
+acessível e construível por meio de uma interface bem definida. Na prática, ser
+transparente significa que a classe deve ter um método de acesso para cada campo
+e um construtor que aceita valores para todos os campos, permitindo recriar uma
 instância indistinguível da original. A seguir temos um exemplo de código
 imutável e transparente.
 
@@ -127,8 +130,8 @@ Se usarmos um tipo genérico `GenericHoliday` para todos os casos, como realizad
 na modelagem orientada a objetos, acabamos com campos que podem ser nulos e
 regras implícitas sobre quais campos devem ou não estar preenchidos para cada
 tipo de feriado. Isso torna o código frágil e propenso a erros, especialmente
-pelo fato de não ser possível usar o compilador para nos ajudar a garantir que as
-combinações de campos estejam corretas.
+pelo fato de não ser possível usar o compilador para nos ajudar a garantir que
+as combinações de campos estejam corretas.
 
 ```java
 // ANTES - Tipo genérico problemático
@@ -199,9 +202,10 @@ public record MoveableHoliday(
 Este princípio garante que apenas combinações legais de dados possam ser
 representadas no sistema[^20]. O mundo é caótico e toda regra parece ter uma
 exceção - "todo feriado tem uma data fixa" rapidamente se torna "todo feriado
-fixo tem uma data fixa, mas os móveis dependem de cálculos complexos, e
-os observados podem ter datas diferentes da oficial". Quando modelamos isso de forma inadequada, podemos ficar
-presos com estruturas que permitem estados inconsistentes.
+fixo tem uma data fixa, mas os móveis dependem de cálculos complexos, e os
+observados podem ter datas diferentes da oficial". Quando modelamos isso de
+forma inadequada, podemos ficar presos com estruturas que permitem estados
+inconsistentes.
 
 Considere uma modelagem problemática para feriados que tenta acomodar todos os
 tipos em uma única classe genérica. Esta abordagem apresenta vários problemas
@@ -239,7 +243,7 @@ proteção:
 - primeiro, use tipos precisos (sealed interfaces e records) para que o
 compilador impeça a criação de tipos inválidos;
 - segundo, em situações onde dados são mutuamente exclusivos, evite múltiplos
-campos opcionais criando records específicos para cada variação; 
+campos opcionais criando records específicos para cada variação;
 - terceiro, quando uma propriedade não pode ser expressa pelo sistema de tipos,
 valide no construtor o mais cedo possível, idealmente na fronteira entre o mundo
 externo e seu sistema.
@@ -408,9 +412,9 @@ A modelagem DOP apresenta uma estrutura fundamentalmente diferente da OOP. A
 *sealed interface* `Holiday` define apenas o contrato de dados (métodos de
 acesso), enquanto cada record implementa exatamente os dados necessários para
 seu tipo específico. Observe como não há herança de implementação - cada record
-é independente e contém apenas os dados relevantes para seu contexto,
-eliminando campos desnecessários e garantindo que estados ilegais sejam
-representáveis pelo sistema de tipos.
+é independente e contém apenas os dados relevantes para seu contexto, eliminando
+campos desnecessários e garantindo que estados ilegais sejam representáveis pelo
+sistema de tipos.
 
 ![Diagrama de classe da modelagem dos feriados como DOP](class-diagram.png)
 
@@ -418,14 +422,14 @@ Assim como fizemos uma analogia de uma classe na OOP com um organismo vivo,
 podemos comparar a DOP com uma linha de montagem industrial moderna. Nesta
 analogia, os dados imutáveis são como peças padronizadas que fluem pela linha
 sem serem alteradas em sua essência, as operações funcionam como estações de
-trabalho especializadas que processam essas peças de forma previsível. Por
-outro lado, o *pattern matching* atua como um sistema de classificação
-automática que direciona cada peça para a estação correta. Por fim, a separação
-entre dados e operações espelha a divisão clara entre matéria-prima e processos
-de fabricação. Esta analogia faz sentido porque, tanto a DOP quanto uma linha
-de montagem, priorizam eficiência, previsibilidade, especialização de funções e
-fluxo controlado de informação, onde cada componente tem uma responsabilidade
-bem definida e o resultado final é construído através da composição ordenada de
+trabalho especializadas que processam essas peças de forma previsível. Por outro
+lado, o *pattern matching* atua como um sistema de classificação automática que
+direciona cada peça para a estação correta. Por fim, a separação entre dados e
+operações espelha a divisão clara entre matéria-prima e processos de fabricação.
+Esta analogia faz sentido porque, tanto a DOP quanto uma linha de montagem,
+priorizam eficiência, previsibilidade, especialização de funções e fluxo
+controlado de informação, onde cada componente tem uma responsabilidade bem
+definida e o resultado final é construído através da composição ordenada de
 operações simples e confiáveis.
 
 ### Programação orientada a dados em Java
@@ -446,7 +450,10 @@ fundamentais:
 
 ## 🤔 O que vem a seguir?
 
-Agora que você conhece os princípios da DOP, como aplicá-los em projetos reais? Na **[Parte 3](https://notes.clementino.me/nem-tudo-eh-objeto-parte-3)**, vamos implementar esses conceitos em APIs REST, funções Lambda e descobrir quando a DOP é a escolha mais adequada para seu próximo projeto.
+Agora que você conhece os princípios da DOP, como aplicá-los em projetos reais?
+Na **[Parte 3](https://notes.clementino.me/nem-tudo-eh-objeto-parte-3)**, vamos
+implementar esses conceitos em APIs REST, funções Lambda e descobrir quando a
+DOP é a escolha mais adequada para seu próximo projeto.
 
 [^16]: [Data-Oriented Programming in Java](https://www.infoq.com/articles/data-oriented-programming-java/)
 [^17]: [Data-Oriented Programming in Java - Version 1.1](https://inside.java/2024/05/23/dop-v1-1-introduction/)
