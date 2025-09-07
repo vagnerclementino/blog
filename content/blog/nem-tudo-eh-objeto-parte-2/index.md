@@ -13,20 +13,20 @@ featuredImage: feature.png
 
 ## Programação Orientada a Dados: Uma Nova Perspectiva
 
-Na [Parte 1](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1), exploramos
-como diferentes paradigmas lidam com complexidade e identificamos limitações da
-OOP. Agora vamos descobrir uma nova abordagem.  A *Programação Orientada a Dados
-(Data-Oriented Programming)* - DOP representa uma nova perspectiva de como
-pensamos a modelagem de software. Em vez de focar em objetos que encapsulam
-dados e comportamento, o paradigma prioriza a estrutura e o fluxo dos dados,
-separando *a informação do seu processamento*.
+Na [Parte 1](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1),
+exploramos como diferentes paradigmas lidam com complexidade e identificamos
+limitações da OOP. Agora vamos descobrir uma nova abordagem: a *Programação
+Orientada a Dados (Data-Oriented Programming - DOP)*. A DOP representa uma nova
+perspectiva de como pensamos a modelagem de software. Em vez de focar em
+objetos que encapsulam dados e comportamento, o paradigma prioriza a estrutura
+e o fluxo dos dados, separando *a informação do seu processamento*.
 
 A ideia de uma programação orientada a dados foi proposta originalmente por
 Brian Goetz[^1], posteriormente, Nicolai Parlog[^2] refinou o conceito,
 organizando melhor os princípios fundamentais. Este artigo apresenta uma visão
 prática dos conceitos propostos por Parlog.
 
-### Princípios Fundamentais
+## Princípios Fundamentais
 
 A Programação Orientada a Dados se baseia em quatro princípios fundamentais[^3]
 que, quando aplicados em conjunto, criam sistemas robustos, previsíveis e mais
@@ -36,7 +36,7 @@ gerenciamento de feriados.
 
 ![Os princípios fundamentais da DOP](four-pod-principles.png)
 
-#### 1. Dados são Imutáveis
+### 1. Dados são Imutáveis
 
 A imutabilidade mitiga uma fonte comum de bugs: objetos modificados por
 diferentes subsistemas sem comunicação adequada[^3]. Um exemplo é quando
@@ -115,7 +115,7 @@ holidays.contains(christmas); // Sempre true - objeto original inalterado
 holidays.contains(christmasEve); // false - nova instância não está no set
 ```
 
-#### 2. Modele os Dados, Todos os Dados, e Nada Além dos Dados
+### 2. Modele os Dados, Todos os Dados, e Nada Além dos Dados
 
 Este princípio enfatiza a criação de tipos específicos que representem fielmente
 cada variação do domínio, evitando tipos genéricos com campos opcionais[^5].
@@ -197,7 +197,7 @@ public record MoveableHoliday(
 ) implements Holiday { }
 ```
 
-#### 3. Torne Estados Ilegais Irrepresentáveis
+### 3. Torne Estados Ilegais Irrepresentáveis
 
 Este princípio garante que apenas combinações legais de dados possam ser
 representadas no sistema[^7]. O mundo é caótico e toda regra parece ter uma
@@ -309,7 +309,7 @@ var newYear = new ObservedHoliday("Ano Novo", "Primeiro dia do ano",
 // - ObservedHoliday com observed anterior ao actual em fim de semana com mondayisation
 ```
 
-#### 4. Separe Operações dos Dados
+### 4. Separe Operações dos Dados
 
 Este princípio mantém dados e comportamentos separados[^8], com records
 contendo apenas estrutura e operações implementadas como funções puras em
@@ -406,7 +406,7 @@ Agora que detalhamos os quatro princípios fundamentais da DOP vamos analisar
 como eles podem ser utilizados para modelar o nosso sistema de gestão de
 feriados.
 
-### Feriados: uma modelagem orientada a dados
+## Feriados: uma modelagem orientada a dados
 
 A modelagem DOP apresenta uma estrutura fundamentalmente diferente da OOP. A
 *sealed interface* `Holiday` define apenas o contrato de dados (métodos de
@@ -432,7 +432,7 @@ controlado de informação, onde cada componente tem uma responsabilidade bem
 definida e o resultado final é construído através da composição ordenada de
 operações simples e confiáveis.
 
-### Programação orientada a dados em Java
+## Programação orientada a dados em Java
 
 A linguagem Java evoluiu com algumas funcionalidades que isoladas podem não ser
 percebidas como relevantes, porém, em conjunto, servem para suportar os

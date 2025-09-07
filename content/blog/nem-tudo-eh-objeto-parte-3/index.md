@@ -1,5 +1,5 @@
 ---
-title: "Nem tudo é objeto - Parte 3: Aplicando Programação Orientada a Dados na Prática"
+title: "Nem tudo é objeto - Parte 3: Aplicando DOP na Prática"
 date: "2025-08-12"
 description: "Guia prático para implementar Programação Orientada a Dados em APIs REST, funções Lambda e projetos reais"
 featuredImage: feature.png
@@ -11,34 +11,29 @@ featuredImage: feature.png
 - **[Parte 2](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2)**: Programação Orientada a Dados
 - **Parte 3**: Aplicando Programação Orientada a Dados na Prática **Você está aqui** 👈🏿
 
- Nas [partes anteriores](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1), exploramos
- os fundamentos da complexidade no software e os princípios da [Programação
- Orientada a Dados](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2).
- Agora é hora de colocar em prática.
-
 ## Quando Usar a Programação Orientada a Dados
 
- Nas [partes anteriores](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1), exploramos
- os fundamentos da complexidade no software e os princípios da [Programação
- Orientada a Dados](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2).
- Agora é hora de colocar em prática. A Programação Orientada a Dados não
- pretende substituir completamente a Programação Orientada a Objetos, mas
- oferece uma abordagem complementar que pode ser aplicada em situações
- específicas onde seus benefícios são mais evidentes[^1].
+ Nas [partes anteriores](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1), 
+ exploramos os fundamentos da complexidade no software e os princípios da
+ [Programação Orientada a
+ Dados](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2).  Agora é hora
+ de colocar em prática. A Programação Orientada a Dados não pretende substituir
+ completamente a Programação Orientada a Objetos, mas oferece uma abordagem
+ complementar que pode ser aplicada em situações específicas onde seus
+ benefícios são mais evidentes[^1].
 
 A DOP posiciona-se entre a Programação Funcional e a Programação Orientada a
 Objetos, sendo, na prática, mais próxima da primeira. Enquanto a programação
 funcional propõe que todas as operações sejam funções puras sem efeitos
-colaterais - requisito que pode ser difícil de alcançar em muitos projetos reais
-
-- a DOP aproveita os benefícios da pureza funcional onde possível e isola os
+colaterais (requisito que pode ser difícil de alcançar em muitos projetos reais)
+a DOP aproveita os benefícios da pureza funcional onde possível e isola os
 desvios necessários nos subsistemas responsáveis pela lógica correspondente.
 
-A força da DOP, similar à programação funcional, é que sua abordagem funciona
-muito bem em pequena escala. Qualquer pedaço de lógica de domínio representado
-como função - seja um pipeline de stream simples ou uma cadeia de funções
-escritas à mão - torna a base de código mais confiável e mais fácil de se
-manter. Não é necessário desenvolver sistemas inteiros de forma orientada a
+O diferencial da DOP, similar à programação funcional, é que sua abordagem
+funciona muito bem em pequena escala. Qualquer pedaço de lógica de domínio
+representado como função - seja um pipeline de stream simples ou uma cadeia de
+funções escritas à mão - torna a base de código mais confiável e mais fácil de
+se manter. Não é necessário desenvolver sistemas inteiros de forma orientada a
 dados. Se você quiser começar em pequena escala, a seguir temos alguns cenários
 em que o uso da DOP pode ser um bom ponto de partida.
 
@@ -54,7 +49,7 @@ em que o uso da DOP pode ser um bom ponto de partida.
 - *Parsers* de configuração (JSON, XML)
 - Calculadoras de domínio específico
 
-### Casos de uso
+## Casos de uso
 
 Para demonstrar todos os conceitos da programação orientada a dados na prática,
 desenvolvemos uma API REST completa para gerenciar feriados. O projeto completo
@@ -62,91 +57,11 @@ está disponível em
 [github.com/vagnerclementino/api-holiday](https://github.com/vagnerclementino/api-holiday)
 e pode ser executado localmente usando Docker Compose.
 
-Um outro exemplo de bom uso da DOP é em *handlers* de funções AWS Lambda[^2].
-O ambiente serverless beneficia-se enormemente da imutabilidade dos dados, que
-elimina problemas de concorrência entre invocações simultâneas da função, e da
-separação clara entre dados e operações, que facilita o teste unitário de cada
-*handler* individualmente.
+### API REST
 
-O pattern matching com `switch` torna o roteamento de requisições HTTP mais
-legível e fácil de manter em comparação com uma sequência de `if-else`.
-Ademais, a ausência de estado mutável compartilhado reduz significativamente a
-complexidade de debugging em um ambiente distribuído.
-
-Além disso, a natureza funcional da DOP alinha-se perfeitamente com o modelo de
-execução stateless (sem estado persistente) das funções Lambda, onde cada
-invocação deve ser independente e previsível, características essenciais para
-sistemas que podem escalar automaticamente e processar milhares de requisições
-concorrentes. A seguir temos um exemplo do uso da DOP em uma função Lambda.
-
-```java
-public class HolidayLambdaHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
-    
-    @Override
-    public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent request, Context context) {
-        try {
-            return switch (request.getHttpMethod()) {
-                case "GET" -> handleGet(request);
-                case "POST" -> handlePost(request);
-                case "PUT" -> handlePut(request);
-                case "DELETE" -> handleDelete(request);
-                default -> createResponse(405, Map.of("error", "Method not allowed"));
-            };
-        } catch (Exception e) {
-            context.getLogger().log("Error: " + e.getMessage());
-            return createResponse(500, Map.of("error", "Internal server error"));
-        }
-    }
-    
-    private APIGatewayProxyResponseEvent handleGet(APIGatewayProxyRequestEvent request) {
-        var pathParameters = request.getPathParameters();
-        var queryParameters = request.getQueryStringParameters();
-        
-        return switch (extractResourceType(request.getPath())) {
-            case "holidays" -> {
-                if (pathParameters != null && pathParameters.containsKey("id")) {
-                    yield getHolidayById(pathParameters.get("id"));
-                } else {
-                    var year = queryParameters != null ? 
-                        Integer.parseInt(queryParameters.getOrDefault("year", "2024")) : 2024;
-                    yield getHolidaysByYear(year);
-                }
-            }
-            case "health" -> createResponse(200, Map.of("status", "healthy"));
-            default -> createResponse(404, Map.of("error", "Resource not found"));
-        };
-    }
-    
-    private APIGatewayProxyResponseEvent handlePost(APIGatewayProxyRequestEvent request) {
-        try {
-            var holidayData = parseHolidayFromJson(request.getBody());
-            var createdHoliday = HolidayOperations.createHoliday(holidayData);
-            return createResponse(201, createdHoliday);
-        } catch (ValidationException e) {
-            return createResponse(400, Map.of("error", e.getMessage()));
-        }
-    }
-    
-    private APIGatewayProxyResponseEvent getHolidaysByYear(int year) {
-        var holidays = HolidayRepository.findAll();
-        var holidaysForYear = HolidayOperations.getHolidaysForYear(holidays, year);
-        return createResponse(200, holidaysForYear);
-    }
-    
-    private APIGatewayProxyResponseEvent createResponse(int statusCode, Object body) {
-        return APIGatewayProxyResponseEvent.builder()
-            .withStatusCode(statusCode)
-            .withHeaders(Map.of(
-                "Content-Type", "application/json",
-                "Access-Control-Allow-Origin", "*"
-            ))
-            .withBody(JsonUtils.toJson(body))
-            .build();
-    }
-}
-```
-
-### Exemplo Prático: API REST para Feriados
+Para demonstrar todos os conceitos da programação orientada a dados na prática,
+desenvolvemos uma API REST completa para gerenciar feriados. O projeto completo
+está disponível em [github.com/vagnerclementino/api-holiday](https://github.com/vagnerclementino/api-holiday) e pode ser executado localmente usando Docker Compose.
 
 Vamos examinar como implementar uma API REST completa usando os princípios da
 DOP. Este exemplo demonstra como os quatro princípios fundamentais se aplicam em
@@ -306,13 +221,99 @@ public class HolidayController {
 }
 ```
 
-### Benefícios Observados na Prática
+### AWS Lambda
+
+Um outro exemplo de bom uso da DOP é em *handlers* de funções AWS Lambda[^2].  O
+ambiente serverless beneficia-se enormemente da imutabilidade dos dados, que
+elimina problemas de concorrência entre invocações simultâneas da função, e da
+separação clara entre dados e operações, que facilita o teste unitário de cada
+*handler* individualmente.
+
+```java
+public class HolidayLambdaHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
+    
+    @Override
+    public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent request, Context context) {
+        try {
+            return switch (request.getHttpMethod()) {
+                case "GET" -> handleGet(request);
+                case "POST" -> handlePost(request);
+                case "PUT" -> handlePut(request);
+                case "DELETE" -> handleDelete(request);
+                default -> createResponse(405, Map.of("error", "Method not allowed"));
+            };
+        } catch (Exception e) {
+            context.getLogger().log("Error: " + e.getMessage());
+            return createResponse(500, Map.of("error", "Internal server error"));
+        }
+    }
+    
+    private APIGatewayProxyResponseEvent handleGet(APIGatewayProxyRequestEvent request) {
+        var pathParameters = request.getPathParameters();
+        var queryParameters = request.getQueryStringParameters();
+        
+        return switch (extractResourceType(request.getPath())) {
+            case "holidays" -> {
+                if (pathParameters != null && pathParameters.containsKey("id")) {
+                    yield getHolidayById(pathParameters.get("id"));
+                } else {
+                    var year = queryParameters != null ? 
+                        Integer.parseInt(queryParameters.getOrDefault("year", "2024")) : 2024;
+                    yield getHolidaysByYear(year);
+                }
+            }
+            case "health" -> createResponse(200, Map.of("status", "healthy"));
+            default -> createResponse(404, Map.of("error", "Resource not found"));
+        };
+    }
+    
+    private APIGatewayProxyResponseEvent handlePost(APIGatewayProxyRequestEvent request) {
+        try {
+            var holidayData = parseHolidayFromJson(request.getBody());
+            var createdHoliday = HolidayOperations.createHoliday(holidayData);
+            return createResponse(201, createdHoliday);
+        } catch (ValidationException e) {
+            return createResponse(400, Map.of("error", e.getMessage()));
+        }
+    }
+    
+    private APIGatewayProxyResponseEvent getHolidaysByYear(int year) {
+        var holidays = HolidayRepository.findAll();
+        var holidaysForYear = HolidayOperations.getHolidaysForYear(holidays, year);
+        return createResponse(200, holidaysForYear);
+    }
+    
+    private APIGatewayProxyResponseEvent createResponse(int statusCode, Object body) {
+        return APIGatewayProxyResponseEvent.builder()
+            .withStatusCode(statusCode)
+            .withHeaders(Map.of(
+                "Content-Type", "application/json",
+                "Access-Control-Allow-Origin", "*"
+            ))
+            .withBody(JsonUtils.toJson(body))
+            .build();
+    }
+}
+```
+
+O pattern matching com `switch` torna o roteamento de requisições HTTP mais
+legível e fácil de manter em comparação com uma sequência de `if-else`.
+Ademais, a ausência de estado mutável compartilhado reduz significativamente a
+complexidade de debugging em um ambiente distribuído.
+
+Além disso, a natureza funcional da DOP alinha-se perfeitamente com o modelo de
+execução stateless (sem estado persistente) das funções Lambda, onde cada
+invocação deve ser independente e previsível, características essenciais para
+sistemas que podem escalar automaticamente e processar milhares de requisições
+concorrentes. A seguir temos um exemplo do uso da DOP em uma função Lambda.
+
+## Benefícios Observados na Prática
 
 Ao implementar a API usando DOP, observamos vários benefícios práticos:
 
 **1. Testabilidade**: Funções puras são extremamente fáceis de testar, pois não
-*dependem de estado externo e sempre produzem o mesmo resultado para as mesmas
-*entradas.
+dependem de estado externo e sempre produzem o mesmo resultado para as mesmas
+entradas.
 
 ```java
 @Test
@@ -330,7 +331,7 @@ void shouldCalculateChristmasForDifferentYears() {
 ```
 
 **2. Thread Safety**: Dados imutáveis eliminam problemas de concorrência,
-*permitindo processamento paralelo seguro.
+permitindo processamento paralelo seguro.
 
 ```java
 public List<Holiday> processHolidaysInParallel(List<Holiday> holidays, int year) {
@@ -341,10 +342,10 @@ public List<Holiday> processHolidaysInParallel(List<Holiday> holidays, int year)
 ```
 
 **3. Debugging Simplificado**: Estados imutáveis facilitam o rastreamento de
-*bugs, pois não há modificações inesperadas de dados.
+bugs, pois não há modificações inesperadas de dados.
 
 **4. Composabilidade**: Operações podem ser facilmente combinadas para criar
-*funcionalidades mais complexas.
+funcionalidades mais complexas.
 
 ```java
 public List<Holiday> getNationalReligiousHolidaysForYear(int year) {
@@ -401,6 +402,7 @@ chance para a DOP em seu próximo projeto?
 - **[Parte 1](https://notes.clementino.me/nem-tudo-eh-objeto-parte-1)**: A Arte de Lidar com a Complexidade
 - **[Parte 2](https://notes.clementino.me/nem-tudo-eh-objeto-parte-2)**: Programação Orientada a Dados
 - **Parte 3**: Aplicando Programação Orientada a Dados na Prática **Você acabou de ler** 👈🏿
+
 *Gostou da série? Compartilhe suas experiências aplicando esses conceitos!*
 
 [^1]: [Stack Overflow Developer Survey 2025 - Most Popular Technologies](https://survey.stackoverflow.co/2025/technology#most-popular-technologies)
