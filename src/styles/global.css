@@ -64,7 +64,6 @@ code:not(pre code) {
   font-size: 87.5%;
   color: #e83e8c;
   word-break: break-word;
-  background-color: rgba(232, 62, 140, 0.1);
   padding: 0.2em 0.4em;
   border-radius: 3px;
   font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
@@ -83,7 +82,6 @@ h6 code {
   font-size: 87.5% !important;
   color: #e83e8c !important;
   word-break: break-word !important;
-  background-color: rgba(232, 62, 140, 0.1) !important;
   padding: 0.2em 0.4em !important;
   border-radius: 3px !important;
   font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace !important;
