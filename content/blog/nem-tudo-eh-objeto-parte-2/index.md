@@ -426,107 +426,106 @@ var newYear = new ObservedHoliday("New Year", "First day of the year",
 // - ObservedHoliday com mondayisation=true em fim de semana sem ajuste de data
 ```
 
+Por fim, e não menos importante, para garantir estados válidos é fundamental
+aplicamos **validação na fronteira**, ou seja,  validar os dados "externos" no
+momento exato em que entram no sistema. Quando um feriado é carregado de um
+arquivo JSON ou retornado de uma API, suas propriedades devem ser validadas
+antes de criar o *record* correspondente. Construtores compactos[^9] são ideais
+para isso, pois garantem que toda instância - independente de como foi criada -
+passou pelas mesmas verificações. Assim, uma vez que um `FixedHoliday` existe no
+sistema, podemos confiar que seus dados são válidos, eliminando verificações
+defensivas nas demais partes do sistema.
+
 ### 4. Separe Operações dos Dados
 
-Este princípio mantém dados e comportamentos separados[^8], com records
-contendo apenas estrutura e operações implementadas como funções puras em
-classes dedicadas. Para manter os records livres de lógica de domínio não
-trivial, as operações não devem ser implementadas neles, mas sim em subsistemas
-dedicados. Esta abordagem previne classes com muitas responsabilidades e evita
-que tipos centrais do domínio atraiam funcionalidades excessivas e se tornem
-difíceis de manter, um problema comum na programação orientada a objetos onde
-classes como `Holiday` acabariam acumulando dezenas de métodos para cálculo de
-datas, formatação, validação, comparação e processamento.
+O quarto e último princípio estabelece a separação entre dados e
+comportamentos[^8]: records contêm apenas estrutura, enquanto operações são
+implementadas como funções puras em classes dedicadas. Essa abordagem evita que
+tipos centrais do domínio acumulem responsabilidades excessivas - um problema
+comum na OOP - onde a classe `Holiday` acabaria com dezenas de métodos para
+cálculo, formatação, validação e processamento, caracterizando o *code smell*
+conhecido como *Large Class*[^10], tornando-se difícil de manter.
 
 ```java
 // Dados puros - apenas estrutura
-public record FixedHoliday(String name, String description, int day, Month month, LocalDate date, 
-                          List<Locality> localities, HolidayType type) implements Holiday { 
+public record FixedHoliday(
+    String name, String description, LocalDate date, int day, Month month,
+    List<Locality> localities, HolidayType type
+) implements Holiday { 
     
     public FixedHoliday {
-        Objects.requireNonNull(month, "Month cannot be null");
-        if (day < 1 || day > month.maxLength()) {
-            throw new IllegalArgumentException("Invalid day for month: " + day);
+        Objects.requireNonNull(name, "Holiday name cannot be null");
+        Objects.requireNonNull(description, "Holiday description cannot be null");
+        Objects.requireNonNull(date, "Holiday date cannot be null");
+        Objects.requireNonNull(month, "Holiday month cannot be null");
+        Objects.requireNonNull(localities, "Holiday localities cannot be null");
+        Objects.requireNonNull(type, "Holiday type cannot be null");
+        
+        if (name.isBlank()) {
+            throw new IllegalArgumentException("Holiday name cannot be blank");
         }
-        if (date != null && (date.getDayOfMonth() != day || date.getMonth() != month)) {
-            throw new IllegalArgumentException("Date must be consistent with day and month");
+        if (localities.isEmpty()) {
+            throw new IllegalArgumentException("Holiday must have at least one locality");
         }
         localities = List.copyOf(localities);
     }
 }
-public record MoveableHoliday(String name, String description, LocalDate date, 
-                             List<Locality> localities, HolidayType type, 
-                             KnownHoliday knownHoliday) implements Holiday { }
+
+public record MoveableHoliday(
+    String name, String description, LocalDate date,
+    List<Locality> localities, HolidayType type,
+    KnownHoliday knownHoliday, boolean mondayisation
+) implements Holiday { }
 
 // Operações separadas - funções puras
 public final class HolidayOperations {
     
-    public static Holiday calculateDate(Holiday holiday, int year) {
+    public Holiday calculateDate(Holiday holiday, int year) {
+        Objects.requireNonNull(holiday, "Holiday cannot be null");
+        validateYear(year);
+        
         return switch (holiday) {
-            case FixedHoliday fixed -> new FixedHoliday(
-                fixed.name(),
-                fixed.description(),
-                fixed.day(),
-                fixed.month(),
-                LocalDate.of(year, fixed.month(), fixed.day()),
-                fixed.localities(),
-                fixed.type()
-            );
-            // … other cases …
+            case FixedHoliday fixed -> {
+                LocalDate newDate = calculateFixedDate(fixed, year);
+                yield fixed.withDate(newDate);
+            }
+            case ObservedHoliday observed -> {
+                LocalDate newDate = calculateFixedDate(observed, year);
+                LocalDate newObserved = observed.mondayisation() ? 
+                    applyMondayisationRules(newDate) : newDate;
+                yield observed.withDate(newDate).withObserved(newObserved);
+            }
+            case MoveableHoliday moveable -> {
+                LocalDate newDate = calculateMoveableDate(moveable, year);
+                yield moveable.withDate(newDate);
+            }
+            case MoveableFromBaseHoliday derived -> {
+                // Implementação para feriados derivados
+                yield calculateDerivedDate(derived, year);
+            }
         };
-    }
-            case MoveableHoliday moveable -> new MoveableHoliday(
-                moveable.name(), 
-                moveable.description(), 
-                calculateMoveableDate(moveable, year), 
-                moveable.localities(), 
-                moveable.type(), 
-                moveable.knownHoliday()
-            );
-            case ObservedHoliday observed -> calculateObservedDate(observed, year);
-        };
-    }
-    
-    // Pattern matching com record patterns
-    public static String formatInfo(Holiday holiday) {
-        return switch (holiday) {
-            case FixedHoliday(var name, _, var day, var month, _, _, _) -> 
-                "Fixo: " + name + " em " + day + "/" + month.getValue();
-            case MoveableHoliday(var name, _, var date, _, _, var known) -> 
-                "Móvel: " + name + " (" + known + ")";
-            case ObservedHoliday(var name, _, _, _, _, var observed, _) -> 
-                "Observado: " + name + " em " + observed;
-        };
-    }
-    
-    public static List<Holiday> getHolidaysForYear(List<Holiday> holidays, int year) {
-        return holidays.stream()
-            .map(holiday -> calculateDate(holiday, year))
-            .toList();
     }
 }
 
 // Uso: operações como funções puras
 var christmas = new FixedHoliday(
-    "Natal", "Nascimento de Cristo",
-    25, Month.DECEMBER, LocalDate.of(2024, 12, 25),
+    "Christmas", "Birth of Christ",
+    LocalDate.of(2024, 12, 25), 25, Month.DECEMBER,
     List.of(Locality.NATIONAL), HolidayType.RELIGIOUS);
-var christmasIn2025 = HolidayOperations.calculateDate(christmas, 2025);
-var info = HolidayOperations.formatInfo(christmasIn2025);
-var allHolidays2025 = HolidayOperations.getHolidaysForYear(
-    List.of(christmas), 2025);
+
+var operations = new HolidayOperations();
+var christmasIn2025 = operations.calculateDate(christmas, 2025);
 ```
 
-A implementação dessas operações utiliza *pattern matching* com `switch`. O
+A implementação dessas operações utiliza *pattern matching* com `switch`[^12]. O
 switch implementa a seleção de qual código deve ser executado para um
 determinado tipo: se tivéssemos definido `calculateDate` na interface `Holiday`
 e chamado `holiday.calculateDate(year)`, o runtime decidiria qual implementação
-executar.  Com `switch` fazemos isso manualmente, permitindo não definir métodos
-na interface e mantendo os dados puros. O uso de *Pattern matching* com *record
-patterns* (Java 21+) torna o código ainda mais expressivo, permitindo
-desconstruir records diretamente durante a correspondência de padrões, como por
-exemplo, `case FixedHoliday(var name, var date, ...)` ao invés de ser necessário
-fazer *casting* manual.
+executar. Com `switch` fazemos isso manualmente, permitindo não definir métodos
+na interface e mantendo os dados puros. O código atual usa pattern matching
+básico com `case FixedHoliday fixed ->`, onde o compilador automaticamente faz o
+cast para o tipo específico, eliminando a necessidade de casting manual e
+tornando o código mais seguro e expressivo.
 
 Agora que detalhamos os quatro princípios fundamentais da DOP vamos analisar
 como eles podem ser utilizados para modelar o nosso sistema de gestão de
@@ -716,19 +715,19 @@ fundamentais:
 - **Descrição**: Controle sobre quais classes podem estender/implementar
 - **Uso em DOP**: Estados ilegais irrepresentáveis
 
-**🔍 Pattern Matching (instanceof)**[^9]
+**🔍 Pattern Matching (instanceof)**[^11]
 
 - **Versão**: Java 14 (Preview), Java 16 (Final)
 - **Descrição**: Verificação de tipo e cast em uma operação
 - **Uso em DOP**: Operações sobre dados
 
-**🔀 Pattern Matching (switch)**[^10]
+**🔀 Pattern Matching (switch)**[^12]
 
 - **Versão**: Java 17 (Preview), Java 21 (Final)
 - **Descrição**: Switch expressions com pattern matching
 - **Uso em DOP**: Processamento de tipos selados
 
-**📝 Text Blocks**[^11]
+**📝 Text Blocks**[^13]
 
 - **Versão**: Java 13 (Preview), Java 15 (Final)
 - **Descrição**: Strings multilinha mais legíveis
@@ -749,6 +748,8 @@ quando a DOP é a escolha mais adequada para seu próximo projeto.
 [^6]: [JEP 409: Sealed Classes](https://openjdk.org/jeps/409)
 [^7]: [Make illegal states unrepresentable - DOP v1.1](https://inside.java/2024/06/03/dop-v1-1-illegal-states/)
 [^8]: [Separate operations from data - DOP v1.1](https://inside.java/2024/06/05/dop-v1-1-separate-operations/)
-[^9]: [JEP 394: Pattern Matching for instanceof](https://openjdk.org/jeps/394)
-[^10]: [JEP 441: Pattern Matching for switch](https://openjdk.org/jeps/441)
-[^11]: [JEP 378: Text Blocks](https://openjdk.org/jeps/378)
+[^9]: [Compact Constructors - Java Records](https://dev.java/learn/records/#compact)
+[^10]: [Large Class](https://refactoring.com/catalog/extractClass.html)
+[^11]: [JEP 394: Pattern Matching for instanceof](https://openjdk.org/jeps/394)
+[^12]: [JEP 441: Pattern Matching for switch](https://openjdk.org/jeps/441)
+[^13]: [JEP 378: Text Blocks](https://openjdk.org/jeps/378)
