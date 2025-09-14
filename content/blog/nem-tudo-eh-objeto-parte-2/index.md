@@ -185,7 +185,7 @@ campos estão corretas para cada contexto específico.
 ```java
 // ANTES - Tipo genérico problemático
 public record GenericHoliday(
-    String name,
+    String name, 
     LocalDate date,
     LocalDate observed,        // null para feriados fixos
     KnownHoliday knownHoliday, // null para feriados fixos  
@@ -222,7 +222,7 @@ public sealed interface Holiday
 ```
 
 Os *Sealed types* representam uma funcionalidade do Java 17+ que permite criar
-hierarquias 'fechadas' de tipos. Ao declarar
+hierarquias 'fechadas' de tipos. Ao declarar 
 `public sealed interface Holiday permits (...)`,
 estamos dizendo ao compilador: apenas estes tipos específicos podem implementar
 `Holiday`, nenhum outro. Isso difere de interfaces tradicionais onde qualquer
@@ -288,7 +288,7 @@ portador de dados em executor de operações complexas.
 
 ### 3. Torne Estados Ilegais Irrepresentáveis
 
-Este princípio garante que apenas combinações legais de dados possam ser
+O terceiro princípio define que apenas combinações legais de dados possam ser
 representadas no sistema[^7]. O mundo é caótico e toda regra parece ter uma
 exceção - "todo feriado tem uma data fixa" rapidamente se torna "todo feriado
 fixo tem uma data fixa, mas os móveis dependem de cálculos complexos, e os
@@ -296,17 +296,27 @@ observados podem ter datas diferentes da oficial". Quando modelamos isso de
 forma inadequada, podemos ficar presos com estruturas que permitem estados
 inconsistentes.
 
-Considere uma modelagem problemática para feriados que tenta acomodar todos os
-tipos em uma única classe genérica. Esta abordagem apresenta vários problemas
-fundamentais: campos opcionais desnecessários - um feriado fixo como o Natal não
-precisa de feriado base (`baseHoliday`) ou uma quantidade de dias entre os
-feriados (`dayOffset`) como para calcular a Sexta Feira Santa a partir da
-Páscoa. Esse cuidado simples de tornar estados inconsistentes impossíveis evita
-que:
+Retomando o exemplo da modelagem problemática discutida anteriormente, onde
+tentamos acomodar todos os tipos de feriados em uma classe genérica,
+identificamos problemas fundamentais de design. Atributos como `baseHoliday` e
+`dayOffset` são necessários apenas para feriados derivados (como Sexta-feira
+Santa calculada a partir da Páscoa), mas ficam desnecessariamente presentes em
+feriados fixos como o Natal. Ao tornar esses estados inconsistentes
+irrepresentáveis através de tipos específicos, evitamos que:
 
-- regras implícitas não sejam expressas no código
-- validações fiquem espalhadas e precisem ser repetidas em vários pontos
-- desenvolvedores fiquem confusos sobre quais campos são relevantes para cada situação
+- Regras de negócio permaneçam implícitas, ao invés de serem expressas através
+do sistema de tipos
+- Validações se espalhem pelo código, criando duplicação e inconsistências
+- Desenvolvedores tenham dúvidas sobre quais campos são aplicáveis em cada
+contexto específico
+
+O exemplo a seguir demonstra como uma modelagem inadequada permite a criação de
+estados logicamente impossíveis. A classe `BadHoliday` pode representar um
+feriado fixo como o Natal com `baseHoliday` e `dayOffset` preenchidos (conceitos
+irrelevantes para datas fixas), ou um feriado móvel sem `knownType` definido
+(impossibilitando o cálculo da data). Pior ainda, permite criar feriados
+observados onde `observedDate` é anterior a `actualDate`, violando a lógica de
+que datas observadas são ajustes posteriores.
 
 ```java
 // PROBLEMA: Estados ilegais são representáveis
@@ -325,17 +335,25 @@ public class BadHoliday {
 }
 ```
 
-Um sistema focado em dados deve assegurar que apenas combinações legais dos
-dados possam ser representadas. A estratégia segue três níveis progressivos de
+Ao não utilizar o sistema de tipos para expressar essas restrições, perdemos a
+oportunidade de ter o compilador Java garantindo estados válidos
+automaticamente. Esses estados ilegais não apenas confundem desenvolvedores, mas
+podem causar bugs sutis em tempo de execução que o compilador não consegue
+detectar, forçando a implementação de validações defensivas espalhadas pelo
+código.
+
+Parece óbvio, mas deveria ser regra que sistema, em especial os orientado a
+dados, assegurem que apenas combinações legais dos dados possam ser
+representadas. Para garantir esse requisito existem três níveis progressivos de
 proteção:
 
-- primeiro, use tipos precisos (sealed interfaces e records) para que o
+- 🔒 **Primeiro**, use tipos precisos (sealed interfaces e records) para que o
 compilador impeça a criação de tipos inválidos;
-- segundo, em situações onde dados são mutuamente exclusivos, evite múltiplos
-campos opcionais criando records específicos para cada variação;
-- terceiro, quando uma propriedade não pode ser expressa pelo sistema de tipos,
-valide no construtor o mais cedo possível, idealmente na fronteira entre o mundo
-externo e seu sistema.
+- ⚡ **Segundo**, em situações onde dados são mutuamente exclusivos, evite
+múltiplos campos opcionais criando records específicos para cada variação;
+- 🛡️ **Terceiro**, quando uma propriedade não pode ser expressa pelo sistema de
+tipos, valide no construtor o mais cedo possível, idealmente na fronteira entre
+o mundo externo e seu sistema.
 
 O código a seguir detalha os três níveis de proteção que podem ser usados para
 evitar estados inválidos.
@@ -343,7 +361,7 @@ evitar estados inválidos.
 ```java
 // Exemplo completo dos 3 níveis de proteção
 public sealed interface Holiday  // Nível 1: Tipos precisos
-    permits FixedHoliday, ObservedHoliday, MoveableHoliday {
+    permits FixedHoliday, ObservedHoliday, MoveableHoliday, MoveableFromBaseHoliday {
     String name();
     String description();
     LocalDate date();
@@ -352,30 +370,40 @@ public sealed interface Holiday  // Nível 1: Tipos precisos
 }
 
 // Nível 2: Records específicos para cada variação
-public record FixedHoliday(String name, LocalDate date, List<Locality> localities) 
-    implements Holiday { }
+public record FixedHoliday(
+    String name, String description, LocalDate date, int day, Month month,
+    List<Locality> localities, HolidayType type
+) implements Holiday { }
 
 // Nível 3: Validação runtime para regras complexas
 public record ObservedHoliday(
-    String name, LocalDate date, List<Locality> localities,
+    String name, String description, LocalDate date, 
+    List<Locality> localities, HolidayType type,
     LocalDate observed, boolean mondayisation
 ) implements Holiday {
     
     public ObservedHoliday {
         Objects.requireNonNull(name, "Holiday name cannot be null");
+        Objects.requireNonNull(description, "Holiday description cannot be null");
+        Objects.requireNonNull(date, "Holiday date cannot be null");
+        Objects.requireNonNull(observed, "Observed date cannot be null");
+        Objects.requireNonNull(localities, "Holiday localities cannot be null");
+        Objects.requireNonNull(type, "Holiday type cannot be null");
+        
         if (name.isBlank()) {
             throw new IllegalArgumentException("Holiday name cannot be blank");
         }
+        if (localities.isEmpty()) {
+            throw new IllegalArgumentException("Holiday must have at least one locality");
+        }
         
         // Regra complexa: mondayisation em fim de semana deve ajustar a data
-        if (mondayisation) {
+        if (mondayisation && date.equals(observed)) {
             DayOfWeek dayOfWeek = date.getDayOfWeek();
-            boolean isWeekend = DayOfWeek.SATURDAY.equals(dayOfWeek) || DayOfWeek.SUNDAY.equals(dayOfWeek);
-            boolean dateWasAdjusted = !date.equals(observed);
-            
-            if (isWeekend && !dateWasAdjusted) {
+            if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
                 throw new IllegalArgumentException(
-                    "Weekend holiday must have adjusted observed date when mondayisation is enabled");
+                    "Mondayisation is enabled but observed date equals original weekend date. " +
+                    "Expected observed date to be adjusted for weekend.");
             }
         }
         
@@ -384,20 +412,18 @@ public record ObservedHoliday(
 }
 
 // RESULTADO: Apenas estados legais são representáveis
-var christmas = new FixedHoliday("Natal", "Nascimento de Cristo", 
-                                25, Month.DECEMBER, LocalDate.of(2024, 12, 25),
+var christmas = new FixedHoliday("Christmas", "Birth of Christ", 
+                                LocalDate.of(2024, 12, 25), 25, Month.DECEMBER,
                                 List.of(Locality.NATIONAL), HolidayType.RELIGIOUS);
-var easter = new MoveableHoliday("Páscoa", "Ressurreição de Cristo", 
-                                LocalDate.of(2024, 3, 31), List.of(Locality.NATIONAL), 
-                                HolidayType.RELIGIOUS, KnownHoliday.EASTER);
-var newYear = new ObservedHoliday("Ano Novo", "Primeiro dia do ano", 
-                                 LocalDate.of(2024, 1, 1), List.of(Locality.NATIONAL), 
-                                 HolidayType.NATIONAL, LocalDate.of(2024, 1, 1), false);
+var newYear = new ObservedHoliday("New Year", "First day of the year", 
+                                 LocalDate.of(2024, 1, 1), 
+                                 List.of(Locality.NATIONAL), HolidayType.NATIONAL,
+                                 LocalDate.of(2024, 1, 1), false);
 
 // Estes são IMPOSSÍVEIS de criar:
-// - FixedHoliday com knownHoliday
-// - MoveableHoliday sem knownHoliday  
-// - ObservedHoliday com observed anterior ao actual em fim de semana com mondayisation
+// - FixedHoliday com knownHoliday (campo não existe)
+// - MoveableHoliday sem knownHoliday (construtor exige)
+// - ObservedHoliday com mondayisation=true em fim de semana sem ajuste de data
 ```
 
 ### 4. Separe Operações dos Dados
