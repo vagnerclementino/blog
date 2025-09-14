@@ -527,6 +527,33 @@ básico com `case FixedHoliday fixed ->`, onde o compilador automaticamente faz 
 cast para o tipo específico, eliminando a necessidade de casting manual e
 tornando o código mais seguro e expressivo.
 
+Uma evolução importante do pattern matching são os *record patterns*[^14] (Java
+21), que permitem 'desempacotar' records diretamente durante a correspondência.
+O underscore `_` substitui campos que não precisamos, tornando explícito quais
+dados cada operação realmente utiliza e melhorando a legibilidade do código.
+
+```java
+// ANTES - Pattern matching básico
+public String formatHoliday(Holiday holiday) {
+    return switch (holiday) {
+        case FixedHoliday fixed -> 
+            "Fixo: " + fixed.name() + " em " + fixed.day() + "/" + fixed.month().getValue();
+        case MoveableHoliday moveable -> 
+            "Móvel: " + moveable.name() + " (" + moveable.knownHoliday() + ")";
+    };
+}
+
+// DEPOIS - Record patterns (Java 21+)
+public String formatHoliday(Holiday holiday) {
+    return switch (holiday) {
+        case FixedHoliday(var name, _, _, var day, var month, _, _) -> 
+            "Fixo: " + name + " em " + day + "/" + month.getValue();
+        case MoveableHoliday(var name, _, _, _, _, var knownHoliday, _) -> 
+            "Móvel: " + name + " (" + knownHoliday + ")";
+    };
+}
+```
+
 Agora que detalhamos os quatro princípios fundamentais da DOP vamos analisar
 como eles podem ser utilizados para modelar o nosso sistema de gestão de
 feriados.
