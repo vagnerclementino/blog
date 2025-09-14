@@ -74,16 +74,19 @@ christmas.setDate(LocalDate.of(2024, 12, 24));
 System.out.println(holidays.contains(christmas)); // false - objeto "perdido"
 ```
 
-A lógica para mitigar esse tipo de problema é simples: se nada pode mudar, tais
-erros não podem ocorrer. Quando subsistemas se comunicam apenas com dados
-imutáveis, essa fonte comum de erros desaparece. Todavia, a necessidade de
-representar mudanças de estado é inevitável. Para mitigar esse tipo de problema,
-o primeiro princípio da DOP define que os objetos sejam **transparentes** - seu
-estado interno deve ser acessível e construível por meio de uma interface bem
-definida. Na prática, ser transparente significa que a classe deve ter um método
-de acesso para cada campo e um construtor que aceita valores para todos os
-campos, permitindo recriar uma instância indistinguível da original. A seguir
-temos um exemplo de código imutável e transparente.
+A solução para esse problema é direta: eliminando a mutabilidade, eliminamos
+essa categoria de erros. Quando subsistemas compartilham apenas dados imutáveis,
+o objeto não pode ser "perdido" no *HashSet* porque seu estado nunca muda após a
+criação. Entretanto, aplicações reais precisam representar mudanças de estado. É
+aqui que o primeiro princípio da DOP oferece uma alternativa: ao invés de
+modificar objetos existentes, criamos novas instâncias com os dados alterados.
+Para isso funcionar, os dados devem ser **transparentes**, ou seja, devem ser
+acessíveis através de métodos de leitura e passiveis de serem recriados por meio
+de construtores que aceitem todos os valores necessários. Essa transparência
+garante que qualquer instância possa ser perfeitamente replicada ou transformada
+em uma nova versão, mantendo a imutabilidade, enquanto permite a evolução do
+estado através de novas instâncias. O exemplo a seguir demonstra como
+implementar dados imutáveis e transparentes.
 
 ```java
 // Solução: record imutável e transparente
@@ -114,21 +117,31 @@ mantendo a imutabilidade. A seguir temos um exemplo seguro do uso de um
 `HashSet`.
 
 ```java
-// Transformações retornam novas instâncias
+// Transformações retornam novas instâncias (implementação DOP real)
 public FixedHoliday withDate(LocalDate newDate) {
-    return new FixedHoliday(name, description, newDate, localities, type);
+    return new FixedHoliday(name,
+                           description,
+                           newDate, 
+                           newDate.getDayOfMonth(), 
+                           newDate.getMonth(),
+                           localities,
+                           type
+                        );
 }
 
-public FixedHoliday withYear(int year) {
-    return new FixedHoliday(name, description, date.withYear(year), localities, type);
+public FixedHoliday forYear(int year) {
+    LocalDate newDate = LocalDate.of(year, month, day);
+    return new FixedHoliday(name, description, newDate, day, month, localities, type);
 }
 
 // Uso seguro - impossível quebrar o HashSet
-var holidays = new HashSet<Holiday>();
-var christmas = new FixedHoliday("Christmas", "...", 25, Month.DECEMBER, LocalDate.of(2024, 12, 25), localities, type);
+var holidays = new HashSet<FixedHoliday>();
+var christmas = new FixedHoliday("Christmas", "Birth of Christ", 
+    LocalDate.of(2024, 12, 25), 25, Month.DECEMBER, 
+    List.of(Locality.NATIONAL), HolidayType.RELIGIOUS);
 holidays.add(christmas);
 var christmasEve = christmas.withDate(LocalDate.of(2024, 12, 24)); // Nova instância
-holidays.contains(christmas); // Sempre true - objeto original inalterado
+holidays.contains(christmas);    // Sempre true - objeto original inalterado
 holidays.contains(christmasEve); // false - nova instância não está no set
 ```
 
