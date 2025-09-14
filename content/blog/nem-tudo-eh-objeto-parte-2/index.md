@@ -419,29 +419,118 @@ feriados.
 
 ## Feriados: uma modelagem orientada a dados
 
-A modelagem DOP apresenta uma estrutura fundamentalmente diferente da OOP. A
-*sealed interface* `Holiday` define apenas o contrato de dados (métodos de
-acesso), enquanto cada record implementa exatamente os dados necessários para
-seu tipo específico. Observe como não há herança de implementação - cada record
-é independente e contém apenas os dados relevantes para seu contexto, eliminando
-campos desnecessários e garantindo que estados ilegais sejam representáveis pelo
-sistema de tipos.
+Para demonstrar como a Programação Orientada a Dados funciona na prática, vamos implementar um sistema de gestão de feriados que exemplifica todos os quatro princípios fundamentais. A modelagem DOP apresenta uma estrutura fundamentalmente diferente da OOP, onde começamos definindo uma *sealed interface* que estabelece o contrato comum para todos os tipos de feriados, garantindo que apenas as implementações permitidas possam existir no sistema.
+
+A interface `Holiday` utiliza o modificador `sealed` para implementar o primeiro princípio da DOP - estados ilegais irrepresentáveis. Ao declarar `permits FixedHoliday, ObservedHoliday, MoveableHoliday, MoveableFromBaseHoliday`, estamos explicitamente limitando quais classes podem implementar esta interface, eliminando a possibilidade de tipos inválidos serem criados acidentalmente:
+
+```java
+// 🔒 Sealed interface - Estados ilegais irrepresentáveis  
+public sealed interface Holiday 
+    permits FixedHoliday, ObservedHoliday, MoveableHoliday, MoveableFromBaseHoliday {
+    
+    String name();
+    String description(); 
+    LocalDate date();
+    List<Locality> localities();
+    HolidayType type();
+    
+    // Funcionalidade compartilhada
+    default boolean isWeekend() {
+        DayOfWeek dayOfWeek = date().getDayOfWeek();
+        return dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
+    }
+}
+```
+
+Observe que a interface define apenas métodos de acesso aos dados, sem comportamentos complexos. O método `isWeekend()` é uma funcionalidade compartilhada simples que deriva informação dos dados existentes, mantendo a pureza dos dados.
+
+O segundo e terceiro princípios - dados imutáveis e transparência de dados - são implementados através de records Java. Cada tipo de feriado é modelado como um record específico que contém exatamente os dados necessários para seu contexto. O `FixedHoliday`, por exemplo, representa feriados que sempre ocorrem na mesma data, como o Natal:
+
+```java
+// 📦 Feriado fixo - sempre na mesma data
+public record FixedHoliday(
+    String name, String description, LocalDate date,
+    int day, Month month, List<Locality> localities, HolidayType type
+) implements Holiday {
+    
+    public FixedHoliday {
+        Objects.requireNonNull(month, "Month cannot be null");
+        if (day < 1 || day > month.maxLength()) {
+            throw new IllegalArgumentException("Invalid day for month: " + day);
+        }
+        localities = List.copyOf(localities); // Defensive copying
+    }
+}
+```
+
+O construtor compacto do record (`public FixedHoliday`) implementa validações que garantem a integridade dos dados no momento da criação. A validação do dia em relação ao mês previne datas impossíveis como 31 de fevereiro. O `List.copyOf(localities)` implementa *defensive copying*, garantindo que a lista interna não possa ser modificada externamente, preservando a imutabilidade.
+
+Para feriados mais complexos, como aqueles que seguem regras de "mondayisation" (quando um feriado cai no fim de semana e é observado na segunda-feira), criamos o `ObservedHoliday` com validações específicas:
+
+```java
+// 📦 Feriado observado - com regras de mondayisation
+public record ObservedHoliday(
+    String name, String description, LocalDate date, 
+    List<Locality> localities, HolidayType type,
+    LocalDate observed, boolean mondayisation
+) implements Holiday {
+    
+    public ObservedHoliday {
+        if (mondayisation && date.equals(observed)) {
+            DayOfWeek dayOfWeek = date.getDayOfWeek();
+            if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
+                throw new IllegalArgumentException(
+                    "Mondayisation is enabled but observed date equals original weekend date");
+            }
+        }
+        localities = List.copyOf(localities);
+    }
+}
+```
+
+Esta validação garante consistência lógica: se a mondayisation está habilitada e a data original cai no fim de semana, a data observada deve ser diferente da original. Isso previne estados inconsistentes onde um feriado deveria ser ajustado mas não foi.
+
+O quarto princípio - separação entre dados e operações - é implementado através da classe `HolidayOperations`, que contém todas as operações que manipulam os dados dos feriados. Esta classe utiliza *pattern matching* com `switch` expressions para processar diferentes tipos de feriados de forma type-safe:
+
+```java
+// 🔀 Operações separadas dos dados
+@Component  
+public final class HolidayOperations {
+    
+    public Holiday calculateDate(Holiday holiday, int year) {
+        return switch (holiday) {
+            case FixedHoliday fixed -> {
+                LocalDate newDate = calculateFixedDate(fixed, year);
+                yield fixed.withDate(newDate);
+            }
+            case ObservedHoliday observed -> {
+                LocalDate newDate = calculateFixedDate(observed, year);
+                LocalDate newObserved = observed.mondayisation() 
+                    ? applyMondayisationRules(newDate) 
+                    : newDate;
+                yield observed.withDate(newDate).withObserved(newObserved);
+            }
+            case MoveableHoliday moveable -> {
+                LocalDate newDate = calculateMoveableDate(moveable, year);
+                yield moveable.withDate(newDate);
+            }
+            case MoveableFromBaseHoliday derived -> {
+                LocalDate newDate = calculateDerivedDate(derived, year);
+                yield derived.withDate(newDate);
+            }
+            // Compilador garante que todos os casos são cobertos
+        };
+    }
+}
+```
+
+O *pattern matching* permite que o compilador verifique se todos os casos possíveis estão sendo tratados. Se adicionarmos um novo tipo de feriado à sealed interface, o compilador nos forçará a atualizar todos os switches, garantindo que nenhum caso seja esquecido. O método `calculateDate` é uma função pura - dado o mesmo feriado e ano, sempre retorna o mesmo resultado, sem efeitos colaterais.
 
 ![Diagrama de classe da modelagem dos feriados como DOP](class-diagram.png)
 
-Assim como fizemos uma analogia de uma classe na OOP com um organismo vivo,
-podemos comparar a DOP com uma linha de montagem industrial moderna. Nesta
-analogia, os dados imutáveis são como peças padronizadas que fluem pela linha
-sem serem alteradas em sua essência, as operações funcionam como estações de
-trabalho especializadas que processam essas peças de forma previsível. Por outro
-lado, o *pattern matching* atua como um sistema de classificação automática que
-direciona cada peça para a estação correta. Por fim, a separação entre dados e
-operações espelha a divisão clara entre matéria-prima e processos de fabricação.
-Esta analogia faz sentido porque, tanto a DOP quanto uma linha de montagem,
-priorizam eficiência, previsibilidade, especialização de funções e fluxo
-controlado de informação, onde cada componente tem uma responsabilidade bem
-definida e o resultado final é construído através da composição ordenada de
-operações simples e confiáveis.
+A implementação completa, incluindo testes e exemplos de uso, está disponível no [repositório do projeto](https://github.com/vagnerclementino/odp-api-holiday) para análise detalhada. O repositório contém também implementações de feriados móveis (como a Páscoa) e exemplos de como integrar esta modelagem com frameworks como Spring Boot.
+
+Assim como fizemos uma analogia de uma classe na OOP com um organismo vivo, podemos comparar a DOP com uma linha de montagem industrial moderna. Nesta analogia, os dados imutáveis são como peças padronizadas que fluem pela linha sem serem alteradas em sua essência, as operações funcionam como estações de trabalho especializadas que processam essas peças de forma previsível. Por outro lado, o *pattern matching* atua como um sistema de classificação automática que direciona cada peça para a estação correta. Por fim, a separação entre dados e operações espelha a divisão clara entre matéria-prima e processos de fabricação. Esta analogia faz sentido porque, tanto a DOP quanto uma linha de montagem, priorizam eficiência, previsibilidade, especialização de funções e fluxo controlado de informação, onde cada componente tem uma responsabilidade bem definida e o resultado final é construído através da composição ordenada de operações simples e confiáveis.
 
 ## Programação orientada a dados em Java
 
