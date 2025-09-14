@@ -760,6 +760,37 @@ fundamentais:
 - **Descrição**: Strings multilinha mais legíveis
 - **Uso em DOP**: Documentação e exemplos
 
+## Os Quatro Pilares da DOP
+
+A Programação Orientada a Dados oferece uma abordagem sistemática para construir
+sistemas mais robustos e manuteníveis através de quatro princípios fundamentais:
+
+- **🔒 Dados Imutáveis e Transparentes**: Use records para criar estruturas de
+dados que não podem ser modificadas após a criação, eliminando bugs relacionados
+a estado compartilhado mutável. A transparência garante acesso direto aos dados
+sem encapsulamento desnecessário.
+
+- **📊 Modele os Dados Completos**: Crie tipos específicos para cada variação do
+domínio usando *sealed interfaces* e *records* dedicados. Evite tipos genéricos
+com campos opcionais - cada record deve conter exatamente os dados necessários
+para seu contexto.
+
+- **🛡️ Estados Ilegais Irrepresentáveis**: Use o sistema de tipos para prevenir
+combinações inválidas de dados. As *Sealed interfaces* restringem implementações
+possíveis, enquanto validações nos construtores garantem integridade na
+fronteira do sistema.
+
+- **⚡ Separe Operações dos Dados**: Mantenha records livres de lógica de domínio
+complexa, implementando operações em classes dedicadas. Use pattern matching com
+switch para processar diferentes tipos de forma type-safe, evitando o problema
+da "Large Class".
+
+A DOP não substitui completamente a OOP, mas oferece uma alternativa valiosa
+especialmente para sistemas que processam grandes volumes de dados ou requerem
+alta confiabilidade. A combinação de records, sealed interfaces e pattern
+matching em versões mais recentes do Java torna essa abordagem prática e
+expressiva.
+
 ## 🤔 O que vem a seguir?
 
 Agora que você conhece os princípios da DOP, como aplicá-los em projetos reais?
