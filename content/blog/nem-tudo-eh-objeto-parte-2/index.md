@@ -14,59 +14,76 @@ featuredImage: feature.png
 ## Programação Orientada a Dados: Uma Nova Perspectiva
 
 Na [Parte 1](https://notes.clementino.me/blog/nem-tudo-eh-objeto-parte-1),
-exploramos como diferentes paradigmas lidam com complexidade e identificamos
-limitações da OOP. Agora vamos descobrir uma nova abordagem: a *Programação
-Orientada a Dados (Data-Oriented Programming - DOP)*. A DOP representa uma nova
-perspectiva de como pensamos a modelagem de software. Em vez de focar em
-objetos que encapsulam dados e comportamento, o paradigma prioriza a estrutura
-e o fluxo dos dados, separando *a informação do seu processamento*.
+exploramos como diferentes paradigmas lidam com a complexidade e identificamos
+limitações inerentes a *Programação Orientada a Objetos - OOP*. Agora vamos
+apresentar uma nova abordagem: a *Programação Orientada a Dados (Data-Oriented
+Programming - DOP)*. A DOP representa uma perspectiva diferente em como pensamos
+a modelagem de software. Em vez de focar em objetos que encapsulam dados e
+comportamento, o paradigma prioriza a estrutura e o fluxo dos dados, separando
+*a informação do seu processamento*.
 
 A ideia de uma programação orientada a dados foi proposta originalmente por
 Brian Goetz[^1], posteriormente, Nicolai Parlog[^2] refinou o conceito,
 organizando melhor os princípios fundamentais. Este artigo apresenta uma visão
-prática dos conceitos propostos por Parlog.
+prática dos conceitos propostos por *Parlog*.
 
 ## Princípios Fundamentais
 
 A Programação Orientada a Dados se baseia em quatro princípios fundamentais[^3]
-que, quando aplicados em conjunto, criam sistemas robustos, previsíveis e mais
-fáceis de manter. A figura abaixo ilustra esses quatro princípios fundamentais.
-Exploraremos cada um usando como exemplo a nossa implementação do sistema de
-gerenciamento de feriados.
+que, quando aplicados em conjunto, criam sistemas robustos, previsíveis e
+potencialmente mais fáceis de manter. A figura abaixo ilustra esses quatro
+princípios fundamentais. Cada um dos princípios será descrito tomando como base
+o desenho de um sistema de gerenciamento de feriados.
 
-![Os princípios fundamentais da DOP](four-pod-principles.png)
+![Os princípios fundamentais da DOP - Fonte: Gerado por IA](four-pod-principles.png)
 
 ### 1. Dados são Imutáveis
 
-A imutabilidade mitiga uma fonte comum de bugs: objetos modificados por
-diferentes subsistemas sem comunicação adequada[^3]. Um exemplo é quando
-armazenamos um objeto em um `HashSet` e depois alteramos um campo usado no
-cálculo do hash code. Essa alteração torna o objeto "inalcançável" na estrutura,
-ou seja, não será possível recuperar o objeto pelo seu *hash*. Este problema
-surge quando dois subsistemas (o `HashSet` e o código que modifica o objeto) têm
-acesso ao mesmo objeto, mas têm diferentes requisitos para modificá-lo e nenhuma
-forma de comunicar essas necessidades. O exemplo a seguir apresenta o problema.
+A imutabilidade mitiga uma fonte comum de bugs como o de objetos que são
+modificados por diferentes "subsistemas" sem comunicação adequada[^3]. Por
+subsistemas estamos dizendo um módulo, função ou mesmo classe dentro de um
+código fonte. Para exemplificar considere que um objeto em um `HashSet` e em
+seguida alteramos qualquer propriedade desse objeto que por ventura seja usada
+no cálculo do hash code. Essa alteração torna o objeto "inalcançável" na
+estrutura, ou seja, não será possível recuperar o objeto pelo seu *hash*. Este
+problema ocorre pelo fato de dois subsistemas (o `HashSet` e o código que
+modifica o objeto) têm acesso ao mesmo objeto, contudo, com diferentes
+requisitos para modificá-lo e nenhuma forma de comunicar essas necessidades. O
+trecho de código a seguir demonstra o problema.
 
 ```java
 // Problema conceitual: objeto mutável em HashSet
-// Imagine uma classe Holiday mutável com método setDate()
+// Imagine uma classe FixedHoliday mutável com método setDate()
 var holidays = new HashSet<Holiday>();
-var christmas = createMutableHoliday("Christmas", LocalDate.of(2024, 12, 25));
+var christmas = new FixedHoliday("Christmas", 
+                                 "Birth of Christ", 
+                                 25,
+                                 Month.DECEMBER,
+                                 List.of(new Locality("BR")),
+                                 HolidayType.RELIGIOUS, 
+                                 false);
 holidays.add(christmas);
-// Se christmas.setDate(LocalDate.of(2024, 12, 24)) fosse chamado aqui:
-// holidays.contains(christmas) retornaria false - objeto "perdido"
+
+// Objeto encontrado normalmente
+System.out.println(holidays.contains(christmas)); // true
+
+// Mutação quebra o contrato do HashSet
+christmas.setDate(LocalDate.of(2024, 12, 24));
+
+// Agora o objeto está "perdido" no HashSet
+System.out.println(holidays.contains(christmas)); // false - objeto "perdido"
 ```
 
-O remédio é simples: se nada pode mudar, tais erros não podem ocorrer. Quando
-subsistemas se comunicam apenas com dados imutáveis, essa fonte comum de erros
-desaparece. Todavia, a necessidade de representar mudanças de estado é
-inevitável.  Para mitigar esse tipo de problema, o primeiro princípio da DOP
-define que os objetos sejam **transparentes** - seu estado interno deve ser
-acessível e construível por meio de uma interface bem definida. Na prática, ser
-transparente significa que a classe deve ter um método de acesso para cada campo
-e um construtor que aceita valores para todos os campos, permitindo recriar uma
-instância indistinguível da original. A seguir temos um exemplo de código
-imutável e transparente.
+A lógica para mitigar esse tipo de problema é simples: se nada pode mudar, tais
+erros não podem ocorrer. Quando subsistemas se comunicam apenas com dados
+imutáveis, essa fonte comum de erros desaparece. Todavia, a necessidade de
+representar mudanças de estado é inevitável. Para mitigar esse tipo de problema,
+o primeiro princípio da DOP define que os objetos sejam **transparentes** - seu
+estado interno deve ser acessível e construível por meio de uma interface bem
+definida. Na prática, ser transparente significa que a classe deve ter um método
+de acesso para cada campo e um construtor que aceita valores para todos os
+campos, permitindo recriar uma instância indistinguível da original. A seguir
+temos um exemplo de código imutável e transparente.
 
 ```java
 // Solução: record imutável e transparente
