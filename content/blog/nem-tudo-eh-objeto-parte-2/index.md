@@ -85,8 +85,12 @@ acessíveis através de métodos de leitura e passiveis de serem recriados por m
 de construtores que aceitem todos os valores necessários. Essa transparência
 garante que qualquer instância possa ser perfeitamente replicada ou transformada
 em uma nova versão, mantendo a imutabilidade, enquanto permite a evolução do
-estado através de novas instâncias. O exemplo a seguir demonstra como
-implementar dados imutáveis e transparentes.
+estado através de novas instâncias.
+
+Em termos práticos, isso significa que para "alterar" um objeto, você deve: (1)
+obter seus dados atuais via *getters*, (2) modificar os valores necessários, e
+(3) criar uma nova instância com o construtor apropriado. O exemplo a seguir
+demonstra como implementar dados imutáveis e transparentes.
 
 ```java
 // Solução: record imutável e transparente
@@ -106,15 +110,13 @@ public record FixedHoliday(
 }
 ```
 
-Em Java, *Records[^4]* foram projetados para serem portadores transparentes e
-imutáveis de dados. Eles atendem automaticamente aos requisitos de
-transparência: campos final para cada componente, construtor que aceita e
-atribui valores, métodos de acesso que os retornam, e implementações de `equals`
-e `hashCode` baseadas nos dados. Além disso, o uso da técnica de *defensive
-copying* (ex. `List.copyOf()`) previne modificações através de referências a
-objetos mutáveis. Por fim, alterações no estado devem retornar novas instâncias,
-mantendo a imutabilidade. A seguir temos um exemplo seguro do uso de um
-`HashSet`.
+Os *Records* do Java foram criados especificamente como estruturas de dados
+imutáveis e transparentes, atendendo perfeitamente aos requisitos da DOP. Eles
+eliminam o *boilerplate* ao gerar automaticamente: (1) campos finais, (2)
+construtor completo, (3) métodos de acesso, e (4) implementações consistentes de
+`equals`/`hashCode`. Combinados com *defensive copying* (`List.copyOf()`) e
+métodos de transformação que retornam novas instâncias, garantem imutabilidade e
+transparência. O exemplo a seguir demonstra seu uso seguro em `HashSet`.
 
 ```java
 // Transformações retornam novas instâncias (implementação DOP real)
@@ -129,21 +131,36 @@ public FixedHoliday withDate(LocalDate newDate) {
                         );
 }
 
-public FixedHoliday forYear(int year) {
-    LocalDate newDate = LocalDate.of(year, month, day);
-    return new FixedHoliday(name, description, newDate, day, month, localities, type);
-}
-
 // Uso seguro - impossível quebrar o HashSet
-var holidays = new HashSet<FixedHoliday>();
-var christmas = new FixedHoliday("Christmas", "Birth of Christ", 
-    LocalDate.of(2024, 12, 25), 25, Month.DECEMBER, 
-    List.of(Locality.NATIONAL), HolidayType.RELIGIOUS);
+var holidays = new HashSet<Holiday>();
+var christmas = new FixedHoliday("Christmas", 
+                                 "Birth of Christ", 
+                                  LocalDate.of(2024, 12, 25), 
+                                  25,
+                                  Month.DECEMBER, 
+                                  List.of(Locality.NATIONAL),
+                                  HolidayType.RELIGIOUS
+                                  );
 holidays.add(christmas);
 var christmasEve = christmas.withDate(LocalDate.of(2024, 12, 24)); // Nova instância
 holidays.contains(christmas);    // Sempre true - objeto original inalterado
 holidays.contains(christmasEve); // false - nova instância não está no set
 ```
+
+Os *Records* representam a implementação nativa em Java dos princípios DOP,
+automatizando campos finais, construtores e métodos de acesso. Entretanto,
+classes tradicionais podem igualmente implementar imutabilidade e transparência
+através de design cuidadoso: campos `final`, construtores que inicializam todos
+os atributos, métodos *getter* sem *setters* e implementações consistentes de
+`equals`/`hashCode`.
+
+Independente da abordagem, a imutabilidade efetiva depende de acordos e padrões
+de equipe: estabelecer convenções para *defensive copying*, definir
+responsabilidades claras para validação de dados, padronizar métodos de
+transformação imutável e, por fim, até definir um acordo entre o time de
+desenvolvimento onde objetos não deveriam ser modificados após a instanciação.
+Esses acordos transformam imutabilidade de algo estritamente técnico em parte da
+cultura de desenvolvimento.
 
 ### 2. Modele os Dados, Todos os Dados, e Nada Além dos Dados
 
