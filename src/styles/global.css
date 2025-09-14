@@ -59,6 +59,23 @@ pre {
   margin: 1em 0;
 }
 
+/* Estilização para código inline */
+code:not(pre code) {
+  font-size: 87.5%;
+  color: #e83e8c;
+  word-break: break-word;
+  background-color: rgba(232, 62, 140, 0.1);
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+}
+
+@media screen and (max-width: 600px) {
+  code:not(pre code) {
+    font-size: 85%;
+  }
+}
+
 h1 {
   font-size: 2em !important;
 }
