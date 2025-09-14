@@ -110,7 +110,7 @@ public record FixedHoliday(
 }
 ```
 
-Os *Records* do Java foram criados especificamente como estruturas de dados
+Os *Records*[^4] em Java foram criados especificamente como estruturas de dados
 imutáveis e transparentes, atendendo perfeitamente aos requisitos da DOP. Eles
 eliminam o *boilerplate* ao gerar automaticamente: (1) campos finais, (2)
 construtor completo, (3) métodos de acesso, e (4) implementações consistentes de
@@ -166,24 +166,27 @@ cultura de desenvolvimento.
 
 Este princípio enfatiza a criação de tipos específicos que representem fielmente
 cada variação do domínio, evitando tipos genéricos com campos opcionais[^5].
-Por exemplo, ao modelar feriados, poderíamos ter a tentação de criar um tipo
-genérico que tente acomodar todas as variações:
+Por exemplo, ao modelar o domínio de feriados, cujos detalhes estão na  
+[Parte 1](https://notes.clementino.me/blog/nem-tudo-eh-objeto-parte-1), dessa
+série, poderíamos definir/modelar um tipo genérico que tente acomodar todas as
+variações de um feriado:
 
 - Feriados fixos têm uma data definida
 - Feriados móveis têm um algoritmo de cálculo
 - Feriados observados podem ter datas diferentes da oficial
 
-Se usarmos um tipo genérico `GenericHoliday` para todos os casos, como realizado
-na modelagem orientada a objetos, acabamos com campos que podem ser nulos e
-regras implícitas sobre quais campos devem ou não estar preenchidos para cada
-tipo de feriado. Isso torna o código frágil e propenso a erros, especialmente
-pelo fato de não ser possível usar o compilador para nos ajudar a garantir que
-as combinações de campos estejam corretas.
+Ao criar um tipo genérico como `GenericHoliday` para todos os casos (abordagem
+típica da OOP), estaríamos gerando um anti-padrão pelo fato de introduzimos
+campos opcionais e regras implícitas sobre quais combinações são válidas para
+cada tipo de feriado. Essa abordagem pode resultar em um código frágil e
+propenso a erros, pois o compilador não consegue validar se as combinações de
+campos estão corretas para cada contexto específico.
 
 ```java
 // ANTES - Tipo genérico problemático
 public record GenericHoliday(
-    String name, LocalDate date,
+    String name,
+    LocalDate date,
     LocalDate observed,        // null para feriados fixos
     KnownHoliday knownHoliday, // null para feriados fixos  
     Holiday baseHoliday,       // null para não-derivados
@@ -192,17 +195,17 @@ public record GenericHoliday(
 ) {}
 ```
 
-Em um sistema (verdadeiramente) orientado a dados a modelagem deveria focar em
-permitir estados válidos. Se um feriado fixo não precisa de algoritmo de
-cálculo, o construtor deve garantir que isso seja o caso. Se nenhum feriado pode
-ter tanto uma data fixa quanto um algoritmo móvel, isso deve ser prevenido.
-Tipos precisos como esses não só simplificam o trabalho do desenvolvedor ao
-eliminar a necessidade de validações complexas, mas também tornam o código mais
-seguro e simples.
+Em sistemas orientados a dados, a modelagem deve usar o sistema de tipos para
+garantir que apenas estados válidos sejam representáveis. Feriados fixos não
+devem ter campos para algoritmos de cálculo, dado que sempre vão ocorrer no
+mesmo dia e mês. Tipos precisos transfere validações do tempo de execução para o
+tempo de compilação, resultando em código mais seguro e desenvolvimento mais
+eficiente.
 
 ```java
 // DEPOIS - Sealed interface com tipos específicos
-public sealed interface Holiday permits FixedHoliday, MoveableHoliday, ObservedHoliday {
+public sealed interface Holiday 
+    permits FixedHoliday, ObservedHoliday, MoveableHoliday, MoveableFromBaseHoliday {
 
   String name();
   String description();
@@ -218,16 +221,25 @@ public sealed interface Holiday permits FixedHoliday, MoveableHoliday, ObservedH
 }
 ```
 
-Uma alternativa para alcançar o segundo princípio é por meio de *sealed
-interfaces*[^6] para modelar alternativas e criar
-*records* específicos para cada variação. Em vez de múltiplos campos com
-requisitos mutuamente exclusivos ou condicionais, criamos uma *sealed interface*
-para modelar as alternativas e a usamos como tipo para um campo obrigatório.
-Cada record implementa exatamente os dados necessários para seu tipo específico,
-eliminando campos irrelevantes, melhorando a legibilidade e tornando o código
-mais fácil de manter. As funcionalidades compartilhadas podem ser implementadas
-através de métodos *default* na interface, evitando repetição entre
-implementações.
+Os *Sealed types* representam uma funcionalidade do Java 17+ que permite criar
+hierarquias 'fechadas' de tipos. Ao declarar
+`public sealed interface Holiday permits (...)`,
+estamos dizendo ao compilador: apenas estes tipos específicos podem implementar
+`Holiday`, nenhum outro. Isso difere de interfaces tradicionais onde qualquer
+classe pode implementá-las. Sealed types são ideais para modelar alternativas de
+domínio onde conhecemos todas as variações possíveis e queremos impedir
+extensões não controladas que poderiam quebrar a lógica do sistema.
+
+Isso posto, uma alternativa para alcançar o segundo princípio é por meio de
+*sealed interfaces*[^6] para modelar alternativas e criar *records* específicos
+para cada variação. Em vez de múltiplos campos com requisitos mutuamente
+exclusivos ou condicionais, criamos uma *sealed interface* para modelar as
+alternativas e a usamos como tipo para um campo obrigatório.  Cada Record
+implementa exatamente os dados necessários para seu tipo específico, eliminando
+campos irrelevantes, melhorando a legibilidade e tornando o código mais fácil de
+manter. As funcionalidades compartilhadas podem ser implementadas através de
+métodos *default* na interface, como o método `isWeekend` do exemplo anterior,
+evitando repetição entre implementações.
 
 ```java
 // Cada tipo contém exatamente os dados necessários
@@ -243,6 +255,36 @@ public record MoveableHoliday(
     boolean mondayisation         // Específico para feriados móveis
 ) implements Holiday { }
 ```
+
+A modelagem anterior exemplifica o segundo princípio da DOP ao garantir que cada
+tipo contenha exatamente os dados necessários para sua função específica. O
+`FixedHoliday` possui campos `day` e `month` porque precisa representar uma data
+fixa anual, enquanto o `MoveableHoliday` inclui `knownHoliday` (para algoritmos
+de cálculo como Páscoa) e `mondayisation` (para regras de ajuste de fim de
+semana) - campos que seriam irrelevantes em feriados fixos. Observe que ambos
+compartilham dados essenciais como `name`, `description` e `localities` através
+da interface `Holiday`, mas cada um adiciona apenas os campos específicos ao seu
+domínio.
+
+Essa abordagem elimina a necessidade de campos opcionais ou nulos, tornando
+impossível criar estados inválidos como um feriado fixo com algoritmo de cálculo
+ou um feriado móvel sem especificar seu tipo conhecido. O compilador Java
+garante que cada instância contenha todos os dados necessários e nenhum dado
+supérfluo, transformando regras de negócio em restrições do sistema de tipos.
+
+Na prática, records frequentemente necessitam de customizações para uso efetivo
+em DOP. A implementação padrão de `equals` usa todos os componentes, mas em
+domínios reais é comum sobrescrever esse comportamento para usar identificadores
+únicos - por exemplo, um `Holiday` pode usar apenas o `name` para igualdade, ou
+um `Book` pode usar apenas o ISBN. Quanto aos métodos em records, as melhores
+práticas sugerem priorizar:
+
+- métodos sem parâmetros que derivam informação dos dados existentes
+(`holiday.isWeekend()`)
+- métodos que recebem o próprio tipo como parâmetro
+(`holiday.isSameType(otherHoliday)`)
+- evitar métodos com parâmetros mutáveis que possam transformar o record de
+portador de dados em executor de operações complexas.
 
 ### 3. Torne Estados Ilegais Irrepresentáveis
 
@@ -466,9 +508,18 @@ feriados.
 
 ## Feriados: uma modelagem orientada a dados
 
-Para demonstrar como a Programação Orientada a Dados funciona na prática, vamos implementar um sistema de gestão de feriados que exemplifica todos os quatro princípios fundamentais. A modelagem DOP apresenta uma estrutura fundamentalmente diferente da OOP, onde começamos definindo uma *sealed interface* que estabelece o contrato comum para todos os tipos de feriados, garantindo que apenas as implementações permitidas possam existir no sistema.
+Para demonstrar como a Programação Orientada a Dados funciona na prática, vamos
+implementar um sistema de gestão de feriados que exemplifica todos os quatro
+princípios fundamentais. A modelagem DOP apresenta uma estrutura
+fundamentalmente diferente da OOP, onde começamos definindo uma *sealed
+interface* que estabelece o contrato comum para todos os tipos de feriados,
+garantindo que apenas as implementações permitidas possam existir no sistema.
 
-A interface `Holiday` utiliza o modificador `sealed` para implementar o primeiro princípio da DOP - estados ilegais irrepresentáveis. Ao declarar `permits FixedHoliday, ObservedHoliday, MoveableHoliday, MoveableFromBaseHoliday`, estamos explicitamente limitando quais classes podem implementar esta interface, eliminando a possibilidade de tipos inválidos serem criados acidentalmente:
+A interface `Holiday` utiliza o modificador `sealed` para implementar o primeiro
+princípio da DOP - estados ilegais irrepresentáveis. Ao declarar `permits
+FixedHoliday, ObservedHoliday, MoveableHoliday, MoveableFromBaseHoliday`,
+estamos explicitamente limitando quais classes podem implementar esta interface,
+eliminando a possibilidade de tipos inválidos serem criados acidentalmente:
 
 ```java
 // 🔒 Sealed interface - Estados ilegais irrepresentáveis  
@@ -489,9 +540,16 @@ public sealed interface Holiday
 }
 ```
 
-Observe que a interface define apenas métodos de acesso aos dados, sem comportamentos complexos. O método `isWeekend()` é uma funcionalidade compartilhada simples que deriva informação dos dados existentes, mantendo a pureza dos dados.
+Observe que a interface define apenas métodos de acesso aos dados, sem
+comportamentos complexos. O método `isWeekend()` é uma funcionalidade
+compartilhada simples que deriva informação dos dados existentes, mantendo a
+pureza dos dados.
 
-O segundo e terceiro princípios - dados imutáveis e transparência de dados - são implementados através de records Java. Cada tipo de feriado é modelado como um record específico que contém exatamente os dados necessários para seu contexto. O `FixedHoliday`, por exemplo, representa feriados que sempre ocorrem na mesma data, como o Natal:
+O segundo e terceiro princípios - dados imutáveis e transparência de dados - são
+implementados através de records Java. Cada tipo de feriado é modelado como um
+record específico que contém exatamente os dados necessários para seu contexto.
+O `FixedHoliday`, por exemplo, representa feriados que sempre ocorrem na mesma
+data, como o Natal:
 
 ```java
 // 📦 Feriado fixo - sempre na mesma data
@@ -510,9 +568,15 @@ public record FixedHoliday(
 }
 ```
 
-O construtor compacto do record (`public FixedHoliday`) implementa validações que garantem a integridade dos dados no momento da criação. A validação do dia em relação ao mês previne datas impossíveis como 31 de fevereiro. O `List.copyOf(localities)` implementa *defensive copying*, garantindo que a lista interna não possa ser modificada externamente, preservando a imutabilidade.
+O construtor compacto do record (`public FixedHoliday`) implementa validações
+que garantem a integridade dos dados no momento da criação. A validação do dia
+em relação ao mês previne datas impossíveis como 31 de fevereiro. O
+`List.copyOf(localities)` implementa *defensive copying*, garantindo que a lista
+interna não possa ser modificada externamente, preservando a imutabilidade.
 
-Para feriados mais complexos, como aqueles que seguem regras de "mondayisation" (quando um feriado cai no fim de semana e é observado na segunda-feira), criamos o `ObservedHoliday` com validações específicas:
+Para feriados mais complexos, como aqueles que seguem regras de "mondayisation"
+(quando um feriado cai no fim de semana e é observado na segunda-feira), criamos
+o `ObservedHoliday` com validações específicas:
 
 ```java
 // 📦 Feriado observado - com regras de mondayisation
@@ -535,9 +599,15 @@ public record ObservedHoliday(
 }
 ```
 
-Esta validação garante consistência lógica: se a mondayisation está habilitada e a data original cai no fim de semana, a data observada deve ser diferente da original. Isso previne estados inconsistentes onde um feriado deveria ser ajustado mas não foi.
+Esta validação garante consistência lógica: se a mondayisation está habilitada e
+a data original cai no fim de semana, a data observada deve ser diferente da
+original. Isso previne estados inconsistentes onde um feriado deveria ser
+ajustado mas não foi.
 
-O quarto princípio - separação entre dados e operações - é implementado através da classe `HolidayOperations`, que contém todas as operações que manipulam os dados dos feriados. Esta classe utiliza *pattern matching* com `switch` expressions para processar diferentes tipos de feriados de forma type-safe:
+O quarto princípio - separação entre dados e operações - é implementado através
+da classe `HolidayOperations`, que contém todas as operações que manipulam os
+dados dos feriados. Esta classe utiliza *pattern matching* com `switch`
+expressions para processar diferentes tipos de feriados de forma type-safe:
 
 ```java
 // 🔀 Operações separadas dos dados
@@ -571,13 +641,34 @@ public final class HolidayOperations {
 }
 ```
 
-O *pattern matching* permite que o compilador verifique se todos os casos possíveis estão sendo tratados. Se adicionarmos um novo tipo de feriado à sealed interface, o compilador nos forçará a atualizar todos os switches, garantindo que nenhum caso seja esquecido. O método `calculateDate` é uma função pura - dado o mesmo feriado e ano, sempre retorna o mesmo resultado, sem efeitos colaterais.
+O *pattern matching* permite que o compilador verifique se todos os casos
+possíveis estão sendo tratados. Se adicionarmos um novo tipo de feriado à sealed
+interface, o compilador nos forçará a atualizar todos os switches, garantindo
+que nenhum caso seja esquecido. O método `calculateDate` é uma função pura -
+dado o mesmo feriado e ano, sempre retorna o mesmo resultado, sem efeitos
+colaterais.
 
 ![Diagrama de classe da modelagem dos feriados como DOP](class-diagram.png)
 
-A implementação completa, incluindo testes e exemplos de uso, está disponível no [repositório do projeto](https://github.com/vagnerclementino/odp-api-holiday) para análise detalhada. O repositório contém também implementações de feriados móveis (como a Páscoa) e exemplos de como integrar esta modelagem com frameworks como Spring Boot.
+A implementação completa, incluindo testes e exemplos de uso, está disponível no
+[repositório do projeto](https://github.com/vagnerclementino/odp-api-holiday)
+para análise detalhada. O repositório contém também implementações de feriados
+móveis (como a Páscoa) e exemplos de como integrar esta modelagem com frameworks
+como Spring Boot.
 
-Assim como fizemos uma analogia de uma classe na OOP com um organismo vivo, podemos comparar a DOP com uma linha de montagem industrial moderna. Nesta analogia, os dados imutáveis são como peças padronizadas que fluem pela linha sem serem alteradas em sua essência, as operações funcionam como estações de trabalho especializadas que processam essas peças de forma previsível. Por outro lado, o *pattern matching* atua como um sistema de classificação automática que direciona cada peça para a estação correta. Por fim, a separação entre dados e operações espelha a divisão clara entre matéria-prima e processos de fabricação. Esta analogia faz sentido porque, tanto a DOP quanto uma linha de montagem, priorizam eficiência, previsibilidade, especialização de funções e fluxo controlado de informação, onde cada componente tem uma responsabilidade bem definida e o resultado final é construído através da composição ordenada de operações simples e confiáveis.
+Assim como fizemos uma analogia de uma classe na OOP com um organismo vivo,
+podemos comparar a DOP com uma linha de montagem industrial moderna. Nesta
+analogia, os dados imutáveis são como peças padronizadas que fluem pela linha
+sem serem alteradas em sua essência, as operações funcionam como estações de
+trabalho especializadas que processam essas peças de forma previsível. Por outro
+lado, o *pattern matching* atua como um sistema de classificação automática que
+direciona cada peça para a estação correta. Por fim, a separação entre dados e
+operações espelha a divisão clara entre matéria-prima e processos de fabricação.
+Esta analogia faz sentido porque, tanto a DOP quanto uma linha de montagem,
+priorizam eficiência, previsibilidade, especialização de funções e fluxo
+controlado de informação, onde cada componente tem uma responsabilidade bem
+definida e o resultado final é construído através da composição ordenada de
+operações simples e confiáveis.
 
 ## Programação orientada a dados em Java
 
@@ -620,9 +711,9 @@ fundamentais:
 ## 🤔 O que vem a seguir?
 
 Agora que você conhece os princípios da DOP, como aplicá-los em projetos reais?
-Na **[Parte 3](https://notes.clementino.me/blog/nem-tudo-eh-objeto-parte-3)**, vamos
-implementar esses conceitos em APIs REST, funções Lambda e descobrir quando a
-DOP é a escolha mais adequada para seu próximo projeto.
+Na **[Parte 3](https://notes.clementino.me/blog/nem-tudo-eh-objeto-parte-3)**,
+vamos implementar esses conceitos em APIs REST, funções Lambda e descobrir
+quando a DOP é a escolha mais adequada para seu próximo projeto.
 
 [^1]: [Data-Oriented Programming in Java](https://www.infoq.com/articles/data-oriented-programming-java/)
 [^2]: [Data-Oriented Programming in Java - Version 1.1](https://inside.java/2024/05/23/dop-v1-1-introduction/)
