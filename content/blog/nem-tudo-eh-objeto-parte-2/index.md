@@ -39,6 +39,8 @@ o desenho de um sistema de gerenciamento de feriados.
 
 ### 1. Dados são Imutáveis
 
+#### O Problema da Mutabilidade
+
 A imutabilidade mitiga uma fonte comum de bugs como o de objetos que são
 modificados por diferentes "subsistemas" sem comunicação adequada[^3]. Por
 subsistemas estamos dizendo um módulo, função ou mesmo classe dentro de um
@@ -52,8 +54,7 @@ requisitos para modificá-lo e nenhuma forma de comunicar essas necessidades. O
 trecho de código a seguir demonstra o problema.
 
 ```java
-// Problema conceitual: objeto mutável em HashSet
-// Imagine uma classe FixedHoliday mutável com método setDate()
+// ❌ PROBLEMA: Objeto mutável em HashSet
 var holidays = new HashSet<Holiday>();
 var christmas = new FixedHoliday("Christmas", 
                                  "Birth of Christ", 
@@ -67,12 +68,14 @@ holidays.add(christmas);
 // Objeto encontrado normalmente
 System.out.println(holidays.contains(christmas)); // true
 
-// Mutação quebra o contrato do HashSet
+// ⚠️ Mutação quebra o HashSet
 christmas.setDate(LocalDate.of(2024, 12, 24));
 
-// Agora o objeto está "perdido" no HashSet
+// ❌ Objeto agora está "perdido"
 System.out.println(holidays.contains(christmas)); // false - objeto "perdido"
 ```
+
+#### Records: Imutabilidade na Prática
 
 A solução para esse problema é direta: eliminando a mutabilidade, eliminamos
 essa categoria de erros. Quando subsistemas compartilham apenas dados imutáveis,
@@ -93,7 +96,7 @@ obter seus dados atuais via *getters*, (2) modificar os valores necessários, e
 demonstra como implementar dados imutáveis e transparentes.
 
 ```java
-// Solução: record imutável e transparente
+// ✅ SOLUÇÃO: Record imutável
 public record FixedHoliday(
     String name, String description, LocalDate date, 
     List<Locality> localities, HolidayType type
@@ -119,7 +122,7 @@ métodos de transformação que retornam novas instâncias, garantem imutabilida
 transparência. O exemplo a seguir demonstra seu uso seguro em `HashSet`.
 
 ```java
-// Transformações retornam novas instâncias (implementação DOP real)
+// ✅ Transformações retornam novas instâncias
 public FixedHoliday withDate(LocalDate newDate) {
     return new FixedHoliday(name,
                            description,
@@ -164,6 +167,8 @@ cultura de desenvolvimento.
 
 ### 2. Modele os Dados, Todos os Dados, e Nada Além dos Dados
 
+#### O Problema dos Tipos Genéricos
+
 Este princípio enfatiza a criação de tipos específicos que representem fielmente
 cada variação do domínio, evitando tipos genéricos com campos opcionais[^5].
 Por exemplo, ao modelar o domínio de feriados, cujos detalhes estão na  
@@ -201,6 +206,8 @@ devem ter campos para algoritmos de cálculo, dado que sempre vão ocorrer no
 mesmo dia e mês. Tipos precisos transfere validações do tempo de execução para o
 tempo de compilação, resultando em código mais seguro e desenvolvimento mais
 eficiente.
+
+#### Sealed Interfaces e Tipos Específicos
 
 ```java
 // DEPOIS - Sealed interface com tipos específicos
@@ -288,6 +295,8 @@ portador de dados em executor de operações complexas.
 
 ### 3. Torne Estados Ilegais Irrepresentáveis
 
+#### O Problema dos Estados Inválidos
+
 O terceiro princípio define que apenas combinações legais de dados possam ser
 representadas no sistema[^7]. O mundo é caótico e toda regra parece ter uma
 exceção - "todo feriado tem uma data fixa" rapidamente se torna "todo feriado
@@ -354,6 +363,8 @@ múltiplos campos opcionais criando records específicos para cada variação;
 - 🛡️ **Terceiro**, quando uma propriedade não pode ser expressa pelo sistema de
 tipos, valide no construtor o mais cedo possível, idealmente na fronteira entre
 o mundo externo e seu sistema.
+
+#### Três Níveis de Proteção
 
 O código a seguir detalha os três níveis de proteção que podem ser usados para
 evitar estados inválidos.
@@ -554,9 +565,11 @@ public String formatHoliday(Holiday holiday) {
 }
 ```
 
-Agora que detalhamos os quatro princípios fundamentais da DOP vamos analisar
-como eles podem ser utilizados para modelar o nosso sistema de gestão de
-feriados.
+Agora que exploramos os quatro princípios fundamentais da DOP, você pode estar
+se perguntando: "Como isso funciona na prática?". Vamos apresentar o sistema de
+gestão de feriados que descrevemos na **[Parte 1](https://notes.clementino.me/blog/nem-tudo-eh-objeto-parte-1)** dessa série. Este exemplo mostrará
+como a DOP pode simplificar domínios complexos que tradicionalmente resultariam
+em hierarquias de classes confusas na programação orientada a objetos.
 
 ## Feriados: uma modelagem orientada a dados
 
@@ -623,12 +636,13 @@ public record FixedHoliday(
 O construtor compacto do record (`public FixedHoliday`) implementa validações
 que garantem a integridade dos dados no momento da criação. A validação do dia
 em relação ao mês previne datas impossíveis como 31 de fevereiro. O
-`List.copyOf(localities)` implementa *defensive copying*, garantindo que a lista
-interna não possa ser modificada externamente, preservando a imutabilidade.
+`List.copyOf(localities)` implementa *defensive copying* (criar uma nova cópia
+imutável para evitar modificações externas), garantindo que a lista interna não
+possa ser modificada externamente, preservando a imutabilidade.
 
 Para feriados mais complexos, como aqueles que seguem regras de "mondayisation"
-(quando um feriado cai no fim de semana e é observado na segunda-feira), criamos
-o `ObservedHoliday` com validações específicas:
+(regra que move feriados de fim de semana para a segunda-feira seguinte),
+criamos o `ObservedHoliday` com validações específicas:
 
 ```java
 // 📦 Feriado observado - com regras de mondayisation
@@ -659,7 +673,8 @@ ajustado mas não foi.
 O quarto princípio - separação entre dados e operações - é implementado através
 da classe `HolidayOperations`, que contém todas as operações que manipulam os
 dados dos feriados. Esta classe utiliza *pattern matching* com `switch`
-expressions para processar diferentes tipos de feriados de forma type-safe:
+expressions para processar diferentes tipos de feriados de forma *type-safe* (o
+compilador garante que apenas tipos válidos sejam processados):
 
 ```java
 // 🔀 Operações separadas dos dados
@@ -783,7 +798,7 @@ fronteira do sistema.
 - **⚡ Separe Operações dos Dados**: Mantenha records livres de lógica de domínio
 complexa, implementando operações em classes dedicadas. Use pattern matching com
 switch para processar diferentes tipos de forma type-safe, evitando o problema
-da "Large Class".
+da *"Large Class"*.
 
 A DOP não substitui completamente a OOP, mas oferece uma alternativa valiosa
 especialmente para sistemas que processam grandes volumes de dados ou requerem
