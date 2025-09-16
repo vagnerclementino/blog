@@ -270,8 +270,8 @@ fixa anual, enquanto o `MoveableHoliday` inclui `knownHoliday` (para algoritmos
 de cálculo como Páscoa) e `mondayisation` (para regras de ajuste de fim de
 semana) - campos que seriam irrelevantes em feriados fixos. Observe que ambos
 compartilham dados essenciais como `name`, `description` e `localities` através
-da interface `Holiday`, mas cada um adiciona apenas os campos específicos ao seu
-domínio.
+da interface `Holiday`, entretanto, cada um adiciona apenas os campos
+específicos ao seu domínio.
 
 Essa abordagem elimina a necessidade de campos opcionais ou nulos, tornando
 impossível criar estados inválidos como um feriado fixo com algoritmo de cálculo
