@@ -826,3 +826,4 @@ quando a DOP é a escolha mais adequada para seu próximo projeto.
 [^11]: [JEP 394: Pattern Matching for instanceof](https://openjdk.org/jeps/394)
 [^12]: [JEP 441: Pattern Matching for switch](https://openjdk.org/jeps/441)
 [^13]: [JEP 378: Text Blocks](https://openjdk.org/jeps/378)
+[^14]: [JEP 440: Record Patterns](https://openjdk.org/jeps/440)
