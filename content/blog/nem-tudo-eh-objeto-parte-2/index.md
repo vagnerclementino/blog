@@ -51,7 +51,7 @@ estrutura, ou seja, não será possível recuperar o objeto pelo seu *hash*. Est
 problema ocorre pelo fato de dois subsistemas (o `HashSet` e o código que
 modifica o objeto) têm acesso ao mesmo objeto, contudo, com diferentes
 requisitos para modificá-lo e nenhuma forma de comunicar essas necessidades. O
-trecho de código a seguir demonstra o problema.
+trecho de código abaixo ilustra o problema.
 
 ```java
 // ❌ PROBLEMA: Objeto mutável em HashSet
@@ -92,8 +92,8 @@ estado através de novas instâncias.
 
 Em termos práticos, isso significa que para "alterar" um objeto, você deve: (1)
 obter seus dados atuais via *getters*, (2) modificar os valores necessários, e
-(3) criar uma nova instância com o construtor apropriado. O exemplo a seguir
-demonstra como implementar dados imutáveis e transparentes.
+(3) criar uma nova instância com o construtor apropriado. Veja na prática como isso funciona:
+mostra como implementar dados imutáveis e transparentes.
 
 ```java
 // ✅ SOLUÇÃO: Record imutável
@@ -119,7 +119,7 @@ eliminam o *boilerplate* ao gerar automaticamente: (1) campos finais, (2)
 construtor completo, (3) métodos de acesso, e (4) implementações consistentes de
 `equals`/`hashCode`. Combinados com *defensive copying* (`List.copyOf()`) e
 métodos de transformação que retornam novas instâncias, garantem imutabilidade e
-transparência. O exemplo a seguir demonstra seu uso seguro em `HashSet`.
+transparência. Veja como isso funciona na prática com `HashSet`:
 
 ```java
 // ✅ Transformações retornam novas instâncias
@@ -319,7 +319,7 @@ do sistema de tipos
 - Desenvolvedores tenham dúvidas sobre quais campos são aplicáveis em cada
 contexto específico
 
-O exemplo a seguir demonstra como uma modelagem inadequada permite a criação de
+Observe como uma modelagem inadequada permite a criação de
 estados logicamente impossíveis. A classe `BadHoliday` pode representar um
 feriado fixo como o Natal com `baseHoliday` e `dayOffset` preenchidos (conceitos
 irrelevantes para datas fixas), ou um feriado móvel sem `knownType` definido
@@ -366,7 +366,7 @@ o mundo externo e seu sistema.
 
 #### Três Níveis de Proteção
 
-O código a seguir detalha os três níveis de proteção que podem ser usados para
+A implementação abaixo detalha os três níveis de proteção que podem ser usados para
 evitar estados inválidos.
 
 ```java
@@ -573,7 +573,7 @@ em hierarquias de classes confusas na programação orientada a objetos.
 
 ## Feriados: uma modelagem orientada a dados
 
-Para demonstrar como a Programação Orientada a Dados funciona na prática, vamos
+Para exemplificar como a Programação Orientada a Dados funciona na prática, vamos
 implementar um sistema de gestão de feriados que exemplifica todos os quatro
 princípios fundamentais. A modelagem DOP apresenta uma estrutura
 fundamentalmente diferente da OOP, onde começamos definindo uma *sealed
@@ -741,7 +741,7 @@ operações simples e confiáveis.
 
 A linguagem Java evoluiu com algumas funcionalidades que isoladas podem não ser
 percebidas como relevantes, porém, em conjunto, servem para suportar os
-princípios da Programação Orientada a Dados. A seguir listamos algumas
+princípios da Programação Orientada a Dados. Abaixo listamos algumas
 funcionalidades da linguagem que facilitam a implementação dos quatro princípios
 fundamentais:
 
