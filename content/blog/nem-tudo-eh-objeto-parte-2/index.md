@@ -276,8 +276,8 @@ específicos ao seu domínio.
 Essa abordagem elimina a necessidade de campos opcionais ou nulos, tornando
 impossível criar estados inválidos como um feriado fixo com algoritmo de cálculo
 ou um feriado móvel sem especificar seu tipo conhecido. O compilador Java
-garante que cada instância contenha todos os dados necessários e nenhum dado
-supérfluo, transformando regras de negócio em restrições do sistema de tipos.
+garante que cada instância contenha apenas os dados necessários, transformando
+regras de negócio em restrições do sistema de tipos.
 
 Na prática, records frequentemente necessitam de customizações para uso efetivo
 em DOP. A implementação padrão de `equals` usa todos os componentes, mas em
