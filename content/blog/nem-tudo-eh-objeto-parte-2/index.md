@@ -98,8 +98,8 @@ demonstra como implementar dados imutáveis e transparentes.
 ```java
 // ✅ SOLUÇÃO: Record imutável
 public record FixedHoliday(
-    String name, String description, LocalDate date, 
-    List<Locality> localities, HolidayType type
+    String name, String description, LocalDate date,
+    int day, Month month, List<Locality> localities, HolidayType type
 ) implements Holiday {
     
     public FixedHoliday {
