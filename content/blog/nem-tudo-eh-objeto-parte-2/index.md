@@ -209,6 +209,15 @@ eficiente.
 
 #### Sealed Interfaces e Tipos Específicos
 
+Os *Sealed types* representam uma funcionalidade do Java 17+ que permite criar
+hierarquias 'fechadas' de tipos. Ao declarar
+`public sealed interface Holiday permits (...)`,
+estamos dizendo ao compilador: apenas estes tipos específicos podem implementar
+`Holiday`, nenhum outro. Isso difere de interfaces tradicionais onde qualquer
+classe pode implementá-las. Sealed types são ideais para modelar alternativas de
+domínio onde conhecemos todas as variações possíveis e queremos impedir
+extensões não controladas que poderiam quebrar a lógica do sistema.
+
 ```java
 // DEPOIS - Sealed interface com tipos específicos
 public sealed interface Holiday 
@@ -227,15 +236,6 @@ public sealed interface Holiday
   }
 }
 ```
-
-Os *Sealed types* representam uma funcionalidade do Java 17+ que permite criar
-hierarquias 'fechadas' de tipos. Ao declarar 
-`public sealed interface Holiday permits (...)`,
-estamos dizendo ao compilador: apenas estes tipos específicos podem implementar
-`Holiday`, nenhum outro. Isso difere de interfaces tradicionais onde qualquer
-classe pode implementá-las. Sealed types são ideais para modelar alternativas de
-domínio onde conhecemos todas as variações possíveis e queremos impedir
-extensões não controladas que poderiam quebrar a lógica do sistema.
 
 Isso posto, uma alternativa para alcançar o segundo princípio é por meio de
 *sealed interfaces*[^6] para modelar alternativas e criar *records* específicos
