@@ -1,0 +1,40 @@
+/* Estilização específica para código inline */
+/* Sobrescreve estilos do PrismJS para código inline */
+
+:not(pre) > code {
+  font-size: 87.5% !important;
+  color: #e83e8c !important;
+  word-break: break-word !important;
+  background-color: transparent !important;
+}
+
+/* Seletor mais específico para garantir sobrescrita */
+p code,
+li code,
+td code,
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+  font-size: 87.5% !important;
+  color: #e83e8c !important;
+  word-break: break-word !important;
+  background-color: transparent !important;
+}
+
+@media screen and (max-width: 600px) {
+  :not(pre) > code,
+  p code,
+  li code,
+  td code,
+  h1 code,
+  h2 code,
+  h3 code,
+  h4 code,
+  h5 code,
+  h6 code {
+    font-size: 85% !important;
+  }
+}
