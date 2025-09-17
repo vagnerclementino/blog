@@ -194,3 +194,11 @@ pre[class*="language-"].line-numbers > code {
 .command-line-prompt > span[data-prompt]:before {
   content: attr(data-prompt);
 }
+
+/* Mobile responsiveness */
+@media screen and (max-width: 600px) {
+  code[class*="language-"],
+  pre[class*="language-"] {
+    font-size: 0.85em;
+  }
+}
