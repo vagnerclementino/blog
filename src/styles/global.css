@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap");
 @import "./hyphenation.css";
-@import "./inline-code.css";
 
 .footnotes h2#footnote-label.sr-only {
   position: static !important;
@@ -146,6 +145,9 @@ h3 {
   padding-left: 2.8em;
   overflow: initial;
 }
+
+/* Import inline code styles after Gatsby/Prism rules to ensure proper specificity */
+@import "./inline-code.css";
 
 .command-line-prompt > span:before {
   color: #999;
