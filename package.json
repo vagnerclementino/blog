@@ -22,7 +22,7 @@
     "gatsby": "^5.15.0",
     "gatsby-cli": "^5.15.0",
     "gatsby-plugin-disqus": "^1.2.6",
-    "gatsby-plugin-feed": "^5.14.0",
+    "gatsby-plugin-feed": "^5.15.0",
     "gatsby-plugin-image": "^3.12.1",
     "gatsby-plugin-local-search": "^1.1.1",
     "gatsby-plugin-manifest": "^5.14.0",
