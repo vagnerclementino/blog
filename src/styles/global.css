@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap");
 @import "./hyphenation.css";
+@import "./inline-code.css";
 
 .footnotes h2#footnote-label.sr-only {
   position: static !important;
@@ -58,6 +59,7 @@ pre {
   white-space: pre;
   margin: 1em 0;
 }
+
 
 h1 {
   font-size: 2em !important;
@@ -129,13 +131,11 @@ h3 {
   padding-left: 2.8em;
 }
 
-/**
-       * If you only want to use line numbering
-       */
+/*
+  * If you only want to use line numbering
+*/
 
 .gatsby-highlight {
-  background-color: #fdf6e3;
-  border-radius: 0.3em;
   margin: 0.5em 0;
   padding: 1em;
   overflow: auto;

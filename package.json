@@ -6,7 +6,7 @@
   },
   "private": true,
   "description": "A personal blog, based on the default blog starter",
-  "version": "5.2.1",
+  "version": "5.3.0",
   "author": "Vagner Clementino <vagner@clementino.me>",
   "bugs": {
     "url": "https://github.com/vagnerclementino/blog/issues"
@@ -110,9 +110,11 @@
     "serve": "gatsby serve",
     "debug:ga": "GATSBY_GTAG_DEBUG=true gatsby develop",
     "test": "jest",
+    "test:quiet": "jest --silent --passWithNoTests",
     "test:watch": "jest --watch --verbose",
     "check-deps": "depcheck || true",
-    "quality": "npm run lint && npm run test && npm run check-deps && cspell link add @cspell/dict-pt-br && cspell --no-must-find-files --config ./cspell.json '**/*.{md,mdx}'",
+    "check-deps:quiet": "depcheck --quiet || true",
+    "quality": "npm run lint && npm run test:quiet && npm run check-deps:quiet && cspell link add @cspell/dict-pt-br && cspell --no-must-find-files --config ./cspell.json '**/*.{md,mdx}'",
     "clean": "gatsby clean",
     "prepare": "husky",
     "prepush": "npm run quality",
