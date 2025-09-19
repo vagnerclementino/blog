@@ -12,7 +12,7 @@
     "url": "https://github.com/vagnerclementino/blog/issues"
   },
   "dependencies": {
-    "@mdx-js/mdx": "^1.5.1",
+    "@mdx-js/mdx": "^3.1.1",
     "@mdx-js/react": "^1.6.22",
     "babel-plugin-styled-components": "^1.13.3",
     "gatsby": "^5.15.0",
