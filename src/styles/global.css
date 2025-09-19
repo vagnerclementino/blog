@@ -131,13 +131,11 @@ h3 {
   padding-left: 2.8em;
 }
 
-/**
-       * If you only want to use line numbering
-       */
+/*
+  * If you only want to use line numbering
+*/
 
 .gatsby-highlight {
-  background: inherit !important;
-  border-radius: 0 !important;
   margin: 0.5em 0;
   padding: 1em;
   overflow: auto;
