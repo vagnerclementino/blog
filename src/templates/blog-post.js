@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet"
 import { Link, graphql } from "gatsby"
 import styled from "styled-components"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faHome, faList, faArrowLeft } from "@fortawesome/free-solid-svg-icons"
+import { faHome, faList } from "@fortawesome/free-solid-svg-icons"
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"

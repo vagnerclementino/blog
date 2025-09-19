@@ -128,10 +128,6 @@ const ExternalLink = styled.a`
   }
 `
 
-const RecentPostsSection = styled.section`
-  margin: 4rem 0;
-`
-
 const SidebarSection = styled.aside`
   margin: 4rem 0;
   
