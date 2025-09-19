@@ -1,5 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap");
 @import "./hyphenation.css";
+@import "./inline-code.css";
+
+.footnotes h2#footnote-label.sr-only {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+  clip: auto !important;
+  white-space: normal !important;
+  border: 0 !important;
+  padding: 0 !important;
+  color: inherit !important;
+}
 
 p {
   text-align: justify;
@@ -47,6 +60,7 @@ pre {
   margin: 1em 0;
 }
 
+
 h1 {
   font-size: 2em !important;
 }
@@ -72,7 +86,10 @@ h3 {
   padding-top: 1rem;
   border-top: 1px solid #eee;
   font-size: 0.9em;
-  color: #666;
+}
+
+.footnotes h2 {
+  color: inherit;
 }
 
 .footnotes ol {
@@ -114,13 +131,11 @@ h3 {
   padding-left: 2.8em;
 }
 
-/**
-       * If you only want to use line numbering
-       */
+/*
+  * If you only want to use line numbering
+*/
 
 .gatsby-highlight {
-  background-color: #fdf6e3;
-  border-radius: 0.3em;
   margin: 0.5em 0;
   padding: 1em;
   overflow: auto;
