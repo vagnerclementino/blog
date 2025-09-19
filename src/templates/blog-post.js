@@ -60,13 +60,6 @@ class BlogPostTemplate extends React.Component {
           description={post.frontmatter.description || post.excerpt}
           featureImg={getFeatureImgPath(featuredImg)}
         />
-        {featuredImg && (
-          <GatsbyImage
-            image={featuredImg}
-            alt={post.frontmatter.featuredImage?.alt || post.frontmatter.title || ""}
-          />
-        )}
-        
         <NavigationBar>
           <NavButton to="/" title="Voltar para Home">
             <FontAwesomeIcon icon={faHome} />
@@ -78,10 +71,13 @@ class BlogPostTemplate extends React.Component {
           </NavButton>
         </NavigationBar>
 
-        <GatsbyImage
-          image={featuredImg}
-          alt={post.frontmatter.description || post.excerpt}
-        />
+        { featuredImg && (
+          <GatsbyImage
+            image={featuredImg}
+            alt={post.frontmatter.featuredImage?.alt || post.frontmatter.title || ""}
+          />
+        )}
+
         <h1>{post.frontmatter.title}</h1>
         <p
           style={{
