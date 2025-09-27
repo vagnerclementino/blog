@@ -27,7 +27,7 @@ em projetos reais. O foco é aplicar DOP em cenários reais de desenvolvimento.
 Vale notar que a Programação Orientada a Dados não pretende substituir
 completamente a Programação Orientada a Objetos, mas oferece uma abordagem
 complementar que pode ser aplicada em situações específicas onde seus benefícios
-são mais evidentes[^1].
+são mais evidentes.
 
 A DOP posiciona-se entre a Programação Funcional e a Programação Orientada a
 Objetos, sendo, na prática, mais próxima da primeira. Enquanto a programação
@@ -35,7 +35,7 @@ funcional propõe que todas as operações sejam funções puras sem efeitos
 colaterais (requisito que pode ser difícil de alcançar em muitos projetos reais)
 a DOP usa funções sem efeitos colaterais sempre que possível e concentra as
 operações que modificam estado (como salvar no banco de dados, enviar emails ou
-escrever em arquivos) em partes específicas do sistema[^3].
+escrever em arquivos) em partes específicas do sistema[^2].
 
 O diferencial da DOP, similar à programação funcional, é que sua abordagem
 funciona muito bem em pequena escala. Qualquer pedaço de lógica de domínio
@@ -48,7 +48,7 @@ orientada a dados. Se você quiser começar em pequena escala, a seguir temos
 alguns cenários em que o uso da DOP pode ser um bom ponto de partida.
 
 **1. Sistemas de Processamento de Dados**: Sistemas que diretamente ingerem e
-produzem dados são candidatos ideais para DOP[^4], por exemplo:
+produzem dados são candidatos ideais para DOP[^3], por exemplo:
 
 - Jobs de processamento em lote (batch jobs)
 - Ferramentas de análise de dados
@@ -67,7 +67,7 @@ Exemplos incluem:
 Para demonstrar os conceitos da programação orientada a dados na prática,
 desenvolvemos uma API REST cujo objetivo é o de gerenciar feriados. O projeto
 completo está disponível em [github.com/vagnerclementino/api-holiday](https://github.com/vagnerclementino/api-holiday)
-e pode ser executado localmente usando Docker Compose.
+e pode ser executado localmente usando Docker Compose[^8].
 
 ### API REST para Gerenciamento de Feriados
 
@@ -105,7 +105,7 @@ public record FixedHoliday(
 ```
 
 Esta abordagem traz benefícios significativos: a estrutura é clara, previne
-modificações acidentais e garante thread safety automático[^5]. Por outro lado,
+modificações acidentais e garante thread safety automático[^4]. Por outro lado,
 criar novas instâncias para pequenas modificações pode ser verboso e gerar
 sobrecarga de memória em sistemas com grandes volumes de dados.
 
@@ -208,13 +208,13 @@ public class HolidayController {
 **💡 Nota**: A implementação real usa DTOs, mappers e anotações de validação. Código completo: [HolidayController.java](https://github.com/vagnerclementino/api-holiday/blob/main/src/main/java/me/clementino/holiday/controller/HolidayController.java)
 
 O pattern matching oferece vantagens claras: torna o código mais legível que
-cadeias de `if-else` e garante que todos os casos sejam tratados[^6]. Contudo,
+cadeias de `if-else` e garante que todos os casos sejam tratados[^5]. Contudo,
 adicionar novos tipos requer modificação em múltiplos pontos do código, violando
-parcialmente o princípio Open/Closed[^7].
+parcialmente o princípio Open/Closed[^6].
 
 ### AWS Lambda
 
-Um outro exemplo de bom uso da DOP é em *handlers* de funções AWS Lambda[^2].
+Um outro exemplo de bom uso da DOP é em *handlers* de funções AWS Lambda[^1].
 O ambiente serverless (computação em nuvem sem gerenciamento de servidor)
 beneficia-se enormemente da imutabilidade dos dados, que elimina problemas de
 concorrência entre invocações simultâneas da função e da separação clara entre
@@ -314,7 +314,7 @@ void shouldCalculateChristmasForDifferentYears() {
 ```
 
 **2. Thread Safety**: Dados imutáveis eliminam problemas de concorrência,
-permitindo processamento paralelo seguro[^8].
+permitindo processamento paralelo seguro[^7].
 
 ```java
 public List<Holiday> processHolidaysInParallel(List<Holiday> holidays, int year) {
@@ -396,11 +396,11 @@ beneficiar da Programação Orientada a Dados?
 
 *Gostou da série? Compartilhe suas experiências aplicando esses conceitos!*
 
-[^1]: [Stack Overflow Developer Survey 2025 - Most Popular Technologies](https://survey.stackoverflow.co/2025/technology#most-popular-technologies)
-[^2]: [AWS Lambda](https://aws.amazon.com/lambda/)
-[^3]: [Functional Programming Principles - Martin Odersky](https://www.coursera.org/learn/scala-functional-programming)
-[^4]: [Data-Oriented Design and C++ - Mike Acton](https://www.youtube.com/watch?v=rX0ItVEVjHc)
-[^5]: [Java Concurrency in Practice - Brian Goetz](https://jcip.net/)
-[^6]: [Pattern Matching for Java - JEP 394](https://openjdk.org/jeps/394)
-[^7]: [SOLID Principles - Robert C. Martin](https://blog.cleancoder.com/uncle-bob/2020/10/18/Solid-Relevance.html)
-[^8]: [Effective Java - Joshua Bloch](https://www.oreilly.com/library/view/effective-java/9780134686097/)
+[^1]: [AWS Lambda](https://aws.amazon.com/lambda/)
+[^2]: [Functional Programming Principles - Martin Odersky](https://www.coursera.org/learn/scala-functional-programming)
+[^3]: [Data-Oriented Design and C++ - Mike Acton](https://www.youtube.com/watch?v=rX0ItVEVjHc)
+[^4]: [Java Concurrency in Practice - Brian Goetz](https://jcip.net/)
+[^5]: [Pattern Matching for Java - JEP 394](https://openjdk.org/jeps/394)
+[^6]: [SOLID Principles - Robert C. Martin](https://blog.cleancoder.com/uncle-bob/2020/10/18/Solid-Relevance.html)
+[^7]: [Effective Java - Joshua Bloch](https://www.oreilly.com/library/view/effective-java/9780134686097/)
+[^8]: [Docker Compose](https://docs.docker.com/compose/)
