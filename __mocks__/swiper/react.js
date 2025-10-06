@@ -1,6 +1,6 @@
 import React from 'react'
 
-// Mock component that works with styled-components and filters out Swiper-specific props
+//Mock component that works with styled-components and filters out Swiper-specific props
 const SwiperComponent = React.forwardRef(({ 
   children, 
   spaceBetween, 
