@@ -97,33 +97,33 @@ describe("BlogPostTemplate", () => {
   it("renders the blog post content correctly", () => {
     const { getByText } = render(<BlogPostTemplate {...mockProps} />)
     
-    // Check if title is rendered
+    //Check if title is rendered
     expect(getByText("Test Title")).toBeInTheDocument()
     
-    // Check if date is rendered
+    //Check if date is rendered
     expect(getByText("January 1, 2023")).toBeInTheDocument()
     
-    // Check if reading time is rendered
+    //Check if reading time is rendered
     expect(getByText(/Tempo de leitura:/)).toBeInTheDocument()
     
-    // Check if body content is rendered
+    //Check if body content is rendered
     expect(getByText("Test body content")).toBeInTheDocument()
   })
 
   it("renders navigation buttons with correct links and icons", () => {
     render(<BlogPostTemplate {...mockProps} />)
     
-    // Check if Home button is rendered
+    //Check if Home button is rendered
     const homeButton = screen.getByText("Home").closest("a")
     expect(homeButton).toBeInTheDocument()
     expect(homeButton).toHaveAttribute("href", "/")
     
-    // Check if Blog button is rendered
+    //Check if Blog button is rendered
     const blogButton = screen.getByText("Todos os Posts").closest("a")
     expect(blogButton).toBeInTheDocument()
     expect(blogButton).toHaveAttribute("href", "/blog/")
     
-    // Check if icons are rendered
+    //Check if icons are rendered
     const icons = screen.getAllByTestId("font-awesome-icon")
     expect(icons).toHaveLength(2)
   })

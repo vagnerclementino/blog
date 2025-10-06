@@ -9,7 +9,7 @@ const NewsletterSignup = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     
-    // Simulação de envio - você pode integrar com um serviço real como Mailchimp, ConvertKit, etc.
+    //Simulação de envio - você pode integrar com um serviço real como Mailchimp, ConvertKit, etc.
     if (email) {
       setStatus("success")
       setEmail("")

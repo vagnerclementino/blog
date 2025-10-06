@@ -2,7 +2,7 @@ import React from "react"
 import { render, screen } from "@testing-library/react"
 import IndexPage from "./index"
 
-// Mock dos componentes
+//Mock dos componentes
 jest.mock("../components/wideLayout", () => ({ children, title }) => (
   <div data-testid="layout" data-title={title}>
     {children}
@@ -46,7 +46,7 @@ jest.mock("../components/avatar", () => ({ size }) => (
   <div data-testid="avatar" data-size={size}>Avatar Component</div>
 ))
 
-// Mock do Gatsby
+//Mock do Gatsby
 jest.mock("gatsby", () => ({
   Link: ({ children, to, ...props }) => (
     <a href={to} {...props}>
@@ -110,24 +110,24 @@ describe("IndexPage", () => {
   it("renders the homepage with all main sections", () => {
     render(<IndexPage {...mockProps} />)
     
-    // Avatar
+    //Avatar
     expect(screen.getByTestId("avatar")).toBeInTheDocument()
     expect(screen.getByTestId("avatar")).toHaveAttribute("data-size", "120")
     
-    // Hero section (without welcome title)
+    //Hero section (without welcome title)
     expect(screen.getByText(/Sou/)).toBeInTheDocument()
     expect(screen.getByText(/Vagner Clementino/)).toBeInTheDocument()
     
-    // Featured posts
+    //Featured posts
     expect(screen.getByTestId("featured-posts")).toBeInTheDocument()
     expect(screen.getByTestId("featured-posts")).toHaveAttribute("data-title", "Posts em Destaque")
     
-    // Recent posts
+    //Recent posts
     expect(screen.getByTestId("recent-posts")).toBeInTheDocument()
     expect(screen.getByTestId("recent-posts")).toHaveAttribute("data-title", "Últimos Posts")
     expect(screen.getByTestId("recent-posts")).toHaveAttribute("data-count", "5")
     
-    // Social links and newsletter
+    //Social links and newsletter
     expect(screen.getByTestId("social-links")).toBeInTheDocument()
     expect(screen.getByTestId("newsletter-signup")).toBeInTheDocument()
   })

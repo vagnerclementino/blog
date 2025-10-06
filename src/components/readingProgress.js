@@ -6,26 +6,26 @@ const ReadingProgress = () => {
 
   useEffect(() => {
     const updateProgress = () => {
-      // Altura total da página menos a altura da viewport
+      //Altura total da página menos a altura da viewport
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight
       
-      // Posição atual do scroll
+      //Posição atual do scroll
       const currentProgress = window.pageYOffset
       
-      // Calcula a porcentagem (0-100)
+      //Calcula a porcentagem (0-100)
       const scrolled = totalHeight > 0 ? (currentProgress / totalHeight) * 100 : 0
       
       setProgress(Math.min(100, Math.max(0, scrolled)))
     }
 
-    // Atualiza o progresso no carregamento inicial
+    //Atualiza o progresso no carregamento inicial
     updateProgress()
 
-    // Adiciona listener para scroll
+    //Adiciona listener para scroll
     window.addEventListener("scroll", updateProgress, { passive: true })
     window.addEventListener("resize", updateProgress, { passive: true })
 
-    // Cleanup
+    //Cleanup
     return () => {
       window.removeEventListener("scroll", updateProgress)
       window.removeEventListener("resize", updateProgress)

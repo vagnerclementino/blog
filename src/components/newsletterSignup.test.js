@@ -25,7 +25,7 @@ describe("NewsletterSignup", () => {
       expect(screen.getByText("✅ Obrigado! Você foi inscrito com sucesso.")).toBeInTheDocument()
     })
     
-    // Email input should be cleared
+    //Email input should be cleared
     expect(emailInput.value).toBe("")
   })
 
@@ -35,7 +35,7 @@ describe("NewsletterSignup", () => {
     const emailInput = screen.getByPlaceholderText("seu@email.com")
     const submitButton = screen.getByRole("button", { name: "Inscrever-se" })
     
-    // Remove the required attribute to test our custom validation
+    //Remove the required attribute to test our custom validation
     emailInput.removeAttribute('required')
     
     fireEvent.click(submitButton)
@@ -60,7 +60,7 @@ describe("NewsletterSignup", () => {
       expect(screen.getByText("✅ Obrigado! Você foi inscrito com sucesso.")).toBeInTheDocument()
     })
     
-    // Fast forward 3 seconds with act
+    //Fast forward 3 seconds with act
     await act(async () => {
       jest.advanceTimersByTime(3000)
     })

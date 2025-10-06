@@ -5,7 +5,7 @@ import Blog from "./blog"
 
 import { useStaticQuery } from 'gatsby';
 
-// Mock Font Awesome
+//Mock Font Awesome
 jest.mock("@fortawesome/react-fontawesome", () => ({
   FontAwesomeIcon: ({ icon, ...props }) => (
     <i data-testid="font-awesome-icon" data-icon={icon.iconName} {...props} />
@@ -22,7 +22,7 @@ beforeEach(() => {
   });
 });
 
-// Mock child components
+//Mock child components
 jest.mock("../components/bio", () => () => <div>Mock Bio</div>)
 jest.mock("../components/searchPosts", () => () => <div>Mock SearchPosts</div>)
 jest.mock("../components/button", () => ({ children }) => <button>{children}</button>)

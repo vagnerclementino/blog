@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import Bio from './bio';
 
-// No need to mock useStaticQuery here as it's already mocked in __mocks__/gatsby.js
+//No need to mock useStaticQuery here as it's already mocked in __mocks__/gatsby.js
 
 describe('Bio component', () => {
   it('renders author name correctly', () => {

@@ -63,7 +63,7 @@ describe("Avatar", () => {
     expect(screen.queryByTestId("gatsby-image")).not.toBeInTheDocument()
   })
 
-  it("applies custom size correctly", () => {
+  it("applies custom size styling to avatar component", () => {
     useStaticQuery.mockReturnValue({
       avatar: null,
     })
@@ -71,7 +71,6 @@ describe("Avatar", () => {
 
     const { container } = render(<Avatar size={120} />)
     
-    // The styled component will apply the size, we just check it renders
     expect(container.firstChild).toBeInTheDocument()
   })
 
@@ -86,7 +85,7 @@ describe("Avatar", () => {
     expect(screen.getByText("👤").parentElement).toHaveClass("custom-avatar")
   })
 
-  it("uses default size when not specified", () => {
+  it("renders with default size when size prop not specified", () => {
     useStaticQuery.mockReturnValue({
       avatar: null,
     })
@@ -94,7 +93,6 @@ describe("Avatar", () => {
 
     const { container } = render(<Avatar />)
     
-    // Should render with default size (component will handle styling)
     expect(container.firstChild).toBeInTheDocument()
   })
 })

@@ -5,7 +5,7 @@ import { Autoplay } from 'swiper/modules'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import PostCard from "./postCard"
 
-// Import Swiper styles
+//Import Swiper styles
 import 'swiper/css'
 
 const PostCarousel = ({ 
@@ -21,16 +21,16 @@ const PostCarousel = ({
   const [swiper, setSwiper] = React.useState(null)
   const [activeIndex, setActiveIndex] = React.useState(0)
   
-  // Filtrar posts baseado no tipo
+  //Filtrar posts baseado no tipo
   let displayPosts
   if (featured) {
-    // Para posts em destaque, filtrar por featured: true ou usar os primeiros 3
+    //Para posts em destaque, filtrar por featured: true ou usar os primeiros 3
     displayPosts = posts.filter(({ node: post }) => post.frontmatter.featured)
     if (!displayPosts.length) {
       displayPosts = posts.slice(0, 3)
     }
   } else {
-    // Para posts normais, usar count ou todos
+    //Para posts normais, usar count ou todos
     displayPosts = showAll ? posts : posts.slice(0, count)
   }
 

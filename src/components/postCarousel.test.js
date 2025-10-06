@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react"
 import PostCarousel from "./postCarousel"
 import { faHeart, faFire } from "@fortawesome/free-solid-svg-icons"
 
-// Mock do Gatsby Link
+//Mock do Gatsby Link
 jest.mock("gatsby", () => ({
   Link: ({ children, to, ...props }) => (
     <a href={to} {...props}>
@@ -12,14 +12,14 @@ jest.mock("gatsby", () => ({
   ),
 }))
 
-// Mock Font Awesome
+//Mock Font Awesome
 jest.mock("@fortawesome/react-fontawesome", () => ({
   FontAwesomeIcon: ({ icon, ...props }) => (
     <i data-testid="font-awesome-icon" data-icon={icon?.iconName || icon} {...props} />
   ),
 }))
 
-// Mock PostCard
+//Mock PostCard
 jest.mock("./postCard", () => {
   return function MockPostCard({ post }) {
     return (
@@ -32,7 +32,7 @@ jest.mock("./postCard", () => {
   }
 })
 
-// Mock Swiper
+//Mock Swiper
 jest.mock('swiper/react', () => ({
   Swiper: ({ children, onSwiper, onSlideChange, ...props }) => (
     <div data-testid="swiper" {...props}>

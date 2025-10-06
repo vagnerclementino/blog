@@ -2,7 +2,6 @@ import React from "react"
 import { render, screen } from "@testing-library/react"
 import PostCard from "./postCard"
 
-// Mock do Gatsby Link
 jest.mock("gatsby", () => ({
   Link: ({ children, to, ...props }) => (
     <a href={to} {...props}>
@@ -104,7 +103,7 @@ describe("PostCard", () => {
     const card1 = container1.querySelector('article')
     const card2 = container2.querySelector('article')
     
-    // Both cards should have the same fixed height
+    //Both cards should have the same fixed height
     expect(card1).toHaveStyle('height: 320px')
     expect(card2).toHaveStyle('height: 320px')
   })
@@ -112,10 +111,10 @@ describe("PostCard", () => {
   it("truncates long titles and descriptions with CSS", () => {
     render(<PostCard post={mockPostWithLongContent} />)
     
-    // Title should be present but truncated via CSS
+    //Title should be present but truncated via CSS
     expect(screen.getByText(/This is a Very Long Post Title/)).toBeInTheDocument()
     
-    // Description should be present but truncated via CSS
+    //Description should be present but truncated via CSS
     expect(screen.getByText(/This is a very long description/)).toBeInTheDocument()
   })
 

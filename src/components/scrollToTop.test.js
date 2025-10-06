@@ -8,7 +8,7 @@ jest.mock("@fortawesome/react-fontawesome", () => ({
   ),
 }))
 
-// Mock window.scrollTo
+//Mock window.scrollTo
 const mockScrollTo = jest.fn()
 Object.defineProperty(window, 'scrollTo', {
   value: mockScrollTo,
@@ -18,7 +18,7 @@ Object.defineProperty(window, 'scrollTo', {
 describe("ScrollToTop", () => {
   beforeEach(() => {
     mockScrollTo.mockClear()
-    // Reset scroll position
+    //Reset scroll position
     Object.defineProperty(window, 'pageYOffset', {
       value: 0,
       writable: true
@@ -44,7 +44,7 @@ describe("ScrollToTop", () => {
   it("becomes visible when scrolled down", () => {
     render(<ScrollToTop showOffset={200} />)
     
-    // Simulate scroll down
+    //Simulate scroll down
     Object.defineProperty(window, 'pageYOffset', {
       value: 300,
       writable: true
@@ -72,7 +72,7 @@ describe("ScrollToTop", () => {
   it("uses custom showOffset prop", () => {
     render(<ScrollToTop showOffset={500} />)
     
-    // Scroll less than offset
+    //Scroll less than offset
     Object.defineProperty(window, 'pageYOffset', {
       value: 400,
       writable: true
@@ -83,7 +83,7 @@ describe("ScrollToTop", () => {
     const button = screen.getByLabelText("Voltar ao topo da página")
     expect(button).toHaveStyle("opacity: 0")
     
-    // Scroll more than offset
+    //Scroll more than offset
     Object.defineProperty(window, 'pageYOffset', {
       value: 600,
       writable: true

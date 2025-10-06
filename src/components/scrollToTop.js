@@ -8,7 +8,7 @@ const ScrollToTop = ({ showOffset = 300 }) => {
 
   useEffect(() => {
     const toggleVisibility = () => {
-      // Mostra o botão quando o usuário rola mais que showOffset pixels
+      //Mostra o botão quando o usuário rola mais que showOffset pixels
       if (window.pageYOffset > showOffset) {
         setIsVisible(true)
       } else {
