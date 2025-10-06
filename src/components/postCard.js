@@ -34,7 +34,10 @@ const Card = styled.article`
   margin-bottom: 1.5rem;
   transition: all 0.3s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  height: 320px; /* Altura fixa para uniformidade */
+  height: 320px;
+  width: 320px;
+  max-width: 350px;
+  min-width: 280px;
   display: flex;
   flex-direction: column;
 
@@ -46,8 +49,19 @@ const Card = styled.article`
 
   @media (max-width: 768px) {
     padding: 1rem;
-    margin-bottom: 1rem;
-    height: 300px; /* Altura ligeiramente menor no mobile */
+    margin: 0 auto 1rem auto;
+    height: auto;
+    min-height: 300px;
+    width: 100%;
+    max-width: 350px;
+    min-width: 280px;
+  }
+  
+  @media (max-width: 480px) {
+    width: auto;
+    max-width: none;
+    min-width: auto;
+    margin: 0;
   }
 `
 
@@ -64,15 +78,11 @@ const CardHeader = styled.header`
 
 const Title = styled.h3`
   margin: 0 0 0.5rem 0;
-  font-size: 1.25rem;
+  font-size: 1.125rem !important;
   line-height: 1.3;
-  display: -webkit-box;
-  -webkit-line-clamp: 2; /* Máximo 2 linhas */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
   
   @media (max-width: 768px) {
-    font-size: 1.1rem;
+    font-size: 1.125rem !important;
   }
 `
 
@@ -92,13 +102,14 @@ const Date = styled.small`
 
 const Description = styled.p`
   color: var(--textSecondary);
+  font-size: 1.125rem;
   line-height: 1.6;
   margin-bottom: 1rem;
-  flex-grow: 1; /* Ocupa o espaço disponível */
-  display: -webkit-box;
-  -webkit-line-clamp: 4; /* Máximo 4 linhas */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  flex-grow: 1;
+  
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `
 
 const ReadMore = styled(Link)`

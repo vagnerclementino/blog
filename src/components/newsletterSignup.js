@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import styled from "styled-components"
+import Button from "./button"
 
 const NewsletterSignup = () => {
   const [email, setEmail] = useState("")
@@ -37,9 +38,9 @@ const NewsletterSignup = () => {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <SubmitButton type="submit">
+            <Button type="submit">
               Inscrever-se
-            </SubmitButton>
+            </Button>
           </InputGroup>
           
           {status === "success" && (
@@ -65,7 +66,8 @@ const NewsletterSignup = () => {
 }
 
 const Container = styled.section`
-  margin: 2rem 0;
+  margin: 2rem auto;
+  max-width: 800px;
   background: var(--bg);
   border: 1px solid var(--textNormal);
   border-radius: 8px;
@@ -122,26 +124,6 @@ const EmailInput = styled.input`
   
   &::placeholder {
     color: var(--textSecondary);
-  }
-`
-
-const SubmitButton = styled.button`
-  padding: 0.75rem 1.5rem;
-  background: var(--textLink);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  
-  &:hover {
-    background: var(--textLinkHover);
-  }
-  
-  @media (max-width: 768px) {
-    width: 100%;
   }
 `
 

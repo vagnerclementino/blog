@@ -3,6 +3,7 @@ title: "Cemitério de Elefantes"
 date: "2025-05-02"
 description: "Desafios e oportunidades para profissionais seniores de tecnologia em 2025"
 featuredImage: feature.jpg
+featured: true
 ---
 
 ## Introdução

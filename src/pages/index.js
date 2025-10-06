@@ -2,7 +2,7 @@ import React from "react"
 import { Link, graphql } from "gatsby"
 import styled from "styled-components"
 
-import Layout from "../components/layout"
+import WideLayout from "../components/wideLayout"
 import SEO from "../components/seo"
 import Button from "../components/button"
 import FeaturedPosts from "../components/featuredPosts"
@@ -19,7 +19,7 @@ class IndexPage extends React.Component {
     const posts = data.allMdx.edges
 
     return (
-      <Layout location={this.props.location} title={siteTitle}>
+      <WideLayout location={this.props.location} title={siteTitle}>
         <SEO
           title="Home"
           keywords={[`blog`, `clementino.me`, `solid`, `design patterns`, `desenvolvimento`, `tecnologia`]}
@@ -50,21 +50,20 @@ class IndexPage extends React.Component {
           </HeroContent>
         </HeroSection>
 
-        <FeaturedPosts posts={posts} count={3} />
+        <FeaturedPosts posts={posts} />
 
         <PostsList 
           posts={posts} 
           title="Últimos Posts" 
           icon={faFire}
-          count={6} 
-          carousel={true}
+          count={5}
         />
 
         <SidebarSection>
           <SocialLinks />
           <NewsletterSignup />
         </SidebarSection>
-      </Layout>
+      </WideLayout>
     )
   }
 }
@@ -161,6 +160,7 @@ export const pageQuery = graphql`
             date(formatString: "DD/MM/YYYY")
             title
             description
+            featured
           }
         }
       }

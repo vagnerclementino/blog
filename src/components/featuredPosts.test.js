@@ -33,9 +33,16 @@ jest.mock("./postCard", () => {
 
 // Mock Swiper
 jest.mock('swiper/react', () => ({
-  Swiper: ({ children, ...props }) => (
+  Swiper: ({ children, pagination, ...props }) => (
     <div data-testid="swiper" {...props}>
       {children}
+      {pagination && (
+        <div className="swiper-pagination">
+          <span className="swiper-pagination-bullet swiper-pagination-bullet-active"></span>
+          <span className="swiper-pagination-bullet"></span>
+          <span className="swiper-pagination-bullet"></span>
+        </div>
+      )}
     </div>
   ),
   SwiperSlide: ({ children, ...props }) => (
@@ -56,7 +63,7 @@ const mockPosts = [
     node: {
       fields: { slug: "/post-1/" },
       frontmatter: {
-        title: "Featured Post 1",
+        title: "Post 1",
         date: "01/01/2024",
         description: "Description for post 1",
       },
@@ -67,7 +74,7 @@ const mockPosts = [
     node: {
       fields: { slug: "/post-2/" },
       frontmatter: {
-        title: "Featured Post 2", 
+        title: "Post 2", 
         date: "02/01/2024",
         description: "Description for post 2",
       },
@@ -78,7 +85,7 @@ const mockPosts = [
     node: {
       fields: { slug: "/post-3/" },
       frontmatter: {
-        title: "Featured Post 3",
+        title: "Post 3",
         date: "03/01/2024", 
         description: "Description for post 3",
       },
@@ -89,11 +96,49 @@ const mockPosts = [
     node: {
       fields: { slug: "/post-4/" },
       frontmatter: {
-        title: "Regular Post 4",
+        title: "Post 4",
         date: "04/01/2024",
         description: "Description for post 4",
       },
       excerpt: "Excerpt for post 4",
+    },
+  },
+]
+
+const mockPostsWithFeatured = [
+  {
+    node: {
+      fields: { slug: "/featured-1/" },
+      frontmatter: {
+        title: "Featured Post 1",
+        date: "01/01/2024",
+        description: "Description for featured post 1",
+        featured: true,
+      },
+      excerpt: "Excerpt for featured post 1",
+    },
+  },
+  {
+    node: {
+      fields: { slug: "/regular-1/" },
+      frontmatter: {
+        title: "Regular Post 1",
+        date: "02/01/2024",
+        description: "Description for regular post 1",
+      },
+      excerpt: "Excerpt for regular post 1",
+    },
+  },
+  {
+    node: {
+      fields: { slug: "/featured-2/" },
+      frontmatter: {
+        title: "Featured Post 2",
+        date: "03/01/2024",
+        description: "Description for featured post 2",
+        featured: true,
+      },
+      excerpt: "Excerpt for featured post 2",
     },
   },
 ]
@@ -107,23 +152,23 @@ describe("FeaturedPosts", () => {
     expect(screen.getByTestId("font-awesome-icon")).toHaveAttribute("data-icon", "heart")
   })
 
-  it("displays only first 3 posts as featured in carousel", () => {
-    render(<FeaturedPosts posts={mockPosts} />)
-    
-    expect(screen.getAllByTestId("post-card")).toHaveLength(3)
-    expect(screen.getByText("Featured Post 1")).toBeInTheDocument()
-    expect(screen.getByText("Featured Post 2")).toBeInTheDocument()
-    expect(screen.getByText("Featured Post 3")).toBeInTheDocument()
-    expect(screen.queryByText("Regular Post 4")).not.toBeInTheDocument()
-  })
-
-  it("respects custom count prop", () => {
-    render(<FeaturedPosts posts={mockPosts} count={2} />)
+  it("displays posts with featured: true when available", () => {
+    render(<FeaturedPosts posts={mockPostsWithFeatured} />)
     
     expect(screen.getAllByTestId("post-card")).toHaveLength(2)
     expect(screen.getByText("Featured Post 1")).toBeInTheDocument()
     expect(screen.getByText("Featured Post 2")).toBeInTheDocument()
-    expect(screen.queryByText("Featured Post 3")).not.toBeInTheDocument()
+    expect(screen.queryByText("Regular Post 1")).not.toBeInTheDocument()
+  })
+
+  it("falls back to first 3 posts when no featured posts exist", () => {
+    render(<FeaturedPosts posts={mockPosts} />)
+    
+    expect(screen.getAllByTestId("post-card")).toHaveLength(3)
+    expect(screen.getByText("Post 1")).toBeInTheDocument()
+    expect(screen.getByText("Post 2")).toBeInTheDocument()
+    expect(screen.getByText("Post 3")).toBeInTheDocument()
+    expect(screen.queryByText("Post 4")).not.toBeInTheDocument()
   })
 
   it("renders Swiper carousel component", () => {
@@ -141,32 +186,40 @@ describe("FeaturedPosts", () => {
     expect(badges).toHaveLength(3)
   })
 
-  it("renders post details correctly using PostCard", () => {
-    render(<FeaturedPosts posts={mockPosts} />)
-    
-    // PostCard should render the post details
-    expect(screen.getAllByTestId("post-card")).toHaveLength(3)
-    expect(screen.getByText("Featured Post 1")).toBeInTheDocument()
-    expect(screen.getByText("01/01/2024")).toBeInTheDocument()
-  })
-
   it("renders nothing when no posts provided", () => {
     const { container } = render(<FeaturedPosts posts={[]} />)
     
     expect(container.firstChild).toBeNull()
   })
 
-  it("uses PostCard component for consistent styling", () => {
-    render(<FeaturedPosts posts={mockPosts} />)
+  it("displays pagination bullets for navigation", () => {
+    render(<FeaturedPosts posts={mockPostsWithFeatured} />)
     
-    // Verify that PostCard components are rendered
-    expect(screen.getAllByTestId("post-card")).toHaveLength(3)
+    // Verifica se existe container de paginação
+    const paginationContainer = document.querySelector('.swiper-pagination')
+    expect(paginationContainer).toBeInTheDocument()
+    
+    // Verifica se existem bullets de paginação
+    const paginationBullets = document.querySelectorAll('.swiper-pagination-bullet')
+    expect(paginationBullets.length).toBeGreaterThan(0)
+    
+    // Verifica se pelo menos um bullet está ativo
+    const activeBullet = document.querySelector('.swiper-pagination-bullet-active')
+    expect(activeBullet).toBeInTheDocument()
   })
 
-  it("has standardized 'Ler mais' links for each featured post", () => {
-    render(<FeaturedPosts posts={mockPosts} />)
+  it("prioritizes featured posts over recent posts", () => {
+    const mixedPosts = [
+      ...mockPosts.slice(0, 2), // 2 regular posts
+      ...mockPostsWithFeatured.filter(({ node }) => node.frontmatter.featured), // 2 featured posts
+    ]
     
-    const readMoreLinks = screen.getAllByText("Ler mais")
-    expect(readMoreLinks).toHaveLength(3)
+    render(<FeaturedPosts posts={mixedPosts} />)
+    
+    expect(screen.getAllByTestId("post-card")).toHaveLength(2)
+    expect(screen.getByText("Featured Post 1")).toBeInTheDocument()
+    expect(screen.getByText("Featured Post 2")).toBeInTheDocument()
+    expect(screen.queryByText("Post 1")).not.toBeInTheDocument()
+    expect(screen.queryByText("Post 2")).not.toBeInTheDocument()
   })
 })

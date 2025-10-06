@@ -1,21 +1,36 @@
 import React from "react"
 import styled from "styled-components"
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, Pagination, Autoplay } from 'swiper/modules'
+import { Autoplay } from 'swiper/modules'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faHeart } from "@fortawesome/free-solid-svg-icons"
 import PostCard from "./postCard"
 
 // Import Swiper styles
 import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
 
-const FeaturedPosts = ({ posts, count = 3 }) => {
-  const featuredPosts = posts.slice(0, count)
+const FeaturedPosts = ({ posts }) => {
+  const [swiper, setSwiper] = React.useState(null)
+  const [activeIndex, setActiveIndex] = React.useState(0)
+  
+  // Tenta encontrar posts com featured: true, senão usa os 3 últimos
+  let featuredPosts = posts.filter(({ node: post }) => post.frontmatter.featured)
+  
+  if (!featuredPosts.length) {
+    featuredPosts = posts.slice(0, 3)
+  }
 
   if (!featuredPosts.length) {
     return null
+  }
+
+  const handleSlideChange = (swiperInstance) => {
+    setActiveIndex(swiperInstance.activeIndex)
+  }
+
+  const goToSlide = (index) => {
+    swiper?.slideTo(index)
+    setActiveIndex(index)
   }
 
   return (
@@ -24,21 +39,23 @@ const FeaturedPosts = ({ posts, count = 3 }) => {
         <FontAwesomeIcon icon={faHeart} /> Posts em Destaque
       </Title>
       <CarouselContainer>
+        <PrevButton onClick={() => swiper?.slidePrev()}>
+          ‹
+        </PrevButton>
+        <NextButton onClick={() => swiper?.slideNext()}>
+          ›
+        </NextButton>
         <StyledSwiper
-          modules={[Navigation, Pagination, Autoplay]}
-          spaceBetween={20}
+          modules={[Autoplay]}
+          spaceBetween={30}
           slidesPerView={1}
-          navigation
-          pagination={{ clickable: true }}
+          onSwiper={setSwiper}
+          onSlideChange={handleSlideChange}
           autoplay={{
             delay: 5000,
             disableOnInteraction: false,
           }}
           breakpoints={{
-            640: {
-              slidesPerView: 2,
-              spaceBetween: 20,
-            },
             1024: {
               slidesPerView: 3,
               spaceBetween: 30,
@@ -54,6 +71,15 @@ const FeaturedPosts = ({ posts, count = 3 }) => {
             </SwiperSlide>
           ))}
         </StyledSwiper>
+        <CustomPagination>
+          {featuredPosts.map((_, index) => (
+            <PaginationBullet
+              key={index}
+              $active={index === activeIndex}
+              onClick={() => goToSlide(index)}
+            />
+          ))}
+        </CustomPagination>
       </CarouselContainer>
     </Container>
   )
@@ -66,7 +92,7 @@ const Container = styled.section`
 const Title = styled.h2`
   margin-bottom: 2rem;
   color: var(--textNormal);
-  font-size: 1.5rem;
+  font-size: 1.5rem !important;
   text-align: center;
   display: flex;
   align-items: center;
@@ -78,93 +104,169 @@ const Title = styled.h2`
   }
   
   @media (max-width: 768px) {
-    font-size: 1.25rem;
+    font-size: 1.25rem !important;
     margin-bottom: 1.5rem;
   }
 `
 
 const CarouselContainer = styled.div`
   position: relative;
-  padding: 0 50px; /* Espaço para os botões de navegação */
+  padding: 0 60px;
   
-  .swiper-button-next,
-  .swiper-button-prev {
-    color: var(--textLink);
-    background: var(--bg);
-    border: 2px solid var(--textLink);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    margin-top: -20px; /* Centraliza verticalmente */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    
-    &:after {
-      font-size: 16px;
-      font-weight: bold;
-    }
-    
-    &:hover {
-      background: var(--textLink);
-      color: var(--bg);
-      transform: scale(1.1);
-    }
+  @media (max-width: 480px) {
+    padding: 0 10px;
   }
+`
+
+const PrevButton = styled.button`
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  border: 2px solid var(--textLink);
+  border-radius: 50%;
+  background: var(--bg);
+  color: var(--textLink);
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
   
-  .swiper-button-next {
-    right: 10px; /* Posiciona fora do card */
-  }
-  
-  .swiper-button-prev {
-    left: 10px; /* Posiciona fora do card */
-  }
-  
-  .swiper-pagination-bullet {
-    background: var(--textSecondary);
-    
-    &.swiper-pagination-bullet-active {
-      background: var(--textLink);
-    }
+  &:hover {
+    background: var(--textLink);
+    color: var(--bg);
+    transform: translateY(-50%) scale(1.1);
   }
   
   @media (max-width: 768px) {
-    padding: 0 35px; /* Menos padding no mobile */
-    
-    .swiper-button-next,
-    .swiper-button-prev {
-      width: 35px;
-      height: 35px;
-      margin-top: -17.5px;
-      
-      &:after {
-        font-size: 14px;
-      }
-    }
-    
-    .swiper-button-next {
-      right: 5px;
-    }
-    
-    .swiper-button-prev {
-      left: 5px;
-    }
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    left: 5px;
+  }
+  
+  @media (max-width: 480px) {
+    width: 35px;
+    height: 35px;
+    font-size: 18px;
+    left: -25px;
+  }
+`
+
+const NextButton = styled.button`
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  border: 2px solid var(--textLink);
+  border-radius: 50%;
+  background: var(--bg);
+  color: var(--textLink);
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: var(--textLink);
+    color: var(--bg);
+    transform: translateY(-50%) scale(1.1);
+  }
+  
+  @media (max-width: 768px) {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    right: 5px;
+  }
+  
+  @media (max-width: 480px) {
+    width: 35px;
+    height: 35px;
+    font-size: 18px;
+    right: -25px;
+  }
+`
+
+const CustomPagination = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  gap: 6px;
+  padding: 5px;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+`
+
+const PaginationBullet = styled.button`
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background: ${props => props.$active ? '#007aff' : 'rgba(0, 0, 0, 0.2)'};
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: block;
+  position: relative;
+  opacity: ${props => props.$active ? '1' : '0.5'};
+  
+  &:hover {
+    background: #007aff;
+    opacity: 1;
+    transform: scale(1.2);
   }
 `
 
 const StyledSwiper = styled(Swiper).withConfig({
   shouldForwardProp: (prop) => !['spaceBetween', 'slidesPerView', 'navigation', 'autoplay'].includes(prop),
 })`
-  padding-bottom: 40px;
+  padding-bottom: 50px;
   
   .swiper-slide {
     height: auto;
     display: flex;
+    justify-content: center;
     
-    /* Garante que todos os cards tenham a mesma altura */
     > * {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
+      width: auto;
+    }
+  }
+  
+  .swiper-pagination {
+    position: static !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-top: 20px !important;
+    height: 20px !important;
+  }
+  
+  .swiper-pagination-bullet {
+    width: 12px !important;
+    height: 12px !important;
+    background: var(--textSecondary) !important;
+    opacity: 1 !important;
+    margin: 0 4px !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    display: inline-block !important;
+    
+    &.swiper-pagination-bullet-active {
+      background: var(--textLink) !important;
     }
   }
 `
