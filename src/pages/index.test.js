@@ -23,9 +23,14 @@ jest.mock("../components/postCard", () => ({ post }) => (
   </div>
 ))
 
-jest.mock("../components/featuredPosts", () => ({ posts }) => (
-  <div data-testid="featured-posts" data-posts-count={posts.length}>
-    Featured Posts Component
+jest.mock("../components/postCarousel", () => ({ posts, title, featured, count }) => (
+  <div 
+    data-testid={featured ? "featured-posts" : "recent-posts"} 
+    data-posts-count={posts.length}
+    data-title={title}
+    data-count={count}
+  >
+    {title} Component
   </div>
 ))
 
@@ -115,20 +120,28 @@ describe("IndexPage", () => {
     
     // Featured posts
     expect(screen.getByTestId("featured-posts")).toBeInTheDocument()
+    expect(screen.getByTestId("featured-posts")).toHaveAttribute("data-title", "Posts em Destaque")
     
-    // Recent posts section
-    expect(screen.getByText("Últimos Posts")).toBeInTheDocument()
+    // Recent posts
+    expect(screen.getByTestId("recent-posts")).toBeInTheDocument()
+    expect(screen.getByTestId("recent-posts")).toHaveAttribute("data-title", "Últimos Posts")
+    expect(screen.getByTestId("recent-posts")).toHaveAttribute("data-count", "5")
     
     // Social links and newsletter
     expect(screen.getByTestId("social-links")).toBeInTheDocument()
     expect(screen.getByTestId("newsletter-signup")).toBeInTheDocument()
   })
 
-  it("renders correct number of recent post cards", () => {
+  it("renders PostCarousel components with correct props", () => {
     render(<IndexPage {...mockProps} />)
     
-    const postCards = screen.getAllByTestId("post-card")
-    expect(postCards).toHaveLength(3) // All 3 posts should be shown as recent
+    const featuredPosts = screen.getByTestId("featured-posts")
+    expect(featuredPosts).toHaveAttribute("data-posts-count", "3")
+    expect(featuredPosts).toHaveAttribute("data-title", "Posts em Destaque")
+    
+    const recentPosts = screen.getByTestId("recent-posts")
+    expect(recentPosts).toHaveAttribute("data-posts-count", "3")
+    expect(recentPosts).toHaveAttribute("data-count", "5")
   })
 
   it("has navigation links to blog and portfolio", () => {
@@ -142,11 +155,16 @@ describe("IndexPage", () => {
     expect(portfolioLink).toHaveAttribute("target", "_blank")
   })
 
-  it("passes correct data to featured posts component", () => {
+  it("passes correct data to PostCarousel components", () => {
     render(<IndexPage {...mockProps} />)
     
     const featuredPosts = screen.getByTestId("featured-posts")
     expect(featuredPosts).toHaveAttribute("data-posts-count", "3")
+    expect(featuredPosts).toHaveAttribute("data-title", "Posts em Destaque")
+    
+    const recentPosts = screen.getByTestId("recent-posts")
+    expect(recentPosts).toHaveAttribute("data-posts-count", "3")
+    expect(recentPosts).toHaveAttribute("data-count", "5")
   })
 
   it("renders SEO component with correct props", () => {
