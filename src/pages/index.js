@@ -5,12 +5,12 @@ import styled from "styled-components"
 import WideLayout from "../components/wideLayout"
 import SEO from "../components/seo"
 import Button from "../components/button"
-import FeaturedPosts from "../components/featuredPosts"
-import PostsList from "../components/postsList"
+import PostCarousel from "../components/postCarousel"
 import SocialLinks from "../components/socialLinks"
 import NewsletterSignup from "../components/newsletterSignup"
 import Avatar from "../components/avatar"
 import { faFire } from "@fortawesome/free-solid-svg-icons"
+import { faHeart } from "@fortawesome/free-solid-svg-icons"
 
 class IndexPage extends React.Component {
   render() {
@@ -50,9 +50,16 @@ class IndexPage extends React.Component {
           </HeroContent>
         </HeroSection>
 
-        <FeaturedPosts posts={posts} />
+        <PostCarousel 
+          posts={posts} 
+          title="Posts em Destaque"
+          icon={faHeart}
+          featured={true}
+          badge="Destaque"
+          autoplay={true}
+        />
 
-        <PostsList 
+        <PostCarousel 
           posts={posts} 
           title="Últimos Posts" 
           icon={faFire}
