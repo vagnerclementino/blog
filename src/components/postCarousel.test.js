@@ -34,16 +34,14 @@ jest.mock("./postCard", () => {
 
 // Mock Swiper
 jest.mock('swiper/react', () => ({
-  Swiper: ({ children, pagination, ...props }) => (
+  Swiper: ({ children, onSwiper, onSlideChange, ...props }) => (
     <div data-testid="swiper" {...props}>
       {children}
-      {pagination && (
-        <div className="swiper-pagination">
-          <span className="swiper-pagination-bullet swiper-pagination-bullet-active"></span>
-          <span className="swiper-pagination-bullet"></span>
-          <span className="swiper-pagination-bullet"></span>
-        </div>
-      )}
+      <div className="swiper-pagination">
+        <span className="swiper-pagination-bullet swiper-pagination-bullet-active"></span>
+        <span className="swiper-pagination-bullet"></span>
+        <span className="swiper-pagination-bullet"></span>
+      </div>
     </div>
   ),
   SwiperSlide: ({ children, ...props }) => (
@@ -163,8 +161,13 @@ describe("PostCarousel", () => {
   })
 
   it("displays pagination bullets", () => {
+    render(<PostCarousel posts={mockPosts} count={3} />)
+    
     const paginationContainer = document.querySelector('.swiper-pagination')
     expect(paginationContainer).toBeInTheDocument()
+    
+    const bullets = document.querySelectorAll('.swiper-pagination-bullet')
+    expect(bullets.length).toBeGreaterThan(0)
   })
 
   it("renders navigation buttons", () => {
