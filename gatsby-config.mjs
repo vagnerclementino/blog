@@ -51,6 +51,17 @@ export default {
     PRESERVE_FILE_DOWNLOAD_CACHE: true,
   },
   plugins: [
+    {
+      resolve: `gatsby-plugin-google-gtag`,
+      options: {
+        trackingIds: [
+          "G-RJC3FZKQTT",
+        ],
+        pluginConfig: {
+          head: true,
+        },
+      },
+    },
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-image`,
