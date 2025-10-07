@@ -98,10 +98,28 @@ Para fazer o build do projeto:
 npm run build
 ```
 
-Para fazer o deploy no Firebase:
+Para fazer o deploy no Firebase, primeiro instale o Firebase CLI globalmente:
 
 ```bash
-npm run deploy
+npm install -g firebase-tools
+```
+
+Faça login no Firebase:
+
+```bash
+firebase login
+```
+
+Em seguida, faça o deploy:
+
+```bash
+firebase deploy
+```
+
+Ou execute todos os passos em sequência:
+
+```bash
+npm run build && firebase deploy
 ```
 
 ## 🛠️ Tecnologias
