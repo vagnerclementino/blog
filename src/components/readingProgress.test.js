@@ -11,10 +11,10 @@ describe("ReadingProgress", () => {
   })
 
   it("renders progress bar inside container", () => {
-    render(<ReadingProgress />)
+    const { container } = render(<ReadingProgress />)
     
-    const progressContainer = document.querySelector('div')
-    const progressBar = document.querySelector('div > div')
+    const progressContainer = container.firstChild
+    const progressBar = progressContainer?.firstChild
     
     expect(progressContainer).toBeInTheDocument()
     expect(progressBar).toBeInTheDocument()
