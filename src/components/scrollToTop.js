@@ -17,6 +17,7 @@ const ScrollToTop = ({ showOffset = 300 }) => {
     }
 
     window.addEventListener("scroll", toggleVisibility)
+    toggleVisibility()
 
     return () => {
       window.removeEventListener("scroll", toggleVisibility)
