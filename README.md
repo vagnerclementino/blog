@@ -1,8 +1,23 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/0643e551-0fef-4f57-9d3c-29d576f3e06c/deploy-status)](https://app.netlify.com/sites/gatsby-personal-starter-blog/deploys)
+# Clementino's Notes
+
+Um blog pessoal sobre desenvolvimento de software, design patterns e boas práticas de programação, construído com Gatsby e React.
 
 <img alt="screenshot" src="./screenshot.gif">
+<img alt="screenshot" src="./screenshot.png">
 
-This is the search-enabled version of Gatsby Personal Starter Blog!
+## Autor
+
+- [@vagnerclementino](https://github.com/vagnerclementino)
+
+## 🔗 Links
+
+[![portfolio](https://img.shields.io/badge/portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://clementino.me/)
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/vagnerclementino/)
+[![blog](https://img.shields.io/badge/blog-FF5722?style=for-the-badge&logo=gatsby&logoColor=white)](https://notes.clementino.me/)
+
+## Demonstração
+
+O blog está disponível em: [https://notes.clementino.me](https://notes.clementino.me)
 
 ## ✍️ Criando Artigos
 
@@ -26,8 +41,6 @@ Para remover um artigo existente:
 npm run article:clean
 ```
 
-O comando irá solicitar o caminho do artigo (ex: `meu-artigo`) e removerá toda a pasta.
-
 ### O que é criado automaticamente
 
 A automação cria:
@@ -36,54 +49,133 @@ A automação cria:
 2. **Arquivo principal**: `index.md` com frontmatter preenchido
 3. **Placeholder da imagem**: `feature.png` (arquivo vazio)
 
-### Próximos passos
+## Rodando localmente
 
-Após executar a automação:
+Clone o projeto
 
-1. **Adicione a imagem destacada**: Substitua o arquivo `feature.png` vazio pela imagem real
-2. **Escreva o conteúdo**: Edite o arquivo `index.md` com o conteúdo do artigo
-3. **Teste localmente**: Execute `npm start` para visualizar o artigo
+```bash
+git clone https://github.com/vagnerclementino/blog.git
+```
 
-## 🚀 Quick start
+Entre no diretório do projeto
 
-1. **Create a Gatsby site.**
+```bash
+cd blog
+```
 
-    Use the Gatsby CLI to create a new site, specifying the blog starter.
+Instale as dependências
 
-    ```sh
-    # create a new Gatsby site using the blog starter
-    gatsby new my-blog-starter https://github.com/thomaswang/gatsby-personal-starter-blog
-    ```
+```bash
+npm install
+```
 
-1. **Start developing.**
+Inicie o servidor de desenvolvimento
 
-    Navigate into your new site’s directory and start it up.
+```bash
+npm start
+```
 
-    ```sh
-    cd my-blog-starter/
-    gatsby develop
-    ```
+O site estará disponível em `http://localhost:8000`
 
-1. **Open the source code and start editing!**
+## Rodando os testes
 
-    Your site is now running at `http://localhost:8000`!
+Para rodar os testes, execute o seguinte comando
 
-    _Note: You'll also see a second link: _`http://localhost:8000/___graphql`_. This is a tool you can use to experiment with querying your data. Learn more about using this tool in the [Gatsby tutorial](https://www.gatsbyjs.org/tutorial/part-five/#introducing-graphiql)._
+```bash
+npm test
+```
 
-    Open the `my-blog-starter` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes and the browser will update in real time!
+Para rodar os testes em modo watch:
 
-## 🎓 Learning Gatsby
+```bash
+npm run test:watch
+```
 
-Looking for more guidance? Full documentation for Gatsby lives [on the website](https://www.gatsbyjs.org/). Here are some places to start:
+## Build e Deploy
 
-- **For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.org/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
+Para fazer o build do projeto:
 
-- **To dive straight into code samples, head [to our documentation](https://www.gatsbyjs.org/docs/).** In particular, check out the _Guides_, _API Reference_, and _Advanced Tutorials_ sections in the sidebar.
+```bash
+npm run build
+```
 
-## 📔 Learning Netlify CMS with Gatsby
+Para fazer o deploy no Firebase:
 
-Start from [this point](https://www.gatsbyjs.org/docs/sourcing-from-netlify-cms/#authenticating-with-github) in the Gatsby documentation to finish the set up for your personal Netlify CMS with authentication.
+```bash
+npm run deploy
+```
 
-## 💫 Deploy
+## 🛠️ Tecnologias
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/thomaswangio/gatsby-personal-starter-blog)
+- **Gatsby** - Framework React para sites estáticos
+- **React** - Biblioteca JavaScript para interfaces
+- **Styled Components** - CSS-in-JS para estilização
+- **MDX** - Markdown com componentes React
+- **Swiper** - Biblioteca para carrosséis
+- **Jest** - Framework de testes
+- **ESLint** - Linter para JavaScript
+- **Firebase Hosting** - Hospedagem
+
+## 📁 Estrutura do Projeto
+
+```bash
+src/
+├── components/          # Componentes React reutilizáveis
+├── pages/              # Páginas do Gatsby
+├── templates/          # Templates para posts
+├── styles/             # Estilos globais
+└── utils/              # Utilitários e helpers
+
+content/
+└── blog/               # Artigos em Markdown/MDX
+```
+
+## 🎨 Funcionalidades
+
+- ✅ Homepage com carrosséis de posts
+- ✅ Posts em destaque configuráveis
+- ✅ Design responsivo
+- ✅ Navegação por setas e bullets
+- ✅ Newsletter signup
+- ✅ Links sociais
+- ✅ SEO otimizado
+- ✅ Testes automatizados
+
+## Contribuindo
+
+Contribuições são sempre bem-vindas!
+
+Para contribuir com o projeto, por favor **crie um fork** do repositório:
+
+1. **Fork este repositório** clicando no botão "Fork" no GitHub
+2. **Clone seu fork** para sua máquina local:
+
+   ```bash
+   git clone https://github.com/SEU-USUARIO/blog.git
+   ```
+
+3. **Crie uma branch** para sua feature:
+
+   ```bash
+   git checkout -b feature/MinhaNovaFeature
+   ```
+
+4. **Faça suas alterações** e commit:
+
+   ```bash
+   git commit -m 'feat: adiciona nova funcionalidade'
+   ```
+
+5. **Push para seu fork**:
+
+   ```bash
+   git push origin feature/MinhaNovaFeature
+   ```
+
+6. **Abra um Pull Request** do seu fork para este repositório
+
+Por favor, certifique-se de que todos os testes estão passando antes de abrir o PR.
+
+## Licença
+
+[MIT](https://choosealicense.com/licenses/mit/)
