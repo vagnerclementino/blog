@@ -98,27 +98,30 @@ Para fazer o build do projeto:
 npm run build
 ```
 
-Para fazer o deploy no Firebase, primeiro instale o Firebase CLI globalmente:
+### Deploy Automático via GitHub Actions
+
+O deploy é feito automaticamente via GitHub Actions:
+
+- **Deploy de Produção**: Quando código é merged na branch `main`, o GitHub Actions executa automaticamente:
+  1. Instala dependências (`npm ci --legacy-peer-deps`)
+  2. Executa testes (`npm test`)
+  3. Faz build (`npm run build`)
+  4. Deploy no Firebase Hosting (produção)
+
+- **Deploy de Preview**: Para Pull Requests, é criado um preview temporário no Firebase Hosting
+
+### Deploy Manual (casos específicos)
+
+Para deploy manual usando Firebase CLI (apenas em casos específicos):
 
 ```bash
+# Instalar Firebase CLI globalmente
 npm install -g firebase-tools
-```
 
-Faça login no Firebase:
-
-```bash
+# Login no Firebase
 firebase login
-```
 
-Em seguida, faça o deploy:
-
-```bash
-firebase deploy
-```
-
-Ou execute todos os passos em sequência:
-
-```bash
+# Deploy manual
 npm run build && firebase deploy
 ```
 
