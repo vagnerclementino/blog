@@ -4,17 +4,17 @@ import ReadingProgress from "./readingProgress"
 
 describe("ReadingProgress", () => {
   it("renders reading progress component with container element", () => {
-    render(<ReadingProgress />)
-    
-    const progressContainer = document.querySelector('div')
-    expect(progressContainer).toBeInTheDocument()
+    const { container } = render(<ReadingProgress />)
+
+    expect(container.firstChild).toBeInTheDocument()
+    expect(container.firstChild.tagName).toBe('DIV')
   })
 
   it("renders progress bar inside container", () => {
-    render(<ReadingProgress />)
+    const { container } = render(<ReadingProgress />)
     
-    const progressContainer = document.querySelector('div')
-    const progressBar = document.querySelector('div > div')
+    const progressContainer = container.firstChild
+    const progressBar = progressContainer?.firstChild
     
     expect(progressContainer).toBeInTheDocument()
     expect(progressBar).toBeInTheDocument()

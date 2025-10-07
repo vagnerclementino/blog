@@ -235,16 +235,14 @@ const NextButton = styled.button`
   }
 `
 
-const StyledSwiper = styled(Swiper).withConfig({
-  shouldForwardProp: (prop) => !['spaceBetween', 'slidesPerView', 'autoplay'].includes(prop),
-})`
+const StyledSwiper = styled(Swiper)`
   padding-bottom: 50px;
-  
+
   .swiper-slide {
     height: auto;
     display: flex;
     justify-content: center;
-    
+
     > * {
       width: auto;
     }
