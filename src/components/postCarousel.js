@@ -252,6 +252,9 @@ const StyledSwiper = styled(Swiper)`
 const PostCardWrapper = styled.div`
   position: relative;
   height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 `
 
 const FeaturedBadge = styled.span`

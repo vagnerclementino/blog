@@ -51,7 +51,7 @@ const Card = styled.article`
     padding: 1rem;
     margin: 0 auto 1rem auto;
     height: auto;
-    min-height: 300px;
+    min-height: 250px;
     width: 100%;
     max-width: 350px;
     min-width: 280px;
@@ -62,6 +62,8 @@ const Card = styled.article`
     max-width: none;
     min-width: auto;
     margin: 0;
+    min-height: 220px;
+    padding: 1rem;
   }
 `
 
