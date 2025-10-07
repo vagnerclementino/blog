@@ -7,7 +7,6 @@ import SEO from "../components/seo"
 import Button from "../components/button"
 import PostCarousel from "../components/postCarousel"
 import SocialLinks from "../components/socialLinks"
-import NewsletterSignup from "../components/newsletterSignup"
 import Avatar from "../components/avatar"
 import { faFire } from "@fortawesome/free-solid-svg-icons"
 import { faHeart } from "@fortawesome/free-solid-svg-icons"
@@ -68,7 +67,6 @@ class IndexPage extends React.Component {
 
         <SidebarSection>
           <SocialLinks />
-          <NewsletterSignup />
         </SidebarSection>
       </WideLayout>
     )
