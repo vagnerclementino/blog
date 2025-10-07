@@ -3,7 +3,6 @@
 Um blog pessoal sobre desenvolvimento de software, design patterns e boas práticas de programação, construído com Gatsby e React.
 
 <img alt="screenshot" src="./screenshot.gif">
-<img alt="screenshot" src="./screenshot.png">
 
 ## Autor
 
