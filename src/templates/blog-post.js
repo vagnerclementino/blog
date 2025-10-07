@@ -1,10 +1,15 @@
 import React from "react"
 import { Helmet } from "react-helmet"
 import { Link, graphql } from "gatsby"
+import styled from "styled-components"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faHome, faList } from "@fortawesome/free-solid-svg-icons"
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import ScrollToTop from "../components/scrollToTop"
+import ReadingProgress from "../components/readingProgress"
 import { rhythm, scale } from "../utils/typography"
 import { translateReadingTime } from "../utils/readingTime"
 import { Disqus } from "gatsby-plugin-disqus"
@@ -45,6 +50,7 @@ class BlogPostTemplate extends React.Component {
 
     return (
       <Layout location={this.props.location}>
+        <ReadingProgress />
         <Helmet>
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
           <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" />
@@ -54,12 +60,24 @@ class BlogPostTemplate extends React.Component {
           description={post.frontmatter.description || post.excerpt}
           featureImg={getFeatureImgPath(featuredImg)}
         />
-        {featuredImg && (
+        <NavigationBar>
+          <NavButton to="/" title="Voltar para Home">
+            <FontAwesomeIcon icon={faHome} />
+            <span>Home</span>
+          </NavButton>
+          <NavButton to="/blog/" title="Voltar para Blog">
+            <FontAwesomeIcon icon={faList} />
+            <span>Todos os Posts</span>
+          </NavButton>
+        </NavigationBar>
+
+        { featuredImg && (
           <GatsbyImage
             image={featuredImg}
             alt={post.frontmatter.featuredImage?.alt || post.frontmatter.title || ""}
           />
         )}
+
         <h1>{post.frontmatter.title}</h1>
         <p
           style={{
@@ -116,10 +134,63 @@ class BlogPostTemplate extends React.Component {
         </ul>
 
         <Disqus config={disqusConfig} />
+        
+        <ScrollToTop showOffset={400} />
       </Layout>
     )
   }
 }
+
+const NavigationBar = styled.div`
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--textSecondary);
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+`
+
+const NavButton = styled(Link)`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--bg);
+  border: 2px solid var(--textLink);
+  border-radius: 8px;
+  color: var(--textLink);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: var(--textLink);
+    color: var(--bg);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  svg {
+    font-size: 1rem;
+  }
+  
+  span {
+    font-size: 0.9rem;
+  }
+  
+  @media (max-width: 768px) {
+    justify-content: center;
+    padding: 0.6rem 0.8rem;
+    
+    span {
+      font-size: 0.8rem;
+    }
+  }
+`
 
 export default BlogPostTemplate
 

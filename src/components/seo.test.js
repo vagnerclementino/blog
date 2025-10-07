@@ -30,10 +30,10 @@ describe('SEO component', () => {
 
     const helmet = Helmet.peek();
     
-    // Test title
+    //Test title
     expect(helmet.title).toBe('Test Page Title | Test Site Title');
     
-    // Test meta tags by finding specific ones
+    //Test meta tags by finding specific ones
     const descriptionMeta = helmet.metaTags.find(tag => tag.name === 'description');
     expect(descriptionMeta.content).toBe('Test Page Description');
     
@@ -43,7 +43,7 @@ describe('SEO component', () => {
     const appleMobileWebAppTitleMeta = helmet.metaTags.find(tag => tag.name === 'apple-mobile-web-app-title');
     expect(appleMobileWebAppTitleMeta.content).toBe("Clementino's Notes");
     
-    // Test link tags for favicon
+    //Test link tags for favicon
     const faviconSvgLink = helmet.linkTags.find(link => link.rel === 'icon' && link.type === 'image/svg+xml');
     expect(faviconSvgLink.href).toBe('/favicon.svg');
     

@@ -3,6 +3,7 @@ title: "Nem tudo é objeto - Parte 3: Aplicando DOP na Prática"
 date: "2025-08-12"
 description: "Guia prático para implementar Programação Orientada a Dados em projetos reais"
 featuredImage: feature.png
+featured: true
 ---
 
 📖 **Esta é uma série em 3 partes sobre o paradigma de programação orientada a dados:**

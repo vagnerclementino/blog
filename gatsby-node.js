@@ -32,7 +32,7 @@ exports.createPages = ({ graphql, actions }) => {
       throw result.errors
     }
 
-    // Create blog posts pages.
+    //Create blog posts pages.
     const posts = result.data.allMdx.edges
 
     posts.forEach((post, index) => {
