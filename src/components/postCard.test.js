@@ -86,8 +86,8 @@ describe("PostCard", () => {
     const titleLink = screen.getByRole("link", { name: "Test Post Title" })
     const readMoreLink = screen.getByRole("link", { name: "Ler mais →" })
     
-    expect(titleLink).toHaveAttribute("href", "/test-post/")
-    expect(readMoreLink).toHaveAttribute("href", "/test-post/")
+    expect(titleLink).toHaveAttribute("href", "/blog/test-post/")
+    expect(readMoreLink).toHaveAttribute("href", "/blog/test-post/")
   })
 
   it("displays standardized 'Ler mais' text", () => {

@@ -11,14 +11,14 @@ const PostCard = ({ post }) => {
       <CardContent>
         <CardHeader>
           <Title>
-            <StyledLink to={post.fields.slug}>
+            <StyledLink to={`/blog${post.fields.slug}`}>
               {title}
             </StyledLink>
           </Title>
           <PublishedDate>{post.frontmatter.date}</PublishedDate>
         </CardHeader>
         <Description>{description}</Description>
-        <ReadMore to={post.fields.slug}>
+        <ReadMore to={`/blog${post.fields.slug}`}>
           Ler mais →
         </ReadMore>
       </CardContent>
