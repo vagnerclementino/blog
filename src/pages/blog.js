@@ -16,7 +16,7 @@ class Blog extends React.Component {
     const siteTitle = data.site.siteMetadata.title
     const posts = data.allMdx.edges
     const localSearchBlog = data.localSearchBlog
-    const homepageURL = process.env.HOMEPAGE_URL || 'https://clementino.me'
+    const homepageURL = process.env.HOMEPAGE_URL || 'https://notes.clementino.me'
 
     return (
       <Layout location={this.props.location} title={siteTitle}>
