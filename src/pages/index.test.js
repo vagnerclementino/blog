@@ -38,10 +38,6 @@ jest.mock("../components/socialLinks", () => () => (
   <div data-testid="social-links">Social Links Component</div>
 ))
 
-jest.mock("../components/newsletterSignup", () => () => (
-  <div data-testid="newsletter-signup">Newsletter Signup Component</div>
-))
-
 jest.mock("../components/avatar", () => ({ size }) => (
   <div data-testid="avatar" data-size={size}>Avatar Component</div>
 ))
@@ -129,7 +125,6 @@ describe("IndexPage", () => {
     
     //Social links and newsletter
     expect(screen.getByTestId("social-links")).toBeInTheDocument()
-    expect(screen.getByTestId("newsletter-signup")).toBeInTheDocument()
   })
 
   it("renders PostCarousel components with correct props", () => {
