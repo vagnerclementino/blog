@@ -15,7 +15,7 @@ const PostCard = ({ post }) => {
               {title}
             </StyledLink>
           </Title>
-          <Date>{post.frontmatter.date}</Date>
+          <PublishedDate>{post.frontmatter.date}</PublishedDate>
         </CardHeader>
         <Description>{description}</Description>
         <ReadMore to={post.fields.slug}>
@@ -95,7 +95,7 @@ const StyledLink = styled(Link)`
   }
 `
 
-const Date = styled.small`
+const PublishedDate = styled.small`
   color: var(--textSecondary);
   font-size: 0.875rem;
 `
