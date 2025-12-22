@@ -6,9 +6,10 @@ featuredImage: feature.png
 ---
 
 ## Medos
+
 Desde a adolescência eu flertava com um cabelo diferente. Eu era fã de rock,
 achava sensacional ver os roqueiros rodando os seus cabelos. Era estiloso. Era
-rebeldia. 
+rebeldia.
 
 ![Balançando a cabeça ao som de black metal](black-metal-hair.gif "Dois homens usando roupas de roqueiros e um deles balançando o cabelo ao som da música")
 
@@ -40,5 +41,3 @@ dreads. Como é bom descobrir um outro de você que nem se imaginava que existia
 Hoje balanço o meu cabelo nos rocks e sambas da vida. Me diferencio por ser
 quem eu sou. E os meus cabelos, em suas distintas formas, texturas e cores, são
 parte dessa história.
-
- 
