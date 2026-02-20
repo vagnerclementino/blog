@@ -1,7 +1,7 @@
 ---
-title: "Pirâmide de Code Review: da inspeção manual à automação inteligente"
+title: "Pirâmide de Code Review: o que automatizar e o que manter humano"
 date: "2026-02-20"
-description: "Uma jornada histórica e prática sobre code review, pull requests e automação por camadas"
+description: "Como estruturar revisão de código com automação na base e julgamento técnico no topo, reduzindo ruído e risco."
 featuredImage: feature.png
 ---
 
