@@ -7,25 +7,25 @@ featuredImage: feature.png
 
 ## Introdução
 
-Code review é uma daquelas práticas que ficam lindas no slide e viram caos no
-mundo real. Todo time diz que revisa código; poucos conseguem fazer isso com
-consistência, profundidade e velocidade ao mesmo tempo.
+Code review fica lindo no slide.
+No mundo real, vira caos fácil.
 
-Neste artigo, vou seguir um fluxo de ideias específico:
+Todo time diz que revisa código.
+Poucos fazem isso com consistência, profundidade e velocidade ao mesmo tempo.
+
+Aqui, vou seguir um fluxo simples:
 
 **Engenharia de Software → Desenvolvimento Ágil → Controle de Versão → Git →
 GitHub/Pull Request → Pirâmide de Code Review → Ferramentas de automação → IA**.
 
-Depois de qualquer iniciativa de qualidade, a pergunta inevitável aparece:
+A pergunta inevitável é:
 **“o que dá para automatizar sem esvaziar o valor humano da revisão?”**
 
-A forma mais útil que encontrei para responder isso foi pensar em uma
-**Pirâmide de Code Review**: uma estrutura por camadas em que a base é altamente
-automatizável e o topo depende (e continuará dependendo) de julgamento técnico,
-contexto de negócio e responsabilidade.
+A resposta que mais funciona para mim é a **Pirâmide de Code Review**.
+Base automatizável. Topo humano.
 
-Antes da pirâmide, vale um passo para trás: de onde vem essa prática e como
-chegamos ao Pull Request.
+Antes dela, vale um passo para trás: de onde vem essa prática?
+E como chegamos ao Pull Request?
 
 ## Uma breve história do Code Review
 
@@ -72,9 +72,11 @@ Antes da pirâmide em si, vale explicitar a sequência histórica e prática:
 8. **IA** entra como copiloto para acelerar análise, sumarização e sugestão de
    melhorias — sem substituir responsabilidade técnica.
 
-Essa ordem importa porque evita a tentação de discutir IA no vácuo:
-primeiro a gente estrutura processo e critério de qualidade; depois aplica
-automação e IA com objetivo claro.
+Essa ordem importa.
+
+Ela evita discutir IA no vácuo.
+Primeiro vem processo e critério de qualidade.
+Depois vêm automação e IA, com objetivo claro.
 
 ## A Pirâmide de Code Review
 
