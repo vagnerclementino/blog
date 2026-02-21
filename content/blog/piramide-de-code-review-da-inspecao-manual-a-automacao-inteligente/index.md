@@ -163,6 +163,37 @@ Você pode adaptar este checklist para PR/MR/Change:
 Quanto mais consistente esse checklist, menos a qualidade depende de memória
 individual.
 
+## Code Review, Manifesto Ágil e os 12 Fatores
+
+Se olharmos com calma, a pirâmide conversa diretamente com valores e princípios
+ágteis.
+
+No **Manifesto Ágil**, dois pontos aparecem com força no contexto de review:
+
+- **"Indivíduos e interações"**: review é interação técnica de alta qualidade,
+  não apenas gate de processo.
+- **"Atenção contínua à excelência técnica"**: revisar código é manter o sistema
+  evolutivo, legível e sustentável[^7].
+
+Também existe aderência com práticas clássicas de desenvolvimento ágil, como
+feedback curto, integração frequente e melhoria contínua. Em outras palavras,
+PR pequeno e revisado cedo tende a gerar menos retrabalho do que um "big bang"
+de código no fim do ciclo.
+
+Quando conectamos com o **12-Factor App**, a conversa fica ainda mais prática:
+
+- **Codebase (I)**: uma codebase versionada e compartilhada favorece revisão
+  transparente[^8].
+- **Build, release, run (V)**: separação de estágios ajuda a definir checks
+  automáticos por camada da pirâmide.
+- **Dev/prod parity (X)**: quanto menor o desvio entre ambientes, mais confiável
+  é o resultado dos checks que antecedem o review humano.
+- **Logs (XI)** e observabilidade: reviewers tomam decisões melhores quando o PR
+  traz sinais de impacto operacional.
+
+O resumo dessa integração é simples: **a pirâmide não compete com ágil nem com
+12 fatores — ela operacionaliza ambos no fluxo de revisão**.
+
 ## Conclusão
 
 Code review não é um ritual burocrático para “liberar merge”.
@@ -184,3 +215,5 @@ engenharia, com menos ruído e mais previsibilidade.
 [^4]: [Atlassian — Pull request workflow](https://www.atlassian.com/git/tutorials/making-a-pull-request)
 [^5]: [GitLab Docs — Merge requests](https://docs.gitlab.com/user/project/merge_requests/)
 [^6]: [Gerrit — Code review workflow](https://gerrit-review.googlesource.com/Documentation/intro-user.html)
+[^7]: [Manifesto for Agile Software Development](https://agilemanifesto.org/)
+[^8]: [The Twelve-Factor App](https://12factor.net/)
