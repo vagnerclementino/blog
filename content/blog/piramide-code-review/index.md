@@ -13,11 +13,6 @@ No mundo real, vira caos fácil.
 Todo time diz que revisa código.
 Poucos fazem isso com consistência, profundidade e velocidade ao mesmo tempo.
 
-Aqui, vou seguir um fluxo simples:
-
-**Engenharia de Software → Desenvolvimento Ágil → Controle de Versão → Git →
-GitHub/Pull Request → Pirâmide de Code Review → Ferramentas de automação → IA**.
-
 A pergunta inevitável é:
 **“o que dá para automatizar sem esvaziar o valor humano da revisão?”**
 
