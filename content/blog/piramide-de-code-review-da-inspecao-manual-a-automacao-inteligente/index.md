@@ -7,22 +7,22 @@ featuredImage: feature.png
 
 ## Introdução
 
-Code review é uma daquelas práticas que parecem simples no slide e caóticas no
-mundo real. Todo time diz que revisa código; poucos conseguem revisar com
-consistência, qualidade e velocidade ao mesmo tempo.
+Code review é uma daquelas práticas que ficam lindas no slide e viram caos no
+mundo real. Todo time diz que revisa código; poucos conseguem fazer isso com
+consistência, profundidade e velocidade ao mesmo tempo.
 
 Neste artigo, vou seguir um fluxo de ideias específico:
 
 **Engenharia de Software → Desenvolvimento Ágil → Controle de Versão → Git →
 GitHub/Pull Request → Pirâmide de Code Review → Ferramentas de automação → IA**.
 
-A pergunta que vem depois de qualquer iniciativa de qualidade costuma ser:
-**“o que dá para automatizar sem perder o valor humano da revisão?”**
+Depois de qualquer iniciativa de qualidade, a pergunta inevitável aparece:
+**“o que dá para automatizar sem esvaziar o valor humano da revisão?”**
 
-A melhor forma que encontrei para responder isso é pensar em uma **Pirâmide de
-Code Review**: uma estrutura por camadas, onde a base é altamente automatizável
-e o topo precisa (e continuará precisando) de julgamento técnico e contexto de
-negócio.
+A forma mais útil que encontrei para responder isso foi pensar em uma
+**Pirâmide de Code Review**: uma estrutura por camadas em que a base é altamente
+automatizável e o topo depende (e continuará dependendo) de julgamento técnico,
+contexto de negócio e responsabilidade.
 
 Antes da pirâmide, vale um passo para trás: de onde vem essa prática e como
 chegamos ao Pull Request.
@@ -72,8 +72,9 @@ Antes da pirâmide em si, vale explicitar a sequência histórica e prática:
 8. **IA** entra como copiloto para acelerar análise, sumarização e sugestão de
    melhorias — sem substituir responsabilidade técnica.
 
-Essa ordem importa porque evita discutir IA no vácuo: primeiro você estrutura
-processo e critérios de qualidade; depois aplica automação e IA com objetivo.
+Essa ordem importa porque evita a tentação de discutir IA no vácuo:
+primeiro a gente estrutura processo e critério de qualidade; depois aplica
+automação e IA com objetivo claro.
 
 ## A Pirâmide de Code Review
 
@@ -232,16 +233,17 @@ O resumo dessa integração é simples: **a pirâmide não compete com ágil nem
 
 ## Conclusão
 
-Code review não é um ritual burocrático para “liberar merge”.
-É um mecanismo de aprendizado coletivo, redução de risco e evolução técnica.
+Code review não é carimbo para “liberar merge”.
+É uma conversa técnica sobre qualidade, risco e evolução do sistema.
 
-A **Pirâmide de Code Review** ajuda a equilibrar duas forças:
+A **Pirâmide de Code Review** funciona porque separa bem as responsabilidades:
 
-- **automação** para o que é repetitivo e mecânico
-- **julgamento humano** para o que é contextual e estratégico
+- **automação** para aquilo que é repetitivo, objetivo e escalável
+- **julgamento humano** para aquilo que é contextual, ambíguo e estratégico
 
-No fim, a meta não é revisar mais PRs. A meta é tomar melhores decisões de
-engenharia, com menos ruído e mais previsibilidade.
+No fim do dia, a meta não é revisar mais PRs.
+A meta é tomar melhores decisões de engenharia com menos ruído,
+menos retrabalho e mais previsibilidade.
 
 ---
 
