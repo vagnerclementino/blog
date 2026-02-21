@@ -201,11 +201,70 @@ No topo da pirâmide, a pergunta deixa de ser técnica e vira decisão de produt
 
 Aqui, automação apoia contexto, mas não decide prioridade nem responsabilidade.
 
+## Code agents aumentam o volume. O humano mantém o sentido.
+
+Com geração de código por IA, uma coisa mudou rápido: o volume de alteração.
+Você produz mais diff por hora. Às vezes, muito mais.
+
+E isso torna o papel humano **mais importante**, não menos.
+
+Code agent é ótimo para acelerar implementação, boilerplate, testes iniciais,
+refatorações repetitivas e documentação de apoio. Mas ele não responde sozinho
+perguntas centrais de engenharia:
+
+- essa escolha faz sentido para o contexto do produto?
+- esse trade-off operacional é aceitável para o nosso cenário?
+- a mudança é segura para quem já usa a API em produção?
+
+Em outras palavras: agente acelera execução; humano responde por direção,
+coerência e risco.
+
+Ferramentas que podem ajudar nesse fluxo (junto com CI):
+
+- **Linters/formatters**: ESLint, Prettier, Ruff, Black
+- **SAST e segurança**: Semgrep, CodeQL, Snyk, Dependabot
+- **Qualidade estática**: SonarQube, Code Climate
+- **Assistentes de revisão**: GitHub Copilot, CodeRabbit, Amazon CodeWhisperer
+
+A recomendação prática é usar IA para reduzir trabalho mecânico e ampliar
+cobertura de análise, sem terceirizar a decisão técnica final.
+
+## Code Review ≠ Quality Assurance
+
+Muita equipe mistura os termos. Vale separar com clareza:
+
+- **Code Review**: prática focada na mudança de código (diff), design,
+  legibilidade, risco técnico e impacto arquitetural.
+- **Quality Assurance (QA)**: disciplina mais ampla de qualidade do produto,
+  incluindo estratégia de testes, critérios de aceitação, validação funcional,
+  não funcional, processo e evidências.
+
+Code review é parte do sistema de qualidade.
+Mas não substitui QA.
+E QA, por sua vez, não substitui review técnico de código.
+
+Quando os dois funcionam juntos, você tem menos bug em produção e menos
+surpresa no deploy.
+
+## Boas práticas para review de verdade (não só checklist)
+
+- **Separe blocos de tempo para revisar**: review fragmentado entre reuniões
+  tende a perder profundidade.
+- **Evite PR gigante**: quanto maior o diff, pior a qualidade da revisão.
+- **Leia o contexto antes do código**: problema, decisão e impacto esperado.
+- **Quando necessário, rode o código localmente**: baixar a branch e executar
+  ajuda a formar visão sistêmica da alteração, além do diff.
+- **Faça duas passadas**:
+  1) entendimento global da mudança;
+  2) leitura detalhada por arquivo.
+- **Registre decisões, não só correções**: o comentário de review também é
+  memória técnica do time.
+
 ## Por onde começar a automação
 
 Se o seu time está começando agora, a sequência mais eficiente costuma ser:
 
-1. **Nível 1** (higiene) — ganho imediato de tempo
+1. **Nível 1** (qualidade mecânica) — ganho imediato de tempo
 2. **Nível 2** (segurança/integridade) — redução de incidentes
 3. **Nível 3** (comportamento) — confiança para deploy
 4. **Níveis 4 e 5** — evolução de maturidade e cultura técnica
