@@ -11,6 +11,11 @@ Code review é uma daquelas práticas que parecem simples no slide e caóticas n
 mundo real. Todo time diz que revisa código; poucos conseguem revisar com
 consistência, qualidade e velocidade ao mesmo tempo.
 
+Neste artigo, vou seguir um fluxo de ideias específico:
+
+**Engenharia de Software → Desenvolvimento Ágil → Controle de Versão → Git →
+GitHub/Pull Request → Pirâmide de Code Review → Ferramentas de automação → IA**.
+
 A pergunta que vem depois de qualquer iniciativa de qualidade costuma ser:
 **“o que dá para automatizar sem perder o valor humano da revisão?”**
 
@@ -44,6 +49,31 @@ Esse objeto recebeu nomes diferentes ao longo do ecossistema:
 
 Mudou o nome, não a essência: propor uma mudança, revisar coletivamente e só
 então integrar na branch principal.
+
+Um marco importante aqui é o lançamento público da feature de Pull Request no
+GitHub, em **23 de fevereiro de 2008**, no post “Oh yeah, there’s pull requests
+now”[^11]. Esse momento ajudou a consolidar o review assíncrono baseado em
+branch/fork como padrão da indústria.
+
+## Da Engenharia de Software ao Pull Request: a linha evolutiva
+
+Antes da pirâmide em si, vale explicitar a sequência histórica e prática:
+
+1. **Engenharia de Software** organiza o desenvolvimento como disciplina,
+   com foco em processo, qualidade e manutenção.
+2. **Desenvolvimento Ágil** acelera ciclos de feedback e entrega contínua,
+   exigindo colaboração frequente e excelência técnica[^7].
+3. **Sistemas de controle de versão** viabilizam colaboração segura em código.
+4. **Git** populariza o modelo distribuído e fluxos não lineares em larga escala[^12].
+5. **GitHub** torna esse fluxo social e assíncrono, consolidando o Pull Request
+   como unidade de colaboração/revisão[^3][^11].
+6. **Pirâmide de Code Review** organiza onde gastar energia humana e onde automatizar.
+7. **Ferramentas de automação** reduzem ruído (lint, testes, SAST, CI checks).
+8. **IA** entra como copiloto para acelerar análise, sumarização e sugestão de
+   melhorias — sem substituir responsabilidade técnica.
+
+Essa ordem importa porque evita discutir IA no vácuo: primeiro você estrutura
+processo e critérios de qualidade; depois aplica automação e IA com objetivo.
 
 ## A Pirâmide de Code Review
 
@@ -225,3 +255,5 @@ engenharia, com menos ruído e mais previsibilidade.
 [^8]: [The Twelve-Factor App](https://12factor.net/)
 [^9]: [Gunnar Morling — The Code Review Pyramid](https://www.morling.dev/blog/the-code-review-pyramid/)
 [^10]: [Code Review Pyramid (SVG original)](https://www.morling.dev/images/code_review_pyramid.svg)
+[^11]: [GitHub Blog (2008) — “Oh yeah, there’s pull requests now”](https://github.blog/news-insights/the-library/oh-yeah-there-s-pull-requests-now/)
+[^12]: [Git — About (git-scm.com)](https://git-scm.com/about)
