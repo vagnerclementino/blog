@@ -27,7 +27,38 @@ Base automatizável. Topo humano.
 Antes dela, vale um passo para trás: de onde vem essa prática?
 E como chegamos ao Pull Request?
 
-## Uma breve história do Code Review
+## Onde isso conversa com Ágil e 12-Factor
+
+Se olharmos com calma, a pirâmide conversa diretamente com valores e princípios
+ágteis.
+
+No **Manifesto Ágil**, dois pontos aparecem com força no contexto de review:
+
+- **"Indivíduos e interações"**: review é interação técnica de alta qualidade,
+  não apenas gate de processo.
+- **"Atenção contínua à excelência técnica"**: revisar código é manter o sistema
+  evolutivo, legível e sustentável[^7].
+
+Também existe aderência com práticas clássicas de desenvolvimento ágil, como
+feedback curto, integração frequente e melhoria contínua. Em outras palavras,
+PR pequeno e revisado cedo tende a gerar menos retrabalho do que um "big bang"
+de código no fim do ciclo.
+
+Quando conectamos com o **12-Factor App**, a conversa fica ainda mais prática:
+
+- **Codebase (I)**: uma codebase versionada e compartilhada favorece revisão
+  transparente[^8].
+- **Build, release, run (V)**: separação de estágios ajuda a definir checks
+  automáticos por camada da pirâmide.
+- **Dev/prod parity (X)**: quanto menor o desvio entre ambientes, mais confiável
+  é o resultado dos checks que antecedem o review humano.
+- **Logs (XI)** e observabilidade: reviewers tomam decisões melhores quando o PR
+  traz sinais de impacto operacional.
+
+O resumo dessa integração é simples: **a pirâmide não compete com ágil nem com
+12 fatores — ela operacionaliza ambos no fluxo de revisão**.
+
+## De onde vem o code review
 
 A revisão de artefatos de software não começou no GitHub. Na literatura clássica,
 um marco importante é o trabalho de **Michael Fagan (IBM, 1976)**, que formalizou
@@ -55,7 +86,7 @@ GitHub, em **23 de fevereiro de 2008**, no post “Oh yeah, there’s pull reque
 now”[^11]. Esse momento ajudou a consolidar o review assíncrono baseado em
 branch/fork como padrão da indústria.
 
-## Da Engenharia de Software ao Pull Request: a linha evolutiva
+## Como chegamos ao Pull Request
 
 Antes da pirâmide em si, vale explicitar a sequência histórica e prática:
 
@@ -92,7 +123,7 @@ A pirâmide ajuda a responder três perguntas:
 2. O que **pode** ser parcialmente automatizado?
 3. O que **não deveria** ser automatizado (ou ainda depende de humano)?
 
-### Nível 1 — Higiene Mecânica (base, 100% automatizável)
+### Nível 1 — Qualidade mecânica (base automatizável)
 
 Aqui moram regras sem subjetividade. Se é determinístico, não deve consumir
 tempo de revisor humano.
@@ -109,7 +140,7 @@ tempo de revisor humano.
 Remover ruído. O reviewer não deveria comentar espaço, ponto e vírgula ou
 arquivo sem newline.
 
-### Nível 2 — Segurança e Integridade (automatização alta)
+### Nível 2 — Segurança e integridade
 
 Ainda muito automatizável, mas com contexto um pouco maior.
 
@@ -124,7 +155,7 @@ Ainda muito automatizável, mas com contexto um pouco maior.
 
 Barrar regressões graves antes de qualquer discussão subjetiva.
 
-### Nível 3 — Comportamento e Contrato (automatização média-alta)
+### Nível 3 — Comportamento e contrato
 
 Aqui entram testes e evidências de comportamento. É automação forte, mas exige
 bom design de suíte e disciplina de manutenção.
@@ -140,7 +171,7 @@ bom design de suíte e disciplina de manutenção.
 
 Responder: “essa mudança ainda faz o que deveria fazer?”
 
-### Nível 4 — Design Técnico e Arquitetura (automatização parcial)
+### Nível 4 — Design e arquitetura
 
 Agora começa a zona cinza. Ferramentas ajudam com sinais, mas não substituem
 julgamento.
@@ -157,7 +188,7 @@ julgamento.
 Sim: métricas, detectors de complexidade e até assistentes de IA.
 Mas a decisão final ainda é humana.
 
-### Nível 5 — Produto, Risco e Estratégia (topo, predominantemente humano)
+### Nível 5 — Produto, risco e estratégia
 
 No topo da pirâmide, a pergunta deixa de ser técnica e vira decisão de produto.
 
@@ -170,7 +201,7 @@ No topo da pirâmide, a pergunta deixa de ser técnica e vira decisão de produt
 
 Aqui, automação apoia contexto, mas não decide prioridade nem responsabilidade.
 
-## O que automatizar primeiro (ordem prática)
+## Por onde começar a automação
 
 Se o seu time está começando agora, a sequência mais eficiente costuma ser:
 
@@ -182,7 +213,7 @@ Se o seu time está começando agora, a sequência mais eficiente costuma ser:
 Uma regra simples: **automatize tudo que é consenso mecânico** e preserve
 energia humana para análise de contexto, risco e design.
 
-## Anti-padrões comuns
+## Onde os reviews costumam dar errado
 
 - Review virar “caça a estilo” porque não há formatter/linter
 - PR gigante (impossível de revisar com qualidade)
@@ -190,7 +221,7 @@ energia humana para análise de contexto, risco e design.
 - Aprovação sem leitura (“LGTM automático”)
 - Métrica de throughput que incentiva velocidade sem qualidade
 
-## Um template de checklist por camada
+## Checklist prático por camada
 
 Você pode adaptar este checklist para PR/MR/Change:
 
@@ -201,37 +232,6 @@ Você pode adaptar este checklist para PR/MR/Change:
 
 Quanto mais consistente esse checklist, menos a qualidade depende de memória
 individual.
-
-## Code Review, Manifesto Ágil e os 12 Fatores
-
-Se olharmos com calma, a pirâmide conversa diretamente com valores e princípios
-ágteis.
-
-No **Manifesto Ágil**, dois pontos aparecem com força no contexto de review:
-
-- **"Indivíduos e interações"**: review é interação técnica de alta qualidade,
-  não apenas gate de processo.
-- **"Atenção contínua à excelência técnica"**: revisar código é manter o sistema
-  evolutivo, legível e sustentável[^7].
-
-Também existe aderência com práticas clássicas de desenvolvimento ágil, como
-feedback curto, integração frequente e melhoria contínua. Em outras palavras,
-PR pequeno e revisado cedo tende a gerar menos retrabalho do que um "big bang"
-de código no fim do ciclo.
-
-Quando conectamos com o **12-Factor App**, a conversa fica ainda mais prática:
-
-- **Codebase (I)**: uma codebase versionada e compartilhada favorece revisão
-  transparente[^8].
-- **Build, release, run (V)**: separação de estágios ajuda a definir checks
-  automáticos por camada da pirâmide.
-- **Dev/prod parity (X)**: quanto menor o desvio entre ambientes, mais confiável
-  é o resultado dos checks que antecedem o review humano.
-- **Logs (XI)** e observabilidade: reviewers tomam decisões melhores quando o PR
-  traz sinais de impacto operacional.
-
-O resumo dessa integração é simples: **a pirâmide não compete com ágil nem com
-12 fatores — ela operacionaliza ambos no fluxo de revisão**.
 
 ## Conclusão
 
