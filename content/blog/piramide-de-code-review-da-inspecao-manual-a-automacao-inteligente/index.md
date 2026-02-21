@@ -47,6 +47,12 @@ então integrar na branch principal.
 
 ## A Pirâmide de Code Review
 
+A base visual deste artigo é inspirada no trabalho original de **Gunnar Morling**,
+no post *The Code Review Pyramid*[^9]. Abaixo, estou usando a imagem original
+(em SVG) como referência visual central[^10]:
+
+![Code Review Pyramid — Gunnar Morling](./code-review-pyramid.svg)
+
 A pirâmide ajuda a responder três perguntas:
 
 1. O que **deve** ser automatizado?
@@ -217,3 +223,5 @@ engenharia, com menos ruído e mais previsibilidade.
 [^6]: [Gerrit — Code review workflow](https://gerrit-review.googlesource.com/Documentation/intro-user.html)
 [^7]: [Manifesto for Agile Software Development](https://agilemanifesto.org/)
 [^8]: [The Twelve-Factor App](https://12factor.net/)
+[^9]: [Gunnar Morling — The Code Review Pyramid](https://www.morling.dev/blog/the-code-review-pyramid/)
+[^10]: [Code Review Pyramid (SVG original)](https://www.morling.dev/images/code_review_pyramid.svg)
