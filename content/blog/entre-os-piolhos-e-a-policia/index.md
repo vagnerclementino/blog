@@ -1,7 +1,7 @@
 ---
 title: "Entre os Piolhos e a Polícia"
 date: "2025-11-14"
-description: "Uma crônica sobre identidade, resistência e auto-conhecimento"
+description: "Um relato sobre identidade, resistência e auto-conhecimento"
 featuredImage: feature.png
 ---
 
@@ -13,10 +13,14 @@ rebeldia.
 
 ![Balançando a cabeça ao som de black metal](black-metal-hair.gif "Dois homens usando roupas de roqueiros e um deles balançando o cabelo ao som da música")
 
-Contudo, aquele jeito de ser se mostrava um tanto quanto distante
-para mim. Nascido no subúrbio, família de 5 filhos, todos homens (negros), não
-dava para se descuidar: os piolhos ou a polícia eram ameaças certas para um
-cabelo grande.
+Contudo, aquele estilo se mostrava um tanto quanto perigoso para mim. Nascido
+na periferia, família de 5 filhos, todos homens (negros), não dava para se
+descuidar: os piolhos ou a polícia eram ameaças certas para um cabelo grande.
+Aos primeiros uma máquina zero bastava. Aos últimos, o jeito era nem tentar
+desafiar. 
+M
+Menos por economia e mais por receio, íamos todos juntos ao barbeiro. Os irmãos
+compartilhavam o mesmo corte e os deboches dos amigos.
 
 ## Rebeldia
 
