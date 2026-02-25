@@ -306,7 +306,20 @@
     "stakeholders",
     "superset",
     "terraplanista",
-    "vagnerclementino"
+    "vagnerclementino",
+    "ambíguo",
+    "aquilo",
+    "contextual",
+    "decisões",
+    "engenharia",
+    "estratégico",
+    "julgamento",
+    "melhores",
+    "previsibilidade",
+    "retrabalho",
+    "revisar",
+    "ruído",
+    "tomar"
   ],
   "ignoreRegExpList": [
     "\\((.*)\\)", // Markdown links
