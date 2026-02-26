@@ -7,27 +7,22 @@ featuredImage: feature.png
 
 ## Introdução
 
-Code review fica lindo no slide.
-No mundo real, vira caos fácil.
+Code review fica lindo no slide. No mundo real, vira caos fácil. Todo time diz
+que revisa código. Poucos fazem isso com consistência, profundidade e
+velocidade ao mesmo tempo.
 
-Todo time diz que revisa código.
-Poucos fazem isso com consistência, profundidade e velocidade ao mesmo tempo.
+A pergunta inevitável é: **"o que dá para automatizar sem esvaziar o valor
+humano da revisão?"**
 
-A pergunta inevitável é:
-**"o que dá para automatizar sem esvaziar o valor humano da revisão?"**
-
-A resposta que mais funciona para mim é a **Pirâmide de Code Review**.
-Base automatizável. Topo humano.
-
-Antes dela, vale um passo para trás: de onde vem essa prática?
-E como chegamos ao Pull Request?
+A resposta que mais funciona para mim é a **Pirâmide de Code Review**. Base
+automatizável. Topo humano. Antes dela, vale um passo para trás: de onde vem
+essa prática? E como chegamos ao Pull Request?
 
 ## Onde isso conversa com Ágil e 12-Factor
 
 Se olharmos com calma, a pirâmide conversa diretamente com valores e princípios
-ágteis.
-
-No **Manifesto Ágil**, dois pontos aparecem com força no contexto de review:
+do desenvolvimento ágil. No **Manifesto Ágil**, dois pontos aparecem com força
+no contexto de review:
 
 - **"Indivíduos e interações"**: review é interação técnica de alta qualidade,
   não apenas gate de processo.
@@ -70,8 +65,8 @@ Esse objeto recebeu nomes diferentes ao longo do ecossistema:
 - **Pull Request (PR)**: popularizado por GitHub e Bitbucket[^3][^4]
 - **Merge Request (MR)**: nomenclatura adotada pelo GitLab[^5]
 - **Change / Patch Set**: fluxo tradicional no Gerrit[^6]
-- **Change List (CL)**: termo comum em organizações com fluxo interno de revisão
-- **Differential Revision**: termo associado ao Phabricator/Differential
+- **Change List (CL)**: termo usado em ferramentas como Perforce[^17] e em processos internos de grandes empresas
+- **Differential Revision**: termo associado ao Phabricator[^18]
 
 Mudou o nome, não a essência: propor uma mudança, revisar coletivamente e só
 então integrar na branch principal.
@@ -125,7 +120,7 @@ tempo de revisor humano.
 
 **Exemplos**
 
-- formatação (Prettier, Black, gofmt)
+- formatação (Prettier[^13], Black[^14], gofmt[^15])
 - lint e convenções
 - checagem de imports, dead code, dependências óbvias
 - segredos em commit e vulnerabilidades conhecidas
@@ -142,7 +137,7 @@ Ainda muito automatizável, mas com contexto um pouco maior.
 **Exemplos**
 
 - SAST e scanners de dependência
-- política de branch protection
+- política de branch protection[^16]
 - validação de permissões, ownership e arquivos sensíveis
 - checks obrigatórios de CI
 
@@ -196,9 +191,9 @@ No topo da pirâmide, a pergunta deixa de ser técnica e vira decisão de produt
 
 Aqui, automação apoia contexto, mas não decide prioridade nem responsabilidade.
 
-## Code agents aumentam o volume. O humano mantém o sentido.
+## Code agents aumentam o volume. O humano mantém o sentido
 
-Com a geração de código com IA, uma coisa mudou rápido: o volume de alteração.
+Com a geração de código assistida por IA, uma coisa mudou rápido: o volume de alteração.
 Você produz mais diff por hora. Às vezes, muito mais.
 
 E isso torna o papel humano **mais importante**, não menos.
@@ -216,10 +211,10 @@ coerência e risco.
 
 Ferramentas que podem ajudar nesse fluxo (junto com CI):
 
-- **Linters/formatters**: ESLint, Prettier, Ruff, Black
-- **SAST e segurança**: Semgrep, CodeQL, Snyk, Dependabot
-- **Qualidade estática**: SonarQube, Code Climate
-- **Assistentes de revisão**: GitHub Copilot, CodeRabbit, Amazon CodeWhisperer
+- **Linters/formatters**: ESLint[^19], Prettier[^13], Ruff[^20], Black[^14]
+- **SAST e segurança**: Semgrep[^21], CodeQL[^22], Snyk[^23], Dependabot[^24]
+- **Qualidade estática**: SonarQube[^25], Code Climate[^26]
+- **Assistentes de revisão**: GitHub Copilot[^27], CodeRabbit[^28], Amazon CodeWhisperer[^29]
 
 A recomendação prática é usar a IA para reduzir trabalho mecânico e ampliar a
 cobertura de análise, sem terceirizar a decisão técnica final.
@@ -297,9 +292,8 @@ A **Pirâmide de Code Review** funciona porque separa bem as responsabilidades:
 - **Automação** para aquilo que é repetitivo, objetivo e escalável
 - **Julgamento humano** para aquilo que é contextual, ambíguo e estratégico
 
-No fim do dia, a meta não é revisar mais PRs.
-A meta é tomar melhores decisões de engenharia com menos ruído,
-menos retrabalho e mais previsibilidade.
+No fim do dia, a meta não é revisar mais PRs. A meta é tomar melhores decisões
+de engenharia com menos ruído, menos retrabalho e mais previsibilidade.
 
 ---
 
@@ -315,3 +309,20 @@ menos retrabalho e mais previsibilidade.
 [^10]: [Code Review Pyramid (SVG original)](https://www.morling.dev/images/code_review_pyramid.svg)
 [^11]: [GitHub Blog (2008) - "Oh yeah, there's pull requests now"](https://github.blog/news-insights/the-library/oh-yeah-there-s-pull-requests-now/)
 [^12]: [Git - About (git-scm.com)](https://git-scm.com/about)
+[^13]: [Prettier - Opinionated Code Formatter](https://prettier.io/)
+[^14]: [Black - The uncompromising Python code formatter](https://black.readthedocs.io/)
+[^15]: [gofmt - Go code formatter](https://pkg.go.dev/cmd/gofmt)
+[^16]: [GitHub Docs - About protected branches](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches)
+[^17]: [Perforce Helix Core - Version Control](https://www.perforce.com/products/helix-core)
+[^18]: [Phabricator - Software Development Platform](https://www.phacility.com/phabricator/)
+[^19]: [ESLint - Pluggable JavaScript linter](https://eslint.org/)
+[^20]: [Ruff - An extremely fast Python linter](https://docs.astral.sh/ruff/)
+[^21]: [Semgrep - Static analysis tool](https://semgrep.dev/)
+[^22]: [CodeQL - Semantic code analysis engine](https://codeql.github.com/)
+[^23]: [Snyk - Developer security platform](https://snyk.io/)
+[^24]: [Dependabot - Automated dependency updates](https://github.com/dependabot)
+[^25]: [SonarQube - Code quality and security](https://www.sonarsource.com/products/sonarqube/)
+[^26]: [Code Climate - Engineering intelligence platform](https://codeclimate.com/)
+[^27]: [GitHub Copilot - AI pair programmer](https://github.com/features/copilot)
+[^28]: [CodeRabbit - AI code review assistant](https://www.coderabbit.ai/)
+[^29]: [Amazon CodeWhisperer - AI coding companion](https://aws.amazon.com/codewhisperer/)
