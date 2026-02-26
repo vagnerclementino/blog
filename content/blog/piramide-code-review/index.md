@@ -12,11 +12,11 @@ ausente. Em diferentes contextos, a liturgia é fundamental: o rito preserva
 tradição, cria identidade e dá estrutura ao sagrado. A forma é tão importante
 quanto o conteúdo.
 
-Em muitas times, revisão de código virou exatamente isso: liturgia corporativa.
+Em muitos times, revisão de código virou exatamente isso: liturgia corporativa.
 Um item na descrição de cargo. Uma etapa obrigatória do fluxo de trabalho.
 
 O desenvolvedor abre o pedido de mudança, outro aprova com _"LGTM"_ (sigla para
-*"Looks Good To Me"*, ou "parece bom para mim"), e o código vai para produção.
+_"Looks Good To Me"_, ou "parece bom para mim"), e o código vai para produção.
 Ninguém questiona design. Ninguém aponta risco. O código segue porque passou
 por algumas etas pré definidas, não porque foi avaliado. Dito dessa forma,
 **isso é claramente uma má prática.**
@@ -42,31 +42,40 @@ vem essa prática? E como chegamos ao Pull Request?
 
 ## De onde vem o code review
 
-A revisão de artefatos de software não começou no GitHub. Na literatura
-clássica, um marco importante é o trabalho de **Michael Fagan (IBM, 1976)**,
-que formalizou as inspeções de software como um processo estruturado para
-encontrar defeitos cedo[^1][^2]. Estudos posteriores confirmaram que revisão
-de código é uma das formas mais eficazes de encontrar defeitos antes que
-cheguem a produção[^32].
+A revisão de artefatos de software não começou no GitHub. Nessa história, um
+marco importante é o trabalho de **Michael Fagan (IBM, 1976)**, que formalizou
+as inspeções de software como um processo estruturado para encontrar defeitos
+cedo[^1][^2]. Estudos posteriores confirmaram que a revisão de código é uma das
+formas mais eficazes de encontrar defeitos antes que cheguem a produção[^32].
 
-Décadas depois, com sistemas distribuídos e desenvolvimento open source,
-processos mais leves ganharam força: patches por e-mail, discussões em lista,
-revisão incremental e reenvio de versões.
+Todavia, o que viabilizou a transição de inspeções formais para revisões
+assíncronas e distribuídas foi a evolução dos sistemas de controle de versão.
+Ferramentas centralizadas como CVS e Subversion (SVN) já permitiam colaboração,
+mas com modelo linear e dependente de um servidor central[^30][^31].
 
-Mas o que viabilizou essa mudança foi a evolução dos sistemas de controle de
-versão. Ferramentas centralizadas como CVS e Subversion (SVN) já permitiam
-colaboração, mas com modelo linear e dependente de um servidor central[^30][^31].
-A virada veio com sistemas distribuídos como **Git** (2005) e Mercurial, que
+![Modelo centralizado: todos os desenvolvedores dependem de um servidor central](./diagrama-centralizado.png)
+
+A virada veio com sistemas distribuídos como **Git** (2005) e Mercurial[^53], que
 deram a cada desenvolvedor uma cópia completa do repositório[^12]. Branch virou
 operação barata. Fork virou fluxo natural.
 
+![Modelo distribuído: cada desenvolvedor tem uma cópia completa e revisão acontece antes do merge](./diagrama-distribuido.png)
+
 Esse modelo distribuído casou perfeitamente com o crescimento do open source.
-Projetos como o kernel Linux já usavam revisão por e-mail com patches[^33]. Quando
-plataformas como **GitHub** (2008) e depois GitLab e Bitbucket transformaram
-esse fluxo em algo visual e assíncrono, o padrão se consolidou: branch, diff,
-revisão, merge[^3][^11]. Pesquisas sobre práticas modernas de code review em
-larga escala, incluindo estudos no Google e na Microsoft, confirmam que esse
-modelo é amplamente adotado e eficaz quando bem executado[^35][^36].
+Projetos como o kernel Linux já usavam revisão por e-mail com patches[^33].
+Quando plataformas como **GitHub** (2008) e depois GitLab e Bitbucket
+transformaram esse fluxo em algo visual e assíncrono, o padrão se consolidou:
+branch, diff, revisão, merge[^3][^11]. Pesquisas sobre práticas modernas de
+code review em larga escala, incluindo estudos no Google e na Microsoft,
+confirmam que esse modelo é amplamente adotado e eficaz quando bem
+executado[^35][^36].
+
+Um marco importante aqui é o lançamento público da feature de Pull Request no
+GitHub, em **23 de fevereiro de 2008**, no post "Oh yeah, there's pull requests
+now"[^11]. Esse momento ajudou a consolidar o review assíncrono baseado em
+branch/fork como padrão da indústria.
+
+![Lancamento da funcionalide de Pull Request](pr-release.png)
 
 Com plataformas modernas de colaboração, a revisão passou a acontecer em um
 objeto único com diff, comentários, checks automáticos e decisão de merge. Esse
@@ -81,42 +90,26 @@ objeto recebeu nomes diferentes ao longo do ecossistema:
 Mudou o nome, não a essência: propor uma mudança, revisar coletivamente e só
 então integrar na branch principal.
 
-Um marco importante aqui é o lançamento público da feature de Pull Request no
-GitHub, em **23 de fevereiro de 2008**, no post "Oh yeah, there's pull requests
-now"[^11]. Esse momento ajudou a consolidar o review assíncrono baseado em
-branch/fork como padrão da indústria.
-
-## Como chegamos ao Pull Request
-
-Antes da pirâmide em si, vale explicitar a sequência histórica e prática:
-
-1. **Engenharia de Software** organiza o desenvolvimento como disciplina,
-   com foco em processo, qualidade e manutenção.
-2. **Desenvolvimento Ágil** acelera ciclos de feedback e entrega contínua,
-   exigindo colaboração frequente e excelência técnica[^7].
-3. **Sistemas de controle de versão** viabilizam colaboração segura em código.
-4. **Git** populariza o modelo distribuído e fluxos não lineares em larga escala[^12].
-5. **GitHub** torna esse fluxo social e assíncrono, consolidando o Pull Request
-   como unidade de colaboração/revisão[^3][^11].
-6. **A Pirâmide de Code Review** organiza onde gastar energia humana e onde automatizar.
-7. **Ferramentas de automação** reduzem ruído (lint, testes, SAST, CI checks).
-   A disciplina de integração contínua, como descrita por Fowler[^37], e a
-   cultura DevOps, popularizada pelo Projeto Phoenix[^38], reforçam que
-   automação e colaboração andam juntas.
-8. **IA** entra como copiloto para acelerar análise, sumarização e sugestão de
-   melhorias - sem substituir a responsabilidade técnica.
-
-Essa ordem importa.
-
-Ela evita discutir IA no vácuo.
-Primeiro vem processo e critério de qualidade.
-Depois vêm automação e IA, com objetivo claro.
+Com o fluxo consolidado, a pergunta mudou. Já não era mais "como revisar
+código", mas "o que olhar primeiro". Quando tudo passa pelo mesmo funil
+— estilo, segurança, testes, design, decisão de produto — o revisor se perde.
+É aí que entra a pirâmide.
 
 ## A Pirâmide de Code Review
 
-A base visual deste artigo é inspirada no trabalho original de **Gunnar Morling**,
-no post *The Code Review Pyramid*[^9]. Abaixo, estou usando a imagem original
-(em SVG) como referência visual central[^10]:
+A ideia de organizar práticas em formato de pirâmide não é nova. Mike Cohn
+propôs a **Pirâmide de Testes** em 2009[^39]: muitos testes unitários na base
+(rápidos e baratos), menos testes de integração no meio, e poucos testes
+end-to-end no topo (lentos e caros). A lógica é simples: quanto mais perto da
+base, mais barato automatizar; quanto mais perto do topo, mais caro e frágil.
+
+A Pirâmide de Code Review segue a mesma intuição aplicada à revisão. Na base,
+o que é mecânico e determinístico — automatize sem pensar duas vezes. No topo,
+o que exige contexto, julgamento e experiência — preserve para o humano.
+
+A base visual deste artigo é inspirada no trabalho original de **Gunnar
+Morling**, no post _The Code Review Pyramid_[^9]. Abaixo, estou usando a imagem
+original (em SVG) como referência visual central[^10]:
 
 ![Code Review Pyramid - Gunnar Morling](./code-review-pyramid.svg)
 
@@ -126,116 +119,139 @@ A pirâmide ajuda a responder três perguntas:
 2. O que **pode** ser parcialmente automatizado?
 3. O que **não deveria** ser automatizado (ou ainda depende de humano)?
 
-### Nível 1 - Qualidade mecânica (base automatizável)
+### Nível 1 — Qualidade mecânica (base automatizável)
 
 Aqui moram regras sem subjetividade. Se é determinístico, não deve consumir
 tempo de revisor humano.
 
-**Exemplos**
+Pense em formatação: tabs vs. espaços, ponto e vírgula, ordem de imports. Em
+um projeto React com TypeScript, o Prettier[^13] resolve isso em um comando.
+Em Java ou Kotlin, o Spotless[^40] ou ktlint[^41] fazem o mesmo. Ninguém deveria gastar
+um comentário de review para dizer "faltou ponto e vírgula na linha 42".
 
-- formatação (Prettier[^13], Black[^14], gofmt[^15])
-- lint e convenções
-- checagem de imports, dead code, dependências óbvias
-- segredos em commit e vulnerabilidades conhecidas
+O mesmo vale para lint. O ESLint[^19] em um projeto JavaScript pega variáveis
+não usadas, imports desnecessários e padrões inseguros antes de qualquer humano
+olhar o código. Em Java, o Checkstyle[^42] e o PMD[^43] cumprem papel semelhante. Em
+Kotlin, o Detekt[^44].
 
-**Objetivo**
+Segredos em commit? Ferramentas como GitLeaks[^45] ou TruffleHog[^46] detectam chaves de
+API e tokens que escaparam para o repositório. Dead code, dependências não
+usadas, arquivos sem newline — tudo isso é consenso mecânico.
 
-Remover ruído. Quem revisa não deveria precisar comentar espaço, ponto e vírgula ou
-arquivo sem newline.
+O objetivo desse nível é remover ruído. Quando a base está automatizada,
+o revisor abre o PR e já encontra um código limpo, padronizado e livre de
+problemas triviais. Sobra atenção para o que importa.
 
-### Nível 2 - Segurança e integridade
+### Nível 2 — Segurança e integridade
 
-Ainda muito automatizável, mas com contexto um pouco maior.
+Ainda muito automatizável, mas com contexto um pouco maior. Aqui o foco
+é barrar regressões graves antes de qualquer discussão subjetiva.
 
-**Exemplos**
+Em um projeto TypeScript, o CodeQL[^22] ou o Semgrep[^21] conseguem detectar
+padrões de injeção, uso inseguro de `eval()`, ou chamadas HTTP sem validação.
+Em Java, o SpotBugs[^47] identifica null pointer dereferences, resource leaks
+e padrões de serialização perigosos. Em Kotlin com Spring, o Snyk[^23] escaneia
+dependências e avisa quando uma biblioteca tem CVE (vulnerabilidade pública
+catalogada) conhecida.
 
-- SAST e scanners de dependência
-- política de branch protection[^16]
-- validação de permissões, ownership e arquivos sensíveis
-- checks obrigatórios de CI
+Política de branch protection[^16] também mora aqui. Exigir aprovação mínima,
+bloquear push direto na main, obrigar que checks de CI passem antes do merge
+— tudo isso é configuração de repositório, não esforço humano.
 
-**Objetivo**
+Validação de CODEOWNERS[^48], permissões de arquivos sensíveis (como
+`application.yml` ou `.env`) e checks obrigatórios de CI completam esse nível.
+O ponto é simples: se uma vulnerabilidade conhecida ou uma quebra de política
+pode ser detectada por máquina, não faz sentido esperar um humano encontrar.
 
-Barrar regressões graves antes de qualquer discussão subjetiva.
-
-### Nível 3 - Comportamento e contrato
+### Nível 3 — Comportamento e contrato
 
 Aqui entram testes e evidências de comportamento. É automação forte, mas exige
 bom design de suíte e disciplina de manutenção.
 
-**Exemplos**
+Em um projeto React, isso significa testes com Testing Library[^49] que validam se
+o componente renderiza corretamente, se o estado muda como esperado e se os
+callbacks disparam. Em Java com Spring Boot, são testes de integração que sobem
+o contexto e validam endpoints. Em Kotlin, testes com MockK[^50] que verificam
+contratos entre camadas.
 
-- testes unitários, integração e contrato
-- cobertura mínima por módulo crítico
-- verificação de compatibilidade de API
-- snapshots/approvals para artefatos previsíveis
+Cobertura mínima por módulo crítico também entra aqui. Não como métrica de
+vaidade ("90% de cobertura!"), mas como proteção: se o módulo de pagamento tem
+menos de 80% de cobertura, o CI bloqueia. Verificação de compatibilidade de API
+— como testes de contrato com Pact[^51] — garante que uma mudança no backend não
+quebra o frontend silenciosamente.
 
-**Objetivo**
+O objetivo desse nível é responder a uma pergunta: "essa mudança ainda faz
+o que deveria fazer?" Se a resposta vem dos testes automatizados, o revisor
+humano pode focar em outra coisa.
 
-Responder à pergunta: "essa mudança ainda faz o que deveria fazer?"
-
-### Nível 4 - Design e arquitetura
+### Nível 4 — Design e arquitetura
 
 Agora começa a zona cinza. Ferramentas ajudam com sinais, mas não substituem o
 julgamento técnico.
 
-**Exemplos**
+Imagine um PR em um projeto Java que adiciona uma dependência direta entre o
+módulo de notificação e o módulo de pagamento. O ArchUnit[^52] pode detectar essa
+violação de fronteira arquitetural automaticamente. Mas e se o PR introduz um
+Service com 15 métodos públicos em um projeto Kotlin? Ou um componente React
+com 400 linhas que mistura lógica de negócio, chamada de API e renderização?
+Nenhuma ferramenta vai dizer com certeza que isso está errado — mas um revisor
+experiente reconhece o problema.
 
-- impacto em acoplamento e limites arquiteturais
-- legibilidade, coesão, nomes e modelagem
-- trade-offs de performance e manutenção
-- aderência ao estilo arquitetural do sistema
+Legibilidade, coesão, nomes e modelagem moram aqui. Um `UserManager` que faz
+tudo é um code smell, mas não é algo que lint detecta. Um hook customizado em
+React que esconde efeitos colaterais complexos pode funcionar perfeitamente nos
+testes e ainda assim ser uma armadilha para quem mantém o código depois.
 
-**É possível automatizar parcialmente?**
+Trade-offs de performance também entram nesse nível. Usar `useEffect` com
+dependências erradas em React, fazer N+1 queries em um endpoint Spring, ou
+criar coroutines sem controle de concorrência em Kotlin — são decisões que
+exigem contexto do sistema, não apenas análise estática.
 
-Sim: métricas, detectores de complexidade e até assistentes de IA.
-Mas a decisão final ainda é humana.
+É possível automatizar parcialmente? Sim. Métricas de complexidade ciclomática,
+detectores de acoplamento e até assistentes de IA ajudam a levantar sinais. Mas
+a decisão final — "isso é aceitável para o nosso contexto?" — ainda é humana.
 
-### Nível 5 - Produto, risco e estratégia
+### Nível 5 — Produto, risco e estratégia
 
 No topo da pirâmide, a pergunta deixa de ser técnica e vira decisão de produto.
 
-**Exemplos**
+Um PR que refatora o fluxo de checkout em React pode estar tecnicamente
+impecável — testes passando, código limpo, sem vulnerabilidades. Mas será que
+faz sentido refatorar o checkout agora, quando o time está focado em reduzir
+churn? Um endpoint novo em Java que expõe dados de usuário pode estar bem
+implementado, mas o risco regulatório foi avaliado?
 
-- isso resolve o problema certo?
-- o risco operacional é aceitável para o momento?
-- a mudança está alinhada à estratégia do time?
-- o custo de manter essa solução compensa o ganho?
+Esse é o nível onde se pergunta: isso resolve o problema certo? O risco
+operacional é aceitável para o momento? A mudança está alinhada à estratégia do
+time? O custo de manter essa solução compensa o ganho?
 
-Aqui, automação apoia contexto, mas não decide prioridade nem responsabilidade.
+Aqui, automação apoia contexto — dashboards de observabilidade, métricas de
+impacto, histórico de incidentes. Mas não decide prioridade nem
+responsabilidade. Esse julgamento é humano, e deveria ser.
 
-## Onde a pirâmide conversa com Ágil e 12-Factor
+## Sim, vamos falar sobre IA
 
-Se olharmos com calma, a pirâmide conversa diretamente com valores e princípios
-do desenvolvimento ágil. No **Manifesto Ágil**, dois pontos aparecem com força
-no contexto de review: **"Indivíduos e interações"**, porque review é interação
-técnica de alta qualidade, não apenas gate de processo; e **"Atenção contínua à
-excelência técnica"**, porque revisar código é manter o sistema evolutivo,
-legível e sustentável[^7].
+Quando Gunnar Morling publicou a Pirâmide de Code Review, o cenário era outro.
+Ferramentas de IA generativa ainda não faziam parte do fluxo de desenvolvimento.
+O papel da automação se limitava a linters, scanners e pipelines de CI. O
+humano entrava do nível 3 para cima, e ninguém questionava isso.
 
-Também existe aderência com práticas clássicas de desenvolvimento ágil, como
-feedback curto, integração frequente e melhoria contínua[^37]. Em outras palavras,
-PR pequeno e revisado cedo tende a gerar menos retrabalho do que um "big bang"
-de código no fim do ciclo[^34].
+Hoje, o cenário mudou. Agentes de código como GitHub Copilot[^27],
+Amazon CodeWhisperer[^29] e CodeRabbit[^28] não apenas geram código — eles
+também revisam. Um agente consegue analisar um PR, sumarizar as mudanças,
+apontar possíveis bugs, sugerir melhorias de legibilidade e até questionar
+decisões de design. Isso era impensável quando a pirâmide foi proposta.
 
-Quando conectamos com o **12-Factor App**, a conversa fica ainda mais prática.
-Uma codebase versionada e compartilhada (fator I) favorece revisão
-transparente[^8]. A separação entre build, release e run (fator V) ajuda a
-definir checks automáticos por camada da pirâmide. Quanto menor o desvio entre
-ambientes de desenvolvimento e produção (fator X), mais confiável é o resultado
-dos checks que antecedem o review humano. E quando o PR traz sinais de impacto
-operacional via logs e observabilidade (fator XI), quem revisa toma decisões
-melhores.
+Na prática, a IA está subindo na pirâmide. Nos níveis 1 e 2, ela já substitui
+boa parte do trabalho humano com eficácia. No nível 3, ajuda a identificar
+testes ausentes e sugerir cenários de borda. No nível 4, consegue levantar
+sinais sobre acoplamento, complexidade e padrões questionáveis. Não com a
+precisão de um arquiteto experiente, mas com velocidade suficiente para
+funcionar como primeiro filtro.
 
-O resumo dessa integração é simples: **a pirâmide não compete com ágil nem com
-12 fatores - ela operacionaliza ambos no fluxo de revisão**.
-
-## Code agents aumentam o volume. O humano mantém o sentido
-
-Com a geração de código assistida por IA, uma coisa mudou rápido: o volume de alteração.
-Você produz mais diff por hora. Às vezes, muito mais.
-
-E isso torna o papel humano **mais importante**, não menos.
+Mas há um limite claro. Com a geração de código assistida por IA, uma coisa
+mudou rápido: o volume de alteração. Você produz mais diff por hora. Às vezes,
+muito mais. E isso torna o papel humano **mais importante**, não menos.
 
 O code agent é ótimo para acelerar implementação, boilerplate, testes iniciais,
 refatorações repetitivas e documentação de apoio. Mas ele não responde sozinho
@@ -244,34 +260,13 @@ produto? Esse trade-off operacional é aceitável para o nosso cenário? A mudan
 é segura para quem já usa a API em produção?
 
 Em outras palavras: o agente acelera a execução; o humano responde pela direção,
-coerência e risco.
+coerência e risco. A pirâmide continua válida — o que mudou é que a fronteira
+entre o que é automatizável e o que exige julgamento humano subiu alguns
+andares. E vai continuar subindo. O desafio é saber onde traçar a linha a cada
+momento.
 
-Ferramentas que podem ajudar nesse fluxo (junto com CI):
-
-- **Linters/formatters**: ESLint[^19], Prettier[^13], Ruff[^20], Black[^14]
-- **SAST e segurança**: Semgrep[^21], CodeQL[^22], Snyk[^23], Dependabot[^24]
-- **Qualidade estática**: SonarQube[^25], Code Climate[^26]
-- **Assistentes de revisão**: GitHub Copilot[^27], CodeRabbit[^28], Amazon CodeWhisperer[^29]
-
-A recomendação prática é usar a IA para reduzir trabalho mecânico e ampliar a
-cobertura de análise, sem terceirizar a decisão técnica final.
-
-## Code Review ≠ Quality Assurance
-
-Muita equipe mistura os termos. Vale separar com clareza.
-
-**Code Review** é uma prática focada na mudança de código (diff), design,
-legibilidade, risco técnico e impacto arquitetural. **Quality Assurance (QA)**
-é uma disciplina mais ampla de qualidade do produto, incluindo estratégia de
-testes, critérios de aceitação, validação funcional, não funcional, processo e
-evidências.
-
-Code review é parte do sistema de qualidade.
-Mas não substitui QA.
-E QA, por sua vez, não substitui review técnico de código.
-
-Quando os dois funcionam juntos, você tem menos bug em produção e menos
-surpresa no deploy.
+A recomendação prática é usar a IA para reduzir trabalho mecânico e ampliar
+a cobertura de análise, sem terceirizar a decisão técnica final.
 
 ## Boas práticas para review de verdade (não só checklist)
 
@@ -368,4 +363,18 @@ de engenharia com menos ruído, menos retrabalho e mais previsibilidade.
 [^35]: [Sadowski, C. et al. (2018) - Modern Code Review: A Case Study at Google](https://dl.acm.org/doi/10.1145/3183519.3183525)
 [^36]: [Bacchelli, A. & Bird, C. (2013) - Expectations, Outcomes, and Challenges of Modern Code Review](https://doi.org/10.1109/ICSE.2013.6606617)
 [^37]: [Martin Fowler (2006) - Continuous Integration](https://martinfowler.com/articles/continuousIntegration.html)
-[^38]: [Kim, G. et al. (2013) - The Phoenix Project: A Novel About IT, DevOps, and Helping Your Business Win](https://itrevolution.com/product/the-phoenix-project/)
+[^39]: [Mike Cohn (2009) - Succeeding with Agile: Software Development Using Scrum (Test Pyramid)](https://martinfowler.com/articles/practical-test-pyramid.html)
+[^40]: [Spotless - Code formatter for Gradle and Maven](https://github.com/diffplug/spotless)
+[^41]: [ktlint - Kotlin linter and formatter](https://pinterest.github.io/ktlint/)
+[^42]: [Checkstyle - Java static analysis tool](https://checkstyle.org/)
+[^43]: [PMD - Source code analyzer](https://pmd.github.io/)
+[^44]: [Detekt - Static code analysis for Kotlin](https://detekt.dev/)
+[^45]: [GitLeaks - Secret detection tool](https://gitleaks.io/)
+[^46]: [TruffleHog - Secret scanning tool](https://trufflesecurity.com/trufflehog)
+[^47]: [SpotBugs - Static analysis tool for Java](https://spotbugs.github.io/)
+[^48]: [GitHub Docs - About code owners](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners)
+[^49]: [Testing Library - Simple and complete testing utilities](https://testing-library.com/)
+[^50]: [MockK - Mocking library for Kotlin](https://mockk.io/)
+[^51]: [Pact - Contract testing framework](https://pact.io/)
+[^52]: [ArchUnit - Unit test architecture for Java](https://www.archunit.org/)
+[^53]: [Mercurial - Distributed version control system](https://www.mercurial-scm.org/)
