@@ -332,7 +332,7 @@ de engenharia com menos ruído, menos retrabalho e mais previsibilidade.
 
 ---
 
-[^1]: [Michael E. Fagan (1976) - Design and Code Inspections to Reduce Errors in Program Development](https://ieeexplore.ieee.org/abstract/document/5387093)
+[^1]: [Michael E. Fagan (1976) - Design and Code Inspections to Reduce Errors in Program Development](https://doi.org/10.1147/sj.153.0182)
 [^2]: [Fagan inspection (visão geral)](https://en.wikipedia.org/wiki/Fagan_inspection)
 [^3]: [GitHub Docs - About pull requests](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests)
 [^4]: [Atlassian - Pull request workflow](https://www.atlassian.com/git/tutorials/making-a-pull-request)
