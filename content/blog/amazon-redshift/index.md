@@ -48,7 +48,7 @@ A escolha do `DISTSTYLE` é crítica para performance:
 |-------|-------------|------|---------|
 | **EVEN** | Sem chave clara | Balanceamento automático | Data skew em joins |
 | **KEY** | Tabelas com joins frequentes | Co-locação de dados relacionados | Overhead em scans |
-| **ALL** | Tabelas dimensão pequenas (<2GB) | Broadcast para todos os nós | Consumo de disco multiplicado |
+| **ALL** | Tabelas dimensão pequenas (< 2GB) | Broadcast para todos os nós | Consumo de disco multiplicado |
 | **AUTO** | Padrão (AWS decide) | Simplicidade | Pouco controle |
 
 **Best Practice**: Use `KEY` para tabelas fato com joins em chaves de distribuição comuns. Evite data skew (desbalanceamento) que causa "slow nodes".
