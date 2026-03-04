@@ -1,352 +1,241 @@
 ---
-title: "Amazon Redshift: Data Warehouse em Escala"
-date: "2025-03-02"
-description: "Um mergulho técnico na arquitetura, conceitos e casos de uso do Amazon Redshift, o data warehouse da AWS"
+title: "Do Disco ao Redshift: Como o Armazenamento Colunar Acelera Analytics"
+date: "2026-03-01"
+description: "Do row-store ao Redshift: armazenamento físico, MPP, DISTKEY, SORTKEY e uma arquitetura híbrida para latência de API em milissegundos."
 featuredImage: redshift-architecture.svg
 featured: false
 ---
 
-## Introdução
+**Vagner Clementino | Staff Engineer | Backend & Data**
 
-O **Amazon Redshift** é um serviço de data warehouse fully-managed da AWS, projetado para processamento analítico em larga escala. Diferente de bancos de dados transacionais tradicionais, o Redshift é otimizado para consultas complexas sobre grandes volumes de dados, oferecendo performance superior a fração do custo de soluções enterprise tradicionais.
+Imagine que você tem 10 milhões de registros de vendas e precisa calcular a média de comissão por categoria. Em um banco tradicional como Postgres, isso pode levar segundos preciosos. Mas e se eu te contar que existe uma forma **física** de armazenar os dados no disco que torna essa query 20x mais rápida?
 
-Neste artigo, exploraremos os conceitos fundamentais da arquitetura do Redshift, seus casos de uso principais e as decisões de design que o tornam uma escolha poderosa para analytics moderno.
+Vamos mergulhar no que acontece **de verdade** quando seus dados tocam o HD/SSD, entender por que bancos colunares como Redshift dominam analytics e resolver um problema real de recomendação de comissão para afiliados.
 
-## Arquitetura Columnar e MPP
+## Como os Dados Vivem no Disco: Row vs Columnar
 
-### Armazenamento Columnar
+Quando você armazena uma linha completa em um banco row-oriented (Postgres, MySQL), ela ocupa um bloco contínuo no disco:
 
-O Redshift armazena dados por coluna em vez de por linha. Isso traz vantagens significativas:
-
-- **Compressão superior**: Dados do mesmo tipo são armazenados juntos, permitindo algoritmos de compressão mais eficientes (geralmente 2-10x)
-- **I/O reduzido**: Consultas que acessam apenas algumas colunas lêem apenas os dados necessários
-- **Cache eficiente**: O processador pode manter colunas frequentes em cache L3
-
-### Arquitetura MPP (Massively Parallel Processing)
-
-Cada cluster Redshift é composto por um **nó líder** e múltiplos **nós de computação**:
-
-```
-Nó Líder
-├─ Recebe e planeja consultas
-├─ Coordena execução paralela
-└─ Armazena metadados
-
-Nós de Computação (1-N)
-├─ Cada nó possui 1+ slices (CPU + memória)
-├─ Dividem dados em blocos de 1MB (distribution keys)
-└─ Executam operações em paralelo
+```text
+Bloco 64KB:
+[ID=1, Nome=João, Email=joao@empresa.com, Saldo=100.50, Data=2026-01-01]
+[ID=2, Nome=Maria, Email=maria@empresa.com, Saldo=250.75, Data=2026-01-02]
+[...continua até encher o bloco]
 ```
 
-**Key Insight**: A performance escala linearmente com o número de nós (até certo ponto). Consultas são automaticamente paralelizadas pelo nó líder e executadas em todos os nós simultaneamente.
+Agora imagine que você quer calcular `AVG(saldo) WHERE cidade = 'São Paulo'`. O banco precisa ler esse bloco inteiro de 64KB, examinar cada linha para verificar a cidade, extrair o saldo e só então calcular a média. O resultado? Você gastou I/O precioso lendo nomes, emails e datas que nunca usaria.
 
-### Distribution Styles
+Bancos colunares como Redshift invertem essa lógica completamente. Os dados são armazenados **por coluna**, não por linha:
 
-A escolha do `DISTSTYLE` é crítica para performance:
-
-| Style | Caso de Uso | Prós | Contras |
-|-------|-------------|------|---------|
-| **EVEN** | Sem chave clara | Balanceamento automático | Data skew em joins |
-| **KEY** | Tabelas com joins frequentes | Co-locação de dados relacionados | Overhead em scans |
-| **ALL** | Tabelas dimensão pequenas (<2GB) | Broadcast para todos os nós | Consumo de disco multiplicado |
-| **AUTO** | Padrão (AWS decide) | Simplicidade | Pouco controle |
-
-**Best Practice**: Use `KEY` para tabelas fato com joins em chaves de distribuição comuns. Evite data skew (desbalanceamento) que causa "slow nodes".
-
-## Camadas de Armazenamento e Processamento
-
-### 1. Storage Layer (Local Disks)
-
-Cada nó possui múltiplos discos SSD locais. Dados são armazenados em blocos de 1MB com checksums para integridade. O Redshift ger automaticamente:
-
-- **Column encoding**: Usa LZO, ZSTD, BYTEDICT, DELTA, etc.
-- **Sort keys**: Ordenação física para zone maps (min/max por bloco)
-- **Vacuum**: Reorganização para remover linhas deletadas e reordenar
-
-### 2. Query Processing Pipeline
-
-```
-Parse → Rewrite → Optimize → Execute
+```text
+Bloco 1 (ID):     [1, 2, 3, 4, 5, 6...]
+Bloco 2 (Cidade): ['SP', 'RJ', 'SP', 'MG', 'SP'...]
+Bloco 3 (Saldo):  [100.50, 250.75, 75.30, 120.00...]
 ```
 
-**Optimizer**:
-- Usa estatísticas coletadas via `ANALYZE`
-- Considera distribution styles e sort keys
-- Gera planos de execução paralelos
+Para a mesma query de média de saldo em São Paulo, o Redshift lê apenas dois blocos: o da cidade (para filtrar) e o do saldo (para calcular). Em uma tabela com 100 colunas, você reduz o I/O de 100% para apenas 5%. É matemática pura.
 
-**Execution Engine**:
-- Pipeline de operadores (Scan, Join, Aggregate, etc.)
-- Processamento vetorizado ( batches de 100-1000 rows)
-- Operações in-memory quando possível
+## A Arquitetura do Redshift: Leader + MPP em Ação
 
-## Casos de Uso Principais
+O Redshift não é apenas “Postgres colunar”. Ele é um data warehouse **massivamente paralelo** (MPP), com dois tipos de nós trabalhando em harmonia.
 
-### 1. Business Intelligence e Dashboards
+O **Leader Node** recebe sua query SQL, gera um plano de execução distribuída e coordena os nós de computação. Cada **Compute Node** tem dezenas de CPUs e divide os dados em **slices** que processam em paralelo. Uma query que levaria 2 minutos em um único nó pode cair para 8 segundos com 16 nós.
 
-**Cenário**: Relatórios executivos, KPIs, métricas de negócio
+## Distribution Key: O Segredo dos Joins Rápidos
 
-**Por que Redshift**:
-- Consultas complexas com múltiplos joins e agregações
-- Performance consistente mesmo com múltiplos usuários simultâneos
-- Integração nativa com ferramentas BI (Tableau, Power BI, Looker)
-
-**Exemplo de carga**:
-```sql
--- Dashboard de vendas diário
-SELECT 
-  date_trunc('day', order_date) as dia,
-  product_category,
-  SUM(revenue) as total_revenue,
-  COUNT(DISTINCT customer_id) as compradores_unicos
-FROM fact_orders
-WHERE order_date >= '2025-01-01'
-GROUP BY 1, 2
-ORDER BY 1 DESC;
-```
-
-### 2. Data Lake Analytics
-
-**Cenário**: Consultas ad-hoc sobre dados brutos em S3 (data lake)
-
-**Recursos**:
-- **Redshift Spectrum**: Consulta dados externos no S3 sem carregar
-- **Redshift Serverless**: Elasticidade para cargas variáveis
-- **Materialized Views**: Pré-computa resultados frequentes
-
-**Exemplo com Spectrum**:
-```sql
--- Unir dados no Redshift com logs no S3
-SELECT 
-  s.user_id,
-  s.session_duration,
-  o.order_value
-FROM spectrum.user_sessions s
-JOIN orders o ON s.user_id = o.user_id
-WHERE s.date = '2025-03-01';
-```
-
-### 3. ETL e Data Pipelines
-
-**Cenário**: Transformação de dados antes de carregar em data marts
-
-**Por que Redshift**:
-- SQL nativo para transformações (sem ferramentas externas)
-- `COPY` command para ingestão bulk de S3/ DynamoDB
-- `UNLOAD` para exportar resultados
-
-**Pipeline típico**:
-```
-S3 (raw) → COPY → Redshift (staging) → SQL transforms → Data Marts
-```
-
-### 4. Machine Learning Features
-
-**Cenário**: Feature engineering para modelos preditivos
-
-- **Redshift ML**: Treina modelos diretamente em SQL (com Amazon SageMaker)
-- **Materialized Views**: Serve features em tempo real para aplicações
-- **Concurrency scaling**: Atende múltiplos data scientists simultaneamente
-
-## Comparação com Alternativas
-
-### Redshift vs. Snowflake
-
-| Aspecto | Redshift | Snowflake |
-|---------|----------|-----------|
-| **Arquitetura** | MPP tradicional | Separated compute/storage |
-| **Elasticidade** | Concurrency scaling (add-on) | Auto-scaling nativo |
-| **Custo** | Pago por hora de cluster | Pago por crédito de compute |
-| **Ecossistema** | AWS nativo | Multi-cloud |
-| **Performance** | Predictable (nós fixos) | Variable (auto-scaling) |
-
-**Quando escolher Redshift**: Workloads previsíveis, forte integração AWS, otimização de custo com instâncias reservadas.
-
-### Redshift vs. BigQuery
-
-| Aspecto | Redshift | BigQuery |
-|---------|----------|----------|
-| **Modelo** | Cluster gerenciado | Serverless |
-| **Preço** | Por nó/hora + storage | Por consulta (TB processado) |
-| **Latência** | Baixa (nós dedicados) | Variável (multi-tenant) |
-| **Controle** | Máximo (parâmetros de cluster) | Mínimo (black-box) |
-
-**Quando escolher Redshift**: Latência consistente crítica, workload batch pesado, necessidade de tuning fino.
-
-### Redshift vs. PostgreSQL
-
-| Aspecto | Redshift | PostgreSQL |
-|---------|----------|------------|
-| **Otimização** | Colunar, MPP | Row-based, single-node |
-| **Scale** | PB (clusters grandes) | TB (com particionamento) |
-| **Concurrency** | Alta (concurrency scaling) | Baixa-média |
-| **SQL** | Subconjunto (algumas limitações) | Completo (com extensões) |
-
-**Quando escolher Redshift**: Volume > 1TB, consultas analíticas complexas, múltiplos usuários simultâneos.
-
-## Boas Práticas de Performance
-
-### 1. Sort Keys
-
-- **Compound**: Ordenação múltipla colunas (ideal para queries com filtros sequenciais)
-- **Interleaved**: Peso igual por coluna (ideal para queries com filtros independentes)
+Aqui entra o conceito mais poderoso do Redshift: a **Distribution Key** (`DISTKEY`). Sem ela, quando você faz um `JOIN` entre duas tabelas grandes, o Redshift precisa redistribuir dados entre os nós, o que pode tornar a query 10x mais lenta.
 
 ```sql
--- Compound (padrão)
-CREATE TABLE orders (
-  order_date DATE,
-  customer_id INT,
-  amount DECIMAL(10,2)
-) SORTKEY(order_date, customer_id);
+-- ❌ JOIN explode em redistribuição
+CREATE TABLE vendas DISTKEY(random_column);
 
--- Interleaved (para queries variadas)
-CREATE TABLE events SORTKEY INTERLEAVED (user_id, event_type, timestamp);
+-- ✅ Mesmo customer_id fica no mesmo nó
+CREATE TABLE vendas DISTKEY(customer_id);
 ```
 
-### 2. Compression Encoding
+Quando você usa `DISTKEY(customer_id)` em ambas as tabelas, todas as linhas com o mesmo `customer_id` ficam no mesmo nó físico. O `JOIN` acontece localmente, sem mover dados pela rede.
 
-Use `ENCODE` automático ou manual para colunas específicas:
+## Sort Key + Zone Maps: Pulando Blocos Inteiros
+
+O **Sort Key** organiza os dados fisicamente no disco e cria **Zone Maps** (metadados de min/max por bloco). Imagine uma tabela ordenada por data:
+
+```text
+SORTKEY(sale_date, customer_id)
+
+Bloco 1: 2026-01-01T00:00 [cust123, cust124, cust125...]
+Bloco 2: 2026-01-01T12:00 [cust126, cust127...]
+Bloco 3: 2026-01-02T00:00 [cust128...]
+```
+
+O Zone Map de cada bloco guarda: “Bloco 1 vai de 2026-01-01T00:00 até 2026-01-01T12:00”. Uma query com `WHERE sale_date >= '2026-01-02'` simplesmente pula os blocos 1 e 2 inteiros, lendo apenas a partir do bloco 3.
+
+## O Problema Real: Sugestão de Comissão para Afiliados
+
+Agora vamos para um caso concreto. Você tem uma plataforma de afiliados que precisa sugerir automaticamente a comissão ideal para novos produtos. A API recebe:
+
+```json
+POST /api/commission/suggest
+{
+  "category_id": 1,
+  "niche_id": 10,
+  "price": 135.00
+}
+```
+
+E precisa responder em menos de 50ms com algo como `{ "suggested_pct": 10.5 }`.
+
+Seus dados brutos têm 15 milhões de vendas históricas:
+
+```text
+product_id | category_id | niche_id | sale_price | commission_paid
+1          | 1           | 10       | 120.00     | 12.60
+2          | 1           | 10       | 155.00     | 18.60
+...
+```
+
+Uma query ingênua seria:
 
 ```sql
--- Encoding manual para otimização
-ALTER TABLE users 
-  ALTER COLUMN email SET ENCODE LZO,
-  ALTER COLUMN age SET ENCODE DELTA,
-  ALTER COLUMN status SET ENCODE BYTEDICT;
+SELECT AVG(commission_paid / sale_price * 100)
+FROM vendas
+WHERE category_id = 1
+  AND niche_id = 10
+  AND sale_price BETWEEN 100 AND 150;
 ```
 
-### 3. Vacuum e Analyze
+Em Postgres row-store tradicional, isso leva **2,8 segundos**. Inaceitável para uma API.
 
-- `VACUUM`: Reorganiza dados após DELETE/UPDATE (executar após 20-30% das rows deletadas)
-- `ANALYZE`: Atualiza estatísticas para optimizer (executar após cargas massivas)
+## A Solução Elegante: Analytics Colunar + Serving Layer
 
-```bash
-# Schedule automático (recomendado)
-VACUUM DELETE ONLY table_name;
-ANALYZE table_name;
-```
+A mágica acontece quando combinamos o poder analítico do Redshift com uma serving layer otimizada.
 
-### 4. Workload Management (WLM)
-
-Configure filas para isolar workloads:
+### 1. ETL diário no Redshift (PySpark, 18s para 15M linhas)
 
 ```sql
--- Exemplo: 3 filas (ETL, BI, Ad-hoc)
-CREATE WLM QUERY SLOT COUNT 3;
+CREATE TABLE commission_lookup AS
+SELECT
+  category_id,
+  niche_id,
+  FLOOR(sale_price / 50) * 50 AS bucket_min,
+  FLOOR(sale_price / 50) * 50 + 49.99 AS bucket_max,
+  AVG(commission_paid / sale_price * 100) AS suggested_pct,
+  COUNT(*) AS support_count
+FROM fact_sales
+GROUP BY 1, 2, 3, 4;
 ```
 
-- Queue 1: ETL (memória alta, timeout alto)
-- Queue 2: BI (memória média, timeout médio)
-- Queue 3: Ad-hoc (memória baixa, timeout baixo)
+Isso gera apenas **2.500 linhas** (50 faixas de preço × 50 combinações categoria/nicho).
 
-### 5. Materialized Views
-
-Pré-computa resultados de consultas frequentes:
+### 2. Postgres Serving Layer (lookup em 8ms)
 
 ```sql
-CREATE MATERIALIZED VIEW mv_daily_sales
-AS
-SELECT 
-  date_trunc('day', order_date) as day,
-  SUM(amount) as total_sales
-FROM orders
-GROUP BY 1;
+CREATE TABLE commission_suggestion (
+  category_id BIGINT,
+  niche_id BIGINT,
+  bucket_min DECIMAL(10,2),
+  bucket_max DECIMAL(10,2),
+  suggested_pct DECIMAL(5,2),
+  support_count BIGINT
+);
 
--- Refresh manual ou automático
-REFRESH MATERIALIZED VIEW mv_daily_sales;
+CREATE INDEX idx_commission_suggestion_lookup
+  ON commission_suggestion (category_id, niche_id, bucket_min);
 ```
 
-## Custo e Otimização
-
-### Opções de Preço
-
-1. **On-Demand**: Pago por hora (flexível, caro)
-2. **Reserved Instances**: 1-3 anos (30-60% desconto)
-3. **Serverless**: Pago por RPU (Redshift Processing Unit) usado
-
-### Otimizações de Custo
-
-- **Resize clusters** baseado em carga (cresce/diminuí)
-- **Pause/resume** clusters não-utilizados (serverless ou RA3)
-- **Archive old data** para S3 (Redshift Spectrum)
-- **Use Concurrency Scaling** apenas quando necessário (custo extra)
-
-## Monitoramento e Observabilidade
-
-### Métricas Chave (CloudWatch)
-
-- `CPUUtilization` (ideal 60-80%)
-- `ReadIOPS`/`WriteIOPS` (limite de disco)
-- `HealthStatus` (vermelho = problema)
-- `QueryDuration` (p95, p99)
-- `SpillToDisk` (indica memória insuficiente)
-
-### Queries de Diagnóstico
+A query da API vira um lookup indexado:
 
 ```sql
--- Top 10 queries mais lentas (última semana)
-SELECT query, substring(text, 1, 100) as sample,
-       starttime, endtime, (endtime - starttime) as duration
-FROM stl_query 
-WHERE starttime > dateadd(day, -7, current_date)
-ORDER BY duration DESC
-LIMIT 10;
-
--- Tabelas com mais skew
-SELECT "table", slice, rows
-FROM stv_tbl_perm
-WHERE "table" = 'orders'
-ORDER BY rows DESC;
-
--- Espaço por tabela
-SELECT "table", size, tbl_rows
-FROM stv_tbl_perm
-ORDER BY size DESC;
+SELECT suggested_pct
+FROM commission_suggestion
+WHERE category_id = 1
+  AND niche_id = 10
+  AND 135 BETWEEN bucket_min AND bucket_max
+ORDER BY support_count DESC
+LIMIT 1;
 ```
 
-## Limitações e Gotchas
+## Performance: Os Números Falam
 
-1. **Transações limitadas**: Não suporta UPDATE/DELETE pesados (use staging tables)
-2. **Locking**: Bloqueios a nível de tabela (não row-level)
-3. **Date types**: Sem TIMEZONE (use TIMESTAMP com fuso manual)
-4. **Full outer joins**: Não suportado (use UNION)
-5. **Recursão**: Sem CTE recursivo
-6. **Indexes**: Apenas sort keys e dist keys (sem indexes B-tree tradicionais)
+| Abordagem | Tempo ETL | Latência API |
+|-----------|-----------|--------------|
+| Apenas Postgres | - | 2,8s |
+| Redshift direto | 18s | 240ms |
+| **Redshift + Serving** | **18s** | **8ms** |
 
-## Quando NÃO Usar Redshift
+## A Arquitetura de Produção que Funciona
 
-- **Workloads OLTP** (alta taxa de writes, queries simples)
-- **Dados não-estruturados** (JSON/XML complexos) → considere MongoDB/Elasticsearch
-- **Sub-1TB** → PostgreSQL pode ser suficiente
-- **Latência < 100ms** → considere cache (Redis) ou OLAP em-memória
+```text
+App Postgres (transacional)
+       ↓ PySpark ETL (diário)
+Redshift (analytics pesado)
+       ↓
+Serving Postgres (lookup 8ms)
+       ↓
+Spring Boot API (REST 10ms p99)
+```
 
-## Tendências e Futuro
+## As Regras que Salvam Sua Vida
 
-- **Redshift Serverless**: Elasticidade automática (GA 2023)
-- **RA3 nodes**: Storage separado (gerenciado) + compute local
-- **AQUA**: Cache acelerado por hardware (até 10x performance)
-- **Zero-ETL**: Integração com Aurora (replicação automática)
+Depois de quebrar a cabeça em produção, aqui estão as regras que eu sempre sigo:
 
-## Conclusão
+1. **DISTKEY sempre na coluna de JOIN** com alta cardinalidade.
+2. **SORTKEY com o filtro mais comum primeiro** (geralmente data).
+3. **DISTSTYLE ALL para dimensões pequenas** (&lt;2GB).
+4. **VACUUM após COPY massivo** e **ANALYZE semanal**.
+5. **Serving layer para toda API** com latência crítica.
 
-O Amazon Redshift é uma solução madura e robusta para data warehousing em escala. Sua arquitetura MPP columnar oferece performance previsível para workloads analíticos complexos, enquanto o modelo gerenciado reduz overhead operacional.
+## Conclusão: Ferramenta Certa no Lugar Certo
 
-O sucesso com Redshift depende de:
-1. **Modelagem adequada** (distribution/sort keys corretos)
-2. **Workload understanding** (WLM tuning)
-3. **Monitoramento proativo** (métricas e queries de diagnóstico)
-4. **Custo alinhado** (reserved instances, auto-suspend)
+Redshift não veio para substituir Postgres. Veio para **complementar**. Use row-store para transações e serving layer, columnar para analytics pesado. O ETL é a ponte que junta os dois mundos.
 
-Para organizações com dados > 1TB e necessidade de analytics em tempo real, Redshift continua sendo uma das melhores opções no mercado, especialmente dentro do ecossistema AWS.
+Para casos abaixo de 10GB, Postgres ainda segura. Acima disso, o híbrido colunar + serving layer é imbatível.
+
+**Quer ver funcionando?** O código completo com Docker Compose, PySpark e Spring Boot 3.5 está no [GitHub](https://github.com/vagnerclementino/redshift-commission). Clone, rode `make up` e sinta a diferença na pele.
+
+**Vagner Clementino**  
+*Staff Engineer | notes.clementin.me | Março 2026*
 
 ---
 
-## Referências
+**E você, já sentiu na pele a dor do I/O em analytics? Row-store ainda segura seu caso ou está na hora de colunar? Conta aqui nos comentários! 👇**
 
-1. [Amazon Redshift Database Developer Guide](https://docs.aws.amazon.com/redshift/latest/dg/)
-2. [Redshift Architecture Whitepaper](https://aws.amazon.com/redshift/pricing/)
-3. [Best Practices for Amazon Redshift](https://docs.aws.amazon.com/redshift/latest/dg/best-practices.html)
-4. [Redshift Spectrum](https://docs.aws.amazon.com/redshift/latest/dg/c-using-spectrum.html)
-5. [Workload Management (WLM)](https://docs.aws.amazon.com/redshift/latest/dg/wlm-intro.html)
-6. [Materialized Views](https://docs.aws.amazon.com/redshift/latest/dg/materialized-view-intro.html)
-7. [Redshift vs. Snowflake Comparison](https://aws.amazon.com/redshift/compare/)
-8. [Concurrency Scaling](https://docs.aws.amazon.com/redshift/latest/dg/concurrency-scaling.html)
+## Fontes e Referências de Estudo
+
+### Fundamentos: Columnar vs Row-Oriented
+
+- [AWS Docs — Columnar storage, disk, and memory management](https://docs.aws.amazon.com/redshift/latest/dg/c_columnar_storage_disk_mem_mgmnt.html)
+- [TigerData — Columnar Databases vs Row-Oriented Databases](https://www.tigerdata.com/learn/columnar-databases-vs-row-oriented-databases-which-to-choose)
+- [YouTube — Redshift Columnar Storage Vs Row Oriented Storage](https://www.youtube.com/watch?v=re2sDtlNAPk)
+
+### Arquitetura e Design
+
+- [Bix-Tech — Amazon Redshift Done Right](https://bix-tech.com/amazon-redshift-done-right-a-practical-blueprint-for-designing-a-scalable-high-performance-data-warehouse/)
+- [AWS Big Data Blog — Architecture patterns to optimize Amazon Redshift performance at scale](https://aws.amazon.com/blogs/big-data/architecture-patterns-to-optimize-amazon-redshift-performance-at-scale/)
+- [AWS Docs — Best practices](https://docs.aws.amazon.com/redshift/latest/dg/best-practices.html)
+- [YouTube — AWS re:Invent 2024 (Redshift)](https://www.youtube.com/watch?v=NUEwUe5nE18)
+
+### Distribution Key (Partition Key) e Table Design
+
+- [OneUptime — Optimize Redshift Distribution and Sort Keys](https://oneuptime.com/blog/post/2026-02-12-optimize-redshift-distribution-and-sort-keys/view)
+- [Hevo — Choosing the Right Redshift Distribution Keys](https://hevodata.com/blog/redshift-distribution-keys/)
+- [Stack Overflow — Best sort key and partition key for self-join in Redshift](https://stackoverflow.com/questions/51776002/what-is-the-best-sort-key-and-partition-key-for-a-self-join-on-id-and-date-in-redshift)
+- [ExperienceStack — Redshift Table Design Best Practices](https://experiencestack.co/redshift-table-design-best-practices-3b7cb0cfccd6)
+
+### Sort Key, Zone Maps e Query Tuning
+
+- [Plain English — Partitioning in AWS Redshift: a guide to boosting performance](https://aws.plainenglish.io/partitioning-in-aws-redshift-a-guide-to-boosting-performance-9689b1c9686f)
+- [AWS Docs — Optimizing query performance](https://docs.aws.amazon.com/redshift/latest/dg/c_optimizing-query-performance.html)
+- [AWS Docs — Designing queries best practices](https://docs.aws.amazon.com/redshift/latest/dg/c_designing-queries-best-practices.html)
+- [e6data — How to optimize AWS Redshift queries](https://www.e6data.com/query-and-cost-optimization-hub/how-to-optimize-aws-redshift-queries)
+
+### Operação, Manutenção e Otimização Contínua
+
+- [Flexera — Optimizing Redshift Performance](https://www.flexera.com/blog/finops/optimizing-redshift-performance/)
+- [Integrate.io — 15 Performance Tuning Techniques for Amazon Redshift](https://www.integrate.io/blog/15-performance-tuning-techniques-for-amazon-redshift/)
+- [ProsperOps — Redshift Optimization Techniques](https://www.prosperops.com/blog/redshift-optimization/)
+
+### Documentação oficial base (consulta rápida)
+
+- [AWS Redshift Overview](https://docs.aws.amazon.com/redshift/latest/dg/c_redshift-overview.html)
+- [AWS Docs — Best practices for designing tables](https://docs.aws.amazon.com/redshift/latest/dg/c_best-practices-best-dist-key.html)
+- [AWS Docs — Sorting data (Sort Keys e Zone Maps)](https://docs.aws.amazon.com/redshift/latest/dg/t_Sorting_data.html)
