@@ -104,7 +104,7 @@
   "main": "n/a",
   "repository": {
     "type": "git",
-    "url": "git@github.com:vagnerclementino/blog.git"
+    "url": "https://github.com/vagnerclementino/blog.git"
   },
   "scripts": {
     "build": "gatsby build",
