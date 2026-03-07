@@ -5,6 +5,8 @@
 - [x] Criação da branch `typescript-migration`
 - [x] Atualização dos dependências para TypeScript
 - [x] Configuração do `tsconfig.json`
+- [x] Commit e push (Branch criada: typescript-migration)
+- [x] Atualização do README.md para documentar a migração
 
 ## 2. Desenvolvimento
 - [ ] Conversão de arquivos JS para TS

@@ -76,6 +76,14 @@ npm start
 
 O site estará disponível em `http://localhost:8000`
 
+### Rodando com TypeScript
+
+Para verificar a tipagem:
+
+```bash
+npm run check-types
+```
+
 ## Rodando os testes
 
 Para rodar os testes, execute o seguinte comando
@@ -129,25 +137,26 @@ npm run build && firebase deploy
 
 - **Gatsby** - Framework React para sites estáticos
 - **React** - Biblioteca JavaScript para interfaces
+- **TypeScript** - Superset tipado de JavaScript
 - **Styled Components** - CSS-in-JS para estilização
 - **MDX** - Markdown com componentes React
 - **Swiper** - Biblioteca para carrosséis
 - **Jest** - Framework de testes
-- **ESLint** - Linter para JavaScript
+- **ESLint** - Linter para JavaScript/TypeScript
 - **Firebase Hosting** - Hospedagem
 
 ## 📁 Estrutura do Projeto
 
 ```bash
-src/
-├── components/          # Componentes React reutilizáveis
-├── pages/              # Páginas do Gatsby
-├── templates/          # Templates para posts
-├── styles/             # Estilos globais
-└── utils/              # Utilitários e helpers
-
-content/
-└── blog/               # Artigos em Markdown/MDX
+blog_amazon_redshift_clone/
+├── content/          # Conteúdo do blog
+├── src/             # Componentes React/TypeScript
+├── docs/            # Documentação
+├── .github/         # Configurações GitHub
+├── tasks/           # Tarefas da migração
+├── package.json     # Dependências (com TypeScript)
+├── tsconfig.json    # Configuração TypeScript
+└── README.md        # Documentação atualizada
 ```
 
 ## 🎨 Funcionalidades
@@ -160,6 +169,22 @@ content/
 - ✅ Links sociais
 - ✅ SEO otimizado
 - ✅ Testes automatizados
+
+## 🔄 Migração para TypeScript
+
+Este projeto está em processo de migração para TypeScript com arquitetura atômica.
+
+**Status**: Fase 1 - Preparação concluída
+
+Branch de migração: `typescript-migration`
+
+Consulte `tasks/task.md` para ver o plano detalhado de migração.
+
+**Objetivos**:
+- Converter todo o código JavaScript para TypeScript
+- Reestruturar componentes em uma arquitetura atômica
+- Manter compatibilidade com Gatsby e MDX
+- Testes incrementais durante a migração
 
 ## Contribuindo
 
@@ -199,4 +224,8 @@ Por favor, certifique-se de que todos os testes estão passando antes de abrir o
 ## Licença
 
 [MIT](https://choosealicense.com/licenses/mit/)
+
+## ⚠️ Nota de Migração
+
+Este projeto está em processo de migração para TypeScript. Algumas funcionalidades podem estar temporariamente indisponíveis durante o processo de conversão.
 
