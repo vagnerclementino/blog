@@ -11,12 +11,17 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "moduleResolution": "Node16",
-    "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
       "~/*": ["./*"]
     }
   },
-  "include": ["src", "content", "**/*.d.ts"],
+  "include": [
+    "src",
+    "content",
+    "gatsby-*.ts",
+    "gulpfile.ts",
+    "**/*.d.ts"
+  ],
   "exclude": ["node_modules", "build", "tsbuildinfo", ".cache"]
 }

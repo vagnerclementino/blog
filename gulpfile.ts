@@ -1,9 +1,25 @@
-const gulp = require('gulp');
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import gulp from 'gulp';
 
-const createSlug = async (title) => {
-  return title
+type InquirerModule = typeof import('inquirer');
+
+type ArticleAnswers = {
+  title: string;
+  date: string;
+  description: string;
+};
+
+type ConfirmAnswer = {
+  confirm: boolean;
+};
+
+type CleanArticleAnswers = {
+  articlePath: string;
+};
+
+const createSlug = async (title: string): Promise<string> =>
+  title
     .toLowerCase()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
@@ -11,10 +27,12 @@ const createSlug = async (title) => {
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-')
     .trim();
-}
 
-const createArticleTemplate = (title, date, description) => {
-  return `---
+const createArticleTemplate = (
+  title: string,
+  date: string,
+  description: string,
+): string => `---
 title: "${title}"
 date: "${date}"
 description: "${description}"
@@ -25,44 +43,63 @@ featuredImage: feature.png
 
 Escreva seu artigo aqui...
 `;
-}
 
-const checkExistingFiles = (indexPath, featurePath) => {
+const checkExistingFiles = (
+  indexPath: string,
+  featurePath: string,
+): { indexExists: boolean; featureExists: boolean } => {
   const indexExists = fs.existsSync(indexPath);
   const featureExists = fs.existsSync(featurePath);
 
   if (indexExists || featureExists) {
     console.log('⚠️  Arquivos já existem:');
-    if (indexExists) console.log(`   - ${indexPath}`);
-    if (featureExists) console.log(`   - ${featurePath}`);
+    if (indexExists) {
+      console.log(`   - ${indexPath}`);
+    }
+    if (featureExists) {
+      console.log(`   - ${featurePath}`);
+    }
   }
+
   return { indexExists, featureExists };
 };
 
-const handleIndexFile = async (indexPath, indexExists, answers, inquirer) => {
+const handleIndexFile = async (
+  indexPath: string,
+  indexExists: boolean,
+  answers: ArticleAnswers,
+  inquirer: InquirerModule,
+): Promise<boolean> => {
   if (!indexExists) {
     const template = createArticleTemplate(answers.title, answers.date, answers.description);
     fs.writeFileSync(indexPath, template);
     return true;
   }
-  
-  const overwrite = await inquirer.default.prompt([{
-    type: 'confirm',
-    name: 'confirm',
-    message: `Sobrescrever ${path.basename(indexPath)}?`,
-    default: false
-  }]);
-  
+
+  const overwrite = await inquirer.default.prompt<ConfirmAnswer>([
+    {
+      type: 'confirm',
+      name: 'confirm',
+      message: `Sobrescrever ${path.basename(indexPath)}?`,
+      default: false,
+    },
+  ]);
+
   if (overwrite.confirm) {
     const template = createArticleTemplate(answers.title, answers.date, answers.description);
     fs.writeFileSync(indexPath, template);
     return true;
   }
+
   return false;
 };
 
-const handleFeatureFile = async (featurePath, featureExists, inquirer) => {
-  const writeFeature = () => {
+const handleFeatureFile = async (
+  featurePath: string,
+  featureExists: boolean,
+  inquirer: InquirerModule,
+): Promise<boolean> => {
+  const writeFeature = (): void => {
     const baseFeaturePath = path.join(__dirname, 'content', 'assets', 'feature.png');
     if (fs.existsSync(baseFeaturePath)) {
       fs.copyFileSync(baseFeaturePath, featurePath);
@@ -75,47 +112,50 @@ const handleFeatureFile = async (featurePath, featureExists, inquirer) => {
     writeFeature();
     return true;
   }
-  
-  const overwrite = await inquirer.default.prompt([{
-    type: 'confirm',
-    name: 'confirm',
-    message: `Sobrescrever ${path.basename(featurePath)}?`,
-    default: false
-  }]);
-  
+
+  const overwrite = await inquirer.default.prompt<ConfirmAnswer>([
+    {
+      type: 'confirm',
+      name: 'confirm',
+      message: `Sobrescrever ${path.basename(featurePath)}?`,
+      default: false,
+    },
+  ]);
+
   if (overwrite.confirm) {
     writeFeature();
     return true;
   }
+
   return false;
 };
 
-const createArticle = async () => {
+const createArticle = async (): Promise<void> => {
   const inquirer = await import('inquirer');
-  
-  const answers = await inquirer.default.prompt([
+
+  const answers = await inquirer.default.prompt<ArticleAnswers>([
     {
       type: 'input',
       name: 'title',
       message: 'Título do artigo:',
-      validate: input => input.trim() !== '' || 'O título é obrigatório'
+      validate: (input: string) => input.trim() !== '' || 'O título é obrigatório',
     },
     {
       type: 'input',
       name: 'date',
       message: 'Data de publicação (YYYY-MM-DD):',
       default: new Date().toISOString().split('T')[0],
-      validate: input => {
+      validate: (input: string) => {
         const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
         return dateRegex.test(input) || 'Use o formato YYYY-MM-DD';
-      }
+      },
     },
     {
       type: 'input',
       name: 'description',
       message: 'Subtítulo/Descrição:',
-      validate: input => input.trim() !== '' || 'A descrição é obrigatória'
-    }
+      validate: (input: string) => input.trim() !== '' || 'A descrição é obrigatória',
+    },
   ]);
 
   const slug = await createSlug(answers.title);
@@ -132,22 +172,22 @@ const createArticle = async () => {
   const indexWritten = await handleIndexFile(indexPath, indexExists, answers, inquirer);
   const featureWritten = await handleFeatureFile(featurePath, featureExists, inquirer);
 
-  console.log(`\n✅ Processamento concluído!`);
+  console.log('\n✅ Processamento concluído!');
   console.log(`📁 Diretório: ${articleDir}`);
   console.log(`📝 Arquivo ${indexWritten ? 'criado' : 'mantido'}: ${indexPath}`);
   console.log(`🖼️  Imagem ${featureWritten ? 'criada' : 'mantida'}: ${featurePath}`);
-}
+};
 
-const cleanArticle = async () => {
+const cleanArticle = async (): Promise<void> => {
   const inquirer = await import('inquirer');
-  
-  const answers = await inquirer.default.prompt([
+
+  const answers = await inquirer.default.prompt<CleanArticleAnswers>([
     {
       type: 'input',
       name: 'articlePath',
       message: 'Caminho do artigo (ex: meu-artigo):',
-      validate: input => input.trim() !== '' || 'O caminho é obrigatório'
-    }
+      validate: (input: string) => input.trim() !== '' || 'O caminho é obrigatório',
+    },
   ]);
 
   const articleDir = path.join(__dirname, 'content', 'blog', answers.articlePath);
@@ -159,15 +199,16 @@ const cleanArticle = async () => {
 
   fs.rmSync(articleDir, { recursive: true });
   console.log(`🗑️  Artigo removido: ${articleDir}`);
-}
+};
 
 gulp.task('new-article', createArticle);
 gulp.task('article', createArticle);
 gulp.task('clean-article', cleanArticle);
 
-gulp.task('default', () => {
+gulp.task('default', (done) => {
   console.log('Tarefas disponíveis:');
   console.log('  gulp new-article    - Criar novo artigo');
   console.log('  gulp article        - Criar novo artigo (alias)');
   console.log('  gulp clean-article  - Remover artigo existente');
+  done();
 });
