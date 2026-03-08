@@ -7,7 +7,7 @@ import SEO from "../components/seo"
 import Button from "../components/button"
 import PostCarousel from "../components/postCarousel"
 import SocialLinks from "../components/socialLinks"
-import Avatar from "../components/avatar"
+import Avatar from "../components/atoms/Avatar"
 import { faFire } from "@fortawesome/free-solid-svg-icons"
 import { faHeart } from "@fortawesome/free-solid-svg-icons"
 

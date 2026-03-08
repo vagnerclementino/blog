@@ -9,11 +9,11 @@ interface AvatarProps {
   alt?: string
 }
 
-const Avatar = ({ 
+const Avatar: React.FC<AvatarProps> = ({ 
   size = 80, 
   className,
   alt = "Avatar"
-}: AvatarProps) => {
+}) => {
   const data = useStaticQuery(graphql`
     query AvatarQuery {
       avatar: file(relativePath: { eq: "avatar.png" }) {
