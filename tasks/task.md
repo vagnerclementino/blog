@@ -36,14 +36,10 @@
 - [x] Commit + push: "feat: migra componentes iniciais para TypeScript (atoms, molecules, organisms)"
 
 ### Fase 2.2: Migração de Átomos
-- [ ] Converter `src/components/atoms/` (se existirem) ou criar átomos básicos:
-  - [ ] `Button.tsx` (button component)
-  - [ ] `Input.tsx` (input fields)
-  - [ ] `Icon.tsx` (icon wrapper)
-  - [ ] `Image.tsx` (optimized image)
-  - [ ] `Link.tsx` (link wrapper)
-- [ ] Testar cada átomo individualmente
-- [ ] Commit + push por componente (um por dia)
+- [x] Converter ReadingProgress.js → ReadingProgress.tsx
+- [x] Converter Bio.js → Bio.tsx
+- [x] Converter avatar.js → Avatar.tsx
+- [x] Commit + push por componente (um por dia)
 
 ### Fase 2.3: Migração de Moléculas
 - [ ] Converter combinações de átomos:
