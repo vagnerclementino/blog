@@ -1,7 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
 import styled from "styled-components"
-import Button from "../atoms/Button"
 
 interface Post {
   frontmatter: {
@@ -20,7 +19,7 @@ interface PostCardProps {
   post: Post
 }
 
-const PostCard = ({ post }: PostCardProps) => {
+const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const title = post.frontmatter.title || post.fields.slug
   const description = post.frontmatter.description || post.excerpt
 
