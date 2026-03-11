@@ -12,8 +12,19 @@ import {
   faRss 
 } from "@fortawesome/free-solid-svg-icons"
 
-const SocialLinks = () => {
-  const socialData = [
+interface SocialLink {
+  name: string
+  url: string
+  icon: any
+  color: string
+}
+
+interface SocialLinksProps {
+  className?: string
+}
+
+const SocialLinks: React.FC<SocialLinksProps> = ({ className }) => {
+  const socialData: SocialLink[] = [
     {
       name: "LinkedIn",
       url: "https://www.linkedin.com/in/vclementino",
@@ -53,7 +64,7 @@ const SocialLinks = () => {
   ]
 
   return (
-    <Container>
+    <Container className={className}>
       <Title>Conecte-se comigo</Title>
       <LinksGrid>
         {socialData.map((social) => (

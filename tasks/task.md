@@ -47,6 +47,9 @@
   - [ ] `ArticleCard.tsx` (image + title + excerpt)
   - [ ] `NavigationItem.tsx` (link + icon)
   - [ ] `SocialShare.tsx` (buttons de redes sociais)
+- [x] `NewsletterSignup.tsx` (form + button)
+- [x] `PostCard.tsx` (card component)
+- [x] `SocialLinks.tsx` (grid de links sociais)
 - [ ] Testar integração entre átomos
 - [ ] Commit + push por molécula
 
