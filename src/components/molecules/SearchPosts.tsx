@@ -1,10 +1,39 @@
 import React, { useState } from "react"
-import { Link } from "gatsby"
+import { Link, navigate } from "gatsby"
 import styled from "styled-components"
 import { useFlexSearch } from "react-use-flexsearch"
 import * as queryString from "query-string"
 
 import { rhythm } from "../utils/typography"
+
+interface PostNode {
+  date: string
+  title?: string
+  slug: string
+  description?: string
+  excerpt?: string
+  frontmatter?: {
+    title?: string
+    description?: string
+    date?: string
+  }
+  fields?: {
+    slug: string
+  }
+}
+
+interface LocalSearchBlog {
+  index: any
+  store: string
+}
+
+interface SearchPostsProps {
+  posts: Array<{ node: PostNode }>
+  localSearchBlog: LocalSearchBlog
+  location: any
+  navigate: (path: string) => void
+  className?: string
+}
 
 const SearchBar = styled.div`
   display: flex;
@@ -41,7 +70,7 @@ const SearchBar = styled.div`
   }
 `
 
-const SearchedPosts = ({ results }) =>
+const SearchedPosts = ({ results }: { results: PostNode[] }) =>
   results.length > 0 ? (
     results.map(node => {
       const date = node.date
@@ -64,7 +93,7 @@ const SearchedPosts = ({ results }) =>
           <small>{date}</small>
           <p
             dangerouslySetInnerHTML={{
-              __html: description || excerpt,
+              __html: description || excerpt || "",
             }}
           />
         </div>
@@ -76,25 +105,29 @@ const SearchedPosts = ({ results }) =>
     </p>
   )
 
-const AllPosts = ({ posts }) => (
+const AllPosts = ({ posts }: { posts: Array<{ node: PostNode }> }) => (
   <div style={{ margin: "20px 0 40px" }}>
     {posts.map(({ node }) => {
-      const title = node.frontmatter.title || node.fields.slug
+      const title = node.frontmatter?.title || node.fields?.slug || node.slug
+      const date = node.frontmatter?.date || node.date
+      const description = node.frontmatter?.description || node.excerpt
+      const slug = node.fields?.slug || node.slug
+
       return (
-        <div key={node.fields.slug}>
+        <div key={slug}>
           <h3
             style={{
               marginBottom: rhythm(1 / 4),
             }}
           >
-            <Link style={{ boxShadow: `none` }} to={`/blog${node.fields.slug}`}>
+            <Link style={{ boxShadow: `none` }} to={`/blog${slug}`}>
               {title}
             </Link>
           </h3>
-          <small>{node.frontmatter.date}</small>
+          <small>{date}</small>
           <p
             dangerouslySetInnerHTML={{
-              __html: node.frontmatter.description || node.excerpt,
+              __html: description || "",
             }}
           />
         </div>
@@ -103,7 +136,13 @@ const AllPosts = ({ posts }) => (
   </div>
 )
 
-const SearchPosts = ({ posts, localSearchBlog, location, navigate }) => {
+const SearchPosts: React.FC<SearchPostsProps> = ({
+  posts,
+  localSearchBlog,
+  location,
+  navigate,
+  className
+}) => {
   const { search } = queryString.parse(location.search)
   const [query, setQuery] = useState(search || "")
 
@@ -111,10 +150,10 @@ const SearchPosts = ({ posts, localSearchBlog, location, navigate }) => {
     query,
     localSearchBlog.index,
     JSON.parse(localSearchBlog.store)
-  )
+  ) as PostNode[]
 
   return (
-    <>
+    <div className={className}>
       <SearchBar>
         <svg
           focusable="false"
@@ -137,7 +176,7 @@ const SearchPosts = ({ posts, localSearchBlog, location, navigate }) => {
         />
       </SearchBar>
       {query ? <SearchedPosts results={results} /> : <AllPosts posts={posts} />}
-    </>
+    </div>
   )
 }
 
