@@ -50,6 +50,7 @@
 - [x] `NewsletterSignup.tsx` (form + button)
 - [x] `PostCard.tsx` (card component)
 - [x] `SocialLinks.tsx` (grid de links sociais)
+- [x] `SearchPosts.tsx` (search component)
 - [ ] Testar integração entre átomos
 - [ ] Commit + push por molécula
 
