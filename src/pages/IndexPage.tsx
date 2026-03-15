@@ -11,7 +11,42 @@ import Avatar from "../components/atoms/Avatar"
 import { faFire } from "@fortawesome/free-solid-svg-icons"
 import { faHeart } from "@fortawesome/free-solid-svg-icons"
 
-class IndexPage extends React.Component {
+interface PageProps {
+  data: {
+    site: {
+      siteMetadata: {
+        title: string
+      }
+    }
+    allMdx: {
+      edges: Array<{
+        node: {
+          excerpt: string
+          fields: {
+            slug: string
+            released: boolean
+            releasedNotForced: boolean
+          }
+          frontmatter: {
+            date: string
+            title: string
+            description: string
+            featured: boolean
+          }
+        }
+      }>
+    }
+  }
+  location: {
+    pathname: string
+    search: string
+    hash: string
+    state?: any
+    key: string
+  }
+}
+
+class IndexPage extends React.Component<PageProps> {
   render() {
     const { data } = this.props
     const siteTitle = data.site.siteMetadata.title
