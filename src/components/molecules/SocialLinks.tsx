@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from "gatsby"
 import styled from "styled-components"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { 
@@ -74,7 +75,6 @@ const SocialLinks: React.FC<SocialLinksProps> = ({ className }) => {
             target={social.name === "RSS" ? "_self" : "_blank"}
             rel={social.name === "RSS" ? "" : "noopener noreferrer"}
             title={social.name}
-            $hoverColor={social.color}
           >
             <IconWrapper>
               <FontAwesomeIcon icon={social.icon} />
@@ -131,11 +131,11 @@ const SocialLink = styled.a`
   
   &:hover {
     transform: translateY(-2px);
-    border-color: ${props => props.$hoverColor};
+    border-color: ${props => props.$hoverColor || props.color};
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     
     svg {
-      color: ${props => props.$hoverColor};
+      color: ${props => props.$hoverColor || props.color};
     }
   }
   

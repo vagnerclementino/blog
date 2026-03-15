@@ -10,7 +10,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "moduleResolution": "Node16",
+    "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
       "~/*": ["./*"]
@@ -23,5 +23,6 @@
     "gulpfile.ts",
     "**/*.d.ts"
   ],
-  "exclude": ["node_modules", "build", "tsbuildinfo", ".cache"]
+  "exclude": ["node_modules", "build", "tsbuildinfo", ".cache"],
+  "types": ["node"]
 }

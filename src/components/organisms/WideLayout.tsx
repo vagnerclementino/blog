@@ -69,7 +69,7 @@ const WideLayout: React.FC<WideLayoutProps> = ({ location, title, children }) =>
         }}
       >
         <header>{Header}</header>
-        <main}>{children}</main>
+        <main>{children}</main>
       </div>
       <Footer>
         © {new Date().getFullYear()}, Built with{" "}
