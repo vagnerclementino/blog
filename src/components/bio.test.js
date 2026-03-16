@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Bio from './bio';
+import Bio from './bio.tsx';
 
 //No need to mock useStaticQuery here as it's already mocked in __mocks__/gatsby.js
 
