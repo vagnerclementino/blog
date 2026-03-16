@@ -72,7 +72,8 @@ const WideLayout: React.FC<WideLayoutProps> = ({ location, title, children }) =>
         <main>{children}</main>
       </div>
       <Footer>
-        © {new Date().getFullYear()}, Built with{" "}
+        © {new Date().getFullYear()}, Built with
+        {` `}
         <a
           href="https://www.gatsbyjs.org"
           target="_blank"

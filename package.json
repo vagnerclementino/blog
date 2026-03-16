@@ -70,8 +70,6 @@
     "@eslint/js": "^8.57.0",
     "@testing-library/jest-dom": "^6.0.0",
     "@testing-library/react": "^14.0.0",
-    "@types/gatsby": "^5.15.0",
-    "@types/gatsby-plugin-google-gtag": "^5.15.0",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.11.0",
     "@types/react": "^18.2.0",
@@ -109,7 +107,6 @@
     "notes"
   ],
   "license": "MIT",
-  "main": "n/a",
   "repository": {
     "type": "git",
     "url": "git@github.com:vagnerclementino/blog.git"
