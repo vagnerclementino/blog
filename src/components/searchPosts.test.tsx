@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { navigate } from 'gatsby';
-import SearchPosts from './searchPosts';
+import SearchPosts from './SearchPosts';
 import { useFlexSearch } from 'react-use-flexsearch';
 
 jest.mock('react-use-flexsearch', () => ({
