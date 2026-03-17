@@ -1,4 +1,4 @@
-import { translateReadingTime } from './readingTime';
+import { translateReadingTime } from './readingTime.tsx';
 
 describe('translateReadingTime', () => {
   it('should return "Unknown" if stats is undefined', () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import SEO from './SEO';
+import SEO from './SEO.tsx';
 import { useStaticQuery } from 'gatsby';
 import { Helmet } from 'react-helmet'; 
 
