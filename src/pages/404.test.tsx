@@ -1,7 +1,7 @@
 import React from "react"
 import { render } from "@testing-library/react"
 import { useStaticQuery } from 'gatsby';
-import NotFoundPage from "./NotFound"
+import NotFoundPage from "./404"
 import { Helmet } from 'react-helmet'; 
 
 const mockProps = {
