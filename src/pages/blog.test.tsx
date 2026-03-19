@@ -1,7 +1,7 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
 import { Helmet } from "react-helmet"
-import Blog from "./blog"
+import Blog from "./Blog"
 
 import { useStaticQuery } from 'gatsby';
 

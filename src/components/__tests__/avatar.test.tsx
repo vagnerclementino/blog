@@ -45,7 +45,7 @@ describe("Avatar", () => {
     useStaticQuery.mockReturnValue(mockImageData)
     getImage.mockReturnValue(mockImageData.avatar.childImageSharp.gatsbyImageData)
 
-    render(<Avatar size={100} />)
+    render(<Avatar size={100} alt="Vagner Clementino" />)
 
     expect(screen.getByTestId("gatsby-image")).toBeInTheDocument()
     expect(screen.getByAltText("Vagner Clementino")).toBeInTheDocument()

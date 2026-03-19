@@ -39,7 +39,7 @@ jest.mock("../components/atoms/ScrollToTop", () => {
   }
 });
 
-jest.mock("../components/readingProgress", () => {
+jest.mock("../components/atoms/ReadingProgress", () => {
   return function MockReadingProgress() {
     return <div data-testid="reading-progress">Reading Progress</div>
   }

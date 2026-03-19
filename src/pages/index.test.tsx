@@ -9,21 +9,21 @@ jest.mock("../components/organisms/WideLayout", () => ({ children, title }) => (
   </div>
 ))
 
-jest.mock("../components/seo", () => ({ title, keywords }) => (
+jest.mock("../components/atoms/SEO", () => ({ title, keywords }) => (
   <div data-testid="seo" data-title={title} data-keywords={keywords?.join(",")} />
 ))
 
-jest.mock("../components/button", () => ({ children, marginTop }) => (
+jest.mock("../components/atoms/Button", () => ({ children, marginTop }) => (
   <button data-margin-top={marginTop}>{children}</button>
 ))
 
-jest.mock("../components/postCard", () => ({ post }) => (
+jest.mock("../components/molecules/PostCard", () => ({ post }) => (
   <div data-testid="post-card" data-slug={post.fields.slug}>
     {post.frontmatter.title}
   </div>
 ))
 
-jest.mock("../components/postCarousel", () => ({ posts, title, featured, count }) => (
+jest.mock("../components/organisms/PostCarousel", () => ({ posts, title, featured, count }) => (
   <div 
     data-testid={featured ? "featured-posts" : "recent-posts"} 
     data-posts-count={posts.length}
@@ -34,11 +34,11 @@ jest.mock("../components/postCarousel", () => ({ posts, title, featured, count }
   </div>
 ))
 
-jest.mock("../components/socialLinks", () => () => (
+jest.mock("../components/molecules/SocialLinks", () => () => (
   <div data-testid="social-links">Social Links Component</div>
 ))
 
-jest.mock("../components/avatar", () => ({ size }) => (
+jest.mock("../components/atoms/Avatar", () => ({ size }) => (
   <div data-testid="avatar" data-size={size}>Avatar Component</div>
 ))
 
