@@ -23,9 +23,9 @@ beforeEach(() => {
 });
 
 //Mock child components
-jest.mock("../components/bio", () => () => <div>Mock Bio</div>)
-jest.mock("../components/searchPosts", () => () => <div>Mock SearchPosts</div>)
-jest.mock("../components/button", () => ({ children }) => <button>{children}</button>)
+jest.mock("../components/atoms/Bio", () => () => <div>Mock Bio</div>)
+jest.mock("../components/molecules/SearchPosts", () => () => <div>Mock SearchPosts</div>)
+jest.mock("../components/atoms/Button", () => ({ children }) => <button>{children}</button>)
 
 const mockProps = {
   data: {

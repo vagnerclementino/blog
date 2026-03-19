@@ -1,6 +1,6 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
-import PostCard from "./postCard"
+import PostCard from "../molecules/PostCard";
 
 jest.mock("gatsby", () => ({
   Link: ({ children, to, ...props }) => (

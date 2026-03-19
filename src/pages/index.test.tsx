@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react"
 import IndexPage from "./index"
 
 //Mock dos componentes
-jest.mock("../components/wideLayout", () => ({ children, title }) => (
+jest.mock("../components/organisms/WideLayout", () => ({ children, title }) => (
   <div data-testid="layout" data-title={title}>
     {children}
   </div>

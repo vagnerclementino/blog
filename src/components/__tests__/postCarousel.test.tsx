@@ -1,6 +1,6 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
-import PostCarousel from "./postCarousel"
+import PostCarousel from "../organisms/PostCarousel";
 import { faHeart, faFire } from "@fortawesome/free-solid-svg-icons"
 
 //Mock do Gatsby Link
@@ -20,7 +20,7 @@ jest.mock("@fortawesome/react-fontawesome", () => ({
 }))
 
 //Mock PostCard
-jest.mock("./postCard", () => {
+jest.mock("../molecules/PostCard", () => {
   return function MockPostCard({ post }) {
     return (
       <div data-testid="post-card">

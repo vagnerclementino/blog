@@ -1,6 +1,6 @@
 import React from "react"
 import { render } from "@testing-library/react"
-import ReadingProgress from "./readingProgress"
+import ReadingProgress from "../atoms/ReadingProgress";
 
 describe("ReadingProgress", () => {
   it("renders reading progress component with container element", () => {

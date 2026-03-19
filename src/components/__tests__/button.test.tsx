@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import 'jest-styled-components';
-import Button from './Button.tsx';
+import Button from '../atoms/Button';
 
 describe('Button component', () => {
   it('applies default styles', () => {

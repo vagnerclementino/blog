@@ -1,6 +1,6 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
-import SocialLinks from "./socialLinks"
+import SocialLinks from "../SocialLinks"
 
 //Mock Font Awesome
 jest.mock("@fortawesome/react-fontawesome", () => ({

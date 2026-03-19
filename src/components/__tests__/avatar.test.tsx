@@ -1,6 +1,6 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
-import Avatar from "./avatar"
+import Avatar from "../atoms/Avatar"
 
 jest.mock("gatsby", () => ({
   useStaticQuery: jest.fn(),

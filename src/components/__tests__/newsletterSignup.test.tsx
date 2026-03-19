@@ -1,6 +1,6 @@
 import React from "react"
 import { render, screen, fireEvent, waitFor, act } from "@testing-library/react"
-import NewsletterSignup from "./newsletterSignup"
+import NewsletterSignup from "../molecules/NewsletterSignup";
 
 describe("NewsletterSignup", () => {
   it("renders newsletter signup form", () => {

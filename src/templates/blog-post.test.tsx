@@ -33,7 +33,7 @@ jest.mock("@fortawesome/react-fontawesome", () => ({
   ),
 }));
 
-jest.mock("../components/scrollToTop", () => {
+jest.mock("../components/atoms/ScrollToTop", () => {
   return function MockScrollToTop() {
     return <div data-testid="scroll-to-top">Scroll to Top</div>
   }

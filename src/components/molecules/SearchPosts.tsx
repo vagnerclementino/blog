@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { useFlexSearch } from "react-use-flexsearch"
 import * as queryString from "query-string"
 
-import { rhythm } from "../utils/typography"
+import { rhythm } from "../../utils/typography"
 
 interface PostNode {
   date: string
