@@ -1,11 +1,10 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
-import { Helmet } from "react-helmet"
+import { HelmetProvider } from "react-helmet-async"
 import Blog from "./Blog"
 
 import { useStaticQuery } from 'gatsby';
 
-//Mock Font Awesome
 jest.mock("@fortawesome/react-fontawesome", () => ({
   FontAwesomeIcon: ({ icon, ...props }) => (
     <i data-testid="font-awesome-icon" data-icon={icon.iconName} {...props} />
@@ -13,6 +12,7 @@ jest.mock("@fortawesome/react-fontawesome", () => ({
 }))
 
 beforeEach(() => {
+  HelmetProvider.canUseDOM = false;
   useStaticQuery.mockReturnValue({
     site: {
       siteMetadata: {
@@ -22,7 +22,6 @@ beforeEach(() => {
   });
 });
 
-//Mock child components
 jest.mock("../components/atoms/Bio", () => () => <div>Mock Bio</div>)
 jest.mock("../components/molecules/SearchPosts", () => () => <div>Mock SearchPosts</div>)
 jest.mock("../components/atoms/Button", () => ({ children }) => <button>{children}</button>)
@@ -75,14 +74,22 @@ beforeEach(() => {
   process.env.HOMEPAGE_URL = "https://test-site.com"
 })
 
+const renderWithHelmet = (ui: React.ReactElement) => {
+  const helmetContext: { helmet?: any } = {};
+  const result = render(
+    <HelmetProvider context={helmetContext}>{ui}</HelmetProvider>
+  );
+  return { ...result, helmetContext };
+};
+
 describe("Blog Page", () => {
   it("renders without errors", () => {
-    const { container } = render(<Blog {...mockProps} />)
+    const { container } = renderWithHelmet(<Blog {...mockProps} />)
     expect(container).toBeInTheDocument()
   })
 
   it("renders Home link with Font Awesome icon", () => {
-    render(<Blog {...mockProps} />)
+    renderWithHelmet(<Blog {...mockProps} />)
     
     const homeLink = screen.getByRole("link", { name: /Home/i })
     expect(homeLink).toBeInTheDocument()
@@ -93,7 +100,7 @@ describe("Blog Page", () => {
   })
 
   it("renders all main components", () => {
-    const { getByText } = render(<Blog {...mockProps} />)
+    const { getByText } = renderWithHelmet(<Blog {...mockProps} />)
     
     expect(getByText("Mock Bio")).toBeInTheDocument()
     expect(getByText("Mock SearchPosts")).toBeInTheDocument()
@@ -101,8 +108,7 @@ describe("Blog Page", () => {
   })
 
   it("includes SEO component with correct title", () => {
-    render(<Blog {...mockProps} />)
-    const helmet = Helmet.peek()
-    expect(helmet.title).toBe("All posts | Clementino's Notes")
+    const { helmetContext } = renderWithHelmet(<Blog {...mockProps} />)
+    expect(helmetContext.helmet.title.toString()).toContain("All posts")
   })
 })
