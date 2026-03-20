@@ -4,7 +4,7 @@ date: "2025-03-28"
 description: "A falta que me fazes não é tanto à hora de dormir..."
 featuredImage: feature.jpeg
 ---
-import ScrollQuote from "../../../src/components/scroll-quote"
+import ScrollQuote from "../../../src/components/atoms/ScrollQuote"
 
 Inspirado no post de Leandro Iamin[^1], reflito sobre as palavras de Drummond
 com um sentimento de saudade e nostalgia.
