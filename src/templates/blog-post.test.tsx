@@ -1,5 +1,6 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
+import { HelmetProvider } from "react-helmet-async"
 import BlogPostTemplate from "./blog-post"
 
 jest.mock("gatsby", () => ({
@@ -60,6 +61,13 @@ jest.mock("gatsby-plugin-image", () => ({
 }));
 
 describe("BlogPostTemplate", () => {
+  beforeEach(() => {
+    HelmetProvider.canUseDOM = false;
+  });
+
+  const renderWithHelmet = (ui: React.ReactElement) =>
+    render(<HelmetProvider>{ui}</HelmetProvider>);
+
   const mockProps = {
     data: {
       mdx: {
@@ -95,7 +103,7 @@ describe("BlogPostTemplate", () => {
   }
 
   it("renders the blog post content correctly", () => {
-    const { getByText } = render(<BlogPostTemplate {...mockProps} />)
+    const { getByText } = renderWithHelmet(<BlogPostTemplate {...mockProps} />)
     
     //Check if title is rendered
     expect(getByText("Test Title")).toBeInTheDocument()
@@ -111,7 +119,7 @@ describe("BlogPostTemplate", () => {
   })
 
   it("renders navigation buttons with correct links and icons", () => {
-    render(<BlogPostTemplate {...mockProps} />)
+    renderWithHelmet(<BlogPostTemplate {...mockProps} />)
     
     //Check if Home button is rendered
     const homeButton = screen.getByText("Home").closest("a")
@@ -129,13 +137,13 @@ describe("BlogPostTemplate", () => {
   })
 
   it("renders scroll to top component", () => {
-    render(<BlogPostTemplate {...mockProps} />)
+    renderWithHelmet(<BlogPostTemplate {...mockProps} />)
     
     expect(screen.getByTestId("scroll-to-top")).toBeInTheDocument()
   })
 
   it("renders reading progress component", () => {
-    render(<BlogPostTemplate {...mockProps} />)
+    renderWithHelmet(<BlogPostTemplate {...mockProps} />)
     
     expect(screen.getByTestId("reading-progress")).toBeInTheDocument()
   })
