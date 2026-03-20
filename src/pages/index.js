@@ -63,6 +63,7 @@ class IndexPage extends React.Component {
           title="Últimos Posts" 
           icon={faFire}
           count={5}
+          autoplay={true}
         />
 
         <SidebarSection>
