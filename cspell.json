@@ -451,7 +451,8 @@
     "newsletter",
     "existing",
     "Identified",
-    "existing"
+    "existing",
+    "updated"
   ],
   "ignoreRegExpList": [
     "\\((.*)\\)", // Markdown links
