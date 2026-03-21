@@ -447,7 +447,11 @@
     "placed",
     "skeleton",
     "Daily",
-    "implementation"
+    "implementation",
+    "newsletter",
+    "existing",
+    "Identified",
+    "existing"
   ],
   "ignoreRegExpList": [
     "\\((.*)\\)", // Markdown links
