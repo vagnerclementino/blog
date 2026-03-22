@@ -27,8 +27,9 @@ Implement newsletter subscription with:
   - Error handling
 - [x] Created Firebase function: `functions/src/newsletter-signup/index.ts`
 - [x] Integrated Mailchimp API with validation and error handling
+- [x] Wrote unit tests for Firebase function (6 tests passing)
 - [x] Updated `cspell.json` with necessary words
-- [x] Committed and pushed branch (commit `39bb5e9`)
+- [x] Committed and pushed branch (commit `4a1712a`)
 - [x] Opened PR #144
 
 ### 🔄 In Progress
