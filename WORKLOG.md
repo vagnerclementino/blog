@@ -57,3 +57,21 @@ Implement newsletter subscription with:
 ---
 
 **Last updated:** 2026-03-24 | **Branch:** feat/newsletter-signup | **Commit:** TBD
+
+## 2026-03-24 Evening Update
+
+- ✅ Feature branch `feat/newsletter-signup` created and pushed
+- ✅ Updated `newsletterSignup.js` to include name field, real API call, and loading state
+- ✅ Created `functions/newsletter-signup.ts` (TypeScript skeleton for Firebase function)
+- ✅ Updated `cspell.json` with necessary words
+- ✅ Commit: 39bb5e9 - "feat: add newsletter signup feature with component update and API function skeleton"
+- ✅ Pull Request #144 opened: https://github.com/vagnerclementino/blog/pull/144
+
+### Current Status
+- PR ready for review
+- Next: Implement Mailchimp integration in Firebase function
+- Then: Create GitHub Actions workflow (trigger on merge to main when functions/ changes)
+
+### Blockers
+- None currently
+
