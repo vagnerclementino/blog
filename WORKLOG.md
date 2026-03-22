@@ -25,19 +25,20 @@ Implement newsletter subscription with:
   - Real API call to `/api/newsletter-signup`
   - Loading state
   - Error handling
-- [x] Committed changes to branch
+- [x] Created Firebase function: `functions/src/newsletter-signup/index.ts`
+- [x] Integrated Mailchimp API with validation and error handling
+- [x] Updated `cspell.json` with necessary words
+- [x] Committed and pushed branch (commit `39bb5e9`)
+- [x] Opened PR #144
 
 ### 🔄 In Progress
-- [ ] Convert component to TypeScript (`.tsx`)
-- [ ] Create Firebase function (`/api/newsletter-signup.ts`)
-- [ ] Set up Mailchimp integration
-- [ ] Configure GitHub Actions workflow (trigger on main merge when functions/ changes)
-
-### 📋 Pending
 - [ ] Write tests for component and function
 - [ ] Test locally with Firebase emulators
-- [ ] Push branch and open PR
+- [ ] Configure GitHub Actions workflow (trigger on merge to main when functions/ changes)
+
+### 📋 Pending
 - [ ] Verify pipeline triggers correctly
+- [ ] Address review comments
 - [ ] Merge after approval
 
 ## Notes
