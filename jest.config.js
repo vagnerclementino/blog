@@ -11,7 +11,7 @@ module.exports = {
     "^swiper/css/navigation$": "identity-obj-proxy",
     "^swiper/css/pagination$": "identity-obj-proxy",
   },
-  testPathIgnorePatterns: [`node_modules`, `\\.cache`, `<rootDir>.*/public`],
+  testPathIgnorePatterns: [`node_modules`, `\\.cache`, `<rootDir>.*/public`, `functions`],
   transformIgnorePatterns: [`node_modules/(?!(gatsby|gatsby-script|gatsby-link|swiper)/)`],
   globals: {
     __PATH_PREFIX__: ``,
