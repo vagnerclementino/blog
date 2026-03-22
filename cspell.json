@@ -451,8 +451,15 @@
     "newsletter",
     "existing",
     "Identified",
-    "existing",
-    "updated"
+    "updated",
+    "necessary",
+    "pushed",
+    "Opened",
+    "Evening",
+    "loading",
+    "opened",
+    "ready",
+    "Blockers"
   ],
   "ignoreRegExpList": [
     "\\((.*)\\)", // Markdown links
