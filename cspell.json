@@ -463,7 +463,10 @@
     "Wrote",
     "added",
     "passing",
-    "Optional"
+    "Optional",
+    "Signup",
+    "signup",
+    "Mailchimp"
   ],
   "ignoreRegExpList": [
     "\\((.*)\\)", // Markdown links
