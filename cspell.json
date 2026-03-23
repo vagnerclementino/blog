@@ -459,7 +459,11 @@
     "loading",
     "opened",
     "ready",
-    "Blockers"
+    "Blockers",
+    "Wrote",
+    "added",
+    "passing",
+    "Optional"
   ],
   "ignoreRegExpList": [
     "\\((.*)\\)", // Markdown links
