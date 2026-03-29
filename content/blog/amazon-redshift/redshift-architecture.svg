@@ -1,0 +1,9 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#2d3748"/>
+  <text x="50%" y="50%" font-family="Arial, sans-serif" font-size="48" fill="white" text-anchor="middle" dominant-baseline="middle">
+    Amazon Redshift
+  </text>
+  <text x="50%" y="60%" font-family="Arial, sans-serif" font-size="24" fill="#a0aec0" text-anchor="middle" dominant-baseline="middle">
+    Data Warehouse em Escala
+  </text>
+</svg>
