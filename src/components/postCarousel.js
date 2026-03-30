@@ -300,4 +300,20 @@ const PaginationBullet = styled.button`
   }
 `
 
+const PostCardWrapper = styled.div`
+  position: relative;
+`
+
+const FeaturedBadge = styled.span`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--textLink);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  z-index: 2;
+`
+
 export default PostCarousel
