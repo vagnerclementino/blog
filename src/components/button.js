@@ -40,7 +40,7 @@ const ButtonWrapper = styled.button`
   min-width: 44px;
 
   /* Ensure sufficient touch area */
-  ${props => props.radius && `border-radius: ${props.radius};`}
+  border-radius: ${props => props.radius || "6px"};
 
   background: ${props => props.background || "black"};
   color: ${props => props.color || "rgb(255, 255, 255)"};
