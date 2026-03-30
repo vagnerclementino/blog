@@ -55,10 +55,10 @@ const PostCarousel = ({
         </Title>
       )}
       <CarouselContainer>
-        <PrevButton onClick={() => swiper?.slidePrev()}>
+        <PrevButton onClick={() => swiper?.slidePrev()} aria-label="Slide anterior">
           ‹
         </PrevButton>
-        <NextButton onClick={() => swiper?.slideNext()}>
+        <NextButton onClick={() => swiper?.slideNext()} aria-label="Próximo slide">
           ›
         </NextButton>
         <StyledSwiper
@@ -97,6 +97,8 @@ const PostCarousel = ({
               key={index}
               $active={index === activeIndex}
               onClick={() => goToSlide(index)}
+              aria-label={`Ir para slide ${index + 1}`}
+              aria-current={index === activeIndex ? "true" : undefined}
             />
           ))}
         </CustomPagination>
@@ -179,6 +181,11 @@ const PrevButton = styled.button`
     transform: translateY(-50%) scale(1.1);
   }
   
+  &:focus {
+    outline: 3px solid var(--textLink);
+    outline-offset: 2px;
+  }
+  
   @media (max-width: 768px) {
     width: 40px;
     height: 40px;
@@ -220,6 +227,11 @@ const NextButton = styled.button`
     transform: translateY(-50%) scale(1.1);
   }
   
+  &:focus {
+    outline: 3px solid var(--textLink);
+    outline-offset: 2px;
+  }
+  
   @media (max-width: 768px) {
     width: 40px;
     height: 40px;
@@ -236,70 +248,55 @@ const NextButton = styled.button`
 `
 
 const StyledSwiper = styled(Swiper)`
-  padding-bottom: 50px;
-
   .swiper-slide {
-    height: auto;
-    display: flex;
-    justify-content: center;
-
-    > * {
-      width: auto;
-    }
+    opacity: 1;
   }
-`
-
-const PostCardWrapper = styled.div`
-  position: relative;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-`
-
-const FeaturedBadge = styled.span`
-  position: absolute;
-  top: -1px;
-  right: 1rem;
-  background: var(--textLink);
-  color: white;
-  padding: 0.25rem 0.75rem;
-  border-radius: 0 0 8px 8px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  z-index: 10;
 `
 
 const CustomPagination = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin-top: 10px;
-  gap: 6px;
-  padding: 5px;
-  width: 100%;
+  gap: 8px;
+  margin-top: 2rem;
   position: relative;
   z-index: 10;
 `
 
 const PaginationBullet = styled.button`
-  width: 10px;
-  height: 10px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: none;
   background: ${props => props.$active ? '#007aff' : 'rgba(0, 0, 0, 0.2)'};
   cursor: pointer;
   transition: all 0.3s ease;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   opacity: ${props => props.$active ? '1' : '0.5'};
+  
+  &::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: ${props => props.$active ? '#fff' : 'rgba(0, 0, 0, 0.4)'};
+  }
   
   &:hover {
     background: #007aff;
     opacity: 1;
-    transform: scale(1.2);
+  }
+  
+  &:focus {
+    outline: 3px solid var(--textLink);
+    outline-offset: 2px;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
   }
 `
 
