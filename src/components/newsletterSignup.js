@@ -37,6 +37,8 @@ const NewsletterSignup = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              aria-required="true"
+              aria-describedby="email-help"
             />
             <Button type="submit">
               Inscrever-se
