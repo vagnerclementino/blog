@@ -18,7 +18,7 @@ const PostCard = ({ post }) => {
           <PublishedDate>{post.frontmatter.date}</PublishedDate>
         </CardHeader>
         <Description>{description}</Description>
-        <ReadMore to={`/blog${post.fields.slug}`}>
+        <ReadMore to={`/blog${post.fields.slug}`} aria-label={`Ler mais sobre ${title}`}>
           Ler mais →
         </ReadMore>
       </CardContent>
