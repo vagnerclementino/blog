@@ -265,6 +265,68 @@ Entender infraestrutura não significa virar DevOps. Significa ser um desenvolve
 
 Como Gene Kim escreveu: _"qualquer melhoria feita depois do gargalo é uma ilusão"_[^1]. Se o gargalo é a falta de entendimento sobre onde e como o código roda, nenhuma melhoria no código vai resolver.
 
+## O elefante no free tier: "Out of Host Capacity"
+
+Se você seguiu até aqui e tentou criar as instâncias ARM, existe uma boa chance de ter encontrado este erro:
+
+> **500-InternalError, Out of host capacity.**
+
+Não é um bug. Não é um problema na sua configuração. É a realidade do free tier: as instâncias ARM Ampere A1 são extremamente populares e a capacidade é limitada. Quando não há máquinas físicas disponíveis na região, o OCI simplesmente recusa a criação.
+
+Isso é frustrante, mas faz parte do jogo. Você está competindo com milhares de outros desenvolvedores pelo mesmo pool de recursos gratuitos. Algumas regiões são mais concorridas que outras — regiões menores como `sa-vinhedo-1` tendem a ter menos capacidade que `us-ashburn-1` ou `eu-frankfurt-1`.
+
+### O que não funciona
+
+- Reduzir os recursos (1 OCPU em vez de 4) — o erro é sobre disponibilidade de hosts, não de tamanho
+- Trocar o Availability Domain — algumas regiões têm apenas 1 AD
+- Tentar pelo Console em vez do Terraform — o erro é do lado da OCI, não da ferramenta
+
+### O que funciona
+
+A abordagem da comunidade é um script de retry que fica tentando até conseguir[^3]. A capacidade flutua — quando alguém deleta uma instância, a vaga abre. Pode levar minutos ou horas.
+
+```bash
+#!/bin/bash
+# Retry até conseguir criar a instância
+while true; do
+  echo "$(date '+%H:%M:%S') - Tentando..."
+  oci compute instance launch \
+    --availability-domain "$AD" \
+    --compartment-id "$COMPARTMENT" \
+    --shape "VM.Standard.A1.Flex" \
+    --subnet-id "$SUBNET" \
+    --shape-config '{"ocpus": 1, "memoryInGBs": 6}' \
+    --image-id "$IMAGE" \
+    --ssh-authorized-keys-file ./key.pub 2>&1
+
+  if [ $? -eq 0 ]; then
+    echo "✅ Criado!"
+    break
+  fi
+  echo "❌ Sem capacidade. Tentando em 30s..."
+  sleep 30
+done
+```
+
+Uma dica: rode esse script no **Cloud Shell da OCI** (disponível no Console). Ele já vem com o OCI CLI configurado, não depende da sua máquina local e não tem problemas de SSL ou autenticação.
+
+### Verificando a capacidade antes de tentar
+
+Você pode consultar a API de Capacity Report para saber se há disponibilidade antes de tentar criar:
+
+```bash
+oci compute compute-capacity-report create \
+  --compartment-id "$COMPARTMENT" \
+  --availability-domain "$AD" \
+  --shape-availabilities '[{"instanceShape": "VM.Standard.A1.Flex", "instanceShapeConfig": {"ocpus": 1, "memoryInGBs": 6}}]'
+```
+
+O campo `availabilityStatus` retorna `AVAILABLE` ou `OUT_OF_HOST_CAPACITY`.
+
+### A lição para desenvolvedores
+
+Esse tipo de limitação é algo que você só descobre quando sai do `localhost`. No mundo real, infraestrutura tem restrições: capacidade, cotas, latência, custos. Entender essas restrições — mesmo que não seja seu trabalho resolvê-las — faz de você um desenvolvedor melhor. É a diferença entre projetar um sistema que "funciona na minha máquina" e um que funciona no mundo.
+
 ## Próximos passos
 
 O cluster está rodando, a API está no ar. A partir daqui, as possibilidades são:
@@ -280,3 +342,4 @@ Tudo isso cabe nos 24GB de RAM do free tier. O código completo está em [github
 
 [^1]: Kim, G., Behr, K., & Spafford, G. (2013). *The Phoenix Project: A Novel about IT, DevOps, and Helping Your Business Win*. IT Revolution Press.
 [^2]: RFC 1918 — Address Allocation for Private Internets. https://datatracker.ietf.org/doc/html/rfc1918
+[^3]: Ehteshum, M. *Get Always Free VM Instance in Oracle Cloud and Solve "Out of Host Capacity" Issue*. https://medium.com/@me69oshan/get-always-free-vm-instance-in-oracle-cloud-and-solve-out-of-host-capacity-issue-the-easy-way-88babae4eae5
