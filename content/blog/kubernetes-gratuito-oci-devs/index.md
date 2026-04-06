@@ -257,6 +257,41 @@ kubectl get pods
 
 Duas réplicas da API rodando no cluster. Gratuito.
 
+## Separando quem gerencia de quem executa
+
+Se você já trabalhou com banco de dados, sabe que não roda a aplicação no mesmo servidor do banco. A lógica é a mesma no Kubernetes: o control plane gerencia o cluster e os workers executam as aplicações.
+
+```
+┌───────────────────────┐    ┌───────────────────────────┐
+│   Control Plane       │    │      Worker               │
+│                       │    │                           │
+│   K3s Server          │    │   K3s Agent               │
+│   API Server          │    │                           │
+│   Scheduler           │    │   ┌───────────────────┐   │
+│   CoreDNS             │    │   │ api-holiday (pod)  │   │
+│                       │    │   └───────────────────┘   │
+│   🚫 Sem pods de app  │    │   ✅ Pods de aplicação    │
+└───────────────────────┘    └───────────────────────────┘
+```
+
+No Kubernetes, isso é feito com **taints** — uma marcação no node que impede o scheduler de colocar pods nele:
+
+```bash
+kubectl taint nodes control-plane node-role.kubernetes.io/control-plane=:NoSchedule
+```
+
+Com uma linha, você garante que nenhum pod de aplicação roda no control plane. Os pods do sistema (CoreDNS) têm tolerância automática e continuam funcionando.
+
+As vantagens são práticas:
+
+- **Estabilidade**: se um pod consome toda a memória, o control plane não é afetado. O cluster continua gerenciável.
+- **Segurança**: pods de aplicação não têm acesso direto ao API server e ao etcd (onde ficam os secrets).
+- **Previsibilidade**: o control plane tem recursos dedicados. Não compete com a aplicação por CPU e memória.
+
+No nosso cluster com 1GB por node, essa separação é ainda mais crítica. Sem ela, o K3s server e a api-holiday competem pelos mesmos 1GB, causando timeouts e restarts. Com a separação, cada um tem seu espaço.
+
+Para um desenvolvedor, entender essa separação muda a forma como você pensa sobre deploy. Não é só "colocar o container para rodar". É decidir **onde** ele roda, **quanto** de recurso ele usa e **o que acontece** quando algo dá errado.
+
 ## O que esse exercício ensina
 
 Voltando ao Projeto Fênix: o problema nunca foi a tecnologia. O problema era o muro entre quem constrói e quem opera. Quando um desenvolvedor entende o que acontece depois do `git push` — como o código vira container, como o container roda num servidor, como o servidor se conecta à rede — as decisões de design melhoram.
