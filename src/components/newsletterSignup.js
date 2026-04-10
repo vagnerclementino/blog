@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import Button from "./button"
+import Button from "./button" // Assuming Button is available locally
 
 const NewsletterSignup = () => {
   const [name, setName] = useState("")

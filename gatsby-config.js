@@ -34,7 +34,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-webpack-bundle-analyser-v2`,
       options: {
-        production: true,
+        production: false, /* Set to false for development analysis */
         disable: false,
         openAnalyzer: false,
         analyzerMode: `static`,
