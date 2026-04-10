@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: `Notes Clementino`,
-    description: `Blog técnico sobre programacão, AWS, Redshift e carreira de desenvolvedor`,
+    description: `Blog técnico sobre programação, AWS, Redshift e carreira de desenvolvedor`,
     author: `@vagnerclementino`,
   },
   plugins: [
@@ -24,7 +24,7 @@ module.exports = {
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        icon: `src/images/gatsby-icon.png`,
       },
     },
     `gatsby-plugin-offline`,
@@ -55,9 +55,9 @@ module.exports = {
         pluginConfig: {
           head: false,
           respectDNT: true,
-          exclude: ["/preview/**", "/do-not-track/me/too/"]
-        }
-      }
-    }
-  ]
-}
+          exclude: ["/preview/**", "/do-not-track/me/too/"],
+        },
+      },
+    },
+  ],
+};
