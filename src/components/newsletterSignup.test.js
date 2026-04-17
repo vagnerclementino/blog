@@ -2,7 +2,7 @@ import React from "react"
 import { render, screen, fireEvent, waitFor, act } from "@testing-library/react"
 import NewsletterSignup from "./newsletterSignup"
 
-// Mock the fetch API
+
 global.fetch = jest.fn(() =>
   Promise.resolve({
     json: () => Promise.resolve({ message: "Mocked success response" }),
@@ -12,9 +12,9 @@ global.fetch = jest.fn(() =>
 
 describe("NewsletterSignup", () => {
   beforeEach(() => {
-    // Reset mocks before each test
+    
     fetch.mockClear();
-    // Mock fetch to return a default successful response
+    
     fetch.mockImplementation(() =>
       Promise.resolve({
         json: () => Promise.resolve({ message: "Mocked success response" }),
@@ -45,7 +45,7 @@ describe("NewsletterSignup", () => {
     fireEvent.click(submitButton);
     
     await waitFor(() => {
-      // Check if fetch was called with correct data
+      
       expect(fetch).toHaveBeenCalledTimes(1);
       expect(fetch).toHaveBeenCalledWith(
         "/api/newsletter-signup",
@@ -57,7 +57,7 @@ describe("NewsletterSignup", () => {
       expect(screen.getByText("Sucesso! Verifique seu email.")).toBeInTheDocument();
     });
     
-    // Verify inputs are cleared
+    
     expect(nameInput.value).toBe("");
     expect(emailInput.value).toBe("");
   });
@@ -69,18 +69,18 @@ describe("NewsletterSignup", () => {
     const emailInput = screen.getByPlaceholderText("seu@email.com");
     const submitButton = screen.getByRole("button", { name: "Assinar" });
 
-    // Test with empty name and valid email
+    
     fireEvent.change(emailInput, { target: { value: "test@example.com" } });
     fireEvent.click(submitButton);
     await waitFor(() => expect(screen.getByText("Por favor, preencha nome e email")).toBeInTheDocument());
 
-    // Test with valid name and empty email
+    
     fireEvent.change(nameInput, { target: { value: "John Doe" } });
     fireEvent.change(emailInput, { target: { value: "" } });
     fireEvent.click(submitButton);
     await waitFor(() => expect(screen.getByText("Por favor, preencha nome e email")).toBeInTheDocument());
 
-    // Test with both empty
+    
     fireEvent.change(nameInput, { target: { value: "" } });
     fireEvent.change(emailInput, { target: { value: "" } });
     fireEvent.click(submitButton);
@@ -106,7 +106,7 @@ describe("NewsletterSignup", () => {
       expect(emailInput.value).toBe("");
     });
     
-    // Fast forward 3 seconds to clear status and inputs
+    
     act(() => {
       jest.advanceTimersByTime(3000);
     });
