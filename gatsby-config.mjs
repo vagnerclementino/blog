@@ -296,12 +296,18 @@ export default {
           {
             serialize: ({ query: { site, allMdx } }) => {
               return allMdx.edges.map(edge => {
+                const imageUrl = edge.node.frontmatter.featuredImage?.publicURL
+                  ? site.siteMetadata.siteUrl + edge.node.frontmatter.featuredImage.publicURL
+                  : null;
                 return Object.assign({}, edge.node.frontmatter, {
                   description: edge.node.frontmatter.description,
                   date: edge.node.frontmatter.date,
                   url: site.siteMetadata.siteUrl + edge.node.fields.slug,
                   guid: site.siteMetadata.siteUrl + edge.node.fields.slug,
-                  custom_elements: [{ "content:encoded": edge.node.excerpt }],
+                  custom_elements: [
+                    { "content:encoded": edge.node.excerpt },
+                    ...(imageUrl ? [{ "enclosure": { _attr: { url: imageUrl, type: "image/jpeg" } } }] : []),
+                  ],
                 })
               })
             },
@@ -321,6 +327,9 @@ export default {
                         title
                         date
                         description
+                        featuredImage {
+                          publicURL
+                        }
                       }
                     }
                   }
