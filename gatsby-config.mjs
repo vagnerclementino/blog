@@ -296,8 +296,8 @@ export default {
           {
             serialize: ({ query: { site, allMdx } }) => {
               return allMdx.edges.map(edge => {
-                const imageUrl = edge.node.frontmatter.featuredImage?.publicURL
-                  ? site.siteMetadata.siteUrl + edge.node.frontmatter.featuredImage.publicURL
+                const imageUrl = edge.node.frontmatter.featuredImage?.childImageSharp?.fixed?.src
+                  ? site.siteMetadata.siteUrl + edge.node.frontmatter.featuredImage.childImageSharp.fixed.src
                   : null;
                 return Object.assign({}, edge.node.frontmatter, {
                   description: edge.node.frontmatter.description,
@@ -328,7 +328,11 @@ export default {
                         date
                         description
                         featuredImage {
-                          publicURL
+                          childImageSharp {
+                            fixed(width: 160, quality: 80) {
+                              src
+                            }
+                          }
                         }
                       }
                     }
