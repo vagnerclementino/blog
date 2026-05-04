@@ -1,8 +1,3 @@
-/*
- * Font Awesome: desabilitar injeção automática de CSS e importar manualmente.
- * Isso evita o FOUC (Flash of Unstyled Content) onde os ícones SVG aparecem gigantes
- * antes do JavaScript carregar e injetar o CSS.
- */
 import { config } from "@fortawesome/fontawesome-svg-core"
 import "@fortawesome/fontawesome-svg-core/styles.css"
 config.autoAddCss = false
