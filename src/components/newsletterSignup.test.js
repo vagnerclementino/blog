@@ -2,23 +2,23 @@ import React from "react"
 import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import NewsletterSignup from "./newsletterSignup"
 
-// Mock mailcheck
+//Mock mailcheck
 jest.mock("mailcheck", () => ({
   run: jest.fn(),
 }))
 
 import Mailcheck from "mailcheck"
 
-// Set up the Firebase Function URL env var
+//Set up the Firebase Function URL env var
 process.env.GATSBY_NEWSLETTER_FUNCTION_URL =
   "https://test-function.example.com/subscribeToNewsletter"
 
-// Mock global fetch
+//Mock global fetch
 global.fetch = jest.fn()
 
 describe("NewsletterSignup", () => {
   beforeEach(() => {
-    // Default: mailcheck finds no suggestion
+    //Default: mailcheck finds no suggestion
     Mailcheck.run.mockImplementation(({ empty }) => empty && empty())
     fetch.mockClear()
     Mailcheck.run.mockClear()
@@ -27,8 +27,6 @@ describe("NewsletterSignup", () => {
   afterEach(() => {
     jest.clearAllMocks()
   })
-
-  // ── Rendering ──────────────────────────────────────────────────────────────
 
   it("renders the newsletter form correctly", () => {
     render(<NewsletterSignup />)
@@ -41,8 +39,6 @@ describe("NewsletterSignup", () => {
       screen.getByText(/Receba as últimas atualizações/)
     ).toBeInTheDocument()
   })
-
-  // ── Mailcheck integration ──────────────────────────────────────────────────
 
   it("shows a mailcheck suggestion when domain has a typo", async () => {
     Mailcheck.run.mockImplementation(({ suggested }) =>
@@ -91,12 +87,10 @@ describe("NewsletterSignup", () => {
     expect(screen.queryByText(/Você quis dizer/)).not.toBeInTheDocument()
   })
 
-  // ── Client-side validation ────────────────────────────────────────────────
-
   it("shows error for invalid email format without making an API call", async () => {
     render(<NewsletterSignup />)
     const input = screen.getByPlaceholderText("seu@email.com")
-    input.removeAttribute("required") // bypass native browser validation
+    input.removeAttribute("required")
 
     fireEvent.change(input, { target: { value: "invalid-email" } })
     fireEvent.click(screen.getByRole("button", { name: "Inscrever-se" }))
@@ -110,10 +104,8 @@ describe("NewsletterSignup", () => {
     expect(fetch).not.toHaveBeenCalled()
   })
 
-  // ── Loading state ─────────────────────────────────────────────────────────
-
   it("shows loading state while waiting for API response", async () => {
-    fetch.mockImplementation(() => new Promise(() => {})) // never resolves
+    fetch.mockImplementation(() => new Promise(() => {}))
 
     render(<NewsletterSignup />)
     fireEvent.change(screen.getByPlaceholderText("seu@email.com"), {
@@ -126,8 +118,6 @@ describe("NewsletterSignup", () => {
       expect(screen.getByRole("button", { name: "Enviando..." })).toBeDisabled()
     })
   })
-
-  // ── Success state ─────────────────────────────────────────────────────────
 
   it("shows success message and clears input on successful subscription", async () => {
     fetch.mockResolvedValue({
@@ -176,8 +166,6 @@ describe("NewsletterSignup", () => {
       )
     })
   })
-
-  // ── Error states ──────────────────────────────────────────────────────────
 
   it("shows server error message when API returns error", async () => {
     fetch.mockResolvedValue({
