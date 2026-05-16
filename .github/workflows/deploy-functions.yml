@@ -5,6 +5,7 @@ on:
     branches: [main, feat/newsletter-signup]
     paths:
       - "functions/**"
+  workflow_dispatch:
 
 jobs:
   test-and-deploy:
