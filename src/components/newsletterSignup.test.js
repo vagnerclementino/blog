@@ -2,79 +2,167 @@ import React from "react"
 import { render, screen, fireEvent, waitFor, act } from "@testing-library/react"
 import NewsletterSignup from "./newsletterSignup"
 
+
+global.fetch = jest.fn(() =>
+  Promise.resolve({
+    json: () => Promise.resolve({ message: "Mocked success response" }),
+    ok: true,
+  })
+)
+
 describe("NewsletterSignup", () => {
-  it("renders newsletter signup form", () => {
-    render(<NewsletterSignup />)
+  beforeEach(() => {
     
-    expect(screen.getByText("📬 Newsletter")).toBeInTheDocument()
-    expect(screen.getByPlaceholderText("seu@email.com")).toBeInTheDocument()
-    expect(screen.getByRole("button", { name: "Inscrever-se" })).toBeInTheDocument()
-    expect(screen.getByText(/Receba as últimas atualizações/)).toBeInTheDocument()
-  })
+    fetch.mockClear();
+    
+    fetch.mockImplementation(() =>
+      Promise.resolve({
+        json: () => Promise.resolve({ message: "Mocked success response" }),
+        ok: true,
+      })
+    );
+  });
 
-  it("shows success message when valid email is submitted", async () => {
-    render(<NewsletterSignup />)
+  it("renders newsletter signup form with name and email fields", () => {
+    render(<NewsletterSignup />);
     
-    const emailInput = screen.getByPlaceholderText("seu@email.com")
-    const submitButton = screen.getByRole("button", { name: "Inscrever-se" })
-    
-    fireEvent.change(emailInput, { target: { value: "test@example.com" } })
-    fireEvent.click(submitButton)
-    
-    await waitFor(() => {
-      expect(screen.getByText("✅ Obrigado! Você foi inscrito com sucesso.")).toBeInTheDocument()
-    })
-    
-    //Email input should be cleared
-    expect(emailInput.value).toBe("")
-  })
+    expect(screen.getByText("📬 Newsletter")).toBeInTheDocument();
+    expect(screen.getByLabelText("Nome completo")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("seu@email.com")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Assinar" })).toBeInTheDocument();
+    expect(screen.getByText(/Receba as últimas atualizações/)).toBeInTheDocument();
+  });
 
-  it("shows error message when empty email is submitted", async () => {
-    render(<NewsletterSignup />)
+  it("shows success message when valid name and email are submitted", async () => {
+    render(<NewsletterSignup />);
     
-    const emailInput = screen.getByPlaceholderText("seu@email.com")
-    const submitButton = screen.getByRole("button", { name: "Inscrever-se" })
+    const nameInput = screen.getByLabelText("Nome completo");
+    const emailInput = screen.getByPlaceholderText("seu@email.com");
+    const submitButton = screen.getByRole("button", { name: "Assinar" });
     
-    //Remove the required attribute to test our custom validation
-    emailInput.removeAttribute('required')
-    
-    fireEvent.click(submitButton)
+    fireEvent.change(nameInput, { target: { value: "John Doe" } });
+    fireEvent.change(emailInput, { target: { value: "test@example.com" } });
+    fireEvent.click(submitButton);
     
     await waitFor(() => {
-      expect(screen.getByText("❌ Por favor, insira um email válido.")).toBeInTheDocument()
-    })
-  })
+      
+      expect(fetch).toHaveBeenCalledTimes(1);
+      expect(fetch).toHaveBeenCalledWith(
+        "/api/newsletter-signup",
+        expect.objectContaining({
+          method: "POST",
+          body: JSON.stringify({ name: "John Doe", email: "test@example.com" }),
+        })
+      );
+      expect(screen.getByText("Sucesso! Verifique seu email.")).toBeInTheDocument();
+    });
+    
+    
+    expect(nameInput.value).toBe("");
+    expect(emailInput.value).toBe("");
+  });
 
-  it("clears status message after 3 seconds", async () => {
-    jest.useFakeTimers()
+  it("shows error message when empty name or email is submitted", async () => {
+    render(<NewsletterSignup />);
     
-    render(<NewsletterSignup />)
+    const nameInput = screen.getByLabelText("Nome completo");
+    const emailInput = screen.getByPlaceholderText("seu@email.com");
+    const submitButton = screen.getByRole("button", { name: "Assinar" });
+
     
-    const emailInput = screen.getByPlaceholderText("seu@email.com")
-    const submitButton = screen.getByRole("button", { name: "Inscrever-se" })
+    fireEvent.change(emailInput, { target: { value: "test@example.com" } });
+    fireEvent.click(submitButton);
+    await waitFor(() => expect(screen.getByText("Por favor, preencha nome e email")).toBeInTheDocument());
+
     
-    fireEvent.change(emailInput, { target: { value: "test@example.com" } })
-    fireEvent.click(submitButton)
+    fireEvent.change(nameInput, { target: { value: "John Doe" } });
+    fireEvent.change(emailInput, { target: { value: "" } });
+    fireEvent.click(submitButton);
+    await waitFor(() => expect(screen.getByText("Por favor, preencha nome e email")).toBeInTheDocument());
+
+    
+    fireEvent.change(nameInput, { target: { value: "" } });
+    fireEvent.change(emailInput, { target: { value: "" } });
+    fireEvent.click(submitButton);
+    await waitFor(() => expect(screen.getByText("Por favor, preencha nome e email")).toBeInTheDocument());
+  });
+
+  it("clears status message and inputs after successful submission and timeout", async () => {
+    jest.useFakeTimers();
+    
+    render(<NewsletterSignup />);
+    
+    const nameInput = screen.getByLabelText("Nome completo");
+    const emailInput = screen.getByPlaceholderText("seu@email.com");
+    const submitButton = screen.getByRole("button", { name: "Assinar" });
+    
+    fireEvent.change(nameInput, { target: { value: "John Doe" } });
+    fireEvent.change(emailInput, { target: { value: "test@example.com" } });
+    fireEvent.click(submitButton);
     
     await waitFor(() => {
-      expect(screen.getByText("✅ Obrigado! Você foi inscrito com sucesso.")).toBeInTheDocument()
-    })
+      expect(screen.getByText("Sucesso! Verifique seu email.")).toBeInTheDocument();
+      expect(nameInput.value).toBe("");
+      expect(emailInput.value).toBe("");
+    });
     
-    //Fast forward 3 seconds with act
-    await act(async () => {
-      jest.advanceTimersByTime(3000)
-    })
+    
+    act(() => {
+      jest.advanceTimersByTime(3000);
+    });
     
     await waitFor(() => {
-      expect(screen.queryByText("✅ Obrigado! Você foi inscrito com sucesso.")).not.toBeInTheDocument()
-    })
+      expect(screen.queryByText("Sucesso! Verifique seu email.")).not.toBeInTheDocument();
+      expect(screen.queryByText("Por favor, preencha nome e email")).not.toBeInTheDocument();
+    });
     
-    jest.useRealTimers()
-  })
+    jest.useRealTimers();
+  });
+
+  it("handles API connection error", async () => {
+    fetch.mockImplementationOnce(() => Promise.reject(new Error("API connection error")));
+    
+    render(<NewsletterSignup />);
+    
+    const nameInput = screen.getByLabelText("Nome completo");
+    const emailInput = screen.getByPlaceholderText("seu@email.com");
+    const submitButton = screen.getByRole("button", { name: "Assinar" });
+    
+    fireEvent.change(nameInput, { target: { value: "John Doe" } });
+    fireEvent.change(emailInput, { target: { value: "test@example.com" } });
+    fireEvent.click(submitButton);
+    
+    await waitFor(() => {
+      expect(screen.getByText("Erro de conexão!")).toBeInTheDocument();
+    });
+  });
+
+  it("handles API error response", async () => {
+    fetch.mockImplementationOnce(() =>
+      Promise.resolve({
+        json: () => Promise.resolve({ message: "User already subscribed" }),
+        ok: false,
+      })
+    );
+    
+    render(<NewsletterSignup />);
+    
+    const nameInput = screen.getByLabelText("Nome completo");
+    const emailInput = screen.getByPlaceholderText("seu@email.com");
+    const submitButton = screen.getByRole("button", { name: "Assinar" });
+    
+    fireEvent.change(nameInput, { target: { value: "John Doe" } });
+    fireEvent.change(emailInput, { target: { value: "test@example.com" } });
+    fireEvent.click(submitButton);
+    
+    await waitFor(() => {
+      expect(screen.getByText("User already subscribed")).toBeInTheDocument();
+    });
+  });
 
   it("displays disclaimer about demo functionality", () => {
-    render(<NewsletterSignup />)
+    render(<NewsletterSignup />);
     
-    expect(screen.getByText(/Esta é uma funcionalidade demonstrativa/)).toBeInTheDocument()
-  })
-})
+    expect(screen.getByText(/Esta é uma funcionalidade demonstrativa/)).toBeInTheDocument();
+  });
+});

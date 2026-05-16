@@ -73,6 +73,11 @@ const ScrollButton = styled.button.withConfig({
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
   }
 
+  &:focus {
+    outline: 2px solid var(--bg);
+    outline-offset: 2px;
+  }
+
   &:active {
     transform: translateY(0);
   }

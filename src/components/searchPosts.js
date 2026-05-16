@@ -117,6 +117,7 @@ const SearchPosts = ({ posts, localSearchBlog, location, navigate }) => {
     <>
       <SearchBar>
         <svg
+          aria-hidden="true"
           focusable="false"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -127,6 +128,7 @@ const SearchPosts = ({ posts, localSearchBlog, location, navigate }) => {
           id="search"
           type="search"
           placeholder="Search all posts"
+          aria-label="Pesquisar todos os posts"
           value={query}
           onChange={e => {
             navigate(

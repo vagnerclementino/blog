@@ -84,7 +84,7 @@ describe("PostCard", () => {
     render(<PostCard post={mockPost} />)
     
     const titleLink = screen.getByRole("link", { name: "Test Post Title" })
-    const readMoreLink = screen.getByRole("link", { name: "Ler mais →" })
+    const readMoreLink = screen.getByRole("link", { name: "Ler mais sobre Test Post Title" })
     
     expect(titleLink).toHaveAttribute("href", "/blog/test-post/")
     expect(readMoreLink).toHaveAttribute("href", "/blog/test-post/")
