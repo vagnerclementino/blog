@@ -90,6 +90,115 @@ Para rodar os testes em modo watch:
 npm run test:watch
 ```
 
+## ☁️ Firebase Functions (Newsletter)
+
+O blog utiliza uma Firebase Function para gerenciar inscrições na newsletter via Mailchimp.
+
+### Pré-requisitos
+
+- Node.js 20+
+- Firebase CLI (ou usar via `npx`)
+
+### Instalação
+
+```bash
+cd functions
+npm install
+```
+
+### Configuração dos Secrets
+
+A function precisa de credenciais do Mailchimp. Para desenvolvimento local, copie o arquivo de exemplo:
+
+```bash
+cp functions/.secret.local.example functions/.secret.local
+```
+
+Edite o `functions/.secret.local` com suas credenciais reais:
+
+```env
+MAILCHIMP_API_KEY=sua-api-key
+MAILCHIMP_SERVER_PREFIX=usX
+MAILCHIMP_AUDIENCE_ID=seu-audience-id
+```
+
+> ⚠️ O arquivo `.secret.local` está no `.gitignore` e nunca deve ser commitado.
+
+### Build
+
+```bash
+cd functions
+npm run build
+```
+
+### Rodando o emulador localmente
+
+A partir da raiz do projeto:
+
+```bash
+npx firebase-tools emulators:start --only functions
+```
+
+Ou usando o script do `functions/package.json`:
+
+```bash
+cd functions
+npm run serve
+```
+
+> ⚠️ **Problema com certificado SSL (UNABLE_TO_GET_ISSUER_CERT_LOCALLY):**
+> Se ao testar a function você receber erro de certificado SSL ao conectar com APIs externas (ex: Mailchimp), inicie o emulador com:
+>
+> ```bash
+> NODE_TLS_REJECT_UNAUTHORIZED=0 npx firebase-tools emulators:start --only functions
+> ```
+>
+> Isso desabilita a verificação de certificado **apenas para desenvolvimento local**. Nunca use em produção.
+
+> ⚠️ **Firebase CLI não encontrado após `npm install -g firebase-tools`:**
+> No macOS, o binário pode não estar no PATH. Use `npx` como alternativa:
+>
+> ```bash
+> npx --yes firebase-tools emulators:start --only functions
+> ```
+>
+> Ou adicione ao `~/.zshrc`:
+>
+> ```bash
+> export PATH="$(npm prefix -g)/bin:$PATH"
+> ```
+
+A function ficará disponível em:
+
+```
+http://127.0.0.1:5001/clementino-notes/us-central1/subscribeToNewsletter
+```
+
+A UI do emulador estará em: `http://127.0.0.1:4000`
+
+### Testando a function
+
+```bash
+curl -X POST http://127.0.0.1:5001/clementino-notes/us-central1/subscribeToNewsletter \
+  -H "Content-Type: application/json" \
+  -d '{"email": "teste@gmail.com"}'
+```
+
+### Testes unitários
+
+```bash
+cd functions
+npm test
+```
+
+### Deploy
+
+O deploy das functions é feito via GitHub Actions automaticamente ao fazer merge na `main`. Para deploy manual:
+
+```bash
+npx firebase-tools deploy --only functions
+```
+
 ## Build e Deploy
 
 Para fazer o build do projeto:

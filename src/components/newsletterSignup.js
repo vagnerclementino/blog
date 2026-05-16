@@ -94,10 +94,17 @@ const NewsletterSignup = () => {
               disabled={isLoading}
               required
             />
-            <Button type="submit" disabled={isLoading}>
+            <Button type="submit" disabled={isLoading} fontSize="13px">
               {isLoading ? "Enviando..." : "Inscrever-se"}
             </Button>
           </InputGroup>
+
+          {isLoading && (
+            <LoadingMessage>
+              <Spinner aria-hidden="true" />
+              Processando sua inscrição, aguarde...
+            </LoadingMessage>
+          )}
 
           {suggestion && (
             <SuggestionMessage>
@@ -128,8 +135,7 @@ const NewsletterSignup = () => {
 const Container = styled.section`
   margin: 2rem auto;
   max-width: 800px;
-  background: var(--bg);
-  border: 1px solid var(--textNormal);
+  background: var(--bg, #ffffff);
   border-radius: 8px;
   overflow: hidden;
 `
@@ -144,12 +150,12 @@ const Content = styled.div`
 
 const Title = styled.h3`
   margin: 0 0 1rem 0;
-  color: var(--textNormal);
+  color: var(--textNormal, #333333);
   font-size: 1.25rem;
 `
 
 const Description = styled.p`
-  color: var(--textSecondary);
+  color: var(--textSecondary, #666666);
   line-height: 1.6;
   margin-bottom: 1.5rem;
 `
@@ -170,20 +176,20 @@ const InputGroup = styled.div`
 
 const EmailInput = styled.input`
   flex: 1;
-  padding: 0.75rem;
-  border: 2px solid var(--textNormal);
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--textNormal, #333333);
   border-radius: 4px;
-  background: var(--bg);
-  color: var(--textNormal);
-  font-size: 1rem;
+  background: var(--bg, #ffffff);
+  color: var(--textNormal, #333333);
+  font-size: 0.9rem;
 
   &:focus {
     outline: none;
-    border-color: var(--textLink);
+    border-color: var(--textLink, #007acc);
   }
 
   &::placeholder {
-    color: var(--textSecondary);
+    color: var(--textSecondary, #999999);
   }
 
   &:disabled {
@@ -194,12 +200,12 @@ const EmailInput = styled.input`
 
 const SuggestionMessage = styled.p`
   font-size: 0.875rem;
-  color: var(--textSecondary);
+  color: var(--textSecondary, #666666);
   margin-bottom: 0.5rem;
 `
 
 const SuggestionLink = styled.span`
-  color: var(--textLink);
+  color: var(--textLink, #007acc);
   cursor: pointer;
   text-decoration: underline;
   font-weight: 600;
@@ -216,6 +222,35 @@ const StatusMessage = styled.div`
   background: ${props => (props.$success ? "#d4edda" : "#f8d7da")};
   color: ${props => (props.$success ? "#155724" : "#721c24")};
   border: 1px solid ${props => (props.$success ? "#c3e6cb" : "#f5c6cb")};
+`
+
+const LoadingMessage = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  background: #e8f4fd;
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+  margin-bottom: 0.5rem;
+`
+
+const Spinner = styled.span`
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #0c5460;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
 `
 
 export default NewsletterSignup

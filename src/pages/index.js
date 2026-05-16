@@ -9,6 +9,7 @@ import PostCarousel from "../components/postCarousel"
 import SocialLinks from "../components/socialLinks"
 import NewsletterSignup from "../components/newsletterSignup"
 import Avatar from "../components/avatar"
+import AnchorLink from "../components/anchorLink"
 import { faFire } from "@fortawesome/free-solid-svg-icons"
 import { faHeart } from "@fortawesome/free-solid-svg-icons"
 
@@ -32,7 +33,7 @@ class IndexPage extends React.Component {
           ]}
         />
 
-        <HeroSection>
+        <HeroSection id="sobre">
           <HeroContent>
             <AvatarContainer>
               <Avatar size={120} />
@@ -58,26 +59,44 @@ class IndexPage extends React.Component {
           </HeroContent>
         </HeroSection>
 
-        <PostCarousel
-          posts={posts}
-          title="Posts em Destaque"
-          icon={faHeart}
-          featured={true}
-          badge="Destaque"
-          autoplay={true}
-        />
+        <section id="destaques">
+          <SectionHeader>
+            <AnchorLink id="destaques" />
+          </SectionHeader>
+          <PostCarousel
+            posts={posts}
+            title="Posts em Destaque"
+            icon={faHeart}
+            featured={true}
+            badge="Destaque"
+            autoplay={true}
+          />
+        </section>
 
-        <PostCarousel
-          posts={posts}
-          title="Últimos Posts"
-          icon={faFire}
-          count={5}
-          autoplay={true}
-        />
+        <section id="ultimos-posts">
+          <SectionHeader>
+            <AnchorLink id="ultimos-posts" />
+          </SectionHeader>
+          <PostCarousel
+            posts={posts}
+            title="Últimos Posts"
+            icon={faFire}
+            count={5}
+            autoplay={true}
+          />
+        </section>
 
-        <NewsletterSignup />
+        <section id="newsletter">
+          <SectionHeader>
+            <AnchorLink id="newsletter" />
+          </SectionHeader>
+          <NewsletterSignup />
+        </section>
 
-        <SidebarSection>
+        <SidebarSection id="contato">
+          <SectionHeader>
+            <AnchorLink id="contato" />
+          </SectionHeader>
           <SocialLinks />
         </SidebarSection>
       </WideLayout>
@@ -150,6 +169,12 @@ const SidebarSection = styled.aside`
   @media (max-width: 768px) {
     margin: 3rem 0;
   }
+`
+
+const SectionHeader = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: -1rem;
 `
 
 export default IndexPage
