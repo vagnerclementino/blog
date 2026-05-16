@@ -1,71 +1,89 @@
-import * as functions from "firebase-functions";
-import * as admin from "firebase-admin";
-import mailchimp from "mailchimp-api-v3";
+import { onRequest } from "firebase-functions/v2/https"
+import * as logger from "firebase-functions/logger"
+import disposableDomains from "disposable-email-domains"
 
-admin.initializeApp();
+export const isValidEmail = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(email)
+}
 
-export const newsletterSignup = functions
-  .runWith({
-    memory: "256MB",
-    timeoutSeconds: 10,
-  })
-  .https.onRequest(async (req: any, res: any) => {
+export const isDisposableEmail = (email: string): boolean => {
+  const domain = email.split("@")[1]
+  if (!domain) return false
+  return disposableDomains.includes(domain)
+}
+
+export const subscribeToNewsletter = onRequest(
+  { cors: true },
+  async (req, res) => {
     if (req.method !== "POST") {
-      res.status(405).json({ message: "Method Not Allowed" });
-      return;
+      res.status(405).send("Method Not Allowed")
+      return
     }
 
-    const { name, email } = req.body;
+    const { email } = req.body as { email?: string }
 
-    // Validação simples
-    if (!name || !email) {
-      res.status(400).json({ message: "Nome e email são obrigatórios." });
-      return;
+    // 1. Validação de Sintaxe
+    if (!email || !isValidEmail(email)) {
+      res.status(400).json({ error: "Formato de e-mail inválido." })
+      return
     }
 
-    const listId = process.env.MAILCHIMP_LIST_ID;
-
-    if (!listId) {
-      functions.logger.error("MAILCHIMP_LIST_ID não configurada");
-      res.status(500).json({ message: "Configuração do servidor incompleta." });
-      return;
+    // 2. Bloqueio de E-mails Temporários
+    if (isDisposableEmail(email)) {
+      res.status(400).json({
+        error:
+          "E-mails temporários não são permitidos. Use seu e-mail principal.",
+      })
+      return
     }
 
-    const apiKey = process.env.MAILCHIMP_API_KEY;
-    if (!apiKey) {
-      functions.logger.error("MAILCHIMP_API_KEY não configurada");
-      res.status(500).json({ message: "Configuração do servidor incompleta." });
-      return;
+    // Variáveis do Mailchimp (via Firebase Secret Manager / env)
+    const API_KEY = process.env.MAILCHIMP_API_KEY
+    const DATACENTER = process.env.MAILCHIMP_SERVER_PREFIX
+    const AUDIENCE_ID = process.env.MAILCHIMP_AUDIENCE_ID
+
+    if (!API_KEY || !DATACENTER || !AUDIENCE_ID) {
+      logger.error("Variáveis do Mailchimp não configuradas")
+      res.status(500).json({ error: "Erro interno no servidor." })
+      return
     }
 
-    const mailchimpConfig = {
-      apiKey,
-      server: process.env.MAILCHIMP_SERVER,
-    };
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const mailchimpClient = new mailchimp(mailchimpConfig.apiKey) as any;
+    const url = `https://${DATACENTER}.api.mailchimp.com/3.0/lists/${AUDIENCE_ID}/members`
 
     try {
-      await mailchimpClient.lists.addMembers(listId, [
-        {
-          email_address: email,
-          status: "subscribed",
-          merge_fields: {
-            FNAME: name,
-          },
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          Authorization: `apikey ${API_KEY}`,
+          "Content-Type": "application/json",
         },
-      ]);
+        body: JSON.stringify({
+          email_address: email,
+          status: "pending", // Aciona o Double Opt-in nativo
+        }),
+      })
 
-      functions.logger.info(`Inscrição adicionada: ${email}`);
-      res.status(200).json({ message: "Inscrição realizada com sucesso!" });
-    } catch (err: any) {
-      functions.logger.error("Erro no Mailchimp:", err);
-      // Se o erro for de já existir, podemos retornar mensagem amigável
-      if (err.status === 400 && err.detail && typeof err.detail === 'string' && (err.detail.includes('already a member') || err.detail.includes('Member Exists'))) {
-        res.status(200).json({ message: "Você já está inscrito!" });
-        return;
+      const data = (await response.json()) as {
+        title?: string
+        detail?: string
       }
-      res.status(500).json({ message: "Erro ao processar inscrição. Tente novamente." });
+
+      if (!response.ok) {
+        if (data.title === "Member Exists") {
+          res.status(400).json({ error: "Este e-mail já está inscrito!" })
+          return
+        }
+        throw new Error(data.detail ?? "Erro na API do Mailchimp")
+      }
+
+      res.status(200).json({
+        message:
+          "Por favor, verifique sua caixa de entrada para confirmar a inscrição!",
+      })
+    } catch (error) {
+      logger.error("Erro na integração", error)
+      res.status(500).json({ error: "Erro interno no servidor." })
     }
-  });
+  }
+)

@@ -9,7 +9,8 @@ const Button = ({
   radius,
   marginTop,
   marginBottom,
-  children
+  children,
+  ...rest
 }) => (
   <ButtonWrapper
     background={background}
@@ -19,6 +20,7 @@ const Button = ({
     radius={radius}
     marginTop={marginTop}
     marginBottom={marginBottom}
+    {...rest}
   >
     {children}
   </ButtonWrapper>

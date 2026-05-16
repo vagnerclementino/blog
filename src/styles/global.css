@@ -2,6 +2,26 @@
 @import "./hyphenation.css";
 @import "./inline-code.css";
 
+:root {
+  --bg: #ffffff;
+  --textNormal: #222222;
+  --textTitle: #222222;
+  --textLink: #007acc;
+  --textSecondary: #757575;
+  --hr: #ced4da;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1b1b2f;
+    --textNormal: #e6e6e6;
+    --textTitle: #e6e6e6;
+    --textLink: #6ab0f5;
+    --textSecondary: #9e9e9e;
+    --hr: #444444;
+  }
+}
+
 .footnotes h2#footnote-label.sr-only {
   position: static !important;
   width: auto !important;
@@ -59,7 +79,6 @@ pre {
   white-space: pre;
   margin: 1em 0;
 }
-
 
 h1 {
   font-size: 2em !important;
