@@ -41,4 +41,4 @@ jobs:
           FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CLEMENTINO_NOTES }}
         run: |
           echo "$FIREBASE_SERVICE_ACCOUNT_JSON" > /tmp/serviceAccountKey.json
-          npx firebase-tools deploy --only functions --project clementino-notes --key-file /tmp/serviceAccountKey.json
+          npx firebase-tools deploy --only functions --project clementino-notes --import-admin-sdk /tmp/serviceAccountKey.json
