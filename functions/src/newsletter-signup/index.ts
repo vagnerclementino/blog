@@ -12,9 +12,16 @@ export const isDisposableEmail = (email: string): boolean => {
   if (!domain) return false
   return disposableDomains.includes(domain)
 }
-
 export const subscribeToNewsletter = onRequest(
-  { cors: true },
+  {
+    cors: true,
+    invoker: "public",
+    secrets: [
+      "MAILCHIMP_API_KEY",
+      "MAILCHIMP_SERVER_PREFIX",
+      "MAILCHIMP_AUDIENCE_ID",
+    ],
+  },
   async (req, res) => {
     if (req.method !== "POST") {
       res.status(405).send("Method Not Allowed")
