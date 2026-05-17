@@ -14,11 +14,13 @@ const mockCallable = jest.fn()
 jest.mock("../firebase", () => ({
   app: {},
   appCheck: null,
+  functions: {},
 }))
 
 jest.mock("firebase/functions", () => ({
   getFunctions: jest.fn(() => ({})),
   httpsCallable: jest.fn(() => mockCallable),
+  connectFunctionsEmulator: jest.fn(),
 }))
 
 describe("NewsletterSignup", () => {
@@ -37,7 +39,7 @@ describe("NewsletterSignup", () => {
     expect(screen.getByText(/Newsletter/)).toBeInTheDocument()
     expect(screen.getByPlaceholderText("seu@email.com")).toBeInTheDocument()
     expect(
-      screen.getByRole("button", { name: "Inscrever-se" })
+      screen.getByRole("button", { name: "Enviar" })
     ).toBeInTheDocument()
     expect(
       screen.getByText(/Receba as últimas atualizações/)
@@ -97,7 +99,7 @@ describe("NewsletterSignup", () => {
     input.removeAttribute("required")
 
     fireEvent.change(input, { target: { value: "invalid-email" } })
-    fireEvent.click(screen.getByRole("button", { name: "Inscrever-se" }))
+    fireEvent.click(screen.getByRole("button", { name: "Enviar" }))
 
     await waitFor(() => {
       expect(
@@ -115,7 +117,7 @@ describe("NewsletterSignup", () => {
     fireEvent.change(screen.getByPlaceholderText("seu@email.com"), {
       target: { value: "user@gmail.com" },
     })
-    fireEvent.click(screen.getByRole("button", { name: "Inscrever-se" }))
+    fireEvent.click(screen.getByRole("button", { name: "Enviar" }))
 
     await waitFor(() => {
       expect(screen.getByText("Enviando...")).toBeInTheDocument()
@@ -134,7 +136,7 @@ describe("NewsletterSignup", () => {
     const input = screen.getByPlaceholderText("seu@email.com")
 
     fireEvent.change(input, { target: { value: "user@gmail.com" } })
-    fireEvent.click(screen.getByRole("button", { name: "Inscrever-se" }))
+    fireEvent.click(screen.getByRole("button", { name: "Enviar" }))
 
     await waitFor(() => {
       expect(
@@ -154,7 +156,7 @@ describe("NewsletterSignup", () => {
     fireEvent.change(screen.getByPlaceholderText("seu@email.com"), {
       target: { value: "user@gmail.com" },
     })
-    fireEvent.click(screen.getByRole("button", { name: "Inscrever-se" }))
+    fireEvent.click(screen.getByRole("button", { name: "Enviar" }))
 
     await waitFor(() => {
       expect(mockCallable).toHaveBeenCalledWith({ email: "user@gmail.com" })
@@ -170,7 +172,7 @@ describe("NewsletterSignup", () => {
     fireEvent.change(screen.getByPlaceholderText("seu@email.com"), {
       target: { value: "user@gmail.com" },
     })
-    fireEvent.click(screen.getByRole("button", { name: "Inscrever-se" }))
+    fireEvent.click(screen.getByRole("button", { name: "Enviar" }))
 
     await waitFor(() => {
       expect(
@@ -186,7 +188,7 @@ describe("NewsletterSignup", () => {
     fireEvent.change(screen.getByPlaceholderText("seu@email.com"), {
       target: { value: "user@gmail.com" },
     })
-    fireEvent.click(screen.getByRole("button", { name: "Inscrever-se" }))
+    fireEvent.click(screen.getByRole("button", { name: "Enviar" }))
 
     await waitFor(() => {
       expect(screen.getByText(/Erro de conexão/)).toBeInTheDocument()
@@ -204,7 +206,7 @@ describe("NewsletterSignup", () => {
     fireEvent.change(screen.getByPlaceholderText("seu@email.com"), {
       target: { value: "user@mailinator.com" },
     })
-    fireEvent.click(screen.getByRole("button", { name: "Inscrever-se" }))
+    fireEvent.click(screen.getByRole("button", { name: "Enviar" }))
 
     await waitFor(() => {
       expect(
@@ -220,7 +222,7 @@ describe("NewsletterSignup", () => {
     fireEvent.change(screen.getByPlaceholderText("seu@email.com"), {
       target: { value: "user@gmail.com" },
     })
-    fireEvent.click(screen.getByRole("button", { name: "Inscrever-se" }))
+    fireEvent.click(screen.getByRole("button", { name: "Enviar" }))
 
     await waitFor(() => {
       expect(screen.getByText(/Erro de autenticação/)).toBeInTheDocument()
