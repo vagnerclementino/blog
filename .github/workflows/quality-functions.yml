@@ -1,15 +1,13 @@
-name: Deploy Firebase Functions
+name: Quality Check - Functions
 
 on:
-  push:
-    branches: [main]
+  pull_request:
     paths:
       - "functions/**"
-  workflow_dispatch:
 
 jobs:
-  deploy:
-    name: Deploy Firebase Functions
+  quality:
+    name: Lint, Test & Build Functions
     runs-on: ubuntu-latest
 
     steps:
@@ -27,6 +25,10 @@ jobs:
         working-directory: functions
         run: npm ci
 
+      - name: Lint (type check)
+        working-directory: functions
+        run: npm run lint
+
       - name: Run tests
         working-directory: functions
         run: npm test
@@ -34,11 +36,3 @@ jobs:
       - name: Build TypeScript
         working-directory: functions
         run: npm run build
-
-      - name: Deploy to Firebase Functions
-        working-directory: functions
-        env:
-          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CLEMENTINO_NOTES }}
-        run: |
-          echo "$FIREBASE_SERVICE_ACCOUNT_JSON" > /tmp/serviceAccountKey.json
-          npx firebase-tools deploy --only functions --project clementino-notes --import-admin-sdk /tmp/serviceAccountKey.json
