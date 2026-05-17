@@ -1,6 +1,9 @@
-import { onRequest } from "firebase-functions/v2/https"
+import { onCall } from "firebase-functions/v2/https"
 import * as logger from "firebase-functions/logger"
 import disposableDomains from "disposable-email-domains"
+import admin from "firebase-admin"
+
+if (!admin.apps.length) admin.initializeApp()
 
 export const isValidEmail = (email: string): boolean => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -12,50 +15,31 @@ export const isDisposableEmail = (email: string): boolean => {
   if (!domain) return false
   return disposableDomains.includes(domain)
 }
-export const subscribeToNewsletter = onRequest(
+export const subscribeToNewsletter = onCall(
   {
-    cors: true,
-    invoker: "public",
     enforceAppCheck: true,
-    secrets: [
-      "MAILCHIMP_API_KEY",
-      "MAILCHIMP_SERVER_PREFIX",
-      "MAILCHIMP_AUDIENCE_ID",
-    ],
   },
+  async (request) => {
+    const { email } = request.data as { email?: string }
 
-  async (req, res) => {
-    if (req.method !== "POST") {
-      res.status(405).send("Method Not Allowed")
-      return
-    }
-
-    const { email } = req.body as { email?: string }
-
-    // 1. Validação de Sintaxe
     if (!email || !isValidEmail(email)) {
-      res.status(400).json({ error: "Formato de e-mail inválido." })
-      return
+      logger.warn("Formato de e-mail inválido.")
+      return { error: "Formato de e-mail inválido." }
     }
 
-    // 2. Bloqueio de E-mails Temporários
     if (isDisposableEmail(email)) {
-      res.status(400).json({
-        error:
-          "E-mails temporários não são permitidos. Use seu e-mail principal.",
-      })
-      return
+      return {
+        error: "E-mails temporários não são permitidos. Use seu e-mail principal.",
+      }
     }
 
-    // Variáveis do Mailchimp (via Firebase Secret Manager / env)
     const API_KEY = process.env.MAILCHIMP_API_KEY
     const DATACENTER = process.env.MAILCHIMP_SERVER_PREFIX
     const AUDIENCE_ID = process.env.MAILCHIMP_AUDIENCE_ID
 
     if (!API_KEY || !DATACENTER || !AUDIENCE_ID) {
       logger.error("Variáveis do Mailchimp não configuradas")
-      res.status(500).json({ error: "Erro interno no servidor." })
-      return
+      return { error: "Erro interno no servidor." }
     }
 
     const url = `https://${DATACENTER}.api.mailchimp.com/3.0/lists/${AUDIENCE_ID}/members`
@@ -69,7 +53,7 @@ export const subscribeToNewsletter = onRequest(
         },
         body: JSON.stringify({
           email_address: email,
-          status: "pending", // Aciona o Double Opt-in nativo
+          status: "pending",
         }),
       })
 
@@ -80,19 +64,18 @@ export const subscribeToNewsletter = onRequest(
 
       if (!response.ok) {
         if (data.title === "Member Exists") {
-          res.status(400).json({ error: "Este e-mail já está inscrito!" })
-          return
+          return { error: "Este e-mail já está inscrito!" }
         }
         throw new Error(data.detail ?? "Erro na API do Mailchimp")
       }
 
-      res.status(200).json({
+      return {
         message:
           "Por favor, verifique sua caixa de entrada para confirmar a inscrição!",
-      })
+      }
     } catch (error) {
       logger.error("Erro na integração", error)
-      res.status(500).json({ error: "Erro interno no servidor." })
+      return { error: "Erro interno no servidor." }
     }
   }
 )

@@ -61,6 +61,31 @@ const NewsletterSignup = ({ anchorId = null }) => {
         appCheckToken = null
       }
 
+      //Prefer calling the callable function via Firebase SDK (attaches App Check automatically)
+      try {
+        const firebaseModule = await import("../firebase")
+        const { app } = firebaseModule
+        if (app) {
+          const { getFunctions, httpsCallable } = await import("firebase/functions")
+          const functions = getFunctions(app)
+          const subscribe = httpsCallable(functions, "subscribeToNewsletter")
+          const result = await subscribe({ email })
+          const data = result.data || {}
+          if (data.error) {
+            setStatus("error")
+            setStatusMessage(`❌ ${data.error}`)
+            return
+          }
+          setStatus("success")
+          setStatusMessage(`✅ ${data.message || "Inscrição realizada"}`)
+          setEmail("")
+          setSuggestion(null)
+          return
+        }
+      } catch (err) {
+      //fallback to HTTP function if callable fails
+      }
+
       const headers = { "Content-Type": "application/json" }
       if (appCheckToken) headers["X-Firebase-AppCheck"] = appCheckToken
 
