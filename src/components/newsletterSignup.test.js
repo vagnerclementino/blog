@@ -2,14 +2,14 @@ import React from "react"
 import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import NewsletterSignup from "./newsletterSignup"
 
-// Mock mailcheck
+//Mock mailcheck
 jest.mock("mailcheck", () => ({
   run: jest.fn(),
 }))
 
 import Mailcheck from "mailcheck"
 
-// Mock firebase module
+//Mock firebase module
 const mockCallable = jest.fn()
 jest.mock("../firebase", () => ({
   app: {},
