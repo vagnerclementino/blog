@@ -2,12 +2,13 @@ import React, { useState } from "react"
 import styled from "styled-components"
 import Mailcheck from "mailcheck"
 import Button from "./button"
+import AnchorLink from "./anchorLink"
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 const getFunctionUrl = () => process.env.GATSBY_NEWSLETTER_FUNCTION_URL || ""
 
-const NewsletterSignup = () => {
+const NewsletterSignup = ({ anchorId = null }) => {
   const [email, setEmail] = useState("")
   const [suggestion, setSuggestion] = useState(null)
   const [status, setStatus] = useState("idle")
@@ -78,7 +79,7 @@ const NewsletterSignup = () => {
   return (
     <Container>
       <Content>
-        <Title>📬 Newsletter</Title>
+        <Title>📬 Newsletter {anchorId && <AnchorLink id={anchorId} />}</Title>
         <Description>
           Receba as últimas atualizações do blog diretamente no seu email. Sem
           spam, apenas conteúdo de qualidade!

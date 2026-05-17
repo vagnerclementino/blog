@@ -9,7 +9,6 @@ import PostCarousel from "../components/postCarousel"
 import SocialLinks from "../components/socialLinks"
 import NewsletterSignup from "../components/newsletterSignup"
 import Avatar from "../components/avatar"
-import AnchorLink from "../components/anchorLink"
 import { faFire } from "@fortawesome/free-solid-svg-icons"
 import { faHeart } from "@fortawesome/free-solid-svg-icons"
 
@@ -60,9 +59,6 @@ class IndexPage extends React.Component {
         </HeroSection>
 
         <section id="destaques">
-          <SectionHeader>
-            <AnchorLink id="destaques" />
-          </SectionHeader>
           <PostCarousel
             posts={posts}
             title="Posts em Destaque"
@@ -70,34 +66,27 @@ class IndexPage extends React.Component {
             featured={true}
             badge="Destaque"
             autoplay={true}
+            anchorId="destaques"
           />
         </section>
 
         <section id="ultimos-posts">
-          <SectionHeader>
-            <AnchorLink id="ultimos-posts" />
-          </SectionHeader>
           <PostCarousel
             posts={posts}
             title="Últimos Posts"
             icon={faFire}
             count={5}
             autoplay={true}
+            anchorId="ultimos-posts"
           />
         </section>
 
         <section id="newsletter">
-          <SectionHeader>
-            <AnchorLink id="newsletter" />
-          </SectionHeader>
-          <NewsletterSignup />
+          <NewsletterSignup anchorId="newsletter" />
         </section>
 
         <SidebarSection id="contato">
-          <SectionHeader>
-            <AnchorLink id="contato" />
-          </SectionHeader>
-          <SocialLinks />
+          <SocialLinks anchorId="contato" />
         </SidebarSection>
       </WideLayout>
     )
@@ -169,12 +158,6 @@ const SidebarSection = styled.aside`
   @media (max-width: 768px) {
     margin: 3rem 0;
   }
-`
-
-const SectionHeader = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: -1rem;
 `
 
 export default IndexPage
