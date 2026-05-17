@@ -17,10 +17,10 @@ export const isDisposableEmail = (email: string): boolean => {
 }
 export const subscribeToNewsletter = onCall(
   {
-    enforceAppCheck: true,
+    enforceAppCheck: !process.env.FUNCTIONS_EMULATOR,
   },
   async (request) => {
-    const { email } = request.data as { email?: string }
+    const { email, name } = request.data as { email?: string; name?: string }
 
     if (!email || !isValidEmail(email)) {
       logger.warn("Formato de e-mail inválido.")
@@ -44,6 +44,19 @@ export const subscribeToNewsletter = onCall(
 
     const url = `https://${DATACENTER}.api.mailchimp.com/3.0/lists/${AUDIENCE_ID}/members`
 
+    const body: Record<string, unknown> = {
+      email_address: email,
+      status: "pending",
+    }
+
+    if (name && name.trim()) {
+      const parts = name.trim().split(/\s+/)
+      body.merge_fields = {
+        FNAME: parts[0],
+        LNAME: parts.slice(1).join(" ") || "",
+      }
+    }
+
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -51,10 +64,7 @@ export const subscribeToNewsletter = onCall(
           Authorization: `apikey ${API_KEY}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          email_address: email,
-          status: "pending",
-        }),
+        body: JSON.stringify(body),
       })
 
       const data = (await response.json()) as {

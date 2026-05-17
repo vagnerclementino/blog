@@ -4,6 +4,7 @@ import {
   ReCaptchaEnterpriseProvider,
   setTokenAutoRefreshEnabled,
 } from "firebase/app-check"
+import { getFunctions, connectFunctionsEmulator } from "firebase/functions"
 
 const firebaseConfig = {
   apiKey: process.env.GATSBY_FIREBASE_API_KEY,
@@ -24,7 +25,7 @@ if (firebaseConfig.apiKey && firebaseConfig.projectId) {
 
 let appCheck = null
 const siteKey = process.env.GATSBY_RECAPTCHA_SITE_KEY
-if (siteKey && typeof window !== "undefined") {
+if (siteKey && typeof window !== "undefined" && process.env.NODE_ENV !== "development") {
   if (process.env.GATSBY_FIREBASE_APPCHECK_DEBUG_TOKEN) {
     self.FIREBASE_APPCHECK_DEBUG_TOKEN = process.env.GATSBY_FIREBASE_APPCHECK_DEBUG_TOKEN
   }
@@ -40,3 +41,13 @@ if (siteKey && typeof window !== "undefined") {
 }
 
 export { app, appCheck }
+
+let functions = null
+if (app && typeof window !== "undefined") {
+  functions = getFunctions(app)
+  if (process.env.NODE_ENV === "development") {
+    connectFunctionsEmulator(functions, "127.0.0.1", 5001)
+  }
+}
+
+export { functions }

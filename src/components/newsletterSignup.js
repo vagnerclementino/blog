@@ -1,12 +1,12 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 import Mailcheck from "mailcheck"
-import Button from "./button"
 import AnchorLink from "./anchorLink"
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 const NewsletterSignup = ({ anchorId = null }) => {
+  const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [suggestion, setSuggestion] = useState(null)
   const [status, setStatus] = useState("idle")
@@ -45,15 +45,14 @@ const NewsletterSignup = ({ anchorId = null }) => {
 
     try {
       const firebaseModule = await import("../firebase")
-      const { app } = firebaseModule
+      const { app, functions } = firebaseModule
       if (!app) {
         throw new Error("Firebase não inicializado")
       }
 
-      const { getFunctions, httpsCallable } = await import("firebase/functions")
-      const functions = getFunctions(app)
+      const { httpsCallable } = await import("firebase/functions")
       const subscribe = httpsCallable(functions, "subscribeToNewsletter")
-      const result = await subscribe({ email })
+      const result = await subscribe({ email, name: name.trim() || undefined })
       const data = result.data || {}
 
       if (data.error) {
@@ -64,6 +63,7 @@ const NewsletterSignup = ({ anchorId = null }) => {
 
       setStatus("success")
       setStatusMessage(`✅ ${data.message || "Inscrição realizada"}`)
+      setName("")
       setEmail("")
       setSuggestion(null)
     } catch (err) {
@@ -92,7 +92,14 @@ const NewsletterSignup = ({ anchorId = null }) => {
         </Description>
 
         <Form onSubmit={handleSubmit} noValidate>
-          <InputGroup>
+          <InlineRow>
+            <NameInput
+              type="text"
+              placeholder="Seu nome"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              disabled={isLoading}
+            />
             <EmailInput
               type="email"
               placeholder="seu@email.com"
@@ -101,10 +108,10 @@ const NewsletterSignup = ({ anchorId = null }) => {
               disabled={isLoading}
               required
             />
-            <Button type="submit" disabled={isLoading} fontSize="13px">
-              {isLoading ? "Enviando..." : "Inscrever-se"}
-            </Button>
-          </InputGroup>
+            <SubmitButton type="submit" disabled={isLoading}>
+              {isLoading ? "Enviando..." : "Enviar"}
+            </SubmitButton>
+          </InlineRow>
 
           {isLoading && (
             <LoadingMessage>
@@ -171,17 +178,19 @@ const Form = styled.form`
   margin-bottom: 1rem;
 `
 
-const InputGroup = styled.div`
+const InlineRow = styled.div`
   display: flex;
+  align-items: center;
   gap: 0.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 
   @media (max-width: 768px) {
     flex-direction: column;
+    align-items: stretch;
   }
 `
 
-const EmailInput = styled.input`
+const NameInput = styled.input`
   flex: 1;
   padding: 0.5rem 0.75rem;
   border: 1px solid var(--textNormal, #333333);
@@ -189,6 +198,10 @@ const EmailInput = styled.input`
   background: var(--bg, #ffffff);
   color: var(--textNormal, #333333);
   font-size: 0.9rem;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 
   &:focus {
     outline: none;
@@ -202,6 +215,63 @@ const EmailInput = styled.input`
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+  }
+`
+
+const EmailInput = styled.input`
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--textNormal, #333333);
+  border-radius: 4px;
+  background: var(--bg, #ffffff);
+  color: var(--textNormal, #333333);
+  font-size: 0.9rem;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--textLink, #007acc);
+  }
+
+  &::placeholder {
+    color: var(--textSecondary, #999999);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+`
+
+const SubmitButton = styled.button`
+  padding: 10px 25px;
+  border: none;
+  border-radius: 6px;
+  background: black;
+  color: rgb(255, 255, 255);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+
+  &:hover {
+    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.25);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 10px 25px;
+    font-size: 13px;
   }
 `
 
