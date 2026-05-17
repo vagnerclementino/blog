@@ -46,9 +46,27 @@ const NewsletterSignup = ({ anchorId = null }) => {
     setStatusMessage("")
 
     try {
+      let appCheckToken = null
+      try {
+        if (typeof window !== "undefined") {
+          const firebaseModule = await import("../firebase")
+          const { appCheck } = firebaseModule
+          if (appCheck) {
+            const { getToken } = await import("firebase/app-check")
+            const tokenResult = await getToken(appCheck, false)
+            appCheckToken = tokenResult?.token ?? null
+          }
+        }
+      } catch (e) {
+        appCheckToken = null
+      }
+
+      const headers = { "Content-Type": "application/json" }
+      if (appCheckToken) headers["X-Firebase-AppCheck"] = appCheckToken
+
       const response = await fetch(getFunctionUrl(), {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers,
         body: JSON.stringify({ email }),
       })
 
