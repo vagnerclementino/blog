@@ -6,8 +6,6 @@ import AnchorLink from "./anchorLink"
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-const getFunctionUrl = () => process.env.GATSBY_NEWSLETTER_FUNCTION_URL || ""
-
 const NewsletterSignup = ({ anchorId = null }) => {
   const [email, setEmail] = useState("")
   const [suggestion, setSuggestion] = useState(null)
@@ -46,74 +44,39 @@ const NewsletterSignup = ({ anchorId = null }) => {
     setStatusMessage("")
 
     try {
-      let appCheckToken = null
-      try {
-        if (typeof window !== "undefined") {
-          const firebaseModule = await import("../firebase")
-          const { appCheck } = firebaseModule
-          if (appCheck) {
-            const { getToken } = await import("firebase/app-check")
-            const tokenResult = await getToken(appCheck, false)
-            appCheckToken = tokenResult?.token ?? null
-          }
-        }
-      } catch (e) {
-        appCheckToken = null
+      const firebaseModule = await import("../firebase")
+      const { app } = firebaseModule
+      if (!app) {
+        throw new Error("Firebase não inicializado")
       }
 
-      //Prefer calling the callable function via Firebase SDK (attaches App Check automatically)
-      try {
-        const firebaseModule = await import("../firebase")
-        const { app } = firebaseModule
-        if (app) {
-          const { getFunctions, httpsCallable } = await import("firebase/functions")
-          const functions = getFunctions(app)
-          const subscribe = httpsCallable(functions, "subscribeToNewsletter")
-          const result = await subscribe({ email })
-          const data = result.data || {}
-          if (data.error) {
-            setStatus("error")
-            setStatusMessage(`❌ ${data.error}`)
-            return
-          }
-          setStatus("success")
-          setStatusMessage(`✅ ${data.message || "Inscrição realizada"}`)
-          setEmail("")
-          setSuggestion(null)
-          return
-        }
-      } catch (err) {
-      //fallback to HTTP function if callable fails
-      }
+      const { getFunctions, httpsCallable } = await import("firebase/functions")
+      const functions = getFunctions(app)
+      const subscribe = httpsCallable(functions, "subscribeToNewsletter")
+      const result = await subscribe({ email })
+      const data = result.data || {}
 
-      const headers = { "Content-Type": "application/json" }
-      if (appCheckToken) headers["X-Firebase-AppCheck"] = appCheckToken
-
-      const response = await fetch(getFunctionUrl(), {
-        method: "POST",
-        headers,
-        body: JSON.stringify({ email }),
-      })
-
-      const data = await response.json()
-
-      if (!response.ok) {
+      if (data.error) {
         setStatus("error")
-        setStatusMessage(
-          `❌ ${data.error || "Ocorreu um erro. Tente novamente."}`
-        )
+        setStatusMessage(`❌ ${data.error}`)
         return
       }
 
       setStatus("success")
-      setStatusMessage(`✅ ${data.message}`)
+      setStatusMessage(`✅ ${data.message || "Inscrição realizada"}`)
       setEmail("")
       setSuggestion(null)
-    } catch {
-      setStatus("error")
-      setStatusMessage(
-        "❌ Erro de conexão. Verifique sua internet e tente novamente."
-      )
+    } catch (err) {
+      const errorMessage = err?.message || ""
+      if (errorMessage.includes("UNAUTHENTICATED")) {
+        setStatus("error")
+        setStatusMessage("❌ Erro de autenticação. Recarregue a página e tente novamente.")
+      } else {
+        setStatus("error")
+        setStatusMessage(
+          "❌ Erro de conexão. Verifique sua internet e tente novamente."
+        )
+      }
     }
   }
 

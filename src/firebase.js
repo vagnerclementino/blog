@@ -25,6 +25,9 @@ if (firebaseConfig.apiKey && firebaseConfig.projectId) {
 let appCheck = null
 const siteKey = process.env.GATSBY_RECAPTCHA_SITE_KEY
 if (siteKey && typeof window !== "undefined") {
+  if (process.env.GATSBY_FIREBASE_APPCHECK_DEBUG_TOKEN) {
+    self.FIREBASE_APPCHECK_DEBUG_TOKEN = process.env.GATSBY_FIREBASE_APPCHECK_DEBUG_TOKEN
+  }
   try {
     appCheck = initializeAppCheck(app, {
       provider: new ReCaptchaEnterpriseProvider(siteKey),

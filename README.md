@@ -199,6 +199,47 @@ O deploy das functions é feito via GitHub Actions automaticamente ao fazer merg
 npx firebase-tools deploy --only functions
 ```
 
+### App Check (Debug Token para desenvolvimento local)
+
+A function usa Firebase App Check para impedir chamadas não autorizadas. Em produção, o reCAPTCHA Enterprise gera tokens automaticamente. Em desenvolvimento local, é necessário configurar um **debug token**.
+
+#### 1. Gerar o debug token
+
+No `.env.development`, defina:
+
+```env
+GATSBY_FIREBASE_APPCHECK_DEBUG_TOKEN=true
+```
+
+Ao iniciar o Gatsby (`npm start`), o console do browser exibirá algo como:
+
+```
+App Check debug token: 12345678-1234-1234-1234-123456789abc
+```
+
+#### 2. Registrar o token no Firebase Console
+
+1. Acesse [Firebase Console](https://console.firebase.google.com/) → seu projeto
+2. Vá em **App Check** → **Apps**
+3. Clique no app web → **Manage debug tokens**
+4. Clique em **Add debug token** e cole o token exibido no console
+
+Ou via CLI:
+
+```bash
+npx firebase-tools appcheck:debug-tokens:create --project clementino-notes --token "SEU-DEBUG-TOKEN"
+```
+
+#### 3. (Opcional) Usar um token fixo
+
+Para evitar registrar um novo token a cada vez, cole o token já registrado diretamente no `.env.development`:
+
+```env
+GATSBY_FIREBASE_APPCHECK_DEBUG_TOKEN=12345678-1234-1234-1234-123456789abc
+```
+
+> ⚠️ O debug token **nunca** deve ser commitado ou usado em produção. O `.env.development` já está no `.gitignore`.
+
 ## Build e Deploy
 
 Para fazer o build do projeto:
