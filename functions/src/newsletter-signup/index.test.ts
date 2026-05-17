@@ -1,18 +1,28 @@
 // Mocks must be declared before imports (Jest hoists jest.mock calls)
+const mockHandler = jest.fn()
 jest.mock("firebase-functions/v2/https", () => ({
-  onRequest: (_options: unknown, handler: unknown) => handler,
+  onCall: (_options: unknown, handler: unknown) => {
+    mockHandler.mockImplementation(handler as (...args: unknown[]) => unknown)
+    return handler
+  },
 }))
 
 jest.mock("firebase-functions/logger", () => ({
   error: jest.fn(),
+  warn: jest.fn(),
   info: jest.fn(),
+}))
+
+jest.mock("firebase-admin", () => ({
+  apps: [{}],
+  initializeApp: jest.fn(),
 }))
 
 import { isValidEmail, isDisposableEmail, subscribeToNewsletter } from "./index"
 
-// Type helper: after mocking onRequest, subscribeToNewsletter is the bare handler
-type Handler = (req: unknown, res: unknown) => Promise<void>
-const handler = (subscribeToNewsletter as unknown) as Handler
+// The handler extracted from onCall
+type CallableRequest = { data: Record<string, unknown> }
+const handler = subscribeToNewsletter as unknown as (request: CallableRequest) => Promise<Record<string, string>>
 
 // ─── isValidEmail ─────────────────────────────────────────────────────────────
 
@@ -48,7 +58,6 @@ describe("isValidEmail", () => {
 
 describe("isDisposableEmail", () => {
   it("returns true for known disposable domains", () => {
-    // These domains are in the real disposable-email-domains package
     expect(isDisposableEmail("user@10minutemail.com")).toBe(true)
     expect(isDisposableEmail("user@mailinator.com")).toBe(true)
     expect(isDisposableEmail("user@guerrillamail.com")).toBe(true)
@@ -67,23 +76,10 @@ describe("isDisposableEmail", () => {
   })
 })
 
-// ─── subscribeToNewsletter (HTTP handler) ─────────────────────────────────────
+// ─── subscribeToNewsletter (onCall handler) ───────────────────────────────────
 
 describe("subscribeToNewsletter", () => {
-  let req: { method: string; body: Record<string, unknown> }
-  let res: {
-    status: jest.Mock
-    json: jest.Mock
-    send: jest.Mock
-  }
-
   beforeEach(() => {
-    req = { method: "POST", body: {} }
-    res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn().mockReturnThis(),
-      send: jest.fn().mockReturnThis(),
-    }
     process.env.MAILCHIMP_API_KEY = "test-api-key"
     process.env.MAILCHIMP_SERVER_PREFIX = "us1"
     process.env.MAILCHIMP_AUDIENCE_ID = "audience123"
@@ -97,54 +93,33 @@ describe("subscribeToNewsletter", () => {
     delete process.env.MAILCHIMP_AUDIENCE_ID
   })
 
-  it("returns 405 for non-POST methods", async () => {
-    req.method = "GET"
-    await handler(req, res)
-    expect(res.status).toHaveBeenCalledWith(405)
-    expect(res.send).toHaveBeenCalledWith("Method Not Allowed")
+  it("returns error when email is missing", async () => {
+    const result = await handler({ data: {} })
+    expect(result).toEqual({ error: "Formato de e-mail inválido." })
   })
 
-  it("returns 400 when email is missing", async () => {
-    req.body = {}
-    await handler(req, res)
-    expect(res.status).toHaveBeenCalledWith(400)
-    expect(res.json).toHaveBeenCalledWith({
-      error: "Formato de e-mail inválido.",
+  it("returns error for invalid email format", async () => {
+    const result = await handler({ data: { email: "not-an-email" } })
+    expect(result).toEqual({ error: "Formato de e-mail inválido." })
+  })
+
+  it("returns error for disposable email domain", async () => {
+    const result = await handler({ data: { email: "user@mailinator.com" } })
+    expect(result).toEqual({
+      error: "E-mails temporários não são permitidos. Use seu e-mail principal.",
     })
   })
 
-  it("returns 400 for invalid email format", async () => {
-    req.body = { email: "not-an-email" }
-    await handler(req, res)
-    expect(res.status).toHaveBeenCalledWith(400)
-    expect(res.json).toHaveBeenCalledWith({
-      error: "Formato de e-mail inválido.",
-    })
-  })
-
-  it("returns 400 for disposable email domain", async () => {
-    req.body = { email: "user@mailinator.com" }
-    await handler(req, res)
-    expect(res.status).toHaveBeenCalledWith(400)
-    expect(res.json).toHaveBeenCalledWith({
-      error:
-        "E-mails temporários não são permitidos. Use seu e-mail principal.",
-    })
-  })
-
-  it("returns 200 and calls Mailchimp with status pending on success", async () => {
-    req.body = { email: "user@gmail.com" }
+  it("returns success and calls Mailchimp with status pending", async () => {
     ;(global.fetch as jest.Mock).mockResolvedValue({
       ok: true,
       json: jest.fn().mockResolvedValue({ id: "abc123" }),
     })
 
-    await handler(req, res)
+    const result = await handler({ data: { email: "user@gmail.com" } })
 
-    expect(res.status).toHaveBeenCalledWith(200)
-    expect(res.json).toHaveBeenCalledWith({
-      message:
-        "Por favor, verifique sua caixa de entrada para confirmar a inscrição!",
+    expect(result).toEqual({
+      message: "Por favor, verifique sua caixa de entrada para confirmar a inscrição!",
     })
 
     // Verify double opt-in: status must be "pending"
@@ -154,42 +129,30 @@ describe("subscribeToNewsletter", () => {
     expect(body.email_address).toBe("user@gmail.com")
   })
 
-  it("returns 400 when Mailchimp responds Member Exists", async () => {
-    req.body = { email: "user@gmail.com" }
+  it("returns error when Mailchimp responds Member Exists", async () => {
     ;(global.fetch as jest.Mock).mockResolvedValue({
       ok: false,
       json: jest.fn().mockResolvedValue({ title: "Member Exists" }),
     })
 
-    await handler(req, res)
+    const result = await handler({ data: { email: "user@gmail.com" } })
 
-    expect(res.status).toHaveBeenCalledWith(400)
-    expect(res.json).toHaveBeenCalledWith({
-      error: "Este e-mail já está inscrito!",
-    })
+    expect(result).toEqual({ error: "Este e-mail já está inscrito!" })
   })
 
-  it("returns 500 on network or unexpected error", async () => {
-    req.body = { email: "user@gmail.com" }
+  it("returns error on network or unexpected error", async () => {
     ;(global.fetch as jest.Mock).mockRejectedValue(new Error("Network error"))
 
-    await handler(req, res)
+    const result = await handler({ data: { email: "user@gmail.com" } })
 
-    expect(res.status).toHaveBeenCalledWith(500)
-    expect(res.json).toHaveBeenCalledWith({
-      error: "Erro interno no servidor.",
-    })
+    expect(result).toEqual({ error: "Erro interno no servidor." })
   })
 
-  it("returns 500 when Mailchimp env vars are missing", async () => {
+  it("returns error when Mailchimp env vars are missing", async () => {
     delete process.env.MAILCHIMP_API_KEY
-    req.body = { email: "user@gmail.com" }
 
-    await handler(req, res)
+    const result = await handler({ data: { email: "user@gmail.com" } })
 
-    expect(res.status).toHaveBeenCalledWith(500)
-    expect(res.json).toHaveBeenCalledWith({
-      error: "Erro interno no servidor.",
-    })
+    expect(result).toEqual({ error: "Erro interno no servidor." })
   })
 })

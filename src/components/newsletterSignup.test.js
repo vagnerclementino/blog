@@ -2,25 +2,29 @@ import React from "react"
 import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import NewsletterSignup from "./newsletterSignup"
 
-//Mock mailcheck
+// Mock mailcheck
 jest.mock("mailcheck", () => ({
   run: jest.fn(),
 }))
 
 import Mailcheck from "mailcheck"
 
-//Set up the Firebase Function URL env var
-process.env.GATSBY_NEWSLETTER_FUNCTION_URL =
-  "https://test-function.example.com/subscribeToNewsletter"
+// Mock firebase module
+const mockCallable = jest.fn()
+jest.mock("../firebase", () => ({
+  app: {},
+  appCheck: null,
+}))
 
-//Mock global fetch
-global.fetch = jest.fn()
+jest.mock("firebase/functions", () => ({
+  getFunctions: jest.fn(() => ({})),
+  httpsCallable: jest.fn(() => mockCallable),
+}))
 
 describe("NewsletterSignup", () => {
   beforeEach(() => {
-    //Default: mailcheck finds no suggestion
     Mailcheck.run.mockImplementation(({ empty }) => empty && empty())
-    fetch.mockClear()
+    mockCallable.mockClear()
     Mailcheck.run.mockClear()
   })
 
@@ -30,7 +34,7 @@ describe("NewsletterSignup", () => {
 
   it("renders the newsletter form correctly", () => {
     render(<NewsletterSignup />)
-    expect(screen.getByText("📬 Newsletter")).toBeInTheDocument()
+    expect(screen.getByText(/Newsletter/)).toBeInTheDocument()
     expect(screen.getByPlaceholderText("seu@email.com")).toBeInTheDocument()
     expect(
       screen.getByRole("button", { name: "Inscrever-se" })
@@ -101,11 +105,11 @@ describe("NewsletterSignup", () => {
       ).toBeInTheDocument()
     })
 
-    expect(fetch).not.toHaveBeenCalled()
+    expect(mockCallable).not.toHaveBeenCalled()
   })
 
   it("shows loading state while waiting for API response", async () => {
-    fetch.mockImplementation(() => new Promise(() => {}))
+    mockCallable.mockImplementation(() => new Promise(() => {}))
 
     render(<NewsletterSignup />)
     fireEvent.change(screen.getByPlaceholderText("seu@email.com"), {
@@ -120,12 +124,10 @@ describe("NewsletterSignup", () => {
   })
 
   it("shows success message and clears input on successful subscription", async () => {
-    fetch.mockResolvedValue({
-      ok: true,
-      json: jest.fn().mockResolvedValue({
-        message:
-          "Por favor, verifique sua caixa de entrada para confirmar a inscrição!",
-      }),
+    mockCallable.mockResolvedValue({
+      data: {
+        message: "Por favor, verifique sua caixa de entrada para confirmar a inscrição!",
+      },
     })
 
     render(<NewsletterSignup />)
@@ -143,10 +145,9 @@ describe("NewsletterSignup", () => {
     expect(input.value).toBe("")
   })
 
-  it("calls the Firebase Function with POST and JSON body", async () => {
-    fetch.mockResolvedValue({
-      ok: true,
-      json: jest.fn().mockResolvedValue({ message: "OK" }),
+  it("calls httpsCallable with the email", async () => {
+    mockCallable.mockResolvedValue({
+      data: { message: "OK" },
     })
 
     render(<NewsletterSignup />)
@@ -156,23 +157,13 @@ describe("NewsletterSignup", () => {
     fireEvent.click(screen.getByRole("button", { name: "Inscrever-se" }))
 
     await waitFor(() => {
-      expect(fetch).toHaveBeenCalledWith(
-        "https://test-function.example.com/subscribeToNewsletter",
-        expect.objectContaining({
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: "user@gmail.com" }),
-        })
-      )
+      expect(mockCallable).toHaveBeenCalledWith({ email: "user@gmail.com" })
     })
   })
 
   it("shows server error message when API returns error", async () => {
-    fetch.mockResolvedValue({
-      ok: false,
-      json: jest
-        .fn()
-        .mockResolvedValue({ error: "Este e-mail já está inscrito!" }),
+    mockCallable.mockResolvedValue({
+      data: { error: "Este e-mail já está inscrito!" },
     })
 
     render(<NewsletterSignup />)
@@ -189,7 +180,7 @@ describe("NewsletterSignup", () => {
   })
 
   it("shows connection error message on network failure", async () => {
-    fetch.mockRejectedValue(new Error("Network error"))
+    mockCallable.mockRejectedValue(new Error("Network error"))
 
     render(<NewsletterSignup />)
     fireEvent.change(screen.getByPlaceholderText("seu@email.com"), {
@@ -203,12 +194,10 @@ describe("NewsletterSignup", () => {
   })
 
   it("shows error for disposable email rejected by server", async () => {
-    fetch.mockResolvedValue({
-      ok: false,
-      json: jest.fn().mockResolvedValue({
-        error:
-          "E-mails temporários não são permitidos. Use seu e-mail principal.",
-      }),
+    mockCallable.mockResolvedValue({
+      data: {
+        error: "E-mails temporários não são permitidos. Use seu e-mail principal.",
+      },
     })
 
     render(<NewsletterSignup />)
@@ -221,6 +210,20 @@ describe("NewsletterSignup", () => {
       expect(
         screen.getByText(/E-mails temporários não são permitidos/)
       ).toBeInTheDocument()
+    })
+  })
+
+  it("shows authentication error for UNAUTHENTICATED response", async () => {
+    mockCallable.mockRejectedValue(new Error("UNAUTHENTICATED"))
+
+    render(<NewsletterSignup />)
+    fireEvent.change(screen.getByPlaceholderText("seu@email.com"), {
+      target: { value: "user@gmail.com" },
+    })
+    fireEvent.click(screen.getByRole("button", { name: "Inscrever-se" }))
+
+    await waitFor(() => {
+      expect(screen.getByText(/Erro de autenticação/)).toBeInTheDocument()
     })
   })
 })
