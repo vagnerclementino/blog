@@ -16,12 +16,14 @@ export const subscribeToNewsletter = onRequest(
   {
     cors: true,
     invoker: "public",
+    enforceAppCheck: true,
     secrets: [
       "MAILCHIMP_API_KEY",
       "MAILCHIMP_SERVER_PREFIX",
       "MAILCHIMP_AUDIENCE_ID",
     ],
   },
+
   async (req, res) => {
     if (req.method !== "POST") {
       res.status(405).send("Method Not Allowed")
