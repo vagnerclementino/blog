@@ -74,7 +74,12 @@ Inicie o servidor de desenvolvimento
 npm start
 ```
 
-O site estará disponível em `http://localhost:8000`
+Este comando inicia simultaneamente:
+
+- **Gatsby** (dev server) em `http://localhost:8000`
+- **Firebase Functions Emulator** em `http://127.0.0.1:5001`
+
+> Para rodar apenas o Gatsby sem o emulador de functions: `npm run develop`
 
 ## Rodando os testes
 
