@@ -21,14 +21,9 @@ if (firebaseConfig.apiKey && firebaseConfig.projectId) {
   app = initializeApp(firebaseConfig)
 }
 
-
-
 let appCheck = null
 const siteKey = process.env.GATSBY_RECAPTCHA_SITE_KEY
 if (siteKey && typeof window !== "undefined" && process.env.NODE_ENV !== "development") {
-  if (process.env.GATSBY_FIREBASE_APPCHECK_DEBUG_TOKEN) {
-    self.FIREBASE_APPCHECK_DEBUG_TOKEN = process.env.GATSBY_FIREBASE_APPCHECK_DEBUG_TOKEN
-  }
   try {
     appCheck = initializeAppCheck(app, {
       provider: new ReCaptchaEnterpriseProvider(siteKey),
@@ -40,8 +35,6 @@ if (siteKey && typeof window !== "undefined" && process.env.NODE_ENV !== "develo
   }
 }
 
-export { app, appCheck }
-
 let functions = null
 if (app && typeof window !== "undefined") {
   functions = getFunctions(app)
@@ -50,4 +43,4 @@ if (app && typeof window !== "undefined") {
   }
 }
 
-export { functions }
+export { app, appCheck, functions }
