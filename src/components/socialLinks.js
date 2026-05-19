@@ -11,8 +11,9 @@ import {
   faGlobe, 
   faRss 
 } from "@fortawesome/free-solid-svg-icons"
+import AnchorLink from "./anchorLink"
 
-const SocialLinks = () => {
+const SocialLinks = ({ anchorId = null }) => {
   const socialData = [
     {
       name: "LinkedIn",
@@ -54,7 +55,7 @@ const SocialLinks = () => {
 
   return (
     <Container>
-      <Title>Conecte-se comigo</Title>
+      <Title>Conecte-se comigo {anchorId && <AnchorLink id={anchorId} />}</Title>
       <LinksGrid>
         {socialData.map((social) => (
           <SocialLink

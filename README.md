@@ -74,7 +74,12 @@ Inicie o servidor de desenvolvimento
 npm start
 ```
 
-O site estará disponível em `http://localhost:8000`
+Este comando inicia simultaneamente:
+
+- **Gatsby** (dev server) em `http://localhost:8000`
+- **Firebase Functions Emulator** em `http://127.0.0.1:5001`
+
+> Para rodar apenas o Gatsby sem o emulador de functions: `npm run develop`
 
 ## Rodando os testes
 
@@ -89,6 +94,100 @@ Para rodar os testes em modo watch:
 ```bash
 npm run test:watch
 ```
+
+## ☁️ Firebase Functions (Newsletter)
+
+O blog utiliza uma Firebase Function para gerenciar inscrições na newsletter via Mailchimp.
+
+### Pré-requisitos
+
+- Node.js 20+
+- Firebase CLI (ou usar via `npx`)
+
+### Instalação
+
+```bash
+cd functions
+npm install
+```
+
+### Configuração dos Secrets
+
+A function precisa de credenciais do Mailchimp. Para desenvolvimento local, copie o arquivo de exemplo:
+
+```bash
+cp functions/.secret.local.example functions/.secret.local
+```
+
+Edite o `functions/.secret.local` com suas credenciais reais:
+
+```env
+MAILCHIMP_API_KEY=sua-api-key
+MAILCHIMP_SERVER_PREFIX=usX
+MAILCHIMP_AUDIENCE_ID=seu-audience-id
+```
+
+> ⚠️ O arquivo `.secret.local` está no `.gitignore` e nunca deve ser commitado.
+
+### Build
+
+```bash
+cd functions
+npm run build
+```
+
+### Rodando o emulador localmente
+
+O comando `npm start` na raiz já inicia o emulador automaticamente junto com o Gatsby. Para rodar o emulador isoladamente:
+
+```bash
+npm run emulator
+```
+
+Ou a partir do diretório `functions`:
+
+```bash
+cd functions
+npm run serve
+```
+
+> ⚠️ **Certificado SSL (UNABLE_TO_GET_ISSUER_CERT_LOCALLY):**
+> Os scripts `npm start` e `npm run emulator` já incluem `NODE_TLS_REJECT_UNAUTHORIZED=0` para contornar problemas de certificado SSL em desenvolvimento local. Nunca use essa variável em produção.
+
+A function ficará disponível em:
+
+```
+http://127.0.0.1:5001/clementino-notes/us-central1/subscribeToNewsletter
+```
+
+A UI do emulador estará em: `http://127.0.0.1:4000`
+
+### Testando a function
+
+```bash
+curl -X POST http://127.0.0.1:5001/clementino-notes/us-central1/subscribeToNewsletter \
+  -H "Content-Type: application/json" \
+  -d '{"data": {"email": "teste@gmail.com", "name": "Vagner Teste"}}'
+```
+
+### Testes unitários
+
+```bash
+cd functions
+npm test
+```
+
+### Deploy
+
+O deploy das functions é feito via GitHub Actions automaticamente ao fazer merge na `main`. Para deploy manual:
+
+```bash
+npx firebase-tools deploy --only functions
+```
+
+### App Check
+
+Em produção, a function usa Firebase App Check com reCAPTCHA Enterprise para impedir chamadas não autorizadas. Em desenvolvimento local, o App Check é desabilitado automaticamente para simplificar o fluxo de testes.
 
 ## Build e Deploy
 
@@ -132,9 +231,11 @@ npm run build && firebase deploy
 - **Styled Components** - CSS-in-JS para estilização
 - **MDX** - Markdown com componentes React
 - **Swiper** - Biblioteca para carrosséis
+- **Firebase Functions** - Backend serverless (newsletter)
+- **Firebase Hosting** - Hospedagem
+- **Mailchimp** - Gerenciamento de newsletter
 - **Jest** - Framework de testes
 - **ESLint** - Linter para JavaScript
-- **Firebase Hosting** - Hospedagem
 
 ## 📁 Estrutura do Projeto
 
@@ -144,7 +245,12 @@ src/
 ├── pages/              # Páginas do Gatsby
 ├── templates/          # Templates para posts
 ├── styles/             # Estilos globais
+├── firebase.js         # Inicialização do Firebase SDK
 └── utils/              # Utilitários e helpers
+
+functions/
+└── src/
+    └── newsletter-signup/  # Firebase Function (Mailchimp)
 
 content/
 └── blog/               # Artigos em Markdown/MDX
