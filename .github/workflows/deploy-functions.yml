@@ -2,7 +2,7 @@ name: Deploy Firebase Functions
 
 on:
   push:
-    branches: [main]
+    branches: [main, feat/newsletter-signup]
     paths:
       - "functions/**"
   workflow_dispatch:
