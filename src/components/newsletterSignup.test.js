@@ -2,14 +2,12 @@ import React from "react"
 import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import NewsletterSignup from "./newsletterSignup"
 
-//Mock mailcheck
 jest.mock("mailcheck", () => ({
   run: jest.fn(),
 }))
 
 import Mailcheck from "mailcheck"
 
-//Mock firebase module
 const mockCallable = jest.fn()
 jest.mock("../firebase", () => ({
   app: {},
@@ -37,6 +35,7 @@ describe("NewsletterSignup", () => {
   it("renders the newsletter form correctly", () => {
     render(<NewsletterSignup />)
     expect(screen.getByText(/Newsletter/)).toBeInTheDocument()
+    expect(screen.getByPlaceholderText("Seu nome")).toBeInTheDocument()
     expect(screen.getByPlaceholderText("seu@email.com")).toBeInTheDocument()
     expect(
       screen.getByRole("button", { name: "Enviar" })
