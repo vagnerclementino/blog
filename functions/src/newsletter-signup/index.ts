@@ -44,17 +44,14 @@ export const subscribeToNewsletter = onCall(
 
     const url = `https://${DATACENTER}.api.mailchimp.com/3.0/lists/${AUDIENCE_ID}/members`
 
+    const parts = name ? name.trim().split(/\s+/) : []
     const body: Record<string, unknown> = {
       email_address: email,
       status: "pending",
-    }
-
-    if (name && name.trim()) {
-      const parts = name.trim().split(/\s+/)
-      body.merge_fields = {
-        FNAME: parts[0],
+      merge_fields: {
+        FNAME: parts[0] || "",
         LNAME: parts.slice(1).join(" ") || "",
-      }
+      },
     }
 
     try {

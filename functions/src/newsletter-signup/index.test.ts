@@ -155,4 +155,30 @@ describe("subscribeToNewsletter", () => {
 
     expect(result).toEqual({ error: "Erro interno no servidor." })
   })
+
+  it("sends merge_fields with FNAME and LNAME when name is provided", async () => {
+    ;(global.fetch as jest.Mock).mockResolvedValue({
+      ok: true,
+      json: jest.fn().mockResolvedValue({ id: "abc123" }),
+    })
+
+    await handler({ data: { email: "user@gmail.com", name: "João Silva" } })
+
+    const [, fetchOptions] = (global.fetch as jest.Mock).mock.calls[0]
+    const body = JSON.parse(fetchOptions.body as string)
+    expect(body.merge_fields).toEqual({ FNAME: "João", LNAME: "Silva" })
+  })
+
+  it("sends merge_fields with empty strings when name is not provided", async () => {
+    ;(global.fetch as jest.Mock).mockResolvedValue({
+      ok: true,
+      json: jest.fn().mockResolvedValue({ id: "abc123" }),
+    })
+
+    await handler({ data: { email: "user@gmail.com" } })
+
+    const [, fetchOptions] = (global.fetch as jest.Mock).mock.calls[0]
+    const body = JSON.parse(fetchOptions.body as string)
+    expect(body.merge_fields).toEqual({ FNAME: "", LNAME: "" })
+  })
 })
