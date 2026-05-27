@@ -1,7 +1,9 @@
 declare module "disposable-email-domains" {
-  const domains: string[];
+  const domains: DisposableDomainList;
   export default domains;
 }
+
+export type DisposableDomainList = string[];
 
 export interface SubscribeRequest {
   email: string;

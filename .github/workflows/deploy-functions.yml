@@ -34,8 +34,10 @@ jobs:
         working-directory: functions
         run: npm run build
 
-      - uses: jsryudev/deploy-firebase-functions@v20.0.1
+      - name: Deploy to Firebase Functions
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CLEMENTINO_NOTES }}
-          FIREBASE_PROJECT: clementino-notes
-          FUNCTIONS_DIR: functions
+          GOOGLE_APPLICATION_CREDENTIALS: /tmp/sa_key.json
+        run: |
+          echo '${{ secrets.GCP_SA_KEY_FUNCTIONS_DEPLOY }}' > /tmp/sa_key.json
+          npx firebase-tools deploy --only functions --project clementino-notes
+          rm -f /tmp/sa_key.json
