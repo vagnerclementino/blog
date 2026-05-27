@@ -2,6 +2,12 @@ import { onCall } from "firebase-functions/v2/https"
 import * as logger from "firebase-functions/logger"
 import disposableDomains from "disposable-email-domains"
 import admin from "firebase-admin"
+import type {
+  SubscribeRequest,
+  SubscribeResponse,
+  MailchimpAddMemberBody,
+  MailchimpErrorResponse,
+} from "../types"
 
 if (!admin.apps.length) admin.initializeApp()
 
@@ -15,12 +21,13 @@ export const isDisposableEmail = (email: string): boolean => {
   if (!domain) return false
   return disposableDomains.includes(domain)
 }
+
 export const subscribeToNewsletter = onCall(
   {
     enforceAppCheck: !process.env.FUNCTIONS_EMULATOR,
   },
-  async (request) => {
-    const { email, name } = request.data as { email?: string; name?: string }
+  async (request): Promise<SubscribeResponse> => {
+    const { email, name } = request.data as Partial<SubscribeRequest>
 
     if (!email || !isValidEmail(email)) {
       logger.warn("Formato de e-mail inválido.")
@@ -45,7 +52,7 @@ export const subscribeToNewsletter = onCall(
     const url = `https://${DATACENTER}.api.mailchimp.com/3.0/lists/${AUDIENCE_ID}/members`
 
     const parts = name ? name.trim().split(/\s+/) : []
-    const body: Record<string, unknown> = {
+    const body: MailchimpAddMemberBody = {
       email_address: email,
       status: "pending",
       merge_fields: {
@@ -64,10 +71,7 @@ export const subscribeToNewsletter = onCall(
         body: JSON.stringify(body),
       })
 
-      const data = (await response.json()) as {
-        title?: string
-        detail?: string
-      }
+      const data = (await response.json()) as MailchimpErrorResponse
 
       if (!response.ok) {
         if (data.title === "Member Exists") {
@@ -86,4 +90,3 @@ export const subscribeToNewsletter = onCall(
     }
   }
 )
-
