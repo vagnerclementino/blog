@@ -68,6 +68,8 @@ describe('src/firebase.js', () => {
     }))
 
     process.env = { ...ORIGINAL_ENV }
+    delete process.env.GATSBY_FIREBASE_API_KEY
+    delete process.env.GATSBY_FIREBASE_PROJECT_ID
 
     let mod
     jest.isolateModules(() => {
