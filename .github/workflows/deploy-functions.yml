@@ -13,8 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -35,12 +34,8 @@ jobs:
         working-directory: functions
         run: npm run build
 
-      - name: Deploy to Firebase Functions
-        working-directory: functions
+      - uses: jsryudev/deploy-firebase-functions@v20.0.1
         env:
-          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CLEMENTINO_NOTES }}
-        run: |
-          echo "$FIREBASE_SERVICE_ACCOUNT_JSON" > /tmp/serviceAccountKey.json
-          export GOOGLE_APPLICATION_CREDENTIALS=/tmp/serviceAccountKey.json
-          npx firebase-tools deploy --only functions --project clementino-notes
-          rm -f /tmp/serviceAccountKey.json
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CLEMENTINO_NOTES }}
+          FIREBASE_PROJECT: clementino-notes
+          FUNCTIONS_DIR: functions
