@@ -31,6 +31,8 @@ O princípio é formalmente definido da seguinte maneira:
 > ser aplicado de maneira desnecessária atinge seu pico absoluto na exata
 > primeira oportunidade de uso após o seu aprendizado."
 
-<inserir grafico>
+O gráfico a seguir tem uma representação da Lei de Clements.
+
+![Representação gráfica da Lei de Clements](law-of-clements.png)
 
 ### Revisão de Código
