@@ -1,4 +1,4 @@
----
+--
 title: "Evitando Complexidade Desnecessária"
 date: "2026-06-02"
 description: "Reflexões de como identificar complexidade em desenho de software"
@@ -31,7 +31,9 @@ O princípio é formalmente definido da seguinte maneira:
 > ser aplicado de maneira desnecessária atinge seu pico absoluto na exata
 > primeira oportunidade de uso após o seu aprendizado."
 
-O gráfico a seguir tem uma representação da Lei de Clements.
+O gráfico a seguir tem uma representação da _Lei de Clements_. Veja que no
+pronto máximo da probabilidade de uso do conceito aprendido ele foi aplicado.
+A questão é se havia a necessidade de ser aplicado.
 
 ![Representação gráfica da Lei de Clements](law-of-clements.png)
 
