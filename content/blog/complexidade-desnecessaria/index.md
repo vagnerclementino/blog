@@ -5,6 +5,32 @@ description: "Reflexões de como identificar complexidade em desenho de software
 featuredImage: feature.png
 ---
 
-## Complexidade Desnecessária
+ - Manequeismo da Complexidade é um erro, mas devemos pensar em gradação
+ - Exemplo do "Leap Year" com TDD
+ - Inclusao de novos campos um DAP
+ - Complexidade Geral do Sistema
+ - Exemplo de um WebClient
 
-Escreva seu artigo aqui...
+## Motivação
+
+Estou especialmente interessado em como identificar complexidade
+(desnecessária) no desenvolvimento de software. 
+
+
+### Automoderação
+
+Para encapsular esse fenômeno comportamental frequentemente observado na
+engenharia de software, este artigo propõe a formulação da chamada _Lei de
+Clements_. Nascida da observação empírica de desenvolvedores que, ao dominarem
+novos padrões arquiteturais ou ferramentas avançadas, tendem a forçar sua
+utilidade em cenários que exigem apenas simplicidade, essa máxima ilustra
+a origem de grande parte da complexidade acidental nos sistemas modernos.
+O princípio é formalmente definido da seguinte maneira:
+
+> "A **Lei de Clements** postula que a probabilidade de um conceito complexo
+> ser aplicado de maneira desnecessária atinge seu pico absoluto na exata
+> primeira oportunidade de uso após o seu aprendizado."
+
+<inserir grafico>
+
+### Revisão de Código
