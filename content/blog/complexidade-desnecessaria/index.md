@@ -1,6 +1,6 @@
 --
 title: "Evitando Complexidade Desnecessária"
-date: "2026-06-02"
+date: "2026-06-01"
 description: "Reflexões de como identificar complexidade em desenho de software"
 featuredImage: feature.png
 ---
