@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay } from 'swiper/modules'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import PostCard from "./postCard"
+import AnchorLink from "./anchorLink"
 
 //Import Swiper styles
 import 'swiper/css'
@@ -16,7 +17,8 @@ const PostCarousel = ({
   showAll = false, 
   autoplay = false,
   featured = false,
-  badge = null
+  badge = null,
+  anchorId = null
 }) => {
   const [swiper, setSwiper] = React.useState(null)
   const [activeIndex, setActiveIndex] = React.useState(0)
@@ -52,6 +54,7 @@ const PostCarousel = ({
       {title && (
         <Title>
           {icon && <FontAwesomeIcon icon={icon} />} {title}
+          {anchorId && <AnchorLink id={anchorId} />}
         </Title>
       )}
       <CarouselContainer>

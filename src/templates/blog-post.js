@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faHome, faList } from "@fortawesome/free-solid-svg-icons"
 
 import Bio from "../components/bio"
+import NewsletterSignup from "../components/newsletterSignup"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import ScrollToTop from "../components/scrollToTop"
@@ -23,7 +24,6 @@ const getFeatureImgPath = featuredImg => {
   }
 }
 
-
 class BlogPostTemplate extends React.Component {
   getDisqusConfig(post) {
     return {
@@ -34,7 +34,7 @@ class BlogPostTemplate extends React.Component {
   }
 
   getFeaturedImage(post) {
-    return post.frontmatter.featuredImage?.childImageSharp?.gatsbyImageData 
+    return post.frontmatter.featuredImage?.childImageSharp?.gatsbyImageData
       ? getImage(post.frontmatter.featuredImage.childImageSharp.gatsbyImageData)
       : undefined
   }
@@ -52,8 +52,15 @@ class BlogPostTemplate extends React.Component {
       <Layout location={this.props.location}>
         <ReadingProgress />
         <Helmet>
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" />
+          <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossOrigin="anonymous"
+          />
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap"
+          />
         </Helmet>
         <SEO
           title={post.frontmatter.title}
@@ -71,10 +78,14 @@ class BlogPostTemplate extends React.Component {
           </NavButton>
         </NavigationBar>
 
-        { featuredImg && (
+        {featuredImg && (
           <GatsbyImage
             image={featuredImg}
-            alt={post.frontmatter.featuredImage?.alt || post.frontmatter.title || ""}
+            alt={
+              post.frontmatter.featuredImage?.alt ||
+              post.frontmatter.title ||
+              ""
+            }
           />
         )}
 
@@ -98,7 +109,9 @@ class BlogPostTemplate extends React.Component {
             marginTop: rhythm(-1),
           }}
         >
-          <strong>Tempo de leitura: {translateReadingTime(fields.readingTime)}</strong>
+          <strong>
+            Tempo de leitura: {translateReadingTime(fields.readingTime)}
+          </strong>
         </p>
         {children}
         <hr
@@ -107,6 +120,7 @@ class BlogPostTemplate extends React.Component {
           }}
         />
         <Bio />
+        <NewsletterSignup />
 
         <ul
           style={{
@@ -134,7 +148,7 @@ class BlogPostTemplate extends React.Component {
         </ul>
 
         <Disqus config={disqusConfig} />
-        
+
         <ScrollToTop showOffset={400} />
       </Layout>
     )
@@ -147,7 +161,7 @@ const NavigationBar = styled.div`
   margin-bottom: 2rem;
   padding: 1rem 0;
   border-bottom: 1px solid var(--textSecondary);
-  
+
   @media (max-width: 768px) {
     flex-direction: column;
     gap: 0.5rem;
@@ -166,26 +180,26 @@ const NavButton = styled(Link)`
   text-decoration: none;
   font-weight: 500;
   transition: all 0.3s ease;
-  
+
   &:hover {
     background: var(--textLink);
     color: var(--bg);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
-  
+
   svg {
     font-size: 1rem;
   }
-  
+
   span {
     font-size: 0.9rem;
   }
-  
+
   @media (max-width: 768px) {
     justify-content: center;
     padding: 0.6rem 0.8rem;
-    
+
     span {
       font-size: 0.8rem;
     }

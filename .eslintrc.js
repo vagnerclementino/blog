@@ -25,15 +25,18 @@ module.exports = {
   },
   rules: {
     "no-console": "error",
-    "no-unused-vars": ["error", {
-      "vars": "all",
-      "args": "after-used",
-      "argsIgnorePattern": "^_",
-      "varsIgnorePattern": "^_",
-    }],
+    "no-unused-vars": [
+      "error",
+      {
+        vars: "all",
+        args: "after-used",
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+      },
+    ],
     "spaced-comment": ["error", "never"],
     "no-inline-comments": "error",
-    "line-comment-position": ["error", { "position": "above" }],
+    "line-comment-position": ["error", { position: "above" }],
     "multiline-comment-style": ["error", "starred-block"],
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
@@ -41,9 +44,9 @@ module.exports = {
     "react/display-name": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-    "eqeqeq": "error",
+    eqeqeq: "error",
     "prefer-const": "error",
-    "complexity": ["warn", 10],
+    complexity: ["warn", 10],
   },
   settings: {
     react: {
@@ -56,7 +59,7 @@ module.exports = {
         "**/*.test.{js,jsx}",
         "**/__tests__/**/*.{js,jsx}",
         "**/__mocks__/**/*.js",
-        "**/loadershim.js"
+        "**/loadershim.js",
       ],
       plugins: ["jest"],
       env: {
@@ -73,11 +76,14 @@ module.exports = {
       },
       rules: {
         "no-console": "off",
-        "no-unused-vars": ["warn", {
-          argsIgnorePattern: "^_",
-          varsIgnorePattern: "^_",
-          ignoreRestSiblings: true
-        }],
+        "no-unused-vars": [
+          "warn",
+          {
+            argsIgnorePattern: "^_",
+            varsIgnorePattern: "^_",
+            ignoreRestSiblings: true,
+          },
+        ],
       },
     },
   ],
@@ -86,5 +92,6 @@ module.exports = {
     "public/",
     ".cache/",
     "coverage/",
+    "functions/",
   ],
-};
+}
