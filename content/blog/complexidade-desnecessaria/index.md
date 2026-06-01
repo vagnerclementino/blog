@@ -7,7 +7,7 @@ featuredImage: feature.png
 
  - Manequeismo da Complexidade é um erro, mas devemos pensar em gradação
  - Exemplo do "Leap Year" com TDD
- - Inclusao de novos campos um DAP
+ - Inclusão de novos campos um DAP
  - Complexidade Geral do Sistema
  - Exemplo de um WebClient
 

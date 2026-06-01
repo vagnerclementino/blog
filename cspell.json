@@ -486,7 +486,12 @@
     "Optional",
     "Signup",
     "signup",
-    "Mailchimp"
+    "Mailchimp", 
+    "featured",
+    "Manequeismo",
+    "Leap",
+    "Automoderação",
+    "Clements"
   ],
   "ignoreRegExpList": [
     "\\((.*)\\)", // Markdown links
