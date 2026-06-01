@@ -128,11 +128,12 @@
     "test:functions": "npm test --prefix functions",
     "check-deps": "depcheck || true",
     "check-deps:quiet": "depcheck --quiet || true",
-    "quality": "npm run lint && npm run test:quiet && npm run test:functions && npm run check-deps:quiet && cspell link add @cspell/dict-pt-br && cspell --no-must-find-files --config ./cspell.json '**/*.{md,mdx}'",
+    "quality": "npm run lint && npm run test:quiet && npm run test:functions && npm run check-deps:quiet && npm run spell",
     "clean": "gatsby clean",
     "prepare": "husky",
     "prepush": "npm run quality",
     "article:new": "gulp new-article",
-    "article:clean": "gulp clean-article"
+    "article:clean": "gulp clean-article",
+    "spell": "cspell link add @cspell/dict-pt-br && cspell --no-must-find-files --config ./cspell.json '**/*.{md,mdx}'"
   }
 }
