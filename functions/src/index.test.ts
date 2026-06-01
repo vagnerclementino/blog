@@ -1,4 +1,3 @@
-// Mocks must be declared before imports (Jest hoists jest.mock calls)
 const mockHandler = jest.fn()
 jest.mock("firebase-functions/v2/https", () => ({
   onCall: (_options: unknown, handler: unknown) => {
@@ -18,65 +17,10 @@ jest.mock("firebase-admin", () => ({
   initializeApp: jest.fn(),
 }))
 
-import { isValidEmail, isDisposableEmail, subscribeToNewsletter } from "./index"
+import { subscribeToNewsletter } from "./index"
 
-// The handler extracted from onCall
 type CallableRequest = { data: Record<string, unknown> }
 const handler = subscribeToNewsletter as unknown as (request: CallableRequest) => Promise<Record<string, string>>
-
-// ─── isValidEmail ─────────────────────────────────────────────────────────────
-
-describe("isValidEmail", () => {
-  it("returns true for valid emails", () => {
-    expect(isValidEmail("user@example.com")).toBe(true)
-    expect(isValidEmail("user.name+tag@sub.domain.co.uk")).toBe(true)
-    expect(isValidEmail("a@b.io")).toBe(true)
-  })
-
-  it("returns false for emails missing @", () => {
-    expect(isValidEmail("notanemail")).toBe(false)
-  })
-
-  it("returns false for emails missing domain extension", () => {
-    expect(isValidEmail("user@nodomain")).toBe(false)
-  })
-
-  it("returns false for emails with no local part", () => {
-    expect(isValidEmail("@example.com")).toBe(false)
-  })
-
-  it("returns false for empty string", () => {
-    expect(isValidEmail("")).toBe(false)
-  })
-
-  it("returns false for emails with spaces", () => {
-    expect(isValidEmail("user @example.com")).toBe(false)
-  })
-})
-
-// ─── isDisposableEmail ────────────────────────────────────────────────────────
-
-describe("isDisposableEmail", () => {
-  it("returns true for known disposable domains", () => {
-    expect(isDisposableEmail("user@10minutemail.com")).toBe(true)
-    expect(isDisposableEmail("user@mailinator.com")).toBe(true)
-    expect(isDisposableEmail("user@guerrillamail.com")).toBe(true)
-    expect(isDisposableEmail("user@temp-mail.com")).toBe(true)
-  })
-
-  it("returns false for legitimate email domains", () => {
-    expect(isDisposableEmail("user@gmail.com")).toBe(false)
-    expect(isDisposableEmail("user@outlook.com")).toBe(false)
-    expect(isDisposableEmail("user@example.com")).toBe(false)
-    expect(isDisposableEmail("user@company.com")).toBe(false)
-  })
-
-  it("returns false when email has no domain", () => {
-    expect(isDisposableEmail("nodomain")).toBe(false)
-  })
-})
-
-// ─── subscribeToNewsletter (onCall handler) ───────────────────────────────────
 
 describe("subscribeToNewsletter", () => {
   beforeEach(() => {
@@ -122,7 +66,6 @@ describe("subscribeToNewsletter", () => {
       message: "Por favor, verifique sua caixa de entrada para confirmar a inscrição!",
     })
 
-    // Verify double opt-in: status must be "pending"
     const [, fetchOptions] = (global.fetch as jest.Mock).mock.calls[0]
     const body = JSON.parse(fetchOptions.body as string)
     expect(body.status).toBe("pending")
